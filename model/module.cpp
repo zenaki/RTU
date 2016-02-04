@@ -18,31 +18,31 @@ void module::write_module(struct t_module *tmodule){
     sett.setValue("FLAG_DUAL_GSM", tmodule->flag_dual_gsm);
     sett.endGroup();
 
-//    sett.beginGroup( "INPUT" );
-//    sett.setValue("INPUT_A1", tmodule->input_a1);
-//    sett.setValue("INPUT_A2", tmodule->input_a2);
-//    sett.setValue("INPUT_A3", tmodule->input_a3);
-//    sett.setValue("INPUT_A4", tmodule->input_a4);
-//    sett.setValue("INPUT_A5", tmodule->input_a5);
-//    sett.setValue("INPUT_A6", tmodule->input_a6);
+    sett.beginGroup( "INPUT" );
+    sett.setValue("INPUT_A1", tmodule->input_a1);
+    sett.setValue("INPUT_A2", tmodule->input_a2);
+    sett.setValue("INPUT_A3", tmodule->input_a3);
+    sett.setValue("INPUT_A4", tmodule->input_a4);
+    sett.setValue("INPUT_A5", tmodule->input_a5);
+    sett.setValue("INPUT_A6", tmodule->input_a6);
 
-//    sett.setValue("INPUT_D1", tmodule->input_d1);
-//    sett.setValue("INPUT_D2", tmodule->input_d2);
-//    sett.setValue("INPUT_D3", tmodule->input_d3);
-//    sett.setValue("INPUT_D4", tmodule->input_d4);
-//    sett.setValue("INPUT_D5", tmodule->input_d5);
-//    sett.setValue("INPUT_D6", tmodule->input_d6);
-//    sett.setValue("INPUT_D7", tmodule->input_d7);
-//    sett.setValue("INPUT_D8", tmodule->input_d8);
-//    sett.endGroup();
+    sett.setValue("INPUT_D1", tmodule->input_d1);
+    sett.setValue("INPUT_D2", tmodule->input_d2);
+    sett.setValue("INPUT_D3", tmodule->input_d3);
+    sett.setValue("INPUT_D4", tmodule->input_d4);
+    sett.setValue("INPUT_D5", tmodule->input_d5);
+    sett.setValue("INPUT_D6", tmodule->input_d6);
+    sett.setValue("INPUT_D7", tmodule->input_d7);
+    sett.setValue("INPUT_D8", tmodule->input_d8);
+    sett.endGroup();
 
-//    sett.beginGroup( "OUTPUT" );
-//    sett.setValue("OUTPUT_R1", tmodule->output_r1);
-//    sett.setValue("OUTPUT_R2", tmodule->output_r2);
-//    sett.setValue("OUTPUT_R3", tmodule->output_r3);
-//    sett.setValue("OUTPUT_R4", tmodule->output_r4);
-//    sett.endGroup();
-//
+    sett.beginGroup( "OUTPUT" );
+    sett.setValue("OUTPUT_R1", tmodule->output_r1);
+    sett.setValue("OUTPUT_R2", tmodule->output_r2);
+    sett.setValue("OUTPUT_R3", tmodule->output_r3);
+    sett.setValue("OUTPUT_R4", tmodule->output_r4);
+    sett.endGroup();
+
     sett.beginGroup( "GSM_1" );
     sett.setValue("FLAG_GSM_1", tmodule->flag_gsm_1);
     sett.setValue("GSM_NAME_1", tmodule->name_gsm_1);
