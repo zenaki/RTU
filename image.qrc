@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>image/module.png</file>
+        <file>image/point.png</file>
+    </qresource>
+</RCC>
