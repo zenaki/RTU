@@ -64,6 +64,8 @@ struct t_module{
     int  flag_com_gsm_1;
     char com_gsm_1[32];
     char number_gsm_1[16];
+    char user_gsm_1[16];
+    char apn_gsm_1[16];
 
     int  flag_gsm_2;
     char name_gsm_2[32];
@@ -73,6 +75,8 @@ struct t_module{
     int  flag_com_gsm_2;
     char com_gsm_2[32];
     char number_gsm_2[16];
+    char user_gsm_2[16];
+    char apn_gsm_2[16];
 
     struct data_port d_port[16];
 

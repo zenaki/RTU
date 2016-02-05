@@ -28,6 +28,10 @@ private slots:
 
     void on_ck_flag_active_gsm_2_clicked(bool checked);
 
+    void on_cb_com_1_currentIndexChanged(int index);
+
+    void on_cb_com_2_currentIndexChanged(int index);
+
 private:
     module mod;
 

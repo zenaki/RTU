@@ -40,6 +40,15 @@ void form_addModule::on_buttonBox_accepted()
     strcpy(tModule.com_gsm_1, this->ui->cb_com_1->currentText().toLatin1());
 
     strcpy(tModule.number_gsm_1, this->ui->edit_number_1->text().toLatin1());
+    if (tModule.flag_com_gsm_1 == 0)
+    {
+        strcpy(tModule.user_gsm_1, "");
+        strcpy(tModule.apn_gsm_1, "");
+    } else if (tModule.flag_com_gsm_1 == 1)
+    {
+        strcpy(tModule.user_gsm_1, this->ui->edit_user_1->text().toLatin1());
+        strcpy(tModule.apn_gsm_1, this->ui->edit_apn_1->text().toLatin1());
+    }
 
     /** GSM_2 **/
     tModule.flag_gsm_2 = this->ui->cb_operator_2->currentIndex();
@@ -54,7 +63,17 @@ void form_addModule::on_buttonBox_accepted()
     strcpy(tModule.com_gsm_2, this->ui->cb_com_2->currentText().toLatin1());
 
     strcpy(tModule.number_gsm_2, this->ui->edit_number_2->text().toLatin1());
+    if (tModule.flag_com_gsm_2 == 0)
+    {
+        strcpy(tModule.user_gsm_2, "");
+        strcpy(tModule.apn_gsm_2, "");
+    } else if (tModule.flag_com_gsm_2 == 1)
+    {
+        strcpy(tModule.user_gsm_2, this->ui->edit_user_2->text().toLatin1());
+        strcpy(tModule.apn_gsm_2, this->ui->edit_apn_2->text().toLatin1());
+    }
 
+    /** INPUT **/
     strcpy(tModule.input_a1, "");
     strcpy(tModule.input_a2, "");
     strcpy(tModule.input_a3, "");
@@ -71,6 +90,7 @@ void form_addModule::on_buttonBox_accepted()
     strcpy(tModule.input_d7, "");
     strcpy(tModule.input_d8, "");
 
+    /** OUTPUT **/
     strcpy(tModule.output_r1, "");
     strcpy(tModule.output_r2, "");
     strcpy(tModule.output_r3, "");
@@ -123,5 +143,28 @@ void form_addModule::on_ck_flag_active_gsm_2_clicked(bool checked)
     ui->edit_devicename_2->setEnabled(checked);
     ui->cb_status_2->setEnabled(checked);
     ui->cb_com_2->setEnabled(checked);
+    ui->cb_com_2->setCurrentIndex(0);
     ui->edit_number_2->setEnabled(checked);
+}
+
+void form_addModule::on_cb_com_1_currentIndexChanged(int index)
+{
+    if (index == 0) {
+        this->ui->edit_user_1->setEnabled(false);
+        this->ui->edit_apn_1->setEnabled(false);
+    } else if (index == 1) {
+        this->ui->edit_user_1->setEnabled(true);
+        this->ui->edit_apn_1->setEnabled(true);
+    }
+}
+
+void form_addModule::on_cb_com_2_currentIndexChanged(int index)
+{
+    if (index == 0) {
+        this->ui->edit_user_2->setEnabled(false);
+        this->ui->edit_apn_2->setEnabled(false);
+    } else if (index == 1) {
+        this->ui->edit_user_2->setEnabled(true);
+        this->ui->edit_apn_2->setEnabled(true);
+    }
 }

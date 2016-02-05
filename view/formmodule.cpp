@@ -9,7 +9,7 @@ formModule::formModule(QWidget *parent, struct t_module *tmodule, QString addres
 
     this->setInterface(address);
 
-    this->ui->tabWidget->setCurrentIndex(0);
+//    this->ui->tabWidget->setCurrentIndex(0);
 }
 
 formModule::~formModule()
@@ -48,8 +48,38 @@ void formModule::setInterface(QString address){
         state_input[i]->addItem("ACTIVE");
     }
 
-    QString str_input_a1 = tModule.input_a1;
-    QStringList list_input_a1 = str_input_a1.split(';');
+    QString str;
+    str.append(tModule.input_a1);
+    str.append(";");
+    str.append(tModule.input_a2);
+    str.append(";");
+    str.append(tModule.input_a3);
+    str.append(";");
+    str.append(tModule.input_a4);
+    str.append(";");
+    str.append(tModule.input_a5);
+    str.append(";");
+    str.append(tModule.input_a6);
+    str.append(";");
+
+    str.append(tModule.input_d1);
+    str.append(";");
+    str.append(tModule.input_d2);
+    str.append(";");
+    str.append(tModule.input_d3);
+    str.append(";");
+    str.append(tModule.input_d4);
+    str.append(";");
+    str.append(tModule.input_d5);
+    str.append(";");
+    str.append(tModule.input_d6);
+    str.append(";");
+    str.append(tModule.input_d7);
+    str.append(";");
+    str.append(tModule.input_d8);
+    str.append(";");
+
+    QStringList list = str.split(';');
 
     for(int i = 0; i < rowInput; i++){
         if (i < 6) {
@@ -59,12 +89,11 @@ void formModule::setInterface(QString address){
         }
         type_IO.prepend(QString::number(i+1));
 
-
-//        name_input[i]->setText(list_input_a[i]][0]);
-//        type_input[i]->setText(list_input_a[i]][1]);
-//        state_input[i]->setCurrentIndex(list_input_a[i]][2].toInt());
-//        calib_mi1]->setText(list_input_a[i]][3]);
-//        calib_x[i]->setText(list_input_a[i]][4]);
+        name_input[i]->setText(list[i*5]);
+        type_input[i]->setText(list[(i*5)+1]);
+        state_input[i]->setCurrentIndex(list[(i*5)+2].toInt());
+        calib_m[i]->setText(list[(i*5)+3]);
+        calib_x[i]->setText(list[(i*5)+4]);
 
         this->ui->tabel_input->setItem(i,0, new QTableWidgetItem(type_IO));
         this->ui->tabel_input->setCellWidget(i,1, name_input[i]);
@@ -87,7 +116,23 @@ void formModule::setInterface(QString address){
         control[i]->addItem("SCHEDULER");
     }
 
+    str.append(tModule.output_r1);
+    str.append(";");
+    str.append(tModule.output_r2);
+    str.append(";");
+    str.append(tModule.output_r3);
+    str.append(";");
+    str.append(tModule.output_r4);
+    str.append(";");
+
+    list = str.split(';');
+
     for(int i = 0; i < rowOutput; i++){
+        name_output[i]->setText(list[i*5]);
+        type_output[i]->setText(list[(i*5)+1]);
+        state_output[i]->setCurrentIndex(list[(i*5)+2].toInt());
+        control[i]->setCurrentIndex(list[(i*5)+3].toInt());
+
         type_IO = " - Relay";
         type_IO.prepend(QString::number(i+1));
         this->ui->tabel_output->setItem(i,0, new QTableWidgetItem(type_IO));
@@ -96,34 +141,44 @@ void formModule::setInterface(QString address){
         this->ui->tabel_output->setCellWidget(i,3, state_output[i]);
         this->ui->tabel_output->setCellWidget(i,4, control[i]);
     }
+
     this->ui->tabel_input->setEditTriggers(QAbstractItemView::NoEditTriggers);
     this->ui->tabel_output->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    modules.sprintf("%s", tModule.name_gsm_1);
-    this->ui->opt_1->setText(modules);
-    modules.sprintf("%s", tModule.name_gsm_2);
-    this->ui->opt_2->setText(modules);
+    this->ui->opt_1->setCurrentIndex(tModule.flag_gsm_1);
+    this->ui->opt_2->setCurrentIndex(tModule.flag_gsm_2);
     modules.sprintf("%s", tModule.device_name_gsm_1);
     this->ui->device_1->setText(modules);
     modules.sprintf("%s", tModule.device_name_gsm_2);
     this->ui->device_2->setText(modules);
-    modules.sprintf("%s", tModule.status_gsm_1);
-    this->ui->status_1->setText(modules);
-    modules.sprintf("%s", tModule.status_gsm_2);
-    this->ui->status_2->setText(modules);
-    modules.sprintf("%s", tModule.com_gsm_1);
-    this->ui->com_1->setText(modules);
-    modules.sprintf("%s", tModule.com_gsm_2);
-    this->ui->com_2->setText(modules);
+    this->ui->status_1->setCurrentIndex(tModule.flag_status_active_gsm_1);
+    this->ui->status_2->setCurrentIndex(tModule.flag_status_active_gsm_2);
+    this->ui->com_1->setCurrentIndex(tModule.flag_com_gsm_1);
+    this->ui->com_2->setCurrentIndex(tModule.flag_com_gsm_2);
     modules.sprintf("%s", tModule.number_gsm_1);
     this->ui->number_1->setText(modules);
     modules.sprintf("%s", tModule.number_gsm_2);
     this->ui->number_2->setText(modules);
 
+    this->ui->opt_1->setEnabled(false);
+    this->ui->device_1->setEnabled(false);
+    this->ui->status_1->setEnabled(false);
+    this->ui->com_1->setEnabled(false);
+    this->ui->number_1->setEnabled(false);
+    this->ui->user_1->setEnabled(false);
+    this->ui->apn_1->setEnabled(false);
+
+    this->ui->opt_2->setEnabled(false);
+    this->ui->device_2->setEnabled(false);
+    this->ui->status_2->setEnabled(false);
+    this->ui->com_2->setEnabled(false);
+    this->ui->number_2->setEnabled(false);
+    this->ui->user_2->setEnabled(false);
+    this->ui->apn_2->setEnabled(false);
+
     this->ui->pbEdit->setHidden(false);
     this->ui->pbSave->setHidden(true);
     this->ui->pbCancel->setHidden(true);
-
 }
 
 void formModule::on_pbSet_clicked()
@@ -185,6 +240,8 @@ void formModule::on_pbSet_clicked()
 
 void formModule::on_pbEdit_clicked()
 {
+    this->ui->tabWidget->setCurrentIndex(2);
+
     this->ui->opt_1->setEnabled(true);
     this->ui->device_1->setEnabled(true);
     this->ui->status_1->setEnabled(true);
@@ -204,6 +261,48 @@ void formModule::on_pbEdit_clicked()
 
 void formModule::on_pbSave_clicked()
 {
+    struct t_module tModule;
+
+    tModule.flag_gsm_1 = this->ui->opt_1->currentIndex();
+    strcpy(tModule.name_gsm_1,ui->opt_1->currentText().toLatin1());
+    tModule.flag_gsm_2 = this->ui->opt_2->currentIndex();
+    strcpy(tModule.name_gsm_2,ui->opt_2->currentText().toLatin1());
+
+    strcpy(tModule.device_name_gsm_1,ui->device_1->text().toLatin1());
+    strcpy(tModule.device_name_gsm_2,ui->device_2->text().toLatin1());
+
+    tModule.flag_status_active_gsm_1 = this->ui->status_1->currentIndex();
+    strcpy(tModule.status_gsm_1,ui->status_1->currentText().toLatin1());
+    tModule.flag_status_active_gsm_2 = this->ui->status_2->currentIndex();
+    strcpy(tModule.status_gsm_2,ui->status_2->currentText().toLatin1());
+
+    tModule.flag_com_gsm_1 = this->ui->com_1->currentIndex();
+    strcpy(tModule.com_gsm_1,ui->com_1->currentText().toLatin1());
+    tModule.flag_com_gsm_2 = this->ui->com_2->currentIndex();
+    strcpy(tModule.com_gsm_2,ui->com_2->currentText().toLatin1());
+
+    strcpy(tModule.number_gsm_1,ui->number_1->text().toLatin1());
+    strcpy(tModule.number_gsm_2,ui->number_2->text().toLatin1());
+
+    module mod;
+    mod.update_communication(&tModule, Address_Module);
+    QString modules;
+
+    this->ui->opt_1->setCurrentIndex(tModule.flag_gsm_1);
+    this->ui->opt_2->setCurrentIndex(tModule.flag_gsm_2);
+    modules.sprintf("%s", tModule.device_name_gsm_1);
+    this->ui->device_1->setText(modules);
+    modules.sprintf("%s", tModule.device_name_gsm_2);
+    this->ui->device_2->setText(modules);
+    this->ui->status_1->setCurrentIndex(tModule.flag_status_active_gsm_1);
+    this->ui->status_2->setCurrentIndex(tModule.flag_status_active_gsm_2);
+    this->ui->com_1->setCurrentIndex(tModule.flag_com_gsm_1);
+    this->ui->com_2->setCurrentIndex(tModule.flag_com_gsm_2);
+    modules.sprintf("%s", tModule.number_gsm_1);
+    this->ui->number_1->setText(modules);
+    modules.sprintf("%s", tModule.number_gsm_2);
+    this->ui->number_2->setText(modules);
+
     this->ui->opt_1->setEnabled(false);
     this->ui->device_1->setEnabled(false);
     this->ui->status_1->setEnabled(false);
@@ -228,22 +327,16 @@ void formModule::on_pbCancel_clicked()
     mod.read_module(&tModule, Address_Module);
     QString modules;
 
-    modules.sprintf("%s", tModule.name_gsm_1);
-    this->ui->opt_1->setText(modules);
-    modules.sprintf("%s", tModule.name_gsm_2);
-    this->ui->opt_2->setText(modules);
+    this->ui->opt_1->setCurrentIndex(tModule.flag_gsm_1);
+    this->ui->opt_2->setCurrentIndex(tModule.flag_gsm_2);
     modules.sprintf("%s", tModule.device_name_gsm_1);
     this->ui->device_1->setText(modules);
     modules.sprintf("%s", tModule.device_name_gsm_2);
     this->ui->device_2->setText(modules);
-    modules.sprintf("%s", tModule.status_gsm_1);
-    this->ui->status_1->setText(modules);
-    modules.sprintf("%s", tModule.status_gsm_2);
-    this->ui->status_2->setText(modules);
-    modules.sprintf("%s", tModule.com_gsm_1);
-    this->ui->com_1->setText(modules);
-    modules.sprintf("%s", tModule.com_gsm_2);
-    this->ui->com_2->setText(modules);
+    this->ui->status_1->setCurrentIndex(tModule.flag_status_active_gsm_1);
+    this->ui->status_2->setCurrentIndex(tModule.flag_status_active_gsm_2);
+    this->ui->com_1->setCurrentIndex(tModule.flag_com_gsm_1);
+    this->ui->com_2->setCurrentIndex(tModule.flag_com_gsm_2);
     modules.sprintf("%s", tModule.number_gsm_1);
     this->ui->number_1->setText(modules);
     modules.sprintf("%s", tModule.number_gsm_2);

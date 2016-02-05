@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>634</width>
-    <height>353</height>
+    <height>394</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,12 +19,12 @@
      <x>350</x>
      <y>130</y>
      <width>265</width>
-     <height>161</height>
+     <height>215</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout_2">
-    <item row="0" column="0">
-     <widget class="QLabel" name="label_6">
+    <item row="3" column="0">
+     <widget class="QLabel" name="label_9">
       <property name="enabled">
        <bool>false</bool>
       </property>
@@ -35,7 +35,7 @@
        </size>
       </property>
       <property name="text">
-       <string>Operator</string>
+       <string>Communication</string>
       </property>
      </widget>
     </item>
@@ -83,8 +83,99 @@
       </property>
      </widget>
     </item>
+    <item row="3" column="1">
+     <widget class="QComboBox" name="cb_com_2">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>141</width>
+        <height>27</height>
+       </size>
+      </property>
+      <item>
+       <property name="text">
+        <string>SMS</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>GPRS</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_6">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>111</width>
+        <height>17</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Operator</string>
+      </property>
+     </widget>
+    </item>
     <item row="1" column="1">
      <widget class="QLineEdit" name="edit_devicename_2">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>141</width>
+        <height>27</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QComboBox" name="cb_status_2">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>141</width>
+        <height>27</height>
+       </size>
+      </property>
+      <item>
+       <property name="text">
+        <string>NOT ACTIVE</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>ACTIVE</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="4" column="0">
+     <widget class="QLabel" name="label_10">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>111</width>
+        <height>17</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Number</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="1">
+     <widget class="QLineEdit" name="edit_number_2">
       <property name="enabled">
        <bool>false</bool>
       </property>
@@ -112,31 +203,8 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="1">
-     <widget class="QComboBox" name="cb_status_2">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>141</width>
-        <height>27</height>
-       </size>
-      </property>
-      <item>
-       <property name="text">
-        <string>NOT ACTIVE</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>ACTIVE</string>
-       </property>
-      </item>
-     </widget>
-    </item>
-    <item row="3" column="0">
-     <widget class="QLabel" name="label_9">
+    <item row="5" column="0">
+     <widget class="QLabel" name="label_17">
       <property name="enabled">
        <bool>false</bool>
       </property>
@@ -147,12 +215,12 @@
        </size>
       </property>
       <property name="text">
-       <string>Communication</string>
+       <string>User name</string>
       </property>
      </widget>
     </item>
-    <item row="3" column="1">
-     <widget class="QComboBox" name="cb_com_2">
+    <item row="5" column="1">
+     <widget class="QLineEdit" name="edit_user_2">
       <property name="enabled">
        <bool>false</bool>
       </property>
@@ -162,20 +230,10 @@
         <height>27</height>
        </size>
       </property>
-      <item>
-       <property name="text">
-        <string>SMS</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>GPRS</string>
-       </property>
-      </item>
      </widget>
     </item>
-    <item row="4" column="0">
-     <widget class="QLabel" name="label_10">
+    <item row="6" column="0">
+     <widget class="QLabel" name="label_18">
       <property name="enabled">
        <bool>false</bool>
       </property>
@@ -186,12 +244,12 @@
        </size>
       </property>
       <property name="text">
-       <string>Number</string>
+       <string>APN</string>
       </property>
      </widget>
     </item>
-    <item row="4" column="1">
-     <widget class="QLineEdit" name="edit_number_2">
+    <item row="6" column="1">
+     <widget class="QLineEdit" name="edit_apn_2">
       <property name="enabled">
        <bool>false</bool>
       </property>
@@ -259,10 +317,36 @@
      <x>18</x>
      <y>130</y>
      <width>265</width>
-     <height>161</height>
+     <height>215</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
+    <item row="5" column="1">
+     <widget class="QLineEdit" name="edit_user_1">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>141</width>
+        <height>27</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0">
+     <widget class="QLabel" name="label_15">
+      <property name="minimumSize">
+       <size>
+        <width>111</width>
+        <height>17</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>User name</string>
+      </property>
+     </widget>
+    </item>
     <item row="0" column="0">
      <widget class="QLabel" name="label">
       <property name="minimumSize">
@@ -413,13 +497,39 @@
       </property>
      </widget>
     </item>
+    <item row="6" column="0">
+     <widget class="QLabel" name="label_16">
+      <property name="minimumSize">
+       <size>
+        <width>111</width>
+        <height>17</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>APN</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="1">
+     <widget class="QLineEdit" name="edit_apn_1">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>141</width>
+        <height>27</height>
+       </size>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
      <x>14</x>
-     <y>314</y>
+     <y>360</y>
      <width>601</width>
      <height>27</height>
     </rect>
