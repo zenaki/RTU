@@ -9,7 +9,7 @@ formModule::formModule(QWidget *parent, struct t_module *tmodule, QString addres
 
     this->setInterface(address);
 
-//    this->ui->tabWidget->setCurrentIndex(0);
+    this->ui->tabWidget->setCurrentIndex(0);
 }
 
 formModule::~formModule()
@@ -108,14 +108,15 @@ void formModule::setInterface(QString address){
         type_output[i] = new QLineEdit(this);
 
         state_output[i] = new QComboBox(this);
-        state_output[i]->addItem("ACTIVE");
         state_output[i]->addItem("NOT ACTIVE");
+        state_output[i]->addItem("ACTIVE");
 
         control[i] = new QComboBox(this);
         control[i]->addItem("LOGIC");
         control[i]->addItem("SCHEDULER");
     }
 
+    str = "";
     str.append(tModule.output_r1);
     str.append(";");
     str.append(tModule.output_r2);
@@ -128,10 +129,10 @@ void formModule::setInterface(QString address){
     list = str.split(';');
 
     for(int i = 0; i < rowOutput; i++){
-        name_output[i]->setText(list[i*5]);
-        type_output[i]->setText(list[(i*5)+1]);
-        state_output[i]->setCurrentIndex(list[(i*5)+2].toInt());
-        control[i]->setCurrentIndex(list[(i*5)+3].toInt());
+        name_output[i]->setText(list[i*4]);
+        type_output[i]->setText(list[(i*4)+1]);
+        state_output[i]->setCurrentIndex(list[(i*4)+2].toInt());
+        control[i]->setCurrentIndex(list[(i*4)+3].toInt());
 
         type_IO = " - Relay";
         type_IO.prepend(QString::number(i+1));
@@ -159,6 +160,14 @@ void formModule::setInterface(QString address){
     this->ui->number_1->setText(modules);
     modules.sprintf("%s", tModule.number_gsm_2);
     this->ui->number_2->setText(modules);
+    modules.sprintf("%s", tModule.user_gsm_1);
+    this->ui->user_1->setText(modules);
+    modules.sprintf("%s", tModule.user_gsm_2);
+    this->ui->user_2->setText(modules);
+    modules.sprintf("%s", tModule.apn_gsm_1);
+    this->ui->apn_1->setText(modules);
+    modules.sprintf("%s", tModule.apn_gsm_2);
+    this->ui->apn_2->setText(modules);
 
     this->ui->opt_1->setEnabled(false);
     this->ui->device_1->setEnabled(false);
@@ -236,6 +245,8 @@ void formModule::on_pbSet_clicked()
 
     module mod;
     mod.update_setting(&tModule, Address_Module);
+
+    QMessageBox::information(this, "Success!!", "Setting Saved", 0, 0);
 }
 
 void formModule::on_pbEdit_clicked()
@@ -247,12 +258,26 @@ void formModule::on_pbEdit_clicked()
     this->ui->status_1->setEnabled(true);
     this->ui->com_1->setEnabled(true);
     this->ui->number_1->setEnabled(true);
+    if (ui->com_1->currentIndex() == 0) {
+        this->ui->user_1->setEnabled(false);
+        this->ui->apn_1->setEnabled(false);
+    } else if (ui->com_1->currentIndex() == 1) {
+        this->ui->user_1->setEnabled(true);
+        this->ui->apn_1->setEnabled(true);
+    }
 
     this->ui->opt_2->setEnabled(true);
     this->ui->device_2->setEnabled(true);
     this->ui->status_2->setEnabled(true);
     this->ui->com_2->setEnabled(true);
     this->ui->number_2->setEnabled(true);
+    if (ui->com_2->currentIndex() == 0) {
+        this->ui->user_2->setEnabled(false);
+        this->ui->apn_2->setEnabled(false);
+    } else if (ui->com_2->currentIndex() == 1) {
+        this->ui->user_2->setEnabled(true);
+        this->ui->apn_2->setEnabled(true);
+    }
 
     this->ui->pbEdit->setHidden(true);
     this->ui->pbSave->setHidden(false);
@@ -284,6 +309,26 @@ void formModule::on_pbSave_clicked()
     strcpy(tModule.number_gsm_1,ui->number_1->text().toLatin1());
     strcpy(tModule.number_gsm_2,ui->number_2->text().toLatin1());
 
+    if (tModule.flag_com_gsm_1 == 0)
+    {
+        strcpy(tModule.user_gsm_1, "");
+        strcpy(tModule.apn_gsm_1, "");
+    } else if (tModule.flag_com_gsm_1 == 1)
+    {
+        strcpy(tModule.user_gsm_1, this->ui->user_1->text().toLatin1());
+        strcpy(tModule.apn_gsm_1, this->ui->apn_1->text().toLatin1());
+    }
+
+    if (tModule.flag_com_gsm_2 == 0)
+    {
+        strcpy(tModule.user_gsm_2, "");
+        strcpy(tModule.apn_gsm_2, "");
+    } else if (tModule.flag_com_gsm_2 == 1)
+    {
+        strcpy(tModule.user_gsm_2, this->ui->user_2->text().toLatin1());
+        strcpy(tModule.apn_gsm_2, this->ui->apn_2->text().toLatin1());
+    }
+
     module mod;
     mod.update_communication(&tModule, Address_Module);
     QString modules;
@@ -302,18 +347,30 @@ void formModule::on_pbSave_clicked()
     this->ui->number_1->setText(modules);
     modules.sprintf("%s", tModule.number_gsm_2);
     this->ui->number_2->setText(modules);
+    modules.sprintf("%s", tModule.user_gsm_1);
+    this->ui->user_1->setText(modules);
+    modules.sprintf("%s", tModule.user_gsm_2);
+    this->ui->user_2->setText(modules);
+    modules.sprintf("%s", tModule.apn_gsm_1);
+    this->ui->apn_1->setText(modules);
+    modules.sprintf("%s", tModule.apn_gsm_2);
+    this->ui->apn_2->setText(modules);
 
     this->ui->opt_1->setEnabled(false);
     this->ui->device_1->setEnabled(false);
     this->ui->status_1->setEnabled(false);
     this->ui->com_1->setEnabled(false);
     this->ui->number_1->setEnabled(false);
+    this->ui->user_1->setEnabled(false);
+    this->ui->apn_1->setEnabled(false);
 
     this->ui->opt_2->setEnabled(false);
     this->ui->device_2->setEnabled(false);
     this->ui->status_2->setEnabled(false);
     this->ui->com_2->setEnabled(false);
     this->ui->number_2->setEnabled(false);
+    this->ui->user_2->setEnabled(false);
+    this->ui->apn_2->setEnabled(false);
 
     this->ui->pbEdit->setHidden(false);
     this->ui->pbSave->setHidden(true);
@@ -341,20 +398,59 @@ void formModule::on_pbCancel_clicked()
     this->ui->number_1->setText(modules);
     modules.sprintf("%s", tModule.number_gsm_2);
     this->ui->number_2->setText(modules);
+    modules.sprintf("%s", tModule.user_gsm_1);
+    this->ui->user_1->setText(modules);
+    modules.sprintf("%s", tModule.user_gsm_2);
+    this->ui->user_2->setText(modules);
+    modules.sprintf("%s", tModule.apn_gsm_1);
+    this->ui->apn_1->setText(modules);
+    modules.sprintf("%s", tModule.apn_gsm_2);
+    this->ui->apn_2->setText(modules);
 
     this->ui->opt_1->setEnabled(false);
     this->ui->device_1->setEnabled(false);
     this->ui->status_1->setEnabled(false);
     this->ui->com_1->setEnabled(false);
     this->ui->number_1->setEnabled(false);
+    this->ui->user_1->setEnabled(false);
+    this->ui->apn_1->setEnabled(false);
 
     this->ui->opt_2->setEnabled(false);
     this->ui->device_2->setEnabled(false);
     this->ui->status_2->setEnabled(false);
     this->ui->com_2->setEnabled(false);
     this->ui->number_2->setEnabled(false);
+    this->ui->user_2->setEnabled(false);
+    this->ui->apn_2->setEnabled(false);
 
     this->ui->pbEdit->setHidden(false);
     this->ui->pbSave->setHidden(true);
     this->ui->pbCancel->setHidden(true);
+}
+
+void formModule::on_com_1_currentIndexChanged(int index)
+{
+    if (index == 0) {
+        this->ui->user_1->setEnabled(false);
+        this->ui->apn_1->setEnabled(false);
+    } else if (index == 1) {
+        this->ui->user_1->setEnabled(true);
+        this->ui->apn_1->setEnabled(true);
+    }
+}
+
+void formModule::on_com_2_currentIndexChanged(int index)
+{
+    if (index == 0) {
+        this->ui->user_2->setEnabled(false);
+        this->ui->apn_2->setEnabled(false);
+    } else if (index == 1) {
+        this->ui->user_2->setEnabled(true);
+        this->ui->apn_2->setEnabled(true);
+    }
+}
+
+void formModule::on_tabWidget_tabBarClicked(int index)
+{
+    this->ui->tabWidget->setCurrentIndex(index);
 }

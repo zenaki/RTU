@@ -32,6 +32,12 @@ private slots:
     void on_pbSave_clicked();
     void on_pbCancel_clicked();
 
+    void on_com_1_currentIndexChanged(int index);
+
+    void on_com_2_currentIndexChanged(int index);
+
+    void on_tabWidget_tabBarClicked(int index);
+
 private:
     module mod;
     QLabel *type[16];

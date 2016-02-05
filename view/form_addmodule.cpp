@@ -74,27 +74,27 @@ void form_addModule::on_buttonBox_accepted()
     }
 
     /** INPUT **/
-    strcpy(tModule.input_a1, "");
-    strcpy(tModule.input_a2, "");
-    strcpy(tModule.input_a3, "");
-    strcpy(tModule.input_a4, "");
-    strcpy(tModule.input_a5, "");
-    strcpy(tModule.input_a6, "");
+    strcpy(tModule.input_a1, ";;;;");
+    strcpy(tModule.input_a2, ";;;;");
+    strcpy(tModule.input_a3, ";;;;");
+    strcpy(tModule.input_a4, ";;;;");
+    strcpy(tModule.input_a5, ";;;;");
+    strcpy(tModule.input_a6, ";;;;");
 
-    strcpy(tModule.input_d1, "");
-    strcpy(tModule.input_d2, "");
-    strcpy(tModule.input_d3, "");
-    strcpy(tModule.input_d4, "");
-    strcpy(tModule.input_d5, "");
-    strcpy(tModule.input_d6, "");
-    strcpy(tModule.input_d7, "");
-    strcpy(tModule.input_d8, "");
+    strcpy(tModule.input_d1, ";;;;");
+    strcpy(tModule.input_d2, ";;;;");
+    strcpy(tModule.input_d3, ";;;;");
+    strcpy(tModule.input_d4, ";;;;");
+    strcpy(tModule.input_d5, ";;;;");
+    strcpy(tModule.input_d6, ";;;;");
+    strcpy(tModule.input_d7, ";;;;");
+    strcpy(tModule.input_d8, ";;;;");
 
     /** OUTPUT **/
-    strcpy(tModule.output_r1, "");
-    strcpy(tModule.output_r2, "");
-    strcpy(tModule.output_r3, "");
-    strcpy(tModule.output_r4, "");
+    strcpy(tModule.output_r1, ";;;");
+    strcpy(tModule.output_r2, ";;;");
+    strcpy(tModule.output_r3, ";;;");
+    strcpy(tModule.output_r4, ";;;");
 
     /** ----------------------------- WRITE ---------------------------- **/
     bool cek = false;
@@ -138,6 +138,8 @@ void form_addModule::on_ck_flag_active_gsm_2_clicked(bool checked)
     ui->label_8->setEnabled(checked);
     ui->label_9->setEnabled(checked);
     ui->label_10->setEnabled(checked);
+    ui->label_17->setEnabled(checked);
+    ui->label_18->setEnabled(checked);
 
     ui->cb_operator_2->setEnabled(checked);
     ui->edit_devicename_2->setEnabled(checked);
