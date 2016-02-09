@@ -76,6 +76,7 @@ void worker::showModule(QWidget *parent, QMdiArea *mdiArea, QString module){
     fModule = new formModule(parent, &tModule, address);
     fModule->setModal(true);
     fModule->setWindowTitle(tModule.module_name);
+//    fModule->setMaximumWidth(700);
 
     mdiArea->addSubWindow(fModule, 0);
 

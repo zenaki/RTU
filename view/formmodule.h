@@ -38,6 +38,14 @@ private slots:
 
     void on_tabWidget_tabBarClicked(int index);
 
+    void on_pbEdit_Module_clicked();
+
+    void on_pbSave_Module_clicked();
+
+    void on_pbCancel_Module_clicked();
+
+    void on_pushButton_clicked();
+
 private:
     module mod;
     QLabel *type[16];

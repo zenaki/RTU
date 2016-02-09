@@ -16,6 +16,7 @@ public:
 
     void write_module(struct t_module *tmodule);
     void update_setting(struct t_module *tmodule, QString addressModule);
+    void update_module(struct t_module *tmodule, QString addressModule);
     void update_communication(struct t_module *tmodule, QString addressModule);
     void read_module(struct t_module *tmodule, QString addressModule);
 };

@@ -131,6 +131,18 @@ void module::update_communication(struct t_module *tmodule, QString addressModul
     sett.endGroup();
 }
 
+void module::update_module(struct t_module *tmodule, QString addressModule){
+    QString pth = addressModule;
+    QSettings sett(pth, QSettings::IniFormat);
+
+    sett.beginGroup( "MODULE" );
+//    sett.setValue("ACTIVE", tmodule->flag_active);
+    sett.setValue("MODULE_NAME", tmodule->module_name);
+    sett.setValue("SN", tmodule->serial_number);
+//    sett.setValue("FLAG_DUAL_GSM", tmodule->flag_dual_gsm);
+    sett.endGroup();
+}
+
 void module::read_module(struct t_module *tmodule, QString addressModule){
     QString pth = addressModule;
     QSettings sett(pth, QSettings::IniFormat);

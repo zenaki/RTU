@@ -9,6 +9,9 @@ formModule::formModule(QWidget *parent, struct t_module *tmodule, QString addres
 
     this->setInterface(address);
 
+    this->ui->bottom_message->setStyleSheet("QLabel { color : red; }");
+    this->ui->bottom_message->setText("Not Connected");
+
     this->ui->tabWidget->setCurrentIndex(0);
 }
 
@@ -156,6 +159,18 @@ void formModule::setInterface(QString address){
 
     this->ui->tabel_input->setEditTriggers(QAbstractItemView::NoEditTriggers);
     this->ui->tabel_output->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
+    modules.sprintf("%s", tModule.module_name);
+    this->ui->module_name->setText(modules);
+    modules.sprintf("%s", tModule.serial_number);
+    this->ui->serial_number->setText(modules);
+
+    this->ui->module_name->setEnabled(false);
+    this->ui->serial_number->setEnabled(false);
+
+    this->ui->pbEdit_Module->setHidden(false);
+    this->ui->pbSave_Module->setHidden(true);
+    this->ui->pbCancel_Module->setHidden(true);
 
     this->ui->opt_1->setCurrentIndex(tModule.flag_gsm_1);
     this->ui->opt_2->setCurrentIndex(tModule.flag_gsm_2);
@@ -464,4 +479,124 @@ void formModule::on_com_2_currentIndexChanged(int index)
 void formModule::on_tabWidget_tabBarClicked(int index)
 {
     this->ui->tabWidget->setCurrentIndex(index);
+
+    struct t_module tModule;
+    module mod;
+    mod.read_module(&tModule, Address_Module);
+    QString modules;
+
+    modules.sprintf("%s", tModule.module_name);
+    this->ui->module_name->setText(modules);
+    modules.sprintf("%s", tModule.serial_number);
+    this->ui->serial_number->setText(modules);
+
+    this->ui->module_name->setEnabled(false);
+    this->ui->serial_number->setEnabled(false);
+
+    this->ui->pbEdit_Module->setHidden(false);
+    this->ui->pbSave_Module->setHidden(true);
+    this->ui->pbCancel_Module->setHidden(true);
+
+    this->ui->opt_1->setCurrentIndex(tModule.flag_gsm_1);
+    this->ui->opt_2->setCurrentIndex(tModule.flag_gsm_2);
+    modules.sprintf("%s", tModule.device_name_gsm_1);
+    this->ui->device_1->setText(modules);
+    modules.sprintf("%s", tModule.device_name_gsm_2);
+    this->ui->device_2->setText(modules);
+    this->ui->status_1->setCurrentIndex(tModule.flag_status_active_gsm_1);
+    this->ui->status_2->setCurrentIndex(tModule.flag_status_active_gsm_2);
+    this->ui->com_1->setCurrentIndex(tModule.flag_com_gsm_1);
+    this->ui->com_2->setCurrentIndex(tModule.flag_com_gsm_2);
+    modules.sprintf("%s", tModule.number_gsm_1);
+    this->ui->number_1->setText(modules);
+    modules.sprintf("%s", tModule.number_gsm_2);
+    this->ui->number_2->setText(modules);
+    modules.sprintf("%s", tModule.user_gsm_1);
+    this->ui->user_1->setText(modules);
+    modules.sprintf("%s", tModule.user_gsm_2);
+    this->ui->user_2->setText(modules);
+    modules.sprintf("%s", tModule.apn_gsm_1);
+    this->ui->apn_1->setText(modules);
+    modules.sprintf("%s", tModule.apn_gsm_2);
+    this->ui->apn_2->setText(modules);
+
+    this->ui->opt_1->setEnabled(false);
+    this->ui->device_1->setEnabled(false);
+    this->ui->status_1->setEnabled(false);
+    this->ui->com_1->setEnabled(false);
+    this->ui->number_1->setEnabled(false);
+    this->ui->user_1->setEnabled(false);
+    this->ui->apn_1->setEnabled(false);
+
+    this->ui->opt_2->setEnabled(false);
+    this->ui->device_2->setEnabled(false);
+    this->ui->status_2->setEnabled(false);
+    this->ui->com_2->setEnabled(false);
+    this->ui->number_2->setEnabled(false);
+    this->ui->user_2->setEnabled(false);
+    this->ui->apn_2->setEnabled(false);
+
+    this->ui->pbEdit->setHidden(false);
+    this->ui->pbSave->setHidden(true);
+    this->ui->pbCancel->setHidden(true);
+}
+
+void formModule::on_pbEdit_Module_clicked()
+{
+    this->ui->module_name->setEnabled(true);
+    this->ui->serial_number->setEnabled(true);
+
+    this->ui->pbEdit_Module->setHidden(true);
+    this->ui->pbSave_Module->setHidden(false);
+    this->ui->pbCancel_Module->setHidden(false);
+
+}
+
+void formModule::on_pbSave_Module_clicked()
+{
+    struct t_module tModule;
+
+    strcpy(tModule.module_name,ui->module_name->text().toLatin1());
+    strcpy(tModule.serial_number,ui->serial_number->text().toLatin1());
+
+    module mod;
+    mod.update_module(&tModule, Address_Module);
+    QString modules;
+
+    modules.sprintf("%s", tModule.module_name);
+    this->ui->module_name->setText(modules);
+    modules.sprintf("%s", tModule.serial_number);
+    this->ui->serial_number->setText(modules);
+
+    this->ui->module_name->setEnabled(false);
+    this->ui->serial_number->setEnabled(false);
+
+    this->ui->pbEdit_Module->setHidden(false);
+    this->ui->pbSave_Module->setHidden(true);
+    this->ui->pbCancel_Module->setHidden(true);
+}
+
+void formModule::on_pbCancel_Module_clicked()
+{
+    struct t_module tModule;
+    module mod;
+    mod.read_module(&tModule, Address_Module);
+    QString modules;
+
+    modules.sprintf("%s", tModule.module_name);
+    this->ui->module_name->setText(modules);
+    modules.sprintf("%s", tModule.serial_number);
+    this->ui->serial_number->setText(modules);
+
+    this->ui->module_name->setEnabled(false);
+    this->ui->serial_number->setEnabled(false);
+
+    this->ui->pbEdit_Module->setHidden(false);
+    this->ui->pbSave_Module->setHidden(true);
+    this->ui->pbCancel_Module->setHidden(true);
+}
+
+void formModule::on_pushButton_clicked()
+{
+
 }
