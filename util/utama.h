@@ -38,7 +38,7 @@
 
 struct data_port{
     char nama_input[64];
-    char type_input[32];
+    int type_input;
     int status_input;
     float calib_m;
     float calib_x;

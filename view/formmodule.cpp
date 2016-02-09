@@ -39,13 +39,24 @@ void formModule::setInterface(QString address){
     for (int i = 0; i < rowInput; i++){
         type[i] = new QLabel(this);
         name_input[i] = new QLineEdit(this);
-        type_input[i] = new QLineEdit(this);
-        calib_m[i] = new QLineEdit(this);
-        calib_x[i] = new QLineEdit(this);
+
+        type_input[i] = new QComboBox(this);
+        type_input[i]->addItem("RPM");
+        type_input[i]->addItem("ON / OFF");
+        type_input[i]->addItem("Push Button");
+        type_input[i]->addItem("Flow - X");
+        type_input[i]->addItem("RPM - RH");
+        type_input[i]->addItem("Running Hours");
+        type_input[i]->addItem("ON / OFF - RH");
+        type_input[i]->addItem("Analog Monita");
+        type_input[i]->addItem("Analog Running Hours");
 
         state_input[i] = new QComboBox(this);
         state_input[i]->addItem("NOT ACTIVE");
         state_input[i]->addItem("ACTIVE");
+
+        calib_m[i] = new QLineEdit(this);
+        calib_x[i] = new QLineEdit(this);
     }
 
     QString str;
@@ -90,7 +101,7 @@ void formModule::setInterface(QString address){
         type_IO.prepend(QString::number(i+1));
 
         name_input[i]->setText(list[i*5]);
-        type_input[i]->setText(list[(i*5)+1]);
+        type_input[i]->setCurrentIndex(list[(i*5)+1].toInt());
         state_input[i]->setCurrentIndex(list[(i*5)+2].toInt());
         calib_m[i]->setText(list[(i*5)+3]);
         calib_x[i]->setText(list[(i*5)+4]);
@@ -197,12 +208,12 @@ void formModule::on_pbSet_clicked()
     for (int i = 0; i < ui->tabel_input->rowCount(); i++)
     {
         strcpy(tModule.d_port[i].nama_input, name_input[i]->text().toLatin1());
-        strcpy(tModule.d_port[i].type_input, type_input[i]->text().toLatin1());
+        tModule.d_port[i].type_input = type_input[i]->currentIndex();
         tModule.d_port[i].status_input = state_input[i]->currentIndex();
         tModule.d_port[i].calib_m = calib_m[i]->text().toFloat();
         tModule.d_port[i].calib_x = calib_x[i]->text().toFloat();
 
-        data[i].sprintf("%s;%s;%d;%.2f;%.2f"
+        data[i].sprintf("%s;%d;%d;%.2f;%.2f"
                      , tModule.d_port[i].nama_input
                      , tModule.d_port[i].type_input
                      , tModule.d_port[i].status_input

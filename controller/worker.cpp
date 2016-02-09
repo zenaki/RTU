@@ -14,7 +14,8 @@ QString worker::newModule(QStandardItemModel *tree, QTreeView *treeView, QString
     mod.read_module(&tModule, address);
 
     QString modules;
-    modules.sprintf("m_%s.ini", tModule.module_name);
+    modules.sprintf("%s", tModule.module_name);
+//    modules.sprintf("m_%s.ini", tModule.module_name);
     mTree.appendItem(tree, treeView, modules);
 
     return modules;

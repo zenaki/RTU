@@ -44,7 +44,7 @@ private:
 
     /** Input Tab **/
     QLineEdit *name_input[16];
-    QLineEdit *type_input[16];
+    QComboBox *type_input[16];
     QComboBox *state_input[16];
     QLineEdit *calib_m[16];
     QLineEdit *calib_x[16];
