@@ -6,14 +6,18 @@
 #include <QComboBox>
 #include <QStandardItem>
 #include <QTableWidgetItem>
-
 #include <QDialog>
+#include <QtSerialPort/QSerialPort>
 
-#include <model/module.h>
+#include "model/module.h"
+#include "view/settingsdialog.h"
+#include "ui_settingsdialog.h"
 
 namespace Ui {
 class formModule;
 }
+
+class SettingsDialog;
 
 class formModule : public QDialog
 {
@@ -33,18 +37,21 @@ private slots:
     void on_pbCancel_clicked();
 
     void on_com_1_currentIndexChanged(int index);
-
     void on_com_2_currentIndexChanged(int index);
 
     void on_tabWidget_tabBarClicked(int index);
 
     void on_pbEdit_Module_clicked();
-
     void on_pbSave_Module_clicked();
-
     void on_pbCancel_Module_clicked();
 
-    void on_pushButton_clicked();
+    void openSerialPort();
+    void closeSerialPort();
+    void about();
+    void writeData(const QByteArray &data);
+    void readData();
+
+    void handleError(QSerialPort::SerialPortError error);
 
 private:
     module mod;
@@ -65,6 +72,28 @@ private:
 
     /** Function **/
     void setInterface(QString address);
+
+    /** Serial Communication **/
+    struct Connection_Settings {
+        QString name;
+        qint32 baudRate;
+        QString stringBaudRate;
+        QSerialPort::DataBits dataBits;
+        QString stringDataBits;
+        QSerialPort::Parity parity;
+        QString stringParity;
+        QSerialPort::StopBits stopBits;
+        QString stringStopBits;
+        QSerialPort::FlowControl flowControl;
+        QString stringFlowControl;
+        bool localEchoEnabled;
+    };
+
+    void initActionsConnections();
+    QString StatusMessage;
+    SettingsDialog *Com_Setting;
+    QSerialPort *serial;
+    Connection_Settings p;
 };
 
 #endif // FORMMODULE_H

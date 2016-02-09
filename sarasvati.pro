@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui serialport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -29,7 +29,8 @@ SOURCES += \
     model/communication/gprs.cpp \
     model/setting.cpp \
     view/form_addmodule.cpp \
-    controller/worker.cpp
+    controller/worker.cpp \
+    view/settingsdialog.cpp
 
 HEADERS += \
     util/debug.h \
@@ -45,13 +46,15 @@ HEADERS += \
     model/communication/gprs.h \
     model/setting.h \
     view/form_addmodule.h \
-    controller/worker.h
+    controller/worker.h \
+    view/settingsdialog.h
 
 FORMS += \
     view/mainwindow.ui \
     view/formmodule.ui \
     view/loginform.ui \
-    view/form_addmodule.ui
+    view/form_addmodule.ui \
+    view/settingsdialog.ui
 
 RESOURCES += \
     image.qrc
