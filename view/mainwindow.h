@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QDialog>
+#include <QtSerialPort/QSerialPort>
 
 #include <util/utama.h>
 #include <model/interface_manipulator/mtreeview.h>
@@ -10,9 +12,14 @@
 #include <view/form_addmodule.h>
 #include <ui_form_addmodule.h>
 
+#include "view/settingsdialog.h"
+#include "ui_settingsdialog.h"
+
 namespace Ui {
 class MainWindow;
 }
+
+class SettingsDialog;
 
 class MainWindow : public QMainWindow
 {
@@ -24,6 +31,12 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();    
 
+    void openSerialPort();
+    void closeSerialPort();
+    void writeData(const QByteArray &data);
+    void readData();
+    void handleError(QSerialPort::SerialPortError error);
+
 private slots:
     void on_actionNew_triggered();
     void update_activeWindow();
@@ -31,6 +44,8 @@ private slots:
 
     void on_actionLoad_triggered();
     void on_treeView_doubleClicked(const QModelIndex &index);
+
+    void on_actionConnect_triggered();
 
 private:
     /** Other Class **/
@@ -48,6 +63,13 @@ private:
     int module_count;
 
     void init_signalSlots();
+
+    /** Serial Communication **/
+    void initActionsConnections();
+    QString StatusMessage;
+    SettingsDialog *settings;
+    SettingsDialog *Com_Setting;
+    QSerialPort *serial;
 };
 
 #endif // MAINWINDOW_H

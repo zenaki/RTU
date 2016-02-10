@@ -1,11 +1,6 @@
 #include "formmodule.h"
 #include "ui_formmodule.h"
 
-#include "settingsdialog.h"
-
-#include <QMessageBox>
-#include <QtSerialPort/QSerialPort>
-
 formModule::formModule(QWidget *parent, struct t_module *tmodule, QString address) :
     QDialog(parent),
     ui(new Ui::formModule)
@@ -14,22 +9,11 @@ formModule::formModule(QWidget *parent, struct t_module *tmodule, QString addres
 
     this->setInterface(address);
 
-    this->ui->bottom_message->setStyleSheet("QLabel { color : black; }");
-    this->ui->bottom_message->setText("Not Connected");
-
     this->ui->tabWidget->setCurrentIndex(0);
-
-    serial = new QSerialPort(this);
-//    Com_Setting = new SettingsDialog;
-
-    connect(serial, SIGNAL(error(QSerialPort::SerialPortError)), this,
-            SLOT(handleError(QSerialPort::SerialPortError)));
-    connect(serial, SIGNAL(readyRead()), this, SLOT(readData()));
 }
 
 formModule::~formModule()
 {
-    delete Com_Setting;
     delete ui;
 }
 
@@ -609,80 +593,7 @@ void formModule::on_pbCancel_Module_clicked()
     this->ui->pbCancel_Module->setHidden(true);
 }
 
-void formModule::openSerialPort()
+void formModule::on_pbSync_clicked()
 {
-//    formModule::Connection_Settings p = Connection_Settings;
-    if (p.name.isNull() ||
-        p.name.isNull())
-    {
-        Com_Setting = new SettingsDialog(this);
-        Com_Setting->setWindowTitle("Serial Communication Setting");
-        Com_Setting->setModal(true);
-
-        Com_Setting->exec();
-
-        if (Com_Setting->accept == 0) return;
-
-        serial->setPortName(p.name);
-        serial->setBaudRate(p.baudRate);
-        serial->setDataBits(p.dataBits);
-        serial->setParity(p.parity);
-        serial->setStopBits(p.stopBits);
-        serial->setFlowControl(p.flowControl);
-        if (serial->open(QIODevice::ReadWrite)) {
-            this->ui->bottom_message->setStyleSheet("QLabel { color : blue; }");
-            StatusMessage = QString("Connected to %s : %s, %s, %s, %s, %s").arg(
-                                    p.name, p.stringBaudRate, p.stringDataBits,
-                                    p.stringParity, p.stringStopBits, p.stringFlowControl);
-            this->ui->bottom_message->setText(StatusMessage);
-        } else {
-            QMessageBox::critical(this, tr("Error"), serial->errorString());
-            this->ui->bottom_message->setStyleSheet("QLabel { color : red; }");
-            this->ui->bottom_message->setText("Connecting Fail");
-        }
-    } else
-    {
-        serial->setPortName(p.name);
-        serial->setBaudRate(p.baudRate);
-        serial->setDataBits(p.dataBits);
-        serial->setParity(p.parity);
-        serial->setStopBits(p.stopBits);
-        serial->setFlowControl(p.flowControl);
-        if (serial->open(QIODevice::ReadWrite)) {
-            this->ui->bottom_message->setStyleSheet("QLabel { color : blue; }");
-            StatusMessage = QString("Connected to %s : %s, %s, %s, %s, %s").arg(
-                                    p.name, p.stringBaudRate, p.stringDataBits,
-                                    p.stringParity, p.stringStopBits, p.stringFlowControl);
-            this->ui->bottom_message->setText(StatusMessage);
-        } else {
-            QMessageBox::critical(this, tr("Error"), serial->errorString());
-            this->ui->bottom_message->setStyleSheet("QLabel { color : red; }");
-            this->ui->bottom_message->setText("Connecting Fail");
-        }
-    }
-}
-void formModule::closeSerialPort()
-{
-    if (serial->isOpen())
-        serial->close();
-    this->ui->bottom_message->setStyleSheet("QLabel { color : black; }");
-    this->ui->bottom_message->setText("Disconnect");
-}
-
-void formModule::writeData(const QByteArray &data)
-{
-    serial->write(data);
-}
-
-void formModule::readData()
-{
-    QByteArray data = serial->readAll();
-}
-
-void formModule::handleError(QSerialPort::SerialPortError error)
-{
-    if (error == QSerialPort::ResourceError) {
-        QMessageBox::critical(this, tr("Critical Error"), serial->errorString());
-        closeSerialPort();
-    }
+//    this->openSerialPort();
 }

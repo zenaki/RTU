@@ -76,7 +76,7 @@ public:
     ~SettingsDialog();
 
     Settings settings() const;
-
+    Settings currentSettings;
 private slots:
     void showPortInfo(int idx);
     void apply();
@@ -90,7 +90,7 @@ private:
 
 private:
     Ui::SettingsDialog *ui;
-    Settings currentSettings;
+//    Settings currentSettings;
     QIntValidator *intValidator;
 };
 
