@@ -19,6 +19,7 @@ namespace Ui {
 class MainWindow;
 }
 
+class worker;
 class SettingsDialog;
 
 class MainWindow : public QMainWindow
@@ -28,12 +29,16 @@ class MainWindow : public QMainWindow
 public:
     Ui::MainWindow *ui;
 
+//    QByteArray data;
+
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();    
 
     void openSerialPort();
     void closeSerialPort();
     void writeData(const QByteArray &data);
+
+public slots:
     void readData();
     void handleError(QSerialPort::SerialPortError error);
 
@@ -51,7 +56,7 @@ private:
     /** Other Class **/
     mTreeview mTree;
     form_addModule *faddModule;
-    worker work;
+    worker *work;
 
     /** main variable **/
     QStandardItemModel *modelTree;
@@ -70,6 +75,8 @@ private:
     SettingsDialog *settings;
     SettingsDialog *Com_Setting;
     QSerialPort *serial;
+
+    QString string_data;
 };
 
 #endif // MAINWINDOW_H

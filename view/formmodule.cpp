@@ -1,6 +1,9 @@
 #include "formmodule.h"
 #include "ui_formmodule.h"
 
+#include <QDebug>
+#include "mainwindow.h"
+
 formModule::formModule(QWidget *parent, struct t_module *tmodule, QString address) :
     QDialog(parent),
     ui(new Ui::formModule)
@@ -595,5 +598,23 @@ void formModule::on_pbCancel_Module_clicked()
 
 void formModule::on_pbSync_clicked()
 {
-//    this->openSerialPort();
+    Serial_Connection = new MainWindow;
+    Serial_Connection->openSerialPort();
+    QString string_data;
+
+    Serial_Connection->writeData("/r/n");
+    Serial_Connection->readData();
+//    string_data.sprintf("%s", Serial_Connection->readData());
+//    qDebug() << Serial_Connection->readData();
+    Serial_Connection->writeData("cek_env/r/n");
+    Serial_Connection->readData();
+//    qDebug() << Serial_Connection->readData();
+    Serial_Connection->writeData("set_env nama nama_dari_hmi/r/n");
+    Serial_Connection->readData();
+//    qDebug() << Serial_Connection->readData();
+    Serial_Connection->writeData("cek_env/r/n");
+    Serial_Connection->readData();
+//    qDebug() << Serial_Connection->readData();
+
+    Serial_Connection->closeSerialPort();
 }

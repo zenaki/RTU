@@ -4,6 +4,7 @@
 #include "settingsdialog.h"
 
 #include <QMessageBox>
+#include <QDebug>
 #include <QtSerialPort/QSerialPort>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -30,12 +31,12 @@ MainWindow::MainWindow(QWidget *parent) :
     QString moduleName;
     QString filePath;
     for(int i = 0; i < files.count(); i++){
-        moduleName = work.check_statusModule(QString(files.at(i)));
+        moduleName = work->check_statusModule(QString(files.at(i)));
 
         if(moduleName != "none"){
             filePath.sprintf("data/module/%s", moduleName.toUtf8().data());
 
-            module_name[module_count] = work.loadModule(modelTree, this->ui->treeView, filePath);
+            module_name[module_count] = work->loadModule(modelTree, this->ui->treeView, filePath);
             module_count++;
         }
     }
@@ -53,14 +54,14 @@ MainWindow::MainWindow(QWidget *parent) :
     serial = new QSerialPort(this);
 //    Com_Setting = new SettingsDialog;
 
-    connect(serial, SIGNAL(error(QSerialPort::SerialPortError)), this,
-            SLOT(handleError(QSerialPort::SerialPortError)));
+    connect(serial, SIGNAL(error(QSerialPort::SerialPortError)), this, SLOT(handleError(QSerialPort::SerialPortError)));
     connect(serial, SIGNAL(readyRead()), this, SLOT(readData()));
 }
 
 MainWindow::~MainWindow()
 {
-    delete settings;
+    if (serial->isOpen())
+        serial->close();
     delete ui;
 }
 
@@ -108,7 +109,7 @@ void MainWindow::on_actionNew_triggered()
     QString title;
     title.sprintf("%s", faddModule->ui->edit_module_name->text().toUtf8().data());
 
-    module_name[module_count] = work.newModule(modelTree, this->ui->treeView, title);
+    module_name[module_count] = work->newModule(modelTree, this->ui->treeView, title);
     module_count++;
 
 }
@@ -123,11 +124,11 @@ void MainWindow::on_actionLoad_triggered()
     if (fileName.isEmpty()) return;
 
     for(int i = 0; i < fileName.count(); i++){
-        file = work.checkModule(QString(fileName.at(i)).toUtf8().data());
+        file = work->checkModule(QString(fileName.at(i)).toUtf8().data());
 
-        if(work.state_of_module(module_count, file, module_name)){
+        if(work->state_of_module(module_count, file, module_name)){
             QApplication::processEvents();
-            module_name[module_count] = work.loadModule(modelTree, this->ui->treeView, QString(fileName.at(i)).toUtf8().data());
+            module_name[module_count] = work->loadModule(modelTree, this->ui->treeView, QString(fileName.at(i)).toUtf8().data());
             module_count++;
         }
         else{
@@ -142,8 +143,8 @@ void MainWindow::on_treeView_doubleClicked(const QModelIndex &index)
     QString name = index.data(Qt::DisplayRole).toString();
 
 
-    if(work.checkIfmodule(name))
-        work.showModule(this, this->ui->mdiArea, name);
+    if(work->checkIfmodule(name))
+        work->showModule(this, this->ui->mdiArea, name);
     else
         return;
 }
@@ -160,38 +161,6 @@ void MainWindow::openSerialPort()
 
         if (Com_Setting->accept == 0) return;
 
-//        SettingsDialog::Settings p = settings->settings();
-        serial->setPortName(Com_Setting->currentSettings.name);
-        serial->setBaudRate(Com_Setting->currentSettings.baudRate);
-        serial->setDataBits(Com_Setting->currentSettings.dataBits);
-        serial->setParity(Com_Setting->currentSettings.parity);
-        serial->setStopBits(Com_Setting->currentSettings.stopBits);
-        serial->setFlowControl(Com_Setting->currentSettings.flowControl);
-        if (serial->open(QIODevice::ReadWrite)) {
-            this->ui->bottom_message->setStyleSheet("QLabel { color : blue; }");
-            StatusMessage = QString("Connected to ") +
-                            Com_Setting->currentSettings.name +
-                            QString(", BR = ") +
-                            Com_Setting->currentSettings.stringBaudRate +
-                            QString(", DB = ") +
-                            Com_Setting->currentSettings.stringDataBits +
-                            QString(", PR = ") +
-                            Com_Setting->currentSettings.stringParity +
-                            QString(", SB = ") +
-                            Com_Setting->currentSettings.stringStopBits +
-                            QString(", FC = ") +
-                            Com_Setting->currentSettings.stringFlowControl;
-            Com_Setting->accept = 1;
-        } else {
-            QMessageBox::critical(this, tr("Error"), serial->errorString());
-            this->ui->bottom_message->setStyleSheet("QLabel { color : red; }");
-            this->ui->bottom_message->setText("Connecting Fail");
-            Com_Setting->accept = 0;
-        }
-        serial->close();
-    } else
-    {
-//        SettingsDialog::Settings p = settings->settings();
         serial->setPortName(Com_Setting->currentSettings.name);
         serial->setBaudRate(Com_Setting->currentSettings.baudRate);
         serial->setDataBits(Com_Setting->currentSettings.dataBits);
@@ -220,17 +189,58 @@ void MainWindow::openSerialPort()
             this->ui->bottom_message->setText("Connecting Fail");
             Com_Setting->accept = 0;
         }
-        serial->close();
+    } else
+    {
+        serial->setPortName(Com_Setting->currentSettings.name);
+        serial->setBaudRate(Com_Setting->currentSettings.baudRate);
+        serial->setDataBits(Com_Setting->currentSettings.dataBits);
+        serial->setParity(Com_Setting->currentSettings.parity);
+        serial->setStopBits(Com_Setting->currentSettings.stopBits);
+        serial->setFlowControl(Com_Setting->currentSettings.flowControl);
+        if (serial->open(QIODevice::ReadWrite)) {
+            this->ui->bottom_message->setStyleSheet("QLabel { color : blue; }");
+            StatusMessage = QString("Connected to ") +
+                            Com_Setting->currentSettings.name +
+                            QString(", BR = ") +
+                            Com_Setting->currentSettings.stringBaudRate +
+                            QString(", DB = ") +
+                            Com_Setting->currentSettings.stringDataBits +
+                            QString(", PR = ") +
+                            Com_Setting->currentSettings.stringParity +
+                            QString(", SB = ") +
+                            Com_Setting->currentSettings.stringStopBits +
+                            QString(", FC = ") +
+                            Com_Setting->currentSettings.stringFlowControl;
+            this->ui->bottom_message->setText(StatusMessage);
+            Com_Setting->accept = 1;
+        } else {
+            QMessageBox::critical(this, tr("Error"), serial->errorString());
+            this->ui->bottom_message->setStyleSheet("QLabel { color : red; }");
+            this->ui->bottom_message->setText("Connecting Fail");
+            Com_Setting->accept = 0;
+        }
     }
     if (Com_Setting->accept == 0)
+    {
         this->openSerialPort();
+    } else
+    {
+        this->writeData("\r\n");
+        this->writeData("cek_env\r\n");
+        this->writeData("set_env nama Berhasil_Ganti_Nama_Board\r\n");
+        this->writeData("cek_env\r\n");
+//        this->closeSerialPort();
+    }
 }
 void MainWindow::closeSerialPort()
 {
     if (serial->isOpen())
         serial->close();
-    this->ui->bottom_message->setStyleSheet("QLabel { color : black; }");
-    this->ui->bottom_message->setText("Disconnect");
+    if (Com_Setting->accept == 0)
+    {
+        this->ui->bottom_message->setStyleSheet("QLabel { color : black; }");
+        this->ui->bottom_message->setText("Disconnect");
+    }
 }
 
 void MainWindow::writeData(const QByteArray &data)
@@ -240,7 +250,14 @@ void MainWindow::writeData(const QByteArray &data)
 
 void MainWindow::readData()
 {
-    QByteArray data = serial->readAll();
+    string_data.append(serial->readAll());
+    if (string_data.indexOf("\r") > 0 || string_data.indexOf("\n") > 0)
+    {
+        QStringList val = string_data.remove("\r").remove("\n").split(";");
+//        qDebug() << string_data.remove("\r").remove("\n");
+        qDebug() << string_data;
+        string_data.clear();
+    }
 }
 
 void MainWindow::handleError(QSerialPort::SerialPortError error)

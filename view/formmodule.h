@@ -8,10 +8,13 @@
 #include <QTableWidgetItem>
 
 #include "model/module.h"
+#include "mainwindow.h"
 
 namespace Ui {
 class formModule;
 }
+
+class MainWindow;
 
 class formModule : public QDialog
 {
@@ -60,6 +63,8 @@ private:
 
     /** Function **/
     void setInterface(QString address);
+
+    MainWindow *Serial_Connection;
 
 };
 
