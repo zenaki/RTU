@@ -1,8 +1,6 @@
 #include "loginform.h"
 #include "ui_loginform.h"
 
-#include "util/utama.h"
-
 loginForm::loginForm(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::loginForm)
@@ -34,7 +32,7 @@ void loginForm::on_loginButton_clicked()
         MainWindow *mWindow;
         mWindow = new MainWindow(this);
 
-        t_serial_settings tSerialSetting;
+        struct t_serial_settings tSerialSetting;
         tSerialSetting.serial_set = 0;
         tSerialSetting.serial_connect = 0;
 

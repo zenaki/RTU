@@ -2,6 +2,7 @@
 #define LOGINFORM_H
 
 #include <QDialog>
+#include "util/utama.h"
 #include "view/mainwindow.h"
 
 namespace Ui {

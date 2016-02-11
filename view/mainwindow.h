@@ -75,8 +75,6 @@ private:
     void initActionsConnections();
     QString StatusMessage;
     SettingsDialog *SettingsDialogForm;
-
-    t_serial_settings Com_Setting;
 };
 
 #endif // MAINWINDOW_H

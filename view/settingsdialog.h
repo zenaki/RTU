@@ -25,6 +25,8 @@ class SettingsDialog : public QDialog
 public:
     explicit SettingsDialog(QWidget *parent = 0);
     ~SettingsDialog();
+
+    t_serial_settings currentSettings;
 private slots:
     void showPortInfo(int idx);
     void apply();
@@ -37,7 +39,6 @@ private:
     void fillPortsInfo();
     void updateSettings();
 
-    t_serial_settings currentSettings;
 private:
     Ui::SettingsDialog *ui;
 //    Settings currentSettings;
