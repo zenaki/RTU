@@ -28,6 +28,8 @@ class MainWindow : public QMainWindow
 
 public:
     Ui::MainWindow *ui;
+    QSerialPort *serial;
+//    SettingsDialog *Com_Setting;
 
 //    QByteArray data;
 
@@ -72,11 +74,9 @@ private:
     /** Serial Communication **/
     void initActionsConnections();
     QString StatusMessage;
-    SettingsDialog *settings;
-    SettingsDialog *Com_Setting;
-    QSerialPort *serial;
+    SettingsDialog *SettingsDialogForm;
 
-    QString string_data;
+    t_serial_settings Com_Setting;
 };
 
 #endif // MAINWINDOW_H

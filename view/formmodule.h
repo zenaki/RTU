@@ -42,7 +42,8 @@ private slots:
     void on_pbSave_Module_clicked();
     void on_pbCancel_Module_clicked();
 
-    void on_pbSync_clicked();
+    void on_pbSync_clicked(struct t_serial_settings *tSerialSetting = 0);
+    void readData(struct t_serial_settings *tSerialSetting = 0);
 
 private:
     module mod;
@@ -65,6 +66,8 @@ private:
     void setInterface(QString address);
 
     MainWindow *Serial_Connection;
+    QString string_data;
+    QStringList val;
 
 };
 

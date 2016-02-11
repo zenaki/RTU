@@ -13,6 +13,9 @@ formModule::formModule(QWidget *parent, struct t_module *tmodule, QString addres
     this->setInterface(address);
 
     this->ui->tabWidget->setCurrentIndex(0);
+
+    Serial_Connection = new MainWindow;
+    connect(Serial_Connection->serial, SIGNAL(readyRead()), this, SLOT(readData()));
 }
 
 formModule::~formModule()
@@ -596,25 +599,31 @@ void formModule::on_pbCancel_Module_clicked()
     this->ui->pbCancel_Module->setHidden(true);
 }
 
-void formModule::on_pbSync_clicked()
+void formModule::on_pbSync_clicked(struct t_serial_settings *tSerialSetting)
 {
-    Serial_Connection = new MainWindow;
-    Serial_Connection->openSerialPort();
-    QString string_data;
+    if (!tSerialSetting->serial_connect)
+    {
+        Serial_Connection->openSerialPort();
+    } else
+    {
+        Serial_Connection->writeData("\r\n");
+        Serial_Connection->writeData("cek_env\r\n");
+        Serial_Connection->writeData("set_env TEST_10\r\n");
+        Serial_Connection->writeData("cek_env\r\n");
+        Serial_Connection->closeSerialPort();
+    }
+}
 
-    Serial_Connection->writeData("/r/n");
-    Serial_Connection->readData();
-//    string_data.sprintf("%s", Serial_Connection->readData());
-//    qDebug() << Serial_Connection->readData();
-    Serial_Connection->writeData("cek_env/r/n");
-    Serial_Connection->readData();
-//    qDebug() << Serial_Connection->readData();
-    Serial_Connection->writeData("set_env nama nama_dari_hmi/r/n");
-    Serial_Connection->readData();
-//    qDebug() << Serial_Connection->readData();
-    Serial_Connection->writeData("cek_env/r/n");
-    Serial_Connection->readData();
-//    qDebug() << Serial_Connection->readData();
-
-    Serial_Connection->closeSerialPort();
+void formModule::readData(struct t_serial_settings *tSerialSetting)
+{
+    tSerialSetting->str_data.append(Serial_Connection->serial->readAll());
+    if (tSerialSetting->str_data.indexOf("\r") > 0 ||
+        tSerialSetting->str_data.indexOf("\n") > 0)
+    {
+        tSerialSetting->val_data =
+                tSerialSetting->str_data.remove("\r").remove("\n").split(";");
+//        qDebug() << tSerialSetting->str_data.remove("\r").remove("\n");
+        qDebug() << tSerialSetting->str_data;
+        tSerialSetting->str_data.clear();
+    }
 }

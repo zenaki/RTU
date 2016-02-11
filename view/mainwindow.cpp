@@ -47,10 +47,6 @@ MainWindow::MainWindow(QWidget *parent) :
     this->ui->bottom_message->setStyleSheet("QLabel { color : black; }");
     this->ui->bottom_message->setText("Not Connected");
 
-    Com_Setting = new SettingsDialog(this);
-    Com_Setting->setWindowTitle("Serial Communication Setting");
-    Com_Setting->setModal(true);
-    Com_Setting->accept = 0;
     serial = new QSerialPort(this);
 //    Com_Setting = new SettingsDialog;
 
@@ -151,92 +147,95 @@ void MainWindow::on_treeView_doubleClicked(const QModelIndex &index)
 
 void MainWindow::openSerialPort()
 {
-//    MainWindow::Connection_Settings p = Connection_Settings;
-//    Com_Setting = new SettingsDialog(this);
-//    Com_Setting->setWindowTitle("Serial Communication Setting");
-//    Com_Setting->setModal(true);
-    if (Com_Setting->accept == 0)
+    if (Com_Setting.serial_set != 1)
     {
-        Com_Setting->exec();
+        SettingsDialogForm = new SettingsDialog(this);
+        SettingsDialogForm->setWindowTitle("Serial Communication Setting");
+        SettingsDialogForm->setModal(true);
+        SettingsDialogForm->exec();
 
-        if (Com_Setting->accept == 0) return;
+        if (Com_Setting.serial_set == 0) return;
 
-        serial->setPortName(Com_Setting->currentSettings.name);
-        serial->setBaudRate(Com_Setting->currentSettings.baudRate);
-        serial->setDataBits(Com_Setting->currentSettings.dataBits);
-        serial->setParity(Com_Setting->currentSettings.parity);
-        serial->setStopBits(Com_Setting->currentSettings.stopBits);
-        serial->setFlowControl(Com_Setting->currentSettings.flowControl);
+        serial->setPortName(Com_Setting.name);
+        serial->setBaudRate(Com_Setting.baudRate);
+        serial->setDataBits(Com_Setting.dataBits);
+        serial->setParity(Com_Setting.parity);
+        serial->setStopBits(Com_Setting.stopBits);
+        serial->setFlowControl(Com_Setting.flowControl);
         if (serial->open(QIODevice::ReadWrite)) {
             this->ui->bottom_message->setStyleSheet("QLabel { color : blue; }");
             StatusMessage = QString("Connected to ") +
-                            Com_Setting->currentSettings.name +
+                            Com_Setting.name +
                             QString(", BR = ") +
-                            Com_Setting->currentSettings.stringBaudRate +
+                            Com_Setting.stringBaudRate +
                             QString(", DB = ") +
-                            Com_Setting->currentSettings.stringDataBits +
+                            Com_Setting.stringDataBits +
                             QString(", PR = ") +
-                            Com_Setting->currentSettings.stringParity +
+                            Com_Setting.stringParity +
                             QString(", SB = ") +
-                            Com_Setting->currentSettings.stringStopBits +
+                            Com_Setting.stringStopBits +
                             QString(", FC = ") +
-                            Com_Setting->currentSettings.stringFlowControl;
+                            Com_Setting.stringFlowControl;
             this->ui->bottom_message->setText(StatusMessage);
-            Com_Setting->accept = 1;
+            Com_Setting.serial_connect = 1;
         } else {
             QMessageBox::critical(this, tr("Error"), serial->errorString());
             this->ui->bottom_message->setStyleSheet("QLabel { color : red; }");
             this->ui->bottom_message->setText("Connecting Fail");
-            Com_Setting->accept = 0;
+            if (serial->isOpen())
+                serial->close();
+            Com_Setting.serial_connect = 0;
         }
     } else
     {
-        serial->setPortName(Com_Setting->currentSettings.name);
-        serial->setBaudRate(Com_Setting->currentSettings.baudRate);
-        serial->setDataBits(Com_Setting->currentSettings.dataBits);
-        serial->setParity(Com_Setting->currentSettings.parity);
-        serial->setStopBits(Com_Setting->currentSettings.stopBits);
-        serial->setFlowControl(Com_Setting->currentSettings.flowControl);
+        serial->setPortName(Com_Setting.name);
+        serial->setBaudRate(Com_Setting.baudRate);
+        serial->setDataBits(Com_Setting.dataBits);
+        serial->setParity(Com_Setting.parity);
+        serial->setStopBits(Com_Setting.stopBits);
+        serial->setFlowControl(Com_Setting.flowControl);
         if (serial->open(QIODevice::ReadWrite)) {
             this->ui->bottom_message->setStyleSheet("QLabel { color : blue; }");
             StatusMessage = QString("Connected to ") +
-                            Com_Setting->currentSettings.name +
+                            Com_Setting.name +
                             QString(", BR = ") +
-                            Com_Setting->currentSettings.stringBaudRate +
+                            Com_Setting.stringBaudRate +
                             QString(", DB = ") +
-                            Com_Setting->currentSettings.stringDataBits +
+                            Com_Setting.stringDataBits +
                             QString(", PR = ") +
-                            Com_Setting->currentSettings.stringParity +
+                            Com_Setting.stringParity +
                             QString(", SB = ") +
-                            Com_Setting->currentSettings.stringStopBits +
+                            Com_Setting.stringStopBits +
                             QString(", FC = ") +
-                            Com_Setting->currentSettings.stringFlowControl;
+                            Com_Setting.stringFlowControl;
             this->ui->bottom_message->setText(StatusMessage);
-            Com_Setting->accept = 1;
+            Com_Setting.serial_connect = 1;
         } else {
             QMessageBox::critical(this, tr("Error"), serial->errorString());
             this->ui->bottom_message->setStyleSheet("QLabel { color : red; }");
             this->ui->bottom_message->setText("Connecting Fail");
-            Com_Setting->accept = 0;
+            if (serial->isOpen())
+                serial->close();
+            Com_Setting.serial_connect = 0;
         }
     }
-    if (Com_Setting->accept == 0)
+    if (Com_Setting.serial_connect == 0)
     {
         this->openSerialPort();
     } else
     {
         this->writeData("\r\n");
         this->writeData("cek_env\r\n");
-        this->writeData("set_env nama Berhasil_Ganti_Nama_Board\r\n");
+        this->writeData("set_env nama ganti_nama\r\n");
         this->writeData("cek_env\r\n");
-//        this->closeSerialPort();
+        this->closeSerialPort();
     }
 }
 void MainWindow::closeSerialPort()
 {
     if (serial->isOpen())
         serial->close();
-    if (Com_Setting->accept == 0)
+    if (Com_Setting.serial_connect == 0)
     {
         this->ui->bottom_message->setStyleSheet("QLabel { color : black; }");
         this->ui->bottom_message->setText("Disconnect");
@@ -250,13 +249,15 @@ void MainWindow::writeData(const QByteArray &data)
 
 void MainWindow::readData()
 {
-    string_data.append(serial->readAll());
-    if (string_data.indexOf("\r") > 0 || string_data.indexOf("\n") > 0)
+    Com_Setting.str_data.append(serial->readAll());
+    if (Com_Setting.str_data.indexOf("\r") > 0 ||
+        Com_Setting.str_data.indexOf("\n") > 0)
     {
-        QStringList val = string_data.remove("\r").remove("\n").split(";");
-//        qDebug() << string_data.remove("\r").remove("\n");
-        qDebug() << string_data;
-        string_data.clear();
+        Com_Setting.val_data =
+                Com_Setting.str_data.remove("\r").remove("\n").split(";");
+//        qDebug() << Com_Setting.str_data.remove("\r").remove("\n");
+        qDebug() << Com_Setting.str_data;
+        Com_Setting.str_data.clear();
     }
 }
 
