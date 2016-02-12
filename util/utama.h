@@ -119,11 +119,6 @@ struct t_serial_settings {
     QString stringStopBits;
     QSerialPort::FlowControl flowControl;
     QString stringFlowControl;
-
-    int serial_set;
-    int serial_connect;
-    QString str_data;
-    QStringList val_data;
 };
 
 

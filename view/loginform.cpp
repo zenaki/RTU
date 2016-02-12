@@ -32,9 +32,9 @@ void loginForm::on_loginButton_clicked()
         MainWindow *mWindow;
         mWindow = new MainWindow(this);
 
-        struct t_serial_settings tSerialSetting;
-        tSerialSetting.serial_set = 0;
-        tSerialSetting.serial_connect = 0;
+//        struct t_serial_settings tSerialSetting;
+//        tSerialSetting.serial_set = 0;
+//        tSerialSetting.serial_connect = 0;
 
         mWindow->show();
 

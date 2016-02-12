@@ -8,7 +8,7 @@
 #include <QTableWidgetItem>
 
 #include "model/module.h"
-#include "mainwindow.h"
+#include "model/communication/serial.h"
 
 namespace Ui {
 class formModule;

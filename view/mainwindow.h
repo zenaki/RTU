@@ -3,24 +3,21 @@
 
 #include <QMainWindow>
 #include <QDialog>
-#include <QtSerialPort/QSerialPort>
 
 #include <util/utama.h>
 #include <model/interface_manipulator/mtreeview.h>
 #include <controller/worker.h>
+#include <model/communication/serial.h>
 
 #include <view/form_addmodule.h>
 #include <ui_form_addmodule.h>
-
-#include "view/settingsdialog.h"
-#include "ui_settingsdialog.h"
 
 namespace Ui {
 class MainWindow;
 }
 
 class worker;
-class SettingsDialog;
+class serial;
 
 class MainWindow : public QMainWindow
 {
@@ -28,21 +25,9 @@ class MainWindow : public QMainWindow
 
 public:
     Ui::MainWindow *ui;
-    QSerialPort *serial;
-//    SettingsDialog *Com_Setting;
-
-//    QByteArray data;
 
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();    
-
-    void openSerialPort();
-    void closeSerialPort();
-    void writeData(const QByteArray &data);
-
-public slots:
-    void readData();
-    void handleError(QSerialPort::SerialPortError error);
 
 private slots:
     void on_actionNew_triggered();
@@ -70,11 +55,6 @@ private:
     int module_count;
 
     void init_signalSlots();
-
-    /** Serial Communication **/
-    void initActionsConnections();
-    QString StatusMessage;
-    SettingsDialog *SettingsDialogForm;
 };
 
 #endif // MAINWINDOW_H
