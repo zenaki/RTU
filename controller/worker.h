@@ -1,6 +1,8 @@
 #ifndef WORKER_H
 #define WORKER_H
 
+#include <QSerialPort>
+
 #include "util/utama.h"
 
 #include <model/interface_manipulator/mtreeview.h>
@@ -20,7 +22,7 @@ public:
     QString checkModule(QString address);
     QString check_statusModule(QString address);
 
-    void showModule(QWidget *parent, QMdiArea *mdiArea, QString module);
+    void showModule(QWidget *parent, QMdiArea *mdiArea, QString module, QSerialPort *SerialPort);
 
     bool checkIfmodule(QString name);
     bool state_of_module(int num, QString newModule, QString *existModule);

@@ -2,9 +2,8 @@
 #include "ui_formmodule.h"
 
 #include <QDebug>
-#include "mainwindow.h"
 
-formModule::formModule(QWidget *parent, struct t_module *tmodule, QString address) :
+formModule::formModule(QWidget *parent, struct t_module *tModule, QString address, QSerialPort *SerialPort) :
     QDialog(parent),
     ui(new Ui::formModule)
 {
@@ -13,6 +12,12 @@ formModule::formModule(QWidget *parent, struct t_module *tmodule, QString addres
     this->setInterface(address);
 
     this->ui->tabWidget->setCurrentIndex(0);
+
+
+    Serial_Com = new QSerialPort(this);
+    Serial_Com = SerialPort;
+
+    Serial = new serial();
 
 //    Serial_Connection = new MainWindow;
 //    connect(Serial_Connection->serial, SIGNAL(readyRead()), this, SLOT(readData()));
@@ -599,8 +604,11 @@ void formModule::on_pbCancel_Module_clicked()
     this->ui->pbCancel_Module->setHidden(true);
 }
 
-void formModule::on_pbSync_clicked(struct t_serial_settings *tSerialSetting)
+void formModule::on_pbSync_clicked()
 {
+    Serial->write_data(Serial_Com, "Test\r\n");
+
+
 //    if (!tSerialSetting->serial_connect)
 //    {
 //        Serial_Connection->openSerialPort();
@@ -614,7 +622,7 @@ void formModule::on_pbSync_clicked(struct t_serial_settings *tSerialSetting)
 //    }
 }
 
-void formModule::readData(struct t_serial_settings *tSerialSetting)
+void formModule::readData()
 {
 //    tSerialSetting->str_data.append(Serial_Connection->serial->readAll());
 //    if (tSerialSetting->str_data.indexOf("\r") > 0 ||

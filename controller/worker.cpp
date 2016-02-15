@@ -63,7 +63,7 @@ QString worker::check_statusModule(QString address){
     return "none";
 }
 
-void worker::showModule(QWidget *parent, QMdiArea *mdiArea, QString module){
+void worker::showModule(QWidget *parent, QMdiArea *mdiArea, QString module, QSerialPort *SerialPort){
     struct t_module tModule;
     QString address;
 
@@ -73,7 +73,7 @@ void worker::showModule(QWidget *parent, QMdiArea *mdiArea, QString module){
 
     formModule *fModule;
 
-    fModule = new formModule(parent, &tModule, address);
+    fModule = new formModule(parent, &tModule, address, SerialPort);
     fModule->setModal(true);
     fModule->setWindowTitle(tModule.module_name);
 //    fModule->setMaximumWidth(700);

@@ -52,6 +52,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 //    connect(serial, SIGNAL(error(QSerialPort::SerialPortError)), this, SLOT(handleError(QSerialPort::SerialPortError)));
 //    connect(serial, SIGNAL(readyRead()), this, SLOT(readData()));
+
+    SerialPort = new  QSerialPort(this);
 }
 
 MainWindow::~MainWindow()
@@ -140,12 +142,57 @@ void MainWindow::on_treeView_doubleClicked(const QModelIndex &index)
 
 
     if(work->checkIfmodule(name))
-        work->showModule(this, this->ui->mdiArea, name);
+        work->showModule(this, this->ui->mdiArea, name, SerialPort);
     else
         return;
 }
 
 void MainWindow::on_actionConnect_triggered()
 {
-//    this->openSerialPort();
+    struct t_serial_settings tSerial;
+    serial Serial;
+    setting Setting;
+
+    if (!Setting.checkSetting())
+    {
+        int exe;
+        settings_dialog = new SettingsDialog(this);
+        settings_dialog->setWindowTitle("Serial Communication Setting");
+        settings_dialog->setModal(true);
+        exe = settings_dialog->exec();
+        if(exe == 0) return;
+
+        if (!SerialPort->isOpen())
+            Serial.open_serial(SerialPort, &tSerial);
+    } else
+    {
+        Setting.read_setting(&tSerial);
+        if (!SerialPort->isOpen())
+            Serial.open_serial(SerialPort, &tSerial);
+    }
+
+    if (SerialPort->open(QIODevice::ReadWrite)) {
+        Setting.read_setting(&tSerial);
+        this->ui->bottom_message->setStyleSheet("QLabel { color : blue; }");
+        StatusMessage = QString("Connected to ") + tSerial.name +
+                        QString(", BR = ") + tSerial.stringBaudRate +
+                        QString(", DB = ") + tSerial.stringDataBits +
+                        QString(", PR = ") + tSerial.stringParity +
+                        QString(", SB = ") + tSerial.stringStopBits +
+                        QString(", FC = ") + tSerial.stringFlowControl;
+        this->ui->bottom_message->setText(StatusMessage);
+    } else {
+//        QMessageBox::critical(this, tr("Error"), SerialPort->errorString());
+        this->ui->bottom_message->setStyleSheet("QLabel { color : red; }");
+        this->ui->bottom_message->setText("Connecting Fail");
+        if (SerialPort->isOpen())
+            SerialPort->close();
+    }
+}
+
+void MainWindow::on_actionDisconnect_triggered()
+{
+    serial Serial;
+    if (SerialPort->isOpen())
+        SerialPort->close();
 }

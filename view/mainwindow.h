@@ -12,6 +12,9 @@
 #include <view/form_addmodule.h>
 #include <ui_form_addmodule.h>
 
+#include <view/settingsdialog.h>
+#include <view/mainwindow.h>
+
 namespace Ui {
 class MainWindow;
 }
@@ -27,7 +30,7 @@ public:
     Ui::MainWindow *ui;
 
     explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();    
+    ~MainWindow();
 
 private slots:
     void on_actionNew_triggered();
@@ -39,10 +42,17 @@ private slots:
 
     void on_actionConnect_triggered();
 
+    void on_actionDisconnect_triggered();
+
 private:
     /** Other Class **/
+
+    QSerialPort *SerialPort;
+    QString StatusMessage;
+
     mTreeview mTree;
     form_addModule *faddModule;
+    SettingsDialog *settings_dialog;
     worker *work;
 
     /** main variable **/

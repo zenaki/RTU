@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "util/utama.h"
+#include "model/communication/serial.h"
 #include "view/mainwindow.h"
 
 namespace Ui {

@@ -5,6 +5,7 @@
 #include "view/settingsdialog.h"
 
 #include <QMessageBox>
+#include <QObject>
 #include <QDebug>
 #include <QtSerialPort/QSerialPort>
 
@@ -15,21 +16,19 @@ class serial
 public:
     serial();
 
-    QSerialPort *SerialPort;
-    bool serial_set;
-    bool serial_connect;
+//    int serial_set;
+//    int serial_connect;
     QString str_data;
     QStringList val_data;
 
-    SettingsDialog *settings_dialog;
-
-    void open_serial(QWidget *parent, struct t_serial_settings *tSerial, bool serial_set, bool serial_connect);
-    void close_serial(bool serial_connect);
-    void write_data(const QByteArray &data);
+    void open_serial(QSerialPort *SerialPort, struct t_serial_settings *tSerial);
+    void close_serial();
+    void write_data(QSerialPort *port, QString data);
 
 public slots:
     void read_data(QString str_data, QStringList val_data);
     void handleError(QSerialPort::SerialPortError error);
+
 };
 
 #endif // SERIAL_H

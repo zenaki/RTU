@@ -8,6 +8,7 @@
 #include <QTableWidgetItem>
 
 #include "model/module.h"
+#include "model/setting.h"
 #include "model/communication/serial.h"
 
 namespace Ui {
@@ -15,6 +16,8 @@ class formModule;
 }
 
 class MainWindow;
+class serial;
+class setting;
 
 class formModule : public QDialog
 {
@@ -24,7 +27,7 @@ public:
     Ui::formModule *ui;
     QString Address_Module;
 
-    explicit formModule(QWidget *parent = 0, struct t_module *tModule = 0, QString address = 0);
+    explicit formModule(QWidget *parent = 0, struct t_module *tModule = 0, QString address = 0, QSerialPort *SerialPort = 0);
     ~formModule();
 
 private slots:
@@ -42,11 +45,12 @@ private slots:
     void on_pbSave_Module_clicked();
     void on_pbCancel_Module_clicked();
 
-    void on_pbSync_clicked(struct t_serial_settings *tSerialSetting = 0);
-    void readData(struct t_serial_settings *tSerialSetting = 0);
+    void on_pbSync_clicked();
+    void readData();
 
 private:
     module mod;
+    QSerialPort *Serial_Com;
     QLabel *type[16];
 
     /** Input Tab **/
@@ -65,7 +69,8 @@ private:
     /** Function **/
     void setInterface(QString address);
 
-    MainWindow *Serial_Connection;
+    serial *Serial;
+    setting *Setting;
     QString string_data;
     QStringList val;
 

@@ -107,8 +107,8 @@
    <addaction name="actionLoad"/>
    <addaction name="actionSave"/>
    <addaction name="actionConnect"/>
-   <addaction name="actionRead_Config"/>
-   <addaction name="actionWrite_Config"/>
+   <addaction name="actionDisconnect"/>
+   <addaction name="actionConfig"/>
    <addaction name="actionMenu"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
@@ -127,14 +127,20 @@
     <string>Connect</string>
    </property>
   </action>
-  <action name="actionRead_Config">
+  <action name="actionDisconnect">
    <property name="text">
-    <string>Read Config</string>
+    <string>Disconnect</string>
+   </property>
+   <property name="toolTip">
+    <string>Disconnect</string>
    </property>
   </action>
-  <action name="actionWrite_Config">
+  <action name="actionConfig">
    <property name="text">
-    <string>Write Config</string>
+    <string>Config</string>
+   </property>
+   <property name="toolTip">
+    <string>Config</string>
    </property>
   </action>
   <action name="actionSave">
