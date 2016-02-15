@@ -18,11 +18,11 @@ public:
 
 //    int serial_set;
 //    int serial_connect;
-    QString str_data;
-    QStringList val_data;
+//    QString str_data;
+//    QStringList val_data;
 
     void open_serial(QSerialPort *SerialPort, struct t_serial_settings *tSerial);
-    void close_serial();
+    void close_serial(QSerialPort *SerialPort);
     void write_data(QSerialPort *port, QString data);
 
 public slots:

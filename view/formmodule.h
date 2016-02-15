@@ -27,7 +27,7 @@ public:
     Ui::formModule *ui;
     QString Address_Module;
 
-    explicit formModule(QWidget *parent = 0, struct t_module *tModule = 0, QString address = 0, QSerialPort *SerialPort = 0);
+    explicit formModule(QWidget *parent = 0, QString address = 0, QSerialPort *SerialPort = 0);
     ~formModule();
 
 private slots:
@@ -71,9 +71,8 @@ private:
 
     serial *Serial;
     setting *Setting;
-    QString string_data;
-    QStringList val;
-
+    QString str_data;
+    QStringList val_data;
 };
 
 #endif // FORMMODULE_H

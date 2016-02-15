@@ -3,7 +3,7 @@
 
 #include <QDebug>
 
-formModule::formModule(QWidget *parent, struct t_module *tModule, QString address, QSerialPort *SerialPort) :
+formModule::formModule(QWidget *parent, QString address, QSerialPort *SerialPort) :
     QDialog(parent),
     ui(new Ui::formModule)
 {
@@ -20,7 +20,7 @@ formModule::formModule(QWidget *parent, struct t_module *tModule, QString addres
     Serial = new serial();
 
 //    Serial_Connection = new MainWindow;
-//    connect(Serial_Connection->serial, SIGNAL(readyRead()), this, SLOT(readData()));
+    connect(Serial_Com, SIGNAL(readyRead()), this, SLOT(readData()));
 }
 
 formModule::~formModule()
@@ -624,14 +624,13 @@ void formModule::on_pbSync_clicked()
 
 void formModule::readData()
 {
-//    tSerialSetting->str_data.append(Serial_Connection->serial->readAll());
-//    if (tSerialSetting->str_data.indexOf("\r") > 0 ||
-//        tSerialSetting->str_data.indexOf("\n") > 0)
-//    {
-//        tSerialSetting->val_data =
-//                tSerialSetting->str_data.remove("\r").remove("\n").split(";");
-////        qDebug() << tSerialSetting->str_data.remove("\r").remove("\n");
-//        qDebug() << tSerialSetting->str_data;
-//        tSerialSetting->str_data.clear();
-//    }
+    str_data.append(Serial_Com->readAll());
+    if (str_data.indexOf("\r") > 0 ||
+        str_data.indexOf("\n") > 0)
+    {
+        val_data = str_data.remove("\r").remove("\n").split(";");
+//        qDebug() << tSerialSetting->str_data.remove("\r").remove("\n");
+        qDebug() << str_data;
+        str_data.clear();
+    }
 }

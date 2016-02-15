@@ -2,8 +2,6 @@
 
 serial::serial()
 {
-//    serialFunct = new serial(this);
-//    connect(SerialPort, SIGNAL(error(QSerialPort::SerialPortError)), this, SLOT(handleError(QSerialPort::SerialPortError)));
 
 }
 
@@ -17,16 +15,10 @@ void serial::open_serial(QSerialPort *SerialPort, struct t_serial_settings *tSer
     SerialPort->setFlowControl(tSerial->flowControl);
 }
 
-void serial::close_serial()
+void serial::close_serial(QSerialPort *SerialPort)
 {
-//    if (SerialPort->isOpen())
-//        SerialPort->close();
-//    if (serial_connect)
-//    {
-//        serial_connect = 0;
-//        this->ui->bottom_message->setStyleSheet("QLabel { color : black; }");
-//        this->ui->bottom_message->setText("Disconnect");
-//    }
+    if (SerialPort->isOpen())
+        SerialPort->close();
 }
 
 void serial::write_data(QSerialPort *port, QString data)
@@ -35,8 +27,8 @@ void serial::write_data(QSerialPort *port, QString data)
     //SerialPort->write(data);
 }
 
-void serial::read_data(QString str_data, QStringList val_data)
-{
+//void serial::read_data(QString str_data, QStringList val_data)
+//{
 //    str_data.append(SerialPort->readAll());
 //    if (str_data.indexOf("(x)") > 0)
 //    {
@@ -46,7 +38,7 @@ void serial::read_data(QString str_data, QStringList val_data)
 //        str_data.clear();
 //    }
 //    val_data.clear();
-}
+//}
 
 //void serial::handleError(QSerialPort::SerialPortError error)
 //{

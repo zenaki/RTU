@@ -73,7 +73,7 @@ void worker::showModule(QWidget *parent, QMdiArea *mdiArea, QString module, QSer
 
     formModule *fModule;
 
-    fModule = new formModule(parent, &tModule, address, SerialPort);
+    fModule = new formModule(parent, address, SerialPort);
     fModule->setModal(true);
     fModule->setWindowTitle(tModule.module_name);
 //    fModule->setMaximumWidth(700);
