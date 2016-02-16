@@ -8,18 +8,23 @@ formModule::formModule(QWidget *parent, QString address, QSerialPort *SerialPort
     ui(new Ui::formModule)
 {
     ui->setupUi(this);
-
-    this->setInterface(address);
-
     this->ui->tabWidget->setCurrentIndex(0);
 
+    Address_Module = address;
+    struct t_module tModule;
+    module mod;
+    mod.read_module(&tModule, Address_Module);
+    NoSeri.sprintf("%s", tModule.serial_number);
+
+    this->setInterface(address);
 
     Serial_Com = new QSerialPort(this);
     Serial_Com = SerialPort;
 
+    Main = new MainWindow();
     Serial = new serial();
+    Setting = new setting();
 
-//    Serial_Connection = new MainWindow;
     connect(Serial_Com, SIGNAL(readyRead()), this, SLOT(readData()));
 }
 
@@ -28,7 +33,7 @@ formModule::~formModule()
     delete ui;
 }
 
-void formModule::setInterface(QString address){    
+void formModule::setInterface(QString address){
     struct t_module tModule;
     module mod;
     Address_Module = address;
@@ -111,11 +116,11 @@ void formModule::setInterface(QString address){
         }
         type_IO.prepend(QString::number(i+1));
 
-        name_input[i]->setText(list[i*5]);
-        type_input[i]->setCurrentIndex(list[(i*5)+1].toInt());
-        state_input[i]->setCurrentIndex(list[(i*5)+2].toInt());
-        calib_m[i]->setText(list[(i*5)+3]);
-        calib_x[i]->setText(list[(i*5)+4]);
+        name_input[i]->setText(list[(i*7)+2]);
+        type_input[i]->setCurrentIndex(list[(i*7)+3].toInt());
+        state_input[i]->setCurrentIndex(list[(i*7)+4].toInt());
+        calib_m[i]->setText(list[(i*7)+5]);
+        calib_x[i]->setText(list[(i*7)+6]);
 
         this->ui->tabel_input->setItem(i,0, new QTableWidgetItem(type_IO));
         this->ui->tabel_input->setCellWidget(i,1, name_input[i]);
@@ -606,31 +611,67 @@ void formModule::on_pbCancel_Module_clicked()
 
 void formModule::on_pbSync_clicked()
 {
-    Serial->write_data(Serial_Com, "Test\r\n");
-
-
-//    if (!tSerialSetting->serial_connect)
-//    {
-//        Serial_Connection->openSerialPort();
-//    } else
-//    {
-//        Serial_Connection->writeData("\r\n");
-//        Serial_Connection->writeData("cek_env\r\n");
-//        Serial_Connection->writeData("set_env TEST_10\r\n");
-//        Serial_Connection->writeData("cek_env\r\n");
-//        Serial_Connection->closeSerialPort();
-//    }
+//    Serial->write_data(Serial_Com, "Test\r\n");
+    if (!Serial_Com->isOpen())
+    {
+        Main->on_actionConnect_triggered();
+    } else
+    {
+        Serial->write_data(Serial_Com, "\r\n");
+        Serial->write_data(Serial_Com, "cek_env\r\n");
+        Serial->write_data(Serial_Com, "set_env TEST_SELASA_16_PEBRUARI_2016\r\n");
+        Serial->write_data(Serial_Com, "cek_env\r\n");
+    }
 }
 
 void formModule::readData()
 {
     str_data.append(Serial_Com->readAll());
-    if (str_data.indexOf("\r") > 0 ||
-        str_data.indexOf("\n") > 0)
+    if (str_data.indexOf(NoSeri) > 0)
     {
-        val_data = str_data.remove("\r").remove("\n").split(";");
-//        qDebug() << tSerialSetting->str_data.remove("\r").remove("\n");
+        val_data = str_data.remove("\r").remove("\n").remove("(" + NoSeri + ")").split("*");
+        this->Syncronization();
         qDebug() << str_data;
         str_data.clear();
     }
+}
+
+void formModule::Syncronization()
+{
+    struct t_module tModule;
+    QString data[16];
+    for (int i = 0; i < ui->tabel_input->rowCount(); i++)
+    {
+        data[i] = val_data[i];
+    }
+    strcpy(tModule.input_a1,data[0].toLatin1());
+    strcpy(tModule.input_a2,data[1].toLatin1());
+    strcpy(tModule.input_a3,data[2].toLatin1());
+    strcpy(tModule.input_a4,data[3].toLatin1());
+    strcpy(tModule.input_a5,data[4].toLatin1());
+    strcpy(tModule.input_a6,data[5].toLatin1());
+
+    strcpy(tModule.input_d1,data[6].toLatin1());
+    strcpy(tModule.input_d2,data[7].toLatin1());
+    strcpy(tModule.input_d3,data[8].toLatin1());
+    strcpy(tModule.input_d4,data[9].toLatin1());
+    strcpy(tModule.input_d5,data[10].toLatin1());
+    strcpy(tModule.input_d6,data[11].toLatin1());
+    strcpy(tModule.input_d7,data[12].toLatin1());
+    strcpy(tModule.input_d8,data[13].toLatin1());
+
+    for (int i = 0; i < ui->tabel_output->rowCount(); i++)
+    {
+        data[i] = val_data[i+15];
+    }
+    strcpy(tModule.output_r1,data[0].toLatin1());
+    strcpy(tModule.output_r2,data[1].toLatin1());
+    strcpy(tModule.output_r3,data[2].toLatin1());
+    strcpy(tModule.output_r4,data[3].toLatin1());
+
+    module mod;
+    mod.update_setting(&tModule, Address_Module);
+    this->setInterface(Address_Module);
+
+    QMessageBox::information(this, "Success!!", "Syncronized ..", 0, 0);
 }

@@ -7,6 +7,7 @@
 #include <QStandardItem>
 #include <QTableWidgetItem>
 
+#include "view/mainwindow.h"
 #include "model/module.h"
 #include "model/setting.h"
 #include "model/communication/serial.h"
@@ -25,7 +26,6 @@ class formModule : public QDialog
 
 public:
     Ui::formModule *ui;
-    QString Address_Module;
 
     explicit formModule(QWidget *parent = 0, QString address = 0, QSerialPort *SerialPort = 0);
     ~formModule();
@@ -49,6 +49,8 @@ private slots:
     void readData();
 
 private:
+    QString Address_Module;
+    QString NoSeri;
     module mod;
     QSerialPort *Serial_Com;
     QLabel *type[16];
@@ -68,7 +70,9 @@ private:
 
     /** Function **/
     void setInterface(QString address);
+    void Syncronization();
 
+    MainWindow *Main;
     serial *Serial;
     setting *Setting;
     QString str_data;

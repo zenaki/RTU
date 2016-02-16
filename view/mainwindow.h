@@ -32,6 +32,10 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+public slots:
+    void on_actionConnect_triggered();
+    void on_actionDisconnect_triggered();
+
 private slots:
     void on_actionNew_triggered();
     void update_activeWindow();
@@ -39,10 +43,6 @@ private slots:
 
     void on_actionLoad_triggered();
     void on_treeView_doubleClicked(const QModelIndex &index);
-
-    void on_actionConnect_triggered();
-
-    void on_actionDisconnect_triggered();
 
 private:
     /** Other Class **/

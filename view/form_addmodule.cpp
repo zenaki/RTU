@@ -74,27 +74,27 @@ void form_addModule::on_buttonBox_accepted()
     }
 
     /** INPUT **/
-    strcpy(tModule.input_a1, ";;;;");
-    strcpy(tModule.input_a2, ";;;;");
-    strcpy(tModule.input_a3, ";;;;");
-    strcpy(tModule.input_a4, ";;;;");
-    strcpy(tModule.input_a5, ";;;;");
-    strcpy(tModule.input_a6, ";;;;");
+    strcpy(tModule.input_a1, "A;1;;;;;");
+    strcpy(tModule.input_a2, "A;2;;;;;");
+    strcpy(tModule.input_a3, "A;3;;;;;");
+    strcpy(tModule.input_a4, "A;4;;;;;");
+    strcpy(tModule.input_a5, "A;5;;;;;");
+    strcpy(tModule.input_a6, "A;6;;;;;");
 
-    strcpy(tModule.input_d1, ";;;;");
-    strcpy(tModule.input_d2, ";;;;");
-    strcpy(tModule.input_d3, ";;;;");
-    strcpy(tModule.input_d4, ";;;;");
-    strcpy(tModule.input_d5, ";;;;");
-    strcpy(tModule.input_d6, ";;;;");
-    strcpy(tModule.input_d7, ";;;;");
-    strcpy(tModule.input_d8, ";;;;");
+    strcpy(tModule.input_d1, "D;1;;;;;");
+    strcpy(tModule.input_d2, "D;2;;;;;");
+    strcpy(tModule.input_d3, "D;3;;;;;");
+    strcpy(tModule.input_d4, "D;4;;;;;");
+    strcpy(tModule.input_d5, "D;5;;;;;");
+    strcpy(tModule.input_d6, "D;6;;;;;");
+    strcpy(tModule.input_d7, "D;7;;;;;");
+    strcpy(tModule.input_d8, "D;8;;;;;");
 
     /** OUTPUT **/
-    strcpy(tModule.output_r1, ";;;");
-    strcpy(tModule.output_r2, ";;;");
-    strcpy(tModule.output_r3, ";;;");
-    strcpy(tModule.output_r4, ";;;");
+    strcpy(tModule.output_r1, "R;1;;;;");
+    strcpy(tModule.output_r2, "R;2;;;;");
+    strcpy(tModule.output_r3, "R;3;;;;");
+    strcpy(tModule.output_r4, "R;4;;;;");
 
     /** ----------------------------- WRITE ---------------------------- **/
     bool cek = false;
