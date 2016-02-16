@@ -12,10 +12,17 @@
 #include "model/setting.h"
 #include "model/communication/serial.h"
 
+#include <controller/worker.h>
+
+#include <view/form_addmodule.h>
+#include <ui_form_addmodule.h>
+#include <ui_mainwindow.h>
+
 namespace Ui {
 class formModule;
 }
 
+class worker;
 class MainWindow;
 class serial;
 class setting;
@@ -32,23 +39,18 @@ public:
 
 private slots:
     void on_pbSet_clicked();
-    void on_pbEdit_clicked();
-    void on_pbSave_clicked();
-    void on_pbCancel_clicked();
-
-    void on_com_1_currentIndexChanged(int index);
-    void on_com_2_currentIndexChanged(int index);
+    void on_pbGet_clicked();
 
     void on_tabWidget_tabBarClicked(int index);
-
-    void on_pbEdit_Module_clicked();
-    void on_pbSave_Module_clicked();
-    void on_pbCancel_Module_clicked();
-
-    void on_pbSync_clicked();
     void readData();
 
+    void on_pushButton_clicked();
+
 private:
+    worker *work;
+    form_addModule *faddModule;
+    QString module_name;\
+
     QString Address_Module;
     QString NoSeri;
     module mod;
@@ -66,7 +68,6 @@ private:
     QLineEdit *type_output[16];
     QComboBox *state_output[16];
     QComboBox *control[16];
-
 
     /** Function **/
     void setInterface(QString address);

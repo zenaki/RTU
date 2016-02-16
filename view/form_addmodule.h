@@ -16,9 +16,10 @@ class form_addModule : public QDialog
 public:
     Ui::form_addModule *ui;
 
-    explicit form_addModule(QWidget *parent = 0);
+    explicit form_addModule(QWidget *parent = 0, bool create = true);
     ~form_addModule();
 
+    bool edit;
     int accept;
     int flag_gsm_2_active;
 

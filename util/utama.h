@@ -105,8 +105,6 @@ struct t_module{
 
 };
 
-
-
 struct t_serial_settings {
     QString name;
     qint32 baudRate;
@@ -120,8 +118,6 @@ struct t_serial_settings {
     QSerialPort::FlowControl flowControl;
     QString stringFlowControl;
 };
-
-
 
 #include "model/debug.h"
 

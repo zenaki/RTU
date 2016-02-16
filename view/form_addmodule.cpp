@@ -1,12 +1,13 @@
 #include "form_addmodule.h"
 #include "ui_form_addmodule.h"
 
-form_addModule::form_addModule(QWidget *parent) :
+form_addModule::form_addModule(QWidget *parent, bool create) :
     QDialog(parent),
     ui(new Ui::form_addModule)
 {
     ui->setupUi(this);
 
+    edit = !create;
     accept = 0;
 }
 
@@ -110,9 +111,17 @@ void form_addModule::on_buttonBox_accepted()
     }
 
     if (cek) {
-        accept = 0;
-        QMessageBox::warning(this, tr("Warning!"), tr("Nama Module sudah terpakai!", 0,0));
-        return;
+        if (!edit) {
+            accept = 0;
+            QMessageBox::warning(this, tr("Warning!"), tr("Nama Module sudah terpakai!", 0,0));
+            return;
+        } else {
+            mod.update_module(&tModule, newFiles.prepend("data/module"));
+            mod.update_communication(&tModule, newFiles.prepend("data/module"));
+            accept = 1;
+
+            close();
+        }
     }
     else {
         mod.write_module(&tModule);

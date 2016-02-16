@@ -96,7 +96,7 @@ void MainWindow::setActiveSubWindow(QWidget *window)
 
 void MainWindow::on_actionNew_triggered()
 {
-    faddModule = new form_addModule(this);
+    faddModule = new form_addModule(this, true);
     faddModule->setWindowTitle("New Module");
     faddModule->setModal(true);
 

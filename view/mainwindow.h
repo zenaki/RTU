@@ -32,6 +32,9 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    /** main variable **/
+    QStandardItemModel *modelTree;
+
 public slots:
     void on_actionConnect_triggered();
     void on_actionDisconnect_triggered();
@@ -54,9 +57,6 @@ private:
     form_addModule *faddModule;
     SettingsDialog *settings_dialog;
     worker *work;
-
-    /** main variable **/
-    QStandardItemModel *modelTree;
 
     int num_window;
     QSignalMapper *windowMapper;

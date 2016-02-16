@@ -21,6 +21,22 @@ QString worker::newModule(QStandardItemModel *tree, QTreeView *treeView, QString
     return modules;
 }
 
+QString worker::editModule(QStandardItemModel *tree, QTreeView *treeView, QString title){
+    struct t_module tModule;
+    QString address;
+
+    address.sprintf("data/module/m_%s.ini", title.toUtf8().data());
+
+    mod.read_module(&tModule, address);
+
+    QString modules;
+    modules.sprintf("%s", tModule.module_name);
+//    modules.sprintf("m_%s.ini", tModule.module_name);
+    mTree.appendItem(tree, treeView, modules);
+
+    return modules;
+}
+
 QString worker::loadModule(QStandardItemModel *tree, QTreeView *treeView, QString address){
     struct t_module tModule;
 
