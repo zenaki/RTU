@@ -44,7 +44,7 @@ private slots:
     void on_tabWidget_tabBarClicked(int index);
     void readData();
 
-    void on_pushButton_clicked();
+    void on_pbEditModule_clicked();
 
 private:
     worker *work;
@@ -52,6 +52,8 @@ private:
     QString module_name;\
 
     QString Address_Module;
+    QString GetNamaBoard;
+    QString GetNoSeri;
     QString NoSeri;
     module mod;
     QSerialPort *Serial_Com;

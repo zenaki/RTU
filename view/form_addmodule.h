@@ -16,7 +16,7 @@ class form_addModule : public QDialog
 public:
     Ui::form_addModule *ui;
 
-    explicit form_addModule(QWidget *parent = 0, bool create = true);
+    explicit form_addModule(QWidget *parent = 0, bool create = true, QString address = 0);
     ~form_addModule();
 
     bool edit;

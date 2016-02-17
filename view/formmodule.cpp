@@ -26,6 +26,8 @@ formModule::formModule(QWidget *parent, QString address, QSerialPort *SerialPort
     connect(Serial_Com, SIGNAL(readyRead()), this, SLOT(readData()));
 
     this->setInterface(address);
+
+    this->ui->pbEditModule->setHidden(true);
 }
 
 formModule::~formModule()
@@ -40,46 +42,47 @@ void formModule::setInterface(QString address){
     mod.read_module(&tModule, Address_Module);
     QString modules;
 
-    int rowInput = 13;
+    int rowInput = 14;
     int rowOutput = 4;
     QString type_IO;
 
     this->ui->tabel_input->verticalHeader()->setHidden(true);
-    this->ui->tabel_input->setColumnCount(6);
+    this->ui->tabel_input->setColumnCount(5);
 //    this->ui->tabel_input->setColumnWidth(0, 50);
     this->ui->tabel_input->setColumnWidth(1, 100);
     this->ui->tabel_input->setColumnWidth(2, 150);
-    this->ui->tabel_input->setColumnWidth(3, 100);
+//    this->ui->tabel_input->setColumnWidth(3, 100);
 //    this->ui->tabel_input->setColumnWidth(4, 100);
-//    this->ui->tabel_input->setColumnWidth(5, 100);
     this->ui->tabel_input->setRowCount(rowInput);
 
     this->ui->tabel_output->verticalHeader()->setHidden(true);
-    this->ui->tabel_output->setColumnCount(5);
+    this->ui->tabel_output->setColumnCount(4);
     //    this->ui->tabel_output->setColumnWidth(0, 50);
         this->ui->tabel_output->setColumnWidth(1, 100);
         this->ui->tabel_output->setColumnWidth(2, 100);
-        this->ui->tabel_output->setColumnWidth(3, 100);
-    //    this->ui->tabel_output->setColumnWidth(4, 100);
+    //    this->ui->tabel_output->setColumnWidth(3, 100);
     this->ui->tabel_output->setRowCount(rowOutput);
 
     for (int i = 0; i < rowInput; i++){
         name_input[i] = new QLineEdit(this);
 
         type_input[i] = new QComboBox(this);
-        type_input[i]->addItem("RPM",1);
-        type_input[i]->addItem("ON / OFF",2);
-        type_input[i]->addItem("Push Button",3);
-        type_input[i]->addItem("Flow - X",6);
-        type_input[i]->addItem("RPM - RH",7);
-        type_input[i]->addItem("Running Hours",8);
-        type_input[i]->addItem("ON / OFF - RH",9);
-        type_input[i]->addItem("Analog Monita",250);
-        type_input[i]->addItem("Analog Running Hours",999);
-
-        state_input[i] = new QComboBox(this);
-        state_input[i]->addItem("NOT ACTIVE",0);
-        state_input[i]->addItem("ACTIVE",1);
+        if (i < 6) {
+            type_input[i]->addItem("Analog Monita",250);
+            type_input[i]->addItem("Analog Running Hours",999);
+        } else
+        {
+            type_input[i]->addItem("RPM",1);
+            type_input[i]->addItem("ON / OFF",2);
+            type_input[i]->addItem("Push Button",3);
+            type_input[i]->addItem("Flow - X",6);
+            type_input[i]->addItem("RPM - RH",7);
+            type_input[i]->addItem("Running Hours",8);
+            type_input[i]->addItem("ON / OFF - RH",9);
+        }
+//        state_input[i] = new QComboBox(this);
+//        state_input[i]->addItem("NOT ACTIVE",0);
+//        state_input[i]->addItem("ACTIVE",1);
 
         calib_m[i] = new QLineEdit(this);
         calib_m[i]->setAlignment(Qt::AlignRight);
@@ -89,35 +92,35 @@ void formModule::setInterface(QString address){
     }
 
     QString str;
-    str.append(tModule.input_a1);
-    str.append(";");
-    str.append(tModule.input_a2);
-    str.append(";");
-    str.append(tModule.input_a3);
-    str.append(";");
-    str.append(tModule.input_a4);
-    str.append(";");
-    str.append(tModule.input_a5);
-    str.append(";");
-    str.append(tModule.input_a6);
-    str.append(";");
+    str.append(tModule.input_a1_name).append(";");
+    str.append(tModule.input_a1).append(";");
+    str.append(tModule.input_a2_name).append(";");
+    str.append(tModule.input_a2).append(";");
+    str.append(tModule.input_a3_name).append(";");
+    str.append(tModule.input_a3).append(";");
+    str.append(tModule.input_a4_name).append(";");
+    str.append(tModule.input_a4).append(";");
+    str.append(tModule.input_a5_name).append(";");
+    str.append(tModule.input_a5).append(";");
+    str.append(tModule.input_a6_name).append(";");
+    str.append(tModule.input_a6).append(";");
 
-    str.append(tModule.input_d1);
-    str.append(";");
-    str.append(tModule.input_d2);
-    str.append(";");
-    str.append(tModule.input_d3);
-    str.append(";");
-    str.append(tModule.input_d4);
-    str.append(";");
-    str.append(tModule.input_d5);
-    str.append(";");
-    str.append(tModule.input_d6);
-    str.append(";");
-    str.append(tModule.input_d7);
-    str.append(";");
-    str.append(tModule.input_d8);
-    str.append(";");
+    str.append(tModule.input_d1_name).append(";");
+    str.append(tModule.input_d1).append(";");
+    str.append(tModule.input_d2_name).append(";");
+    str.append(tModule.input_d2).append(";");
+    str.append(tModule.input_d3_name).append(";");
+    str.append(tModule.input_d3).append(";");
+    str.append(tModule.input_d4_name).append(";");
+    str.append(tModule.input_d4).append(";");
+    str.append(tModule.input_d5_name).append(";");
+    str.append(tModule.input_d5).append(";");
+    str.append(tModule.input_d6_name).append(";");
+    str.append(tModule.input_d6).append(";");
+    str.append(tModule.input_d7_name).append(";");
+    str.append(tModule.input_d7).append(";");
+    str.append(tModule.input_d8_name).append(";");
+    str.append(tModule.input_d8).append(";");
 
     QStringList list = str.split(';');
 
@@ -127,25 +130,35 @@ void formModule::setInterface(QString address){
         } else {
             type_IO = " - Digital";
         }
+
         type_IO.prepend(QString::number(i+1));
 
-        name_input[i]->setText(list[(i*7)+2]);
-        type_input[i]->setCurrentIndex(list[(i*7)+3].toInt());
-        state_input[i]->setCurrentIndex(list[(i*7)+4].toInt());
-        calib_m[i]->setText(list[(i*7)+5]);
-        calib_x[i]->setText(list[(i*7)+6]);
+        name_input[i]->setText(list[i*6]);
+        int indx;
+        if (list[(i*6)+3].toInt() == 250) {indx = 0;}
+        if (list[(i*6)+3].toInt() == 999) {indx = 1;}
+        if (list[(i*6)+3].toInt() == 1) {indx = 0;}
+        if (list[(i*6)+3].toInt() == 2) {indx = 1;}
+        if (list[(i*6)+3].toInt() == 3) {indx = 2;}
+        if (list[(i*6)+3].toInt() == 6) {indx = 3;}
+        if (list[(i*6)+3].toInt() == 7) {indx = 4;}
+        if (list[(i*6)+3].toInt() == 8) {indx = 5;}
+        if (list[(i*6)+3].toInt() == 9) {indx = 6;}
+        type_input[i]->setCurrentIndex(indx);
+//        state_input[i]->setCurrentIndex(list[(i*6)+3].toInt());
+        calib_m[i]->setText(list[(i*6)+4]);
+        calib_x[i]->setText(list[(i*6)+5]);
 
         this->ui->tabel_input->setItem(i,0, new QTableWidgetItem(type_IO));
         this->ui->tabel_input->setCellWidget(i,1, name_input[i]);
         this->ui->tabel_input->setCellWidget(i,2, type_input[i]);
-        this->ui->tabel_input->setCellWidget(i,3, state_input[i]);
-        this->ui->tabel_input->setCellWidget(i,4, calib_m[i]);
-        this->ui->tabel_input->setCellWidget(i,5, calib_x[i]);
+//        this->ui->tabel_input->setCellWidget(i,3, state_input[i]);
+        this->ui->tabel_input->setCellWidget(i,3, calib_m[i]);
+        this->ui->tabel_input->setCellWidget(i,4, calib_x[i]);
     }
 
     for (int i = 0; i < rowOutput; i++){
         name_output[i] = new QLineEdit(this);
-        type_output[i] = new QLineEdit(this);
 
         state_output[i] = new QComboBox(this);
         state_output[i]->addItem("NOT ACTIVE");
@@ -157,30 +170,28 @@ void formModule::setInterface(QString address){
     }
 
     str = "";
-    str.append(tModule.output_r1);
-    str.append(";");
-    str.append(tModule.output_r2);
-    str.append(";");
-    str.append(tModule.output_r3);
-    str.append(";");
-    str.append(tModule.output_r4);
-    str.append(";");
+    str.append(tModule.output_r1_name).append(";");
+    str.append(tModule.output_r1).append(";");
+    str.append(tModule.output_r2_name).append(";");
+    str.append(tModule.output_r2).append(";");
+    str.append(tModule.output_r3_name).append(";");
+    str.append(tModule.output_r3).append(";");
+    str.append(tModule.output_r4_name).append(";");
+    str.append(tModule.output_r4).append(";");
 
     list = str.split(';');
 
     for(int i = 0; i < rowOutput; i++){
-        name_output[i]->setText(list[(i*6)+2]);
-        type_output[i]->setText(list[(i*6)+3]);
-        state_output[i]->setCurrentIndex(list[(i*6)+4].toInt());
-        control[i]->setCurrentIndex(list[(i*6)+5].toInt());
+        name_output[i]->setText(list[i*5]);
+        state_output[i]->setCurrentIndex(list[(i*5)+3].toInt());
+        control[i]->setCurrentIndex(list[(i*5)+4].toInt());
 
         type_IO = " - Relay";
         type_IO.prepend(QString::number(i+1));
         this->ui->tabel_output->setItem(i,0, new QTableWidgetItem(type_IO));
         this->ui->tabel_output->setCellWidget(i,1, name_output[i]);
-        this->ui->tabel_output->setCellWidget(i,2, type_output[i]);
-        this->ui->tabel_output->setCellWidget(i,3, state_output[i]);
-        this->ui->tabel_output->setCellWidget(i,4, control[i]);
+        this->ui->tabel_output->setCellWidget(i,2, state_output[i]);
+        this->ui->tabel_output->setCellWidget(i,3, control[i]);
     }
 
     this->ui->tabel_input->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -225,81 +236,131 @@ void formModule::on_pbSet_clicked()
 {
     struct t_module tModule;
     QString data[16];
+    QString Message;
+    QString Request;
+
+    if (Serial_Com->isOpen()) {
+        if (!GetNoSeri.isEmpty()) {
+            if (NoSeri == GetNoSeri) {
+                for (int i = 0; i < ui->tabel_input->rowCount(); i++)
+                {
+                    if (i<6) {
+                        Request.sprintf("set_kanal %d %.3f %.3f", i+1, calib_m[i]->text().toFloat(), calib_x[i]->text().toFloat());
+                        Serial->write_data(Serial_Com, Request);
+                    } else {
+                        Request.sprintf("set_kanal %d %.3f %.3f", i-6+1, calib_m[i]->text().toFloat(), calib_x[i]->text().toFloat());
+                        Serial->write_data(Serial_Com, Request);
+                    }
+                    Message = "On-Board";
+                }
+            } else {
+                Message = "On-Local";
+            }
+        } else {
+            Message = "On-Local";
+        }
+    } else {
+        Message = "On-Local";
+    }
+
+    int indx;
+
     for (int i = 0; i < ui->tabel_input->rowCount(); i++)
     {
-        strcpy(tModule.d_port[i].nama_input, name_input[i]->text().toLatin1());
-        tModule.d_port[i].type_input = type_input[i]->currentIndex();
-        tModule.d_port[i].status_input = state_input[i]->currentIndex();
+//        tModule.d_port[i].status_input = state_input[i]->currentIndex();
         tModule.d_port[i].calib_m = calib_m[i]->text().toFloat();
         tModule.d_port[i].calib_x = calib_x[i]->text().toFloat();
 
-        data[i].sprintf("%s;%d;%d;%.2f;%.2f"
-                     , tModule.d_port[i].nama_input
-                     , tModule.d_port[i].type_input
-                     , tModule.d_port[i].status_input
-                     , tModule.d_port[i].calib_m
-                     , tModule.d_port[i].calib_x) ;
-    }
-    data[0].prepend("A;1;");
-    strcpy(tModule.input_a1,data[0].toLatin1());
-    data[1].prepend("A;2;");
-    strcpy(tModule.input_a2,data[1].toLatin1());
-    data[2].prepend("A;3;");
-    strcpy(tModule.input_a3,data[2].toLatin1());
-    data[3].prepend("A;4;");
-    strcpy(tModule.input_a4,data[3].toLatin1());
-    data[4].prepend("A;5;");
-    strcpy(tModule.input_a5,data[4].toLatin1());
-    data[5].prepend("A;6;");
-    strcpy(tModule.input_a6,data[5].toLatin1());
+        if (i < 6) {
+            if (type_input[i]->currentIndex() == 0) {indx = 250;}
+            if (type_input[i]->currentIndex() == 1) {indx = 999;}
+            tModule.d_port[i].type_input = indx;
 
-    data[6].prepend("D;1;");
+            data[i].sprintf("A;%d;%d;%.3f;%.3f", i+1
+                            , indx
+                            , tModule.d_port[i].calib_m
+                            , tModule.d_port[i].calib_x);
+        } else {
+            if (type_input[i]->currentIndex() == 0) {indx = 1;}
+            if (type_input[i]->currentIndex() == 1) {indx = 2;}
+            if (type_input[i]->currentIndex() == 2) {indx = 3;}
+            if (type_input[i]->currentIndex() == 3) {indx = 6;}
+            if (type_input[i]->currentIndex() == 4) {indx = 7;}
+            if (type_input[i]->currentIndex() == 5) {indx = 8;}
+            if (type_input[i]->currentIndex() == 6) {indx = 9;}
+            tModule.d_port[i].type_input = indx;
+
+            data[i].sprintf("D;%d;%d;%.3f;%.3f", i-6+1
+                            , indx
+                            , tModule.d_port[i].calib_m
+                            , tModule.d_port[i].calib_x);
+        }
+    }
+
+    strcpy(tModule.input_a1,data[0].toLatin1());
+    strcpy(tModule.input_a1_name,name_input[0]->text().toLatin1());
+    strcpy(tModule.input_a2,data[1].toLatin1());
+    strcpy(tModule.input_a2_name,name_input[1]->text().toLatin1());
+    strcpy(tModule.input_a3,data[2].toLatin1());
+    strcpy(tModule.input_a3_name,name_input[2]->text().toLatin1());
+    strcpy(tModule.input_a4,data[3].toLatin1());
+    strcpy(tModule.input_a4_name,name_input[3]->text().toLatin1());
+    strcpy(tModule.input_a5,data[4].toLatin1());
+    strcpy(tModule.input_a5_name,name_input[4]->text().toLatin1());
+    strcpy(tModule.input_a6,data[5].toLatin1());
+    strcpy(tModule.input_a6_name,name_input[5]->text().toLatin1());
+
     strcpy(tModule.input_d1,data[6].toLatin1());
-    data[7].prepend("D;2;");
+    strcpy(tModule.input_d1_name,name_input[6]->text().toLatin1());
     strcpy(tModule.input_d2,data[7].toLatin1());
-    data[8].prepend("D;3;");
+    strcpy(tModule.input_d2_name,name_input[7]->text().toLatin1());
     strcpy(tModule.input_d3,data[8].toLatin1());
-    data[9].prepend("D;4;");
+    strcpy(tModule.input_d3_name,name_input[8]->text().toLatin1());
     strcpy(tModule.input_d4,data[9].toLatin1());
-    data[10].prepend("D;5");
+    strcpy(tModule.input_d4_name,name_input[9]->text().toLatin1());
     strcpy(tModule.input_d5,data[10].toLatin1());
-    data[11].prepend("D;6;");
+    strcpy(tModule.input_d5_name,name_input[10]->text().toLatin1());
     strcpy(tModule.input_d6,data[11].toLatin1());
-    data[12].prepend("D;7;");
+    strcpy(tModule.input_d6_name,name_input[11]->text().toLatin1());
     strcpy(tModule.input_d7,data[12].toLatin1());
-    data[13].prepend("D;8;");
+    strcpy(tModule.input_d7_name,name_input[12]->text().toLatin1());
     strcpy(tModule.input_d8,data[13].toLatin1());
+    strcpy(tModule.input_d8_name,name_input[13]->text().toLatin1());
 
     for (int i = 0; i < ui->tabel_output->rowCount(); i++)
     {
-        strcpy(tModule.d_port[i].nama_output, name_output[i]->text().toLatin1());
-        strcpy(tModule.d_port[i].type_output, type_output[i]->text().toLatin1());
         tModule.d_port[i].status_output = state_output[i]->currentIndex();
         tModule.d_port[i].control = control[i]->currentIndex();
 
-        data[i].sprintf("%s;%s;%d;%d"
-                     , tModule.d_port[i].nama_output
-                     , tModule.d_port[i].type_output
+        data[i].sprintf("R;%d;%d;%d", i+1
                      , tModule.d_port[i].status_output
                      , tModule.d_port[i].control) ;
     }
-    data[0].prepend("R;1;");
+
     strcpy(tModule.output_r1,data[0].toLatin1());
-    data[1].prepend("R;2;");
+    strcpy(tModule.output_r1_name,name_output[0]->text().toLatin1());
     strcpy(tModule.output_r2,data[1].toLatin1());
-    data[2].prepend("R;3;");
+    strcpy(tModule.output_r2_name,name_output[1]->text().toLatin1());
     strcpy(tModule.output_r3,data[2].toLatin1());
-    data[3].prepend("R;4;");
+    strcpy(tModule.output_r3_name,name_output[2]->text().toLatin1());
     strcpy(tModule.output_r4,data[3].toLatin1());
+    strcpy(tModule.output_r4_name,name_output[3]->text().toLatin1());
 
     module mod;
     mod.update_setting(&tModule, Address_Module);
 
-    QMessageBox::information(this, "Success!!", "Setting Saved", 0, 0);
+    Message.prepend("Setting ").append(" Saved");
+    QMessageBox::information(this, "Success!!", Message, 0, 0);
 }
 
 void formModule::on_tabWidget_tabBarClicked(int index)
 {
+    if (index == 2) {
+        this->ui->pbEditModule->setHidden(false);
+    } else {
+        this->ui->pbEditModule->setHidden(true);
+    }
+
     this->ui->tabWidget->setCurrentIndex(index);
 
     struct t_module tModule;
@@ -347,25 +408,39 @@ void formModule::on_pbGet_clicked()
     //    Serial->write_data(Serial_Com, "Test\r\n");
         if (!Serial_Com->isOpen())
         {
-            Main->on_actionConnect_triggered();
+//            Main->on_actionConnect_triggered();
+            QMessageBox::warning(this, "Serial Comunication !!", "Protocol is not open ..", 0, 0);
         } else
         {
-            Serial->write_data(Serial_Com, "\r\n");
-            Serial->write_data(Serial_Com, "cek_env\r\n");
-            Serial->write_data(Serial_Com, "set_env TEST_SELASA_16_PEBRUARI_2016\r\n");
-            Serial->write_data(Serial_Com, "cek_env\r\n");
+            if (GetNoSeri.isEmpty() || GetNamaBoard.isEmpty()) {
+                Serial->write_data(Serial_Com, "hmi_cek_env\r\n");
+                Serial->write_data(Serial_Com, "hmi_sync\r\n");
+            } else {
+                Serial->write_data(Serial_Com, "hmi_sync\r\n");
+            }
         }
 }
 
 void formModule::readData()
 {
     str_data.append(Serial_Com->readAll());
-    if (str_data.indexOf(NoSeri) > 0)
-    {
-        val_data = str_data.remove("\r").remove("\n").remove("(" + NoSeri + ")").split("*");
-        this->Syncronization();
-        qDebug() << str_data;
-        str_data.clear();
+    if (GetNoSeri.isEmpty() || GetNamaBoard.isEmpty()) {
+        if (str_data.indexOf("\r\n") > 0) {
+            val_data = str_data.remove("Rinjani$ ").remove("hmi_cek_env").remove("\r").remove("\n").split(";");
+            GetNamaBoard = val_data[0];
+            GetNoSeri = val_data[1];
+//            qDebug() << str_data;
+            val_data.clear();
+            str_data.clear();
+        }
+    } else {
+        if (str_data.indexOf("(X)") > 0)
+        {
+            val_data = str_data.remove("Rinjani$ ").remove("hmi_sync").remove("\r").remove("\n").remove("(X)").split("*");
+            this->Syncronization();
+//            qDebug() << str_data;
+            str_data.clear();
+        }
     }
 }
 
@@ -377,41 +452,61 @@ void formModule::Syncronization()
     {
         data[i] = val_data[i];
     }
+
     strcpy(tModule.input_a1,data[0].toLatin1());
+    strcpy(tModule.input_a1_name,name_input[0]->text().toLatin1());
     strcpy(tModule.input_a2,data[1].toLatin1());
+    strcpy(tModule.input_a2_name,name_input[1]->text().toLatin1());
     strcpy(tModule.input_a3,data[2].toLatin1());
+    strcpy(tModule.input_a3_name,name_input[2]->text().toLatin1());
     strcpy(tModule.input_a4,data[3].toLatin1());
+    strcpy(tModule.input_a4_name,name_input[3]->text().toLatin1());
     strcpy(tModule.input_a5,data[4].toLatin1());
+    strcpy(tModule.input_a5_name,name_input[4]->text().toLatin1());
     strcpy(tModule.input_a6,data[5].toLatin1());
+    strcpy(tModule.input_a6_name,name_input[5]->text().toLatin1());
 
     strcpy(tModule.input_d1,data[6].toLatin1());
+    strcpy(tModule.input_d1_name,name_input[6]->text().toLatin1());
     strcpy(tModule.input_d2,data[7].toLatin1());
+    strcpy(tModule.input_d2_name,name_input[7]->text().toLatin1());
     strcpy(tModule.input_d3,data[8].toLatin1());
+    strcpy(tModule.input_d3_name,name_input[8]->text().toLatin1());
     strcpy(tModule.input_d4,data[9].toLatin1());
+    strcpy(tModule.input_d4_name,name_input[9]->text().toLatin1());
     strcpy(tModule.input_d5,data[10].toLatin1());
+    strcpy(tModule.input_d5_name,name_input[10]->text().toLatin1());
     strcpy(tModule.input_d6,data[11].toLatin1());
+    strcpy(tModule.input_d6_name,name_input[11]->text().toLatin1());
     strcpy(tModule.input_d7,data[12].toLatin1());
+    strcpy(tModule.input_d7_name,name_input[12]->text().toLatin1());
     strcpy(tModule.input_d8,data[13].toLatin1());
+    strcpy(tModule.input_d8_name,name_input[13]->text().toLatin1());
 
     for (int i = 0; i < ui->tabel_output->rowCount(); i++)
     {
-        data[i] = val_data[i+15];
+        data[i] = val_data[i+14];
     }
+
     strcpy(tModule.output_r1,data[0].toLatin1());
+    strcpy(tModule.output_r1_name,name_output[0]->text().toLatin1());
     strcpy(tModule.output_r2,data[1].toLatin1());
+    strcpy(tModule.output_r2_name,name_output[1]->text().toLatin1());
     strcpy(tModule.output_r3,data[2].toLatin1());
+    strcpy(tModule.output_r3_name,name_output[2]->text().toLatin1());
     strcpy(tModule.output_r4,data[3].toLatin1());
+    strcpy(tModule.output_r4_name,name_output[3]->text().toLatin1());
 
     module mod;
     mod.update_setting(&tModule, Address_Module);
     this->setInterface(Address_Module);
 
-    QMessageBox::information(this, "Success!!", "Syncronized ..", 0, 0);
+    QMessageBox::information(this, "Success!!", "Setting Syncronized ..", 0, 0);
 }
 
-void formModule::on_pushButton_clicked()
+void formModule::on_pbEditModule_clicked()
 {
-    faddModule = new form_addModule(this, false);
+    faddModule = new form_addModule(this, false, Address_Module);
     faddModule->setWindowTitle("Edit Module");
     faddModule->setModal(true);
 
