@@ -54,6 +54,10 @@ MainWindow::MainWindow(QWidget *parent) :
 //    connect(serial, SIGNAL(readyRead()), this, SLOT(readData()));
 
     SerialPort = new  QSerialPort(this);
+
+    this->ui->actionConnect->setEnabled(true);
+    this->ui->actionDisconnect->setEnabled(false);
+    this->ui->actionConfig->setEnabled(true);
 }
 
 MainWindow::~MainWindow()
@@ -181,12 +185,18 @@ void MainWindow::on_actionConnect_triggered()
                         QString(", SB = ") + tSerial.stringStopBits +
                         QString(", FC = ") + tSerial.stringFlowControl;
         this->ui->bottom_message->setText(StatusMessage);
+        this->ui->actionConnect->setEnabled(false);
+        this->ui->actionDisconnect->setEnabled(true);
+        this->ui->actionConfig->setEnabled(false);
     } else {
 //        QMessageBox::critical(this, tr("Error"), SerialPort->errorString());
         this->ui->bottom_message->setStyleSheet("QLabel { color : red; }");
         this->ui->bottom_message->setText("Connecting Fail");
         if (SerialPort->isOpen())
             SerialPort->close();
+        this->ui->actionConnect->setEnabled(true);
+        this->ui->actionDisconnect->setEnabled(false);
+        this->ui->actionConfig->setEnabled(true);
     }
 }
 
@@ -201,4 +211,7 @@ void MainWindow::on_actionDisconnect_triggered()
         StatusMessage = "Disconnect";
         this->ui->bottom_message->setText(StatusMessage);
     }
+
+    this->ui->actionConnect->setEnabled(true);
+    this->ui->actionDisconnect->setEnabled(false);
 }

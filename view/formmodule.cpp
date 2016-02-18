@@ -240,6 +240,7 @@ void formModule::on_pbSet_clicked()
     QString data[16];
     QString Message;
     QString Request;
+    int diff = 0;
 
     if (Serial_Com->isOpen()) {
         if (NoSeri == GetNoSeri) {
@@ -256,6 +257,11 @@ void formModule::on_pbSet_clicked()
             }
         } else {
             Message = "On-Local";
+            if (!GetNoSeri.isEmpty()) {
+                diff = 1;
+            } else {
+                diff = 2;
+            }
         }
     } else {
         Message = "On-Local";
@@ -347,8 +353,18 @@ void formModule::on_pbSet_clicked()
     module mod;
     mod.update_setting(&tModule, Address_Module);
 
-    Message.prepend("Setting ").append(" Saved");
-    QMessageBox::information(this, "Success!!", Message, 0, 0);
+    if (diff == 0) {
+        Message.prepend("Setting ").append(" Saved");
+        QMessageBox::information(this, "Success!!", Message, 0, 0);
+    } else if (diff == 1) {
+        Message.prepend("Setting ").append(" Saved");
+        Message.append("\n\n Different Serial Number !!!");
+        QMessageBox::information(this, "Success!!", Message, 0, 0);
+    } else if (diff == 2) {
+        Message.prepend("Setting ").append(" Saved");
+        Message.append("\n\n Syncronize first for Setting to Board ..");
+        QMessageBox::information(this, "Success!!", Message, 0, 0);
+    }
 }
 
 void formModule::on_tabWidget_tabBarClicked(int index)
@@ -432,11 +448,17 @@ void formModule::readData()
             str_data.clear();
         }
     } else {
-        if (str_data.indexOf("(X)") > 0)
-        {
-            val_data = str_data.remove("Rinjani$ ").remove("hmi_sync").remove("\r").remove("\n").remove("(X)").split("*");
-            this->Syncronization();
-//            qDebug() << str_data;
+        if (NoSeri == GetNoSeri) {
+            if (str_data.indexOf("(X)") > 0)
+            {
+                val_data = str_data.remove("Rinjani$ ").remove("hmi_sync").remove("\r").remove("\n").remove("(X)").split("*");
+                this->Syncronization();
+//                qDebug() << str_data;
+                str_data.clear();
+            }
+        } else {
+            QMessageBox::warning(this, "Syncronize Error !!", "Different Serial Number !!!", 0, 0);
+            val_data.clear();
             str_data.clear();
         }
     }
@@ -446,54 +468,180 @@ void formModule::Syncronization()
 {
     struct t_module tModule;
     QString data[16];
+    QString temp;
     for (int i = 0; i < ui->tabel_input->rowCount(); i++)
     {
-        data[i] = val_data[i];
+        if (i<6) {
+            temp = val_data[i];
+            if (temp.mid(2,1) == QString::number(i+1)) {
+                data[i] = val_data[i];
+            }
+        } else {
+            temp = val_data[i];
+            if (temp.mid(2,1) == QString::number(i-6+1)) {
+                data[i] = val_data[i];
+            }
+        }
     }
 
-    strcpy(tModule.input_a1,data[0].toLatin1());
-    strcpy(tModule.input_a1_name,name_input[0]->text().toLatin1());
-    strcpy(tModule.input_a2,data[1].toLatin1());
-    strcpy(tModule.input_a2_name,name_input[1]->text().toLatin1());
-    strcpy(tModule.input_a3,data[2].toLatin1());
-    strcpy(tModule.input_a3_name,name_input[2]->text().toLatin1());
-    strcpy(tModule.input_a4,data[3].toLatin1());
-    strcpy(tModule.input_a4_name,name_input[3]->text().toLatin1());
-    strcpy(tModule.input_a5,data[4].toLatin1());
-    strcpy(tModule.input_a5_name,name_input[4]->text().toLatin1());
-    strcpy(tModule.input_a6,data[5].toLatin1());
-    strcpy(tModule.input_a6_name,name_input[5]->text().toLatin1());
+    temp = data[0];
+    if (temp.mid(0,2) == "A;") {
+        strcpy(tModule.input_a1,data[0].toLatin1());
+        strcpy(tModule.input_a1_name,name_input[0]->text().toLatin1());
+    } else {
+        data[0] = "A;1;250;0.000;0.000";
+        strcpy(tModule.input_a1,data[0].toLatin1());
+        strcpy(tModule.input_a1_name,name_input[0]->text().toLatin1());
+    } temp = data[1];
+    if (temp.mid(0,2) == "A;") {
+        strcpy(tModule.input_a2,data[1].toLatin1());
+        strcpy(tModule.input_a2_name,name_input[1]->text().toLatin1());
+    } else {
+        data[1] = "A;2;250;0.000;0.000";
+        strcpy(tModule.input_a2,data[1].toLatin1());
+        strcpy(tModule.input_a2_name,name_input[1]->text().toLatin1());
+    } temp = data[2];
+    if (temp.mid(0,2) == "A;") {
+        strcpy(tModule.input_a3,data[2].toLatin1());
+        strcpy(tModule.input_a3_name,name_input[2]->text().toLatin1());
+    } else {
+        data[2] = "A;3;250;0.000;0.000";
+        strcpy(tModule.input_a3,data[2].toLatin1());
+        strcpy(tModule.input_a3_name,name_input[2]->text().toLatin1());
+    } temp = data[3];
+    if (temp.mid(0,2) == "A;") {
+        strcpy(tModule.input_a4,data[3].toLatin1());
+        strcpy(tModule.input_a4_name,name_input[3]->text().toLatin1());
+    } else {
+        data[3] = "A;4;250;0.000;0.000";
+        strcpy(tModule.input_a4,data[3].toLatin1());
+        strcpy(tModule.input_a4_name,name_input[3]->text().toLatin1());
+    } temp = data[4];
+    if (temp.mid(0,2) == "A;") {
+        strcpy(tModule.input_a5,data[4].toLatin1());
+        strcpy(tModule.input_a5_name,name_input[4]->text().toLatin1());
+    } else {
+        data[4] = "A;5;250;0.000;0.000";
+        strcpy(tModule.input_a5,data[4].toLatin1());
+        strcpy(tModule.input_a5_name,name_input[4]->text().toLatin1());
+    } temp = data[5];
+    if (temp.mid(0,2) == "A;") {
+        strcpy(tModule.input_a6,data[5].toLatin1());
+        strcpy(tModule.input_a6_name,name_input[5]->text().toLatin1());
+    } else {
+        data[5] = "A;6;250;0.000;0.000";
+        strcpy(tModule.input_a6,data[5].toLatin1());
+        strcpy(tModule.input_a6_name,name_input[5]->text().toLatin1());
+    }
 
-    strcpy(tModule.input_d1,data[6].toLatin1());
-    strcpy(tModule.input_d1_name,name_input[6]->text().toLatin1());
-    strcpy(tModule.input_d2,data[7].toLatin1());
-    strcpy(tModule.input_d2_name,name_input[7]->text().toLatin1());
-    strcpy(tModule.input_d3,data[8].toLatin1());
-    strcpy(tModule.input_d3_name,name_input[8]->text().toLatin1());
-    strcpy(tModule.input_d4,data[9].toLatin1());
-    strcpy(tModule.input_d4_name,name_input[9]->text().toLatin1());
-    strcpy(tModule.input_d5,data[10].toLatin1());
-    strcpy(tModule.input_d5_name,name_input[10]->text().toLatin1());
-    strcpy(tModule.input_d6,data[11].toLatin1());
-    strcpy(tModule.input_d6_name,name_input[11]->text().toLatin1());
-    strcpy(tModule.input_d7,data[12].toLatin1());
-    strcpy(tModule.input_d7_name,name_input[12]->text().toLatin1());
-    strcpy(tModule.input_d8,data[13].toLatin1());
-    strcpy(tModule.input_d8_name,name_input[13]->text().toLatin1());
+
+    temp = data[6];
+    if (temp.mid(0,2) == "D;") {
+        strcpy(tModule.input_d1,data[6].toLatin1());
+        strcpy(tModule.input_d1_name,name_input[6]->text().toLatin1());
+    } else {
+        data[6] = "D;1;1;0.000;0.000";
+        strcpy(tModule.input_d1,data[6].toLatin1());
+        strcpy(tModule.input_d1_name,name_input[6]->text().toLatin1());
+    } temp = data[7];
+    if (temp.mid(0,2) == "D;") {
+        strcpy(tModule.input_d2,data[7].toLatin1());
+        strcpy(tModule.input_d2_name,name_input[7]->text().toLatin1());
+    } else {
+        data[7] = "D;2;1;0.000;0.000";
+        strcpy(tModule.input_d1,data[7].toLatin1());
+        strcpy(tModule.input_d1_name,name_input[7]->text().toLatin1());
+    } temp = data[8];
+    if (temp.mid(0,2) == "D;") {
+        strcpy(tModule.input_d3,data[8].toLatin1());
+        strcpy(tModule.input_d3_name,name_input[8]->text().toLatin1());
+    } else {
+        data[8] = "D;3;1;0.000;0.000";
+        strcpy(tModule.input_d1,data[8].toLatin1());
+        strcpy(tModule.input_d1_name,name_input[8]->text().toLatin1());
+    } temp = data[9];
+    if (temp.mid(0,2) == "D;") {
+        strcpy(tModule.input_d4,data[9].toLatin1());
+        strcpy(tModule.input_d4_name,name_input[9]->text().toLatin1());
+    } else {
+        data[9] = "D;4;1;0.000;0.000";
+        strcpy(tModule.input_d1,data[9].toLatin1());
+        strcpy(tModule.input_d1_name,name_input[9]->text().toLatin1());
+    } temp = data[10];
+    if (temp.mid(0,2) == "D;") {
+        strcpy(tModule.input_d5,data[10].toLatin1());
+        strcpy(tModule.input_d5_name,name_input[10]->text().toLatin1());
+    } else {
+        data[10] = "D;5;1;0.000;0.000";
+        strcpy(tModule.input_d1,data[10].toLatin1());
+        strcpy(tModule.input_d1_name,name_input[10]->text().toLatin1());
+    } temp = data[11];
+    if (temp.mid(0,2) == "D;") {
+        strcpy(tModule.input_d6,data[11].toLatin1());
+        strcpy(tModule.input_d6_name,name_input[11]->text().toLatin1());
+    } else {
+        data[11] = "D;6;1;0.000;0.000";
+        strcpy(tModule.input_d1,data[11].toLatin1());
+        strcpy(tModule.input_d1_name,name_input[11]->text().toLatin1());
+    } temp = data[12];
+    if (temp.mid(0,2) == "D;") {
+        strcpy(tModule.input_d7,data[12].toLatin1());
+        strcpy(tModule.input_d7_name,name_input[12]->text().toLatin1());
+    } else {
+        data[12] = "D;7;1;0.000;0.000";
+        strcpy(tModule.input_d1,data[12].toLatin1());
+        strcpy(tModule.input_d1_name,name_input[12]->text().toLatin1());
+    } temp = data[13];
+    if (temp.mid(0,2) == "D;") {
+        strcpy(tModule.input_d8,data[13].toLatin1());
+        strcpy(tModule.input_d8_name,name_input[13]->text().toLatin1());
+    } else {
+        data[13] = "D;8;1;0.000;0.000";
+        strcpy(tModule.input_d1,data[13].toLatin1());
+        strcpy(tModule.input_d1_name,name_input[13]->text().toLatin1());
+    }
 
     for (int i = 0; i < ui->tabel_output->rowCount(); i++)
     {
-        data[i] = val_data[i+14];
+        temp = val_data[i+14];
+        if (temp.mid(2,1) == QString::number(i+1)) {
+            data[i] = val_data[i+14];
+        }
     }
 
-    strcpy(tModule.output_r1,data[0].toLatin1());
-    strcpy(tModule.output_r1_name,name_output[0]->text().toLatin1());
-    strcpy(tModule.output_r2,data[1].toLatin1());
-    strcpy(tModule.output_r2_name,name_output[1]->text().toLatin1());
-    strcpy(tModule.output_r3,data[2].toLatin1());
-    strcpy(tModule.output_r3_name,name_output[2]->text().toLatin1());
-    strcpy(tModule.output_r4,data[3].toLatin1());
-    strcpy(tModule.output_r4_name,name_output[3]->text().toLatin1());
+    temp = data[0];
+    if (temp.mid(0,2) == "R;") {
+        strcpy(tModule.output_r1,data[0].toLatin1());
+        strcpy(tModule.output_r1_name,name_output[0]->text().toLatin1());
+    } else {
+        data[0] = "R;1;0;0";
+        strcpy(tModule.input_d1,data[0].toLatin1());
+        strcpy(tModule.input_d1_name,name_input[0]->text().toLatin1());
+    } temp = data[1];
+    if (temp.mid(0,2) == "R;") {
+        strcpy(tModule.output_r2,data[1].toLatin1());
+        strcpy(tModule.output_r2_name,name_output[1]->text().toLatin1());
+    } else {
+        data[1] = "R;1;0;0";
+        strcpy(tModule.input_d1,data[1].toLatin1());
+        strcpy(tModule.input_d1_name,name_input[1]->text().toLatin1());
+    } temp = data[2];
+    if (temp.mid(0,2) == "R;") {
+        strcpy(tModule.output_r3,data[2].toLatin1());
+        strcpy(tModule.output_r3_name,name_output[2]->text().toLatin1());
+    } else {
+        data[2] = "R;1;0;0";
+        strcpy(tModule.input_d1,data[2].toLatin1());
+        strcpy(tModule.input_d1_name,name_input[2]->text().toLatin1());
+    } temp = data[3];
+    if (temp.mid(0,2) == "R;") {
+        strcpy(tModule.output_r4,data[3].toLatin1());
+        strcpy(tModule.output_r4_name,name_output[3]->text().toLatin1());
+    } else {
+        data[3] = "R;1;0;0";
+        strcpy(tModule.input_d1,data[3].toLatin1());
+        strcpy(tModule.input_d1_name,name_input[3]->text().toLatin1());
+    }
 
     module mod;
     mod.update_setting(&tModule, Address_Module);
