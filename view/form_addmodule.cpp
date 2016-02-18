@@ -15,6 +15,11 @@ form_addModule::form_addModule(QWidget *parent, bool create, QString address) :
         mod.read_module(&tModule, address);
         QString modules;
 
+        this->on_ck_flag_active_gsm_2_clicked(tModule.flag_dual_gsm);
+        this->on_cb_com_1_currentIndexChanged(tModule.flag_com_gsm_1);
+        this->on_cb_com_2_currentIndexChanged(tModule.flag_com_gsm_2);
+
+        this->ui->edit_module_name->setEnabled(false);
         modules.sprintf("%s", tModule.module_name);
         this->ui->edit_module_name->setText(modules);
         modules.sprintf("%s", tModule.serial_number);
@@ -24,40 +29,23 @@ form_addModule::form_addModule(QWidget *parent, bool create, QString address) :
         }
 
         this->ui->cb_operator_1->setCurrentIndex(tModule.flag_gsm_1);
-        this->ui->cb_operator_1->setEnabled(true);
         modules.sprintf("%s", tModule.device_name_gsm_1);
         this->ui->edit_devicename_1->setText(modules);
-        this->ui->edit_devicename_1->setEnabled(true);
         this->ui->cb_status_1->setCurrentIndex(tModule.flag_status_active_gsm_1);
-        this->ui->cb_status_1->setEnabled(true);
         this->ui->cb_com_1->setCurrentIndex(tModule.flag_com_gsm_1);
-        this->ui->cb_com_1->setEnabled(true);
         modules.sprintf("%s", tModule.number_gsm_1);
         this->ui->edit_number_1->setText(modules);
-        if (tModule.flag_com_gsm_1 == 1) {
-            modules.sprintf("%s", tModule.user_gsm_1);
-            this->ui->edit_user_1->setText(modules);
-            modules.sprintf("%s", tModule.apn_gsm_1);
-            this->ui->edit_apn_1->setText(modules);
-        }
+
 
         this->ui->cb_operator_2->setCurrentIndex(tModule.flag_gsm_2);
-        this->ui->cb_operator_2->setEnabled(true);
         modules.sprintf("%s", tModule.device_name_gsm_2);
         this->ui->edit_devicename_2->setText(modules);
-        this->ui->edit_devicename_2->setEnabled(true);
         this->ui->cb_status_2->setCurrentIndex(tModule.flag_status_active_gsm_2);
-        this->ui->cb_status_2->setEnabled(true);
         this->ui->cb_com_2->setCurrentIndex(tModule.flag_com_gsm_2);
-        this->ui->cb_com_2->setEnabled(true);
         modules.sprintf("%s", tModule.number_gsm_2);
         this->ui->edit_number_2->setText(modules);
-        if (tModule.flag_com_gsm_2 == 1) {
-            modules.sprintf("%s", tModule.user_gsm_2);
-            this->ui->edit_user_2->setText(modules);
-            modules.sprintf("%s", tModule.apn_gsm_2);
-            this->ui->edit_apn_2->setText(modules);
-        }
+    } else {
+        this->ui->edit_module_name->setEnabled(true);
     }
 }
 
@@ -70,6 +58,10 @@ form_addModule::~form_addModule()
 void form_addModule::on_buttonBox_accepted()
 {
     struct t_module tModule;
+    QString newFiles;
+    strcpy(tModule.module_name, this->ui->edit_module_name->text().toLatin1());
+    newFiles.sprintf("m_%s.ini", tModule.module_name);
+    mod.read_module(&tModule, newFiles.prepend("data/module/"));
 
     tModule.flag_active = 1;
     strcpy(tModule.module_name, this->ui->edit_module_name->text().toLatin1());
@@ -124,53 +116,11 @@ void form_addModule::on_buttonBox_accepted()
         strcpy(tModule.apn_gsm_2, this->ui->edit_apn_2->text().toLatin1());
     }
 
-    /** INPUT **/
-    strcpy(tModule.input_a1, "A;1;0;0.000;0.000");
-    strcpy(tModule.input_a1_name, "");
-    strcpy(tModule.input_a2, "A;2;0;0.000;0.000");
-    strcpy(tModule.input_a1_name, "");
-    strcpy(tModule.input_a3, "A;3;0;0.000;0.000");
-    strcpy(tModule.input_a1_name, "");
-    strcpy(tModule.input_a4, "A;4;0;0.000;0.000");
-    strcpy(tModule.input_a1_name, "");
-    strcpy(tModule.input_a5, "A;5;0;0.000;0.000");
-    strcpy(tModule.input_a1_name, "");
-    strcpy(tModule.input_a6, "A;6;0;0.000;0.000");
-    strcpy(tModule.input_a1_name, "");
-
-    strcpy(tModule.input_d1, "D;1;0;0.000;0.000");
-    strcpy(tModule.input_d1_name, "");
-    strcpy(tModule.input_d2, "D;2;0;0.000;0.000");
-    strcpy(tModule.input_d2_name, "");
-    strcpy(tModule.input_d3, "D;3;0;0.000;0.000");
-    strcpy(tModule.input_d3_name, "");
-    strcpy(tModule.input_d4, "D;4;0;0.000;0.000");
-    strcpy(tModule.input_d4_name, "");
-    strcpy(tModule.input_d5, "D;5;0;0.000;0.000");
-    strcpy(tModule.input_d5_name, "");
-    strcpy(tModule.input_d6, "D;6;0;0.000;0.000");
-    strcpy(tModule.input_d6_name, "");
-    strcpy(tModule.input_d7, "D;7;0;0.000;0.000");
-    strcpy(tModule.input_d7_name, "");
-    strcpy(tModule.input_d8, "D;8;0;0.000;0.000");
-    strcpy(tModule.input_d8_name, "");
-
-    /** OUTPUT **/
-    strcpy(tModule.output_r1, "R;1;0;0");
-    strcpy(tModule.output_r1_name, "");
-    strcpy(tModule.output_r2, "R;2;0;0");
-    strcpy(tModule.output_r2_name, "");
-    strcpy(tModule.output_r3, "R;3;0;0");
-    strcpy(tModule.output_r3_name, "");
-    strcpy(tModule.output_r4, "R;4;0;0");
-    strcpy(tModule.output_r4_name, "");
-
     /** ----------------------------- WRITE ---------------------------- **/
     bool cek = false;
     QDir path("data/module");
     QStringList files = path.entryList(QDir::Files);
 
-    QString newFiles;
     newFiles.sprintf("m_%s.ini", tModule.module_name);
 
     /* cek apakah nama module sudah dipakai atau belum */
@@ -178,24 +128,65 @@ void form_addModule::on_buttonBox_accepted()
         if(newFiles == QString(files.at(i))) cek = true;
     }
 
-    if (cek) {
-        if (!edit) {
+    if (edit) {
+        mod.write_module(&tModule);
+//        mod.update_module(&tModule, newFiles.prepend("data/module/"));
+//        mod.update_communication(&tModule, newFiles.prepend("data/module/"));
+        accept = 1;
+
+        close();
+    } else {
+        if (cek) {
             accept = 0;
             QMessageBox::warning(this, tr("Warning!"), tr("Nama Module sudah terpakai!", 0,0));
             return;
         } else {
-            mod.update_module(&tModule, newFiles.prepend("data/module"));
-            mod.update_communication(&tModule, newFiles.prepend("data/module"));
+            /** INPUT **/
+            strcpy(tModule.input_a1, "A;1;0;0.000;0.000");
+            strcpy(tModule.input_a1_name, "");
+            strcpy(tModule.input_a2, "A;2;0;0.000;0.000");
+            strcpy(tModule.input_a1_name, "");
+            strcpy(tModule.input_a3, "A;3;0;0.000;0.000");
+            strcpy(tModule.input_a1_name, "");
+            strcpy(tModule.input_a4, "A;4;0;0.000;0.000");
+            strcpy(tModule.input_a1_name, "");
+            strcpy(tModule.input_a5, "A;5;0;0.000;0.000");
+            strcpy(tModule.input_a1_name, "");
+            strcpy(tModule.input_a6, "A;6;0;0.000;0.000");
+            strcpy(tModule.input_a1_name, "");
+
+            strcpy(tModule.input_d1, "D;1;0;0.000;0.000");
+            strcpy(tModule.input_d1_name, "");
+            strcpy(tModule.input_d2, "D;2;0;0.000;0.000");
+            strcpy(tModule.input_d2_name, "");
+            strcpy(tModule.input_d3, "D;3;0;0.000;0.000");
+            strcpy(tModule.input_d3_name, "");
+            strcpy(tModule.input_d4, "D;4;0;0.000;0.000");
+            strcpy(tModule.input_d4_name, "");
+            strcpy(tModule.input_d5, "D;5;0;0.000;0.000");
+            strcpy(tModule.input_d5_name, "");
+            strcpy(tModule.input_d6, "D;6;0;0.000;0.000");
+            strcpy(tModule.input_d6_name, "");
+            strcpy(tModule.input_d7, "D;7;0;0.000;0.000");
+            strcpy(tModule.input_d7_name, "");
+            strcpy(tModule.input_d8, "D;8;0;0.000;0.000");
+            strcpy(tModule.input_d8_name, "");
+
+            /** OUTPUT **/
+            strcpy(tModule.output_r1, "R;1;0;0");
+            strcpy(tModule.output_r1_name, "");
+            strcpy(tModule.output_r2, "R;2;0;0");
+            strcpy(tModule.output_r2_name, "");
+            strcpy(tModule.output_r3, "R;3;0;0");
+            strcpy(tModule.output_r3_name, "");
+            strcpy(tModule.output_r4, "R;4;0;0");
+            strcpy(tModule.output_r4_name, "");
+
+            mod.write_module(&tModule);
             accept = 1;
 
             close();
         }
-    }
-    else {
-        mod.write_module(&tModule);
-        accept = 1;
-
-        close();
     }
 }
 

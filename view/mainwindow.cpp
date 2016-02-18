@@ -197,7 +197,8 @@ void MainWindow::on_actionDisconnect_triggered()
 
     if (!SerialPort->open(QIODevice::ReadWrite)) {
         this->ui->bottom_message->setStyleSheet("QLabel { color : black; }");
-        StatusMessage.replace("Connected to ", "Disconnected from");
+//        StatusMessage.replace("Connected to ", "Disconnected from");
+        StatusMessage = "Disconnect";
         this->ui->bottom_message->setText(StatusMessage);
     }
 }

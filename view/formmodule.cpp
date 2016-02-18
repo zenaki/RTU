@@ -222,12 +222,14 @@ void formModule::setInterface(QString address){
     this->ui->number_1->setText(modules);
     modules.sprintf("%s", tModule.number_gsm_2);
     this->ui->number_2->setText(modules);
+
     modules.sprintf("%s", tModule.user_gsm_1);
     this->ui->user_1->setText(modules);
-    modules.sprintf("%s", tModule.user_gsm_2);
-    this->ui->user_2->setText(modules);
     modules.sprintf("%s", tModule.apn_gsm_1);
     this->ui->apn_1->setText(modules);
+
+    modules.sprintf("%s", tModule.user_gsm_2);
+    this->ui->user_2->setText(modules);
     modules.sprintf("%s", tModule.apn_gsm_2);
     this->ui->apn_2->setText(modules);
 }
@@ -240,21 +242,17 @@ void formModule::on_pbSet_clicked()
     QString Request;
 
     if (Serial_Com->isOpen()) {
-        if (!GetNoSeri.isEmpty()) {
-            if (NoSeri == GetNoSeri) {
-                for (int i = 0; i < ui->tabel_input->rowCount(); i++)
-                {
-                    if (i<6) {
-                        Request.sprintf("set_kanal %d %.3f %.3f", i+1, calib_m[i]->text().toFloat(), calib_x[i]->text().toFloat());
-                        Serial->write_data(Serial_Com, Request);
-                    } else {
-                        Request.sprintf("set_kanal %d %.3f %.3f", i-6+1, calib_m[i]->text().toFloat(), calib_x[i]->text().toFloat());
-                        Serial->write_data(Serial_Com, Request);
-                    }
-                    Message = "On-Board";
+        if (NoSeri == GetNoSeri) {
+            for (int i = 0; i < ui->tabel_input->rowCount(); i++)
+            {
+                if (i<6) {
+                    Request.sprintf("set_kanal %d %.3f %.3f", i+1, calib_m[i]->text().toFloat(), calib_x[i]->text().toFloat());
+                    Serial->write_data(Serial_Com, Request);
+                } else {
+                    Request.sprintf("set_kanal %d %.3f %.3f", i-6+1, calib_m[i]->text().toFloat(), calib_x[i]->text().toFloat());
+                    Serial->write_data(Serial_Com, Request);
                 }
-            } else {
-                Message = "On-Local";
+                Message = "On-Board";
             }
         } else {
             Message = "On-Local";
@@ -514,9 +512,10 @@ void formModule::on_pbEditModule_clicked()
 
     if (faddModule->accept == 0) return;
 
-    QString title;
-    title.sprintf("%s", faddModule->ui->edit_module_name->text().toUtf8().data());
+    this->setInterface(Address_Module);
+//    QString title;
+//    title.sprintf("%s", faddModule->ui->edit_module_name->text().toUtf8().data());
 
-    module_name = work->editModule(Main->modelTree, Main->ui->treeView, title);
+//    module_name = work->editModule(Main->modelTree, Main->ui->treeView, title);
 //    module_count++;
 }
