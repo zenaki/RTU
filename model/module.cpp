@@ -70,8 +70,9 @@ void module::write_module(struct t_module *tmodule){
     sett.setValue("FLAG_COM_GSM_1", tmodule->flag_com_gsm_1);
     sett.setValue("COM_GSM_1", tmodule->com_gsm_1);
     sett.setValue("NUMBER_GSM_1", tmodule->number_gsm_1);
-    sett.setValue("USER_GSM_1", tmodule->user_gsm_1);
     sett.setValue("APN_GSM_1", tmodule->apn_gsm_1);
+    sett.setValue("USER_GSM_1", tmodule->user_gsm_1);
+    sett.setValue("PASSWD_GSM_1", tmodule->passwd_gsm_1);
     sett.endGroup();
 
     sett.beginGroup( "GSM_2" );
@@ -83,8 +84,9 @@ void module::write_module(struct t_module *tmodule){
     sett.setValue("FLAG_COM_GSM_2", tmodule->flag_com_gsm_2);
     sett.setValue("COM_GSM_2", tmodule->com_gsm_2);
     sett.setValue("NUMBER_GSM_2", tmodule->number_gsm_2);
-    sett.setValue("USER_GSM_2", tmodule->user_gsm_2);
     sett.setValue("APN_GSM_2", tmodule->apn_gsm_2);
+    sett.setValue("USER_GSM_2", tmodule->user_gsm_2);
+    sett.setValue("PASSWD_GSM_2", tmodule->passwd_gsm_2);
     sett.endGroup();
 }
 
@@ -149,8 +151,9 @@ void module::update_communication(struct t_module *tmodule, QString addressModul
     sett.setValue("FLAG_COM_GSM_1", tmodule->flag_com_gsm_1);
     sett.setValue("COM_GSM_1", tmodule->com_gsm_1);
     sett.setValue("NUMBER_GSM_1", tmodule->number_gsm_1);
-    sett.setValue("USER_GSM_1", tmodule->user_gsm_1);
     sett.setValue("APN_GSM_1", tmodule->apn_gsm_1);
+    sett.setValue("USER_GSM_1", tmodule->user_gsm_1);
+    sett.setValue("PASSWD_GSM_1", tmodule->passwd_gsm_1);
     sett.endGroup();
 
     sett.beginGroup( "GSM_2" );
@@ -162,8 +165,9 @@ void module::update_communication(struct t_module *tmodule, QString addressModul
     sett.setValue("FLAG_COM_GSM_2", tmodule->flag_com_gsm_2);
     sett.setValue("COM_GSM_2", tmodule->com_gsm_2);
     sett.setValue("NUMBER_GSM_2", tmodule->number_gsm_2);
-    sett.setValue("USER_GSM_2", tmodule->user_gsm_2);
     sett.setValue("APN_GSM_2", tmodule->apn_gsm_2);
+    sett.setValue("USER_GSM_2", tmodule->user_gsm_2);
+    sett.setValue("PASSWD_GSM_2", tmodule->passwd_gsm_2);
     sett.endGroup();
 }
 

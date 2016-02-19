@@ -429,6 +429,7 @@ void formModule::on_pbGet_clicked()
             if (GetNoSeri.isEmpty() || GetNamaBoard.isEmpty()) {
                 Serial->write_data(Serial_Com, "hmi_cek_env\r\n");
                 Serial->write_data(Serial_Com, "hmi_sync\r\n");
+                Serial->write_data(Serial_Com, "hmi_cek_cfg_sim\r\n");
             } else {
                 Serial->write_data(Serial_Com, "hmi_sync\r\n");
             }
@@ -438,9 +439,16 @@ void formModule::on_pbGet_clicked()
 void formModule::readData()
 {
     str_data.append(Serial_Com->readAll());
-    if (GetNoSeri.isEmpty() || GetNamaBoard.isEmpty()) {
-        if (str_data.indexOf("\r\n") > 0) {
-            val_data = str_data.remove("Rinjani$ ").remove("hmi_cek_env").remove("\r").remove("\n").split(";");
+    if (GetNoSeri.isEmpty()) {
+        if (str_data.indexOf("<ENV") > 0 && str_data.indexOf("ENV>") > 0) {
+            val_data = str_data
+                        .remove(" ")
+                        .remove("<ENV")
+                        .remove("<ENVani$")
+                        .remove("ENV>")
+                        .remove("Rinjani$")
+                        .remove("hmi_cek_env")
+                        .remove("\r").remove("\n").split(";");
             GetNamaBoard = val_data[0];
             GetNoSeri = val_data[1];
 //            qDebug() << str_data;
@@ -449,10 +457,28 @@ void formModule::readData()
         }
     } else {
         if (NoSeri == GetNoSeri) {
-            if (str_data.indexOf("(X)") > 0)
-            {
-                val_data = str_data.remove("Rinjani$ ").remove("hmi_sync").remove("\r").remove("\n").remove("(X)").split("*");
-                this->Syncronization();
+            if (str_data.indexOf("<I/O") > 0 && str_data.indexOf("I/O>") > 0) {
+                val_data = str_data
+                            .remove(" ")
+                            .remove("<I/O")
+                            .remove("<I/Oani$")
+                            .remove("I/O>")
+                            .remove("Rinjani$")
+                            .remove("hmi_sync")
+                            .remove("\r").remove("\n").remove("(X)").split("*");
+                this->Sync_IO();
+//                qDebug() << str_data;
+                str_data.clear();
+            } else if (str_data.indexOf("<SIM") > 0 && str_data.indexOf("SIM>") > 0) {
+                val_data = str_data
+                            .remove(" ")
+                            .remove("<SIM")
+                            .remove("<SIMani$")
+                            .remove("SIM>")
+                            .remove("Rinjani$")
+                            .remove("hmi_cek_cfg_sim")
+                            .remove("\r").remove("\n").remove("(X)").split("*");
+                this->Sync_SIM();
 //                qDebug() << str_data;
                 str_data.clear();
             }
@@ -464,7 +490,7 @@ void formModule::readData()
     }
 }
 
-void formModule::Syncronization()
+void formModule::Sync_IO()
 {
     struct t_module tModule;
     QString data[16];
@@ -645,6 +671,189 @@ void formModule::Syncronization()
 
     module mod;
     mod.update_setting(&tModule, Address_Module);
+    this->setInterface(Address_Module);
+
+//    QMessageBox::information(this, "Success!!", "Setting Syncronized ..", 0, 0);
+}
+
+void formModule::Sync_SIM()
+{
+    struct t_module tModule;
+    QString data[16];
+    QStringList temp;
+    for (int i = 0; i < 2; i++)
+    {
+        data[i] = val_data[i];
+    }
+
+    temp = data[0].split(";");
+    if (temp[1] != "-") {
+        data[0] = temp[1];
+        strcpy(tModule.device_name_gsm_1, data[0].toLatin1());
+    } else {
+        data[0] = "";
+        strcpy(tModule.device_name_gsm_1, data[0].toLatin1());
+    }
+    if (temp[2] != "-") {
+        data[0] = temp[2];
+        strcpy(tModule.name_gsm_1, data[0].toLatin1());
+        if (data[0] == "TELKOMSEL") {
+            tModule.flag_gsm_1 = 0;
+        } else if (data[0] == "INDOSAT") {
+            tModule.flag_gsm_1 = 1;
+        } else if (data[0] == "XL") {
+            tModule.flag_gsm_1 = 2;
+        } else if (data[0] == "3") {
+            tModule.flag_gsm_1 = 3;
+        }
+    } else {
+        data[0] = "";
+        strcpy(tModule.name_gsm_1, data[0].toLatin1());
+        tModule.flag_gsm_1 = 0;
+    }
+    if (temp[3] != "-") {
+        data[0] = temp[3];
+        strcpy(tModule.number_gsm_1, data[0].toLatin1());
+    } else {
+        data[0] = "";
+        strcpy(tModule.number_gsm_1, data[0].toLatin1());
+    }
+    if (temp[4] != "-") {
+        data[0] = temp[4];
+        tModule.flag_status_active_gsm_1 = data[0].toInt();
+        if (tModule.flag_status_active_gsm_1 == 0) {
+            data[0] = "NOT ACTIVE";
+            strcpy(tModule.status_gsm_1, data[0].toLatin1());
+        } else if (tModule.flag_status_active_gsm_1 == 1) {
+            data[0] = "ACTIVE";
+            strcpy(tModule.status_gsm_1, data[0].toLatin1());
+        }
+    } else {
+        data[0] = "0";
+        tModule.flag_status_active_gsm_1 = data[0].toInt();
+        data[0] = "NOT ACTIVE";
+        strcpy(tModule.status_gsm_1, data[0].toLatin1());
+    }
+    if (temp[5] != "-") {
+        data[0] = temp[5];
+        strcpy(tModule.apn_gsm_1, data[0].toLatin1());
+    } else {
+        data[0] = temp[5];
+        strcpy(tModule.apn_gsm_1, data[0].toLatin1());
+    }
+    if (temp[6] != "-") {
+        data[0] = temp[6];
+        strcpy(tModule.user_gsm_1, data[0].toLatin1());
+    } else {
+        data[0] = "";
+        strcpy(tModule.user_gsm_1, data[0].toLatin1());
+    }
+    if (temp[7] != "-") {
+        data[0] = temp[7];
+        strcpy(tModule.passwd_gsm_1, data[0].toLatin1());
+    } else {
+        data[0] = "";
+        strcpy(tModule.passwd_gsm_1, data[0].toLatin1());
+    }
+    if (temp[8] != "-") {
+        data[0] = temp[8];
+        strcpy(tModule.com_gsm_1, data[0].toLatin1());
+        if (data[0] == "GSM") {
+            tModule.flag_com_gsm_1 = 0;
+        } else if (data[0] == "GPRS") {
+            tModule.flag_com_gsm_1 = 1;
+        }
+    } else {
+        data[0] = "";
+        strcpy(tModule.com_gsm_1, data[0].toLatin1());
+        tModule.flag_com_gsm_1 = 0;
+    }
+
+    temp = data[1].split(";");
+    if (temp[1] != "-") {
+        data[1] = temp[1];
+        strcpy(tModule.device_name_gsm_2, data[1].toLatin1());
+    } else {
+        data[1] = "";
+        strcpy(tModule.device_name_gsm_2, data[1].toLatin1());
+    }
+    if (temp[2] != "-") {
+        data[1] = temp[2];
+        strcpy(tModule.name_gsm_2, data[1].toLatin1());
+        if (data[1] == "TELKOMSEL") {
+            tModule.flag_gsm_2 = 0;
+        } else if (data[1] == "INDOSAT") {
+            tModule.flag_gsm_2 = 1;
+        } else if (data[1] == "XL") {
+            tModule.flag_gsm_2 = 2;
+        } else if (data[1] == "3") {
+            tModule.flag_gsm_1 = 3;
+        }
+    } else {
+        data[1] = "";
+        strcpy(tModule.name_gsm_2, data[1].toLatin1());
+        tModule.flag_gsm_2 = 0;
+    }
+    if (temp[3] != "-") {
+        data[1] = temp[3];
+        strcpy(tModule.number_gsm_2, data[1].toLatin1());
+    } else {
+        data[1] = "";
+        strcpy(tModule.number_gsm_2, data[1].toLatin1());
+    }
+    if (temp[4] != "-") {
+        data[1] = temp[4];
+        tModule.flag_status_active_gsm_2 = data[1].toInt();
+        if (tModule.flag_status_active_gsm_2 == 0) {
+            data[1] = "NOT ACTIVE";
+            strcpy(tModule.status_gsm_2, data[1].toLatin1());
+        } else if (tModule.flag_status_active_gsm_2 == 1) {
+            data[1] = "ACTIVE";
+            strcpy(tModule.status_gsm_2, data[1].toLatin1());
+        }
+    } else {
+        data[1] = "0";
+        tModule.flag_status_active_gsm_2 = data[1].toInt();
+        data[1] = "NOT ACTIVE";
+        strcpy(tModule.status_gsm_2, data[1].toLatin1());
+    }
+    if (temp[5] != "-") {
+        data[1] = temp[5];
+        strcpy(tModule.apn_gsm_2, data[1].toLatin1());
+    } else {
+        data[1] = "";
+        strcpy(tModule.apn_gsm_2, data[1].toLatin1());
+    }
+    if (temp[6] != "-") {
+        data[1] = temp[6];
+        strcpy(tModule.user_gsm_2, data[1].toLatin1());
+    } else {
+        data[1] = "";
+        strcpy(tModule.user_gsm_2, data[1].toLatin1());
+    }
+    if (temp[7] != "-") {
+        data[1] = temp[7];
+        strcpy(tModule.passwd_gsm_2, data[1].toLatin1());
+    } else {
+        data[1] = "";
+        strcpy(tModule.passwd_gsm_2, data[1].toLatin1());
+    }
+    if (temp[8] != "-") {
+        data[1] = temp[8];
+        strcpy(tModule.com_gsm_2, data[1].toLatin1());
+        if (data[1] == "GSM") {
+            tModule.flag_com_gsm_2 = 0;
+        } else if (data[1] == "GPRS") {
+            tModule.flag_com_gsm_2 = 1;
+        }
+    } else {
+        data[1] = "";
+        strcpy(tModule.com_gsm_2, data[1].toLatin1());
+        tModule.flag_com_gsm_2 = 0;
+    }
+
+    module mod;
+    mod.update_communication(&tModule, Address_Module);
     this->setInterface(Address_Module);
 
     QMessageBox::information(this, "Success!!", "Setting Syncronized ..", 0, 0);
