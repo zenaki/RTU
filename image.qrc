@@ -5,5 +5,6 @@
         <file>image/connect.png</file>
         <file>image/disconnect.png</file>
         <file>image/settings.png</file>
+        <file>image/circle-loading.gif</file>
     </qresource>
 </RCC>

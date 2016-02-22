@@ -76,6 +76,8 @@ private:
     void Sync_IO();
     void Sync_SIM();
 
+    void delay(int v_ms);
+
     MainWindow *Main;
     serial *Serial;
     setting *Setting;

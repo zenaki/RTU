@@ -35,7 +35,12 @@ form_addModule::form_addModule(QWidget *parent, bool create, QString address) :
         this->ui->cb_com_1->setCurrentIndex(tModule.flag_com_gsm_1);
         modules.sprintf("%s", tModule.number_gsm_1);
         this->ui->edit_number_1->setText(modules);
-
+        modules.sprintf("%s", tModule.apn_gsm_1);
+        this->ui->edit_apn_1->setText(modules);
+        modules.sprintf("%s", tModule.user_gsm_1);
+        this->ui->edit_user_1->setText(modules);
+        modules.sprintf("%s", tModule.passwd_gsm_1);
+        this->ui->edit_passwd_1->setText(modules);
 
         this->ui->cb_operator_2->setCurrentIndex(tModule.flag_gsm_2);
         modules.sprintf("%s", tModule.device_name_gsm_2);
@@ -44,6 +49,12 @@ form_addModule::form_addModule(QWidget *parent, bool create, QString address) :
         this->ui->cb_com_2->setCurrentIndex(tModule.flag_com_gsm_2);
         modules.sprintf("%s", tModule.number_gsm_2);
         this->ui->edit_number_2->setText(modules);
+        modules.sprintf("%s", tModule.apn_gsm_2);
+        this->ui->edit_apn_2->setText(modules);
+        modules.sprintf("%s", tModule.user_gsm_2);
+        this->ui->edit_user_2->setText(modules);
+        modules.sprintf("%s", tModule.passwd_gsm_2);
+        this->ui->edit_passwd_2->setText(modules);
     } else {
         this->ui->edit_module_name->setEnabled(true);
     }
@@ -87,10 +98,12 @@ void form_addModule::on_buttonBox_accepted()
     {
         strcpy(tModule.user_gsm_1, "");
         strcpy(tModule.apn_gsm_1, "");
+        strcpy(tModule.passwd_gsm_1, "");
     } else if (tModule.flag_com_gsm_1 == 1)
     {
         strcpy(tModule.user_gsm_1, this->ui->edit_user_1->text().toLatin1());
         strcpy(tModule.apn_gsm_1, this->ui->edit_apn_1->text().toLatin1());
+        strcpy(tModule.passwd_gsm_1, this->ui->edit_passwd_1->text().toLatin1());
     }
 
     /** GSM_2 **/
@@ -110,10 +123,12 @@ void form_addModule::on_buttonBox_accepted()
     {
         strcpy(tModule.user_gsm_2, "");
         strcpy(tModule.apn_gsm_2, "");
+        strcpy(tModule.passwd_gsm_2, "");
     } else if (tModule.flag_com_gsm_2 == 1)
     {
         strcpy(tModule.user_gsm_2, this->ui->edit_user_2->text().toLatin1());
         strcpy(tModule.apn_gsm_2, this->ui->edit_apn_2->text().toLatin1());
+        strcpy(tModule.passwd_gsm_2, this->ui->edit_passwd_2->text().toLatin1());
     }
 
     /** ----------------------------- WRITE ---------------------------- **/
@@ -208,6 +223,7 @@ void form_addModule::on_ck_flag_active_gsm_2_clicked(bool checked)
     ui->label_10->setEnabled(checked);
     ui->label_17->setEnabled(checked);
     ui->label_18->setEnabled(checked);
+    ui->label_20->setEnabled(checked);
 
     ui->cb_operator_2->setEnabled(checked);
     ui->edit_devicename_2->setEnabled(checked);
@@ -222,9 +238,11 @@ void form_addModule::on_cb_com_1_currentIndexChanged(int index)
     if (index == 0) {
         this->ui->edit_user_1->setEnabled(false);
         this->ui->edit_apn_1->setEnabled(false);
+        this->ui->edit_passwd_1->setEnabled(false);
     } else if (index == 1) {
         this->ui->edit_user_1->setEnabled(true);
         this->ui->edit_apn_1->setEnabled(true);
+        this->ui->edit_passwd_1->setEnabled(true);
     }
 }
 
@@ -233,8 +251,10 @@ void form_addModule::on_cb_com_2_currentIndexChanged(int index)
     if (index == 0) {
         this->ui->edit_user_2->setEnabled(false);
         this->ui->edit_apn_2->setEnabled(false);
+        this->ui->edit_passwd_2->setEnabled(false);
     } else if (index == 1) {
         this->ui->edit_user_2->setEnabled(true);
         this->ui->edit_apn_2->setEnabled(true);
+        this->ui->edit_passwd_2->setEnabled(true);
     }
 }

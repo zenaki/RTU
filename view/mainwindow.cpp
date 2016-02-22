@@ -202,16 +202,21 @@ void MainWindow::on_actionConnect_triggered()
 
 void MainWindow::on_actionDisconnect_triggered()
 {
-    serial Serial;
-    Serial.close_serial(SerialPort);
-
-    if (!SerialPort->open(QIODevice::ReadWrite)) {
+//    serial Serial;
+//    Serial.close_serial(SerialPort);
+    if (SerialPort->isOpen()) {
+        SerialPort->close();
         this->ui->bottom_message->setStyleSheet("QLabel { color : black; }");
-//        StatusMessage.replace("Connected to ", "Disconnected from");
+        StatusMessage.replace("Connected to ", "Disconnected from ");
+//        StatusMessage = "Disconnect";
+        this->ui->bottom_message->setText(StatusMessage);
+    } else {
+        this->ui->bottom_message->setStyleSheet("QLabel { color : black; }");
         StatusMessage = "Disconnect";
         this->ui->bottom_message->setText(StatusMessage);
     }
 
     this->ui->actionConnect->setEnabled(true);
     this->ui->actionDisconnect->setEnabled(false);
+    this->ui->actionConfig->setEnabled(true);
 }

@@ -240,8 +240,9 @@ void module::read_module(struct t_module *tmodule, QString addressModule){
     tmodule->flag_com_gsm_1 = sett.value("GSM_1/FLAG_COM_GSM_1").toInt();
     strcpy(tmodule->com_gsm_1, sett.value("GSM_1/COM_GSM_1").toString().toLatin1());
     strcpy(tmodule->number_gsm_1, sett.value("GSM_1/NUMBER_GSM_1").toString().toLatin1());
-    strcpy(tmodule->user_gsm_1, sett.value("GSM_1/USER_GSM_1").toString().toLatin1());
     strcpy(tmodule->apn_gsm_1, sett.value("GSM_1/APN_GSM_1").toString().toLatin1());
+    strcpy(tmodule->user_gsm_1, sett.value("GSM_1/USER_GSM_1").toString().toLatin1());
+    strcpy(tmodule->passwd_gsm_1, sett.value("GSM_1/PASSWD_GSM_1").toString().toLatin1());
 
     tmodule->flag_gsm_2 = sett.value("GSM_2/FLAG_GSM_2").toInt();
     strcpy(tmodule->name_gsm_2, sett.value("GSM_2/GSM_NAME_2").toString().toLatin1());
@@ -251,6 +252,7 @@ void module::read_module(struct t_module *tmodule, QString addressModule){
     tmodule->flag_com_gsm_2 = sett.value("GSM_2/FLAG_COM_GSM_2").toInt();
     strcpy(tmodule->com_gsm_2, sett.value("GSM_2/COM_GSM_2").toString().toLatin1());
     strcpy(tmodule->number_gsm_2, sett.value("GSM_2/NUMBER_GSM_2").toString().toLatin1());
-    strcpy(tmodule->user_gsm_2, sett.value("GSM_2/USER_GSM_2").toString().toLatin1());
     strcpy(tmodule->apn_gsm_2, sett.value("GSM_2/APN_GSM_2").toString().toLatin1());
+    strcpy(tmodule->user_gsm_2, sett.value("GSM_2/USER_GSM_2").toString().toLatin1());
+    strcpy(tmodule->passwd_gsm_2, sett.value("GSM_2/PASSWD_GSM_2").toString().toLatin1());
 }

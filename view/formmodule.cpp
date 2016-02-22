@@ -2,6 +2,9 @@
 #include "ui_formmodule.h"
 
 #include <QDebug>
+#include <QTime>
+
+#include <QtGui>
 
 formModule::formModule(QWidget *parent, QString address, QSerialPort *SerialPort) :
     QDialog(parent),
@@ -28,6 +31,13 @@ formModule::formModule(QWidget *parent, QString address, QSerialPort *SerialPort
     this->setInterface(address);
 
     this->ui->pbEditModule->setHidden(true);
+
+    QMovie *movie = new QMovie(":/new/prefix1/image/circle-loading.gif");
+    this->ui->Busy->setMovie(movie);
+    movie->start();
+    this->ui->Busy->hide();
+
+    this->ui->request->hide();
 }
 
 formModule::~formModule()
@@ -69,15 +79,15 @@ void formModule::setInterface(QString address){
         type_input[i] = new QComboBox(this);
         if (i < 6) {
             type_input[i]->addItem("Analog Monita",250);
-            type_input[i]->addItem("Analog Running Hours",999);
+            type_input[i]->addItem("Analog Running Hours",230);
         } else
         {
             type_input[i]->addItem("RPM",1);
             type_input[i]->addItem("ON / OFF",2);
-            type_input[i]->addItem("Push Button",3);
+//            type_input[i]->addItem("Push Button",3);
             type_input[i]->addItem("Flow - X",6);
             type_input[i]->addItem("RPM - RH",7);
-            type_input[i]->addItem("Running Hours",8);
+//            type_input[i]->addItem("Running Hours",8);
             type_input[i]->addItem("ON / OFF - RH",9);
         }
 //        state_input[i] = new QComboBox(this);
@@ -136,14 +146,12 @@ void formModule::setInterface(QString address){
         name_input[i]->setText(list[i*6]);
         int indx;
         if (list[(i*6)+3].toInt() == 250) {indx = 0;}
-        if (list[(i*6)+3].toInt() == 999) {indx = 1;}
+        if (list[(i*6)+3].toInt() == 230) {indx = 1;}
         if (list[(i*6)+3].toInt() == 1) {indx = 0;}
         if (list[(i*6)+3].toInt() == 2) {indx = 1;}
-        if (list[(i*6)+3].toInt() == 3) {indx = 2;}
-        if (list[(i*6)+3].toInt() == 6) {indx = 3;}
-        if (list[(i*6)+3].toInt() == 7) {indx = 4;}
-        if (list[(i*6)+3].toInt() == 8) {indx = 5;}
-        if (list[(i*6)+3].toInt() == 9) {indx = 6;}
+        if (list[(i*6)+3].toInt() == 6) {indx = 2;}
+        if (list[(i*6)+3].toInt() == 7) {indx = 3;}
+        if (list[(i*6)+3].toInt() == 9) {indx = 4;}
         type_input[i]->setCurrentIndex(indx);
 //        state_input[i]->setCurrentIndex(list[(i*6)+3].toInt());
         calib_m[i]->setText(list[(i*6)+4]);
@@ -227,11 +235,15 @@ void formModule::setInterface(QString address){
     this->ui->user_1->setText(modules);
     modules.sprintf("%s", tModule.apn_gsm_1);
     this->ui->apn_1->setText(modules);
+    modules.sprintf("%s", tModule.passwd_gsm_1);
+    this->ui->passwd_1->setText(modules);
 
     modules.sprintf("%s", tModule.user_gsm_2);
     this->ui->user_2->setText(modules);
     modules.sprintf("%s", tModule.apn_gsm_2);
     this->ui->apn_2->setText(modules);
+    modules.sprintf("%s", tModule.passwd_gsm_2);
+    this->ui->passwd_2->setText(modules);
 }
 
 void formModule::on_pbSet_clicked()
@@ -240,21 +252,192 @@ void formModule::on_pbSet_clicked()
     QString data[16];
     QString Message;
     QString Request;
+    int indx;
     int diff = 0;
+    int jeda = 1000;
+    int reset = 0;
 
     if (Serial_Com->isOpen()) {
         if (NoSeri == GetNoSeri) {
+            this->ui->pbSet->setEnabled(false);
+            this->ui->Busy->show();
+            this->ui->request->show();
+            this->ui->request->setText(Request);
             for (int i = 0; i < ui->tabel_input->rowCount(); i++)
             {
+                Request.sprintf("set_kanal %d %.3f %.3f\r\n", i+1, calib_m[i]->text().toFloat(), calib_x[i]->text().toFloat());
+                Serial->write_data(Serial_Com, Request);
+                this->ui->request->setText(Request);
+                this->delay(jeda);
+
                 if (i<6) {
-                    Request.sprintf("set_kanal %d %.3f %.3f", i+1, calib_m[i]->text().toFloat(), calib_x[i]->text().toFloat());
+                    if (type_input[i]->currentIndex() == 0) {indx = 250;}
+                    if (type_input[i]->currentIndex() == 1) {indx = 230;}
+
+                    Request.sprintf("set_kanal %d status %d\r\n", i+1, indx);
                     Serial->write_data(Serial_Com, Request);
+                    this->ui->request->setText(Request);
+                    this->delay(jeda);
                 } else {
-                    Request.sprintf("set_kanal %d %.3f %.3f", i-6+1, calib_m[i]->text().toFloat(), calib_x[i]->text().toFloat());
+                    if (type_input[i]->currentIndex() == 0) {indx = 1;}
+                    if (type_input[i]->currentIndex() == 1) {indx = 2;}
+                    if (type_input[i]->currentIndex() == 2) {indx = 6;}
+                    if (type_input[i]->currentIndex() == 3) {indx = 7;}
+                    if (type_input[i]->currentIndex() == 4) {indx = 9;}
+                    if (indx == 9) {reset = 1;}
+                    Request.sprintf("set_kanal %d status %d\r\n", i+1, indx);
                     Serial->write_data(Serial_Com, Request);
+                    this->ui->request->setText(Request);
+                    this->delay(jeda);
                 }
-                Message = "On-Board";
             }
+            for (int i = 0; i < ui->tabel_output->rowCount(); i++)
+            {
+                Request.sprintf("set_relay %d %d\r\n", i+1, state_output[i]->currentIndex());
+                Serial->write_data(Serial_Com, Request);
+                this->ui->request->setText(Request);
+                this->delay(jeda);
+            }
+
+            if (!ui->device_1->text().isEmpty()) {
+                Request = "set_cfg_sim 1 nama " + ui->device_1->text() + "\r\n";
+            } else {
+                Request = "set_cfg_sim 1 nama -\r\n";
+            }
+            Serial->write_data(Serial_Com, Request);
+            this->ui->request->setText(Request);
+            this->delay(jeda);
+            if (!ui->opt_1->text().isEmpty()) {
+                Request = "set_cfg_sim 1 operator " + ui->opt_1->text() + "\r\n";
+            } else {
+                Request = "set_cfg_sim 1 operator -\r\n";
+            }
+            Serial->write_data(Serial_Com, Request);
+            this->ui->request->setText(Request);
+            this->delay(jeda);
+            if (!ui->number_1->text().isEmpty()) {
+                Request = "set_cfg_sim 1 nomor " + ui->number_1->text() + "\r\n";
+            } else {
+                Request = "set_cfg_sim 1 nomor -\r\n";
+            }
+            Serial->write_data(Serial_Com, Request);
+            this->ui->request->setText(Request);
+            this->delay(jeda);
+            if (!ui->status_1->text().isEmpty()) {
+                if (ui->status_1->text() == "ACTIVE") {
+                    Request = "set_cfg_sim 1 status 1\r\n";
+                } else {
+                    Request = "set_cfg_sim 1 status 0\r\n";
+                }
+            } else {
+                Request = "set_cfg_sim 1 status 0\r\n";
+            }
+            Serial->write_data(Serial_Com, Request);
+            this->ui->request->setText(Request);
+            this->delay(jeda);
+            if (!ui->apn_1->text().isEmpty()) {
+                Request = "set_cfg_sim 1 apn " + ui->apn_1->text() + "\r\n";
+            } else {
+                Request = "set_cfg_sim 1 apn -\r\n";
+            }
+            Serial->write_data(Serial_Com, Request);
+            this->ui->request->setText(Request);
+            this->delay(jeda);
+            if (!ui->user_1->text().isEmpty()) {
+                Request = "set_cfg_sim 1 user " + ui->user_1->text() + "\r\n";
+            } else {
+                Request = "set_cfg_sim 1 user -\r\n";
+            }
+            Serial->write_data(Serial_Com, Request);
+            this->ui->request->setText(Request);
+            this->delay(jeda);
+            if (!ui->passwd_1->text().isEmpty()) {
+                Request = "set_cfg_sim 1 pass " + ui->passwd_1->text() + "\r\n";
+            } else {
+                Request = "set_cfg_sim 1 pass -\r\n";
+            }
+            Serial->write_data(Serial_Com, Request);
+            this->ui->request->setText(Request);
+            this->delay(jeda);
+            if (!ui->com_1->text().isEmpty()) {
+                Request = "set_cfg_sim 1 mode " + ui->com_1->text() + "\r\n";
+            } else {
+                Request = "set_cfg_sim 1 mode -\r\n";
+            }
+            Serial->write_data(Serial_Com, Request);
+            this->ui->request->setText(Request);
+            this->delay(jeda);
+
+            if (!ui->device_2->text().isEmpty()) {
+                Request = "set_cfg_sim 2 nama " + ui->device_2->text() + "\r\n";
+            } else {
+                Request = "set_cfg_sim 2 nama -\r\n";
+            }
+            Serial->write_data(Serial_Com, Request);
+            this->ui->request->setText(Request);
+            this->delay(jeda);
+            if (!ui->opt_2->text().isEmpty()) {
+                Request = "set_cfg_sim 2 operator " + ui->opt_2->text() + "\r\n";
+            } else {
+                Request = "set_cfg_sim 2 operator -\r\n";
+            }
+            Serial->write_data(Serial_Com, Request);
+            this->ui->request->setText(Request);
+            this->delay(jeda);
+            if (!ui->number_2->text().isEmpty()) {
+                Request = "set_cfg_sim 2 nomor " + ui->number_2->text() + "\r\n";
+            } else {
+                Request = "set_cfg_sim 2 nomor -\r\n";
+            }
+            Serial->write_data(Serial_Com, Request);
+            this->ui->request->setText(Request);
+            this->delay(jeda);
+            if (!ui->status_2->text().isEmpty()) {
+                if (ui->status_2->text() == "ACTIVE") {
+                    Request = "set_cfg_sim 2 status 1\r\n";
+                } else {
+                    Request = "set_cfg_sim 2 status 0\r\n";
+                }
+            } else {
+                Request = "set_cfg_sim 2 status 0\r\n";
+            }
+            Serial->write_data(Serial_Com, Request);
+            this->ui->request->setText(Request);
+            this->delay(jeda);
+            if (!ui->apn_2->text().isEmpty()) {
+                Request = "set_cfg_sim 2 apn " + ui->apn_2->text() + "\r\n";
+            } else {
+                Request = "set_cfg_sim 2 apn -\r\n";
+            }
+            Serial->write_data(Serial_Com, Request);
+            this->ui->request->setText(Request);
+            this->delay(jeda);
+            if (!ui->user_1->text().isEmpty()) {
+                Request = "set_cfg_sim 2 user " + ui->user_2->text() + "\r\n";
+            } else {
+                Request = "set_cfg_sim 2 user -\r\n";
+            }
+            Serial->write_data(Serial_Com, Request);
+            this->ui->request->setText(Request);
+            this->delay(jeda);
+            if (!ui->passwd_2->text().isEmpty()) {
+                Request = "set_cfg_sim 2 pass " + ui->passwd_2->text() + "\r\n";
+            } else {
+                Request = "set_cfg_sim 2 pass -\r\n";
+            }
+            Serial->write_data(Serial_Com, Request);
+            this->ui->request->setText(Request);
+            this->delay(jeda);
+            if (!ui->com_1->text().isEmpty()) {
+                Request = "set_cfg_sim 2 mode " + ui->com_1->text() + "\r\n";
+            } else {
+                Request = "set_cfg_sim 2 mode -\r\n";
+            }
+            Serial->write_data(Serial_Com, Request);
+            this->ui->request->setText(Request);
+            this->delay(jeda);
+
+            Message = "On-Board";
         } else {
             Message = "On-Local";
             if (!GetNoSeri.isEmpty()) {
@@ -267,8 +450,6 @@ void formModule::on_pbSet_clicked()
         Message = "On-Local";
     }
 
-    int indx;
-
     for (int i = 0; i < ui->tabel_input->rowCount(); i++)
     {
 //        tModule.d_port[i].status_input = state_input[i]->currentIndex();
@@ -277,7 +458,7 @@ void formModule::on_pbSet_clicked()
 
         if (i < 6) {
             if (type_input[i]->currentIndex() == 0) {indx = 250;}
-            if (type_input[i]->currentIndex() == 1) {indx = 999;}
+            if (type_input[i]->currentIndex() == 1) {indx = 230;}
             tModule.d_port[i].type_input = indx;
 
             data[i].sprintf("A;%d;%d;%.3f;%.3f", i+1
@@ -287,11 +468,9 @@ void formModule::on_pbSet_clicked()
         } else {
             if (type_input[i]->currentIndex() == 0) {indx = 1;}
             if (type_input[i]->currentIndex() == 1) {indx = 2;}
-            if (type_input[i]->currentIndex() == 2) {indx = 3;}
-            if (type_input[i]->currentIndex() == 3) {indx = 6;}
-            if (type_input[i]->currentIndex() == 4) {indx = 7;}
-            if (type_input[i]->currentIndex() == 5) {indx = 8;}
-            if (type_input[i]->currentIndex() == 6) {indx = 9;}
+            if (type_input[i]->currentIndex() == 2) {indx = 6;}
+            if (type_input[i]->currentIndex() == 3) {indx = 7;}
+            if (type_input[i]->currentIndex() == 4) {indx = 9;}
             tModule.d_port[i].type_input = indx;
 
             data[i].sprintf("D;%d;%d;%.3f;%.3f", i-6+1
@@ -353,6 +532,13 @@ void formModule::on_pbSet_clicked()
     module mod;
     mod.update_setting(&tModule, Address_Module);
 
+    if (reset == 1) {
+        Request = "reset\r\n";
+        Serial->write_data(Serial_Com, Request);
+        this->ui->request->setText(Request);
+        this->delay(jeda*4);
+    }
+
     if (diff == 0) {
         Message.prepend("Setting ").append(" Saved");
         QMessageBox::information(this, "Success!!", Message, 0, 0);
@@ -365,6 +551,11 @@ void formModule::on_pbSet_clicked()
         Message.append("\n\n Syncronize first for Setting to Board ..");
         QMessageBox::information(this, "Success!!", Message, 0, 0);
     }
+    this->ui->pbSet->setEnabled(true);
+    this->ui->Busy->hide();
+    Request = "";
+    this->ui->request->setText(Request);
+    this->ui->request->hide();
 }
 
 void formModule::on_tabWidget_tabBarClicked(int index)
@@ -420,18 +611,21 @@ void formModule::on_tabWidget_tabBarClicked(int index)
 void formModule::on_pbGet_clicked()
 {
     //    Serial->write_data(Serial_Com, "Test\r\n");
+        this->ui->pbGet->setEnabled(false);
         if (!Serial_Com->isOpen())
         {
 //            Main->on_actionConnect_triggered();
             QMessageBox::warning(this, "Serial Comunication !!", "Protocol is not open ..", 0, 0);
+            this->ui->pbGet->setEnabled(true);
         } else
         {
             if (GetNoSeri.isEmpty() || GetNamaBoard.isEmpty()) {
                 Serial->write_data(Serial_Com, "hmi_cek_env\r\n");
-                Serial->write_data(Serial_Com, "hmi_sync\r\n");
-                Serial->write_data(Serial_Com, "hmi_cek_cfg_sim\r\n");
+//                Serial->write_data(Serial_Com, "hmi_sync\r\n");
+//                Serial->write_data(Serial_Com, "hmi_cek_cfg_sim\r\n");
             } else {
                 Serial->write_data(Serial_Com, "hmi_sync\r\n");
+                Serial->write_data(Serial_Com, "hmi_cek_cfg_sim\r\n");
             }
         }
 }
@@ -441,6 +635,7 @@ void formModule::readData()
     str_data.append(Serial_Com->readAll());
     if (GetNoSeri.isEmpty()) {
         if (str_data.indexOf("<ENV") > 0 && str_data.indexOf("ENV>") > 0) {
+            str_data = str_data.mid(str_data.indexOf("<ENV"), str_data.indexOf("ENV>")+4);
             val_data = str_data
                         .remove(" ")
                         .remove("<ENV")
@@ -454,10 +649,20 @@ void formModule::readData()
 //            qDebug() << str_data;
             val_data.clear();
             str_data.clear();
+            if (NoSeri == GetNoSeri) {
+                QMessageBox::information(this, "Syncronize Success !!!", "Serial Number Syncronized !!!", 0, 0);
+                this->ui->pbGet->setEnabled(true);
+            } else {
+                QMessageBox::warning(this, "Syncronize Error !!!", "Different Serial Number !!!", 0, 0);
+                GetNamaBoard = "";
+                GetNoSeri = "";
+                this->ui->pbGet->setEnabled(true);
+            }
         }
     } else {
         if (NoSeri == GetNoSeri) {
             if (str_data.indexOf("<I/O") > 0 && str_data.indexOf("I/O>") > 0) {
+                str_data = str_data.mid(str_data.indexOf("<I/O"), str_data.indexOf("I/O>")+4);
                 val_data = str_data
                             .remove(" ")
                             .remove("<I/O")
@@ -469,7 +674,9 @@ void formModule::readData()
                 this->Sync_IO();
 //                qDebug() << str_data;
                 str_data.clear();
+                this->ui->pbGet->setEnabled(true);
             } else if (str_data.indexOf("<SIM") > 0 && str_data.indexOf("SIM>") > 0) {
+                str_data = str_data.mid(str_data.indexOf("<SIM"), str_data.indexOf("SIM>")+4);
                 val_data = str_data
                             .remove(" ")
                             .remove("<SIM")
@@ -481,11 +688,13 @@ void formModule::readData()
                 this->Sync_SIM();
 //                qDebug() << str_data;
                 str_data.clear();
+                this->ui->pbGet->setEnabled(true);
             }
         } else {
             QMessageBox::warning(this, "Syncronize Error !!", "Different Serial Number !!!", 0, 0);
             val_data.clear();
             str_data.clear();
+            this->ui->pbGet->setEnabled(true);
         }
     }
 }
@@ -787,7 +996,7 @@ void formModule::Sync_SIM()
         } else if (data[1] == "XL") {
             tModule.flag_gsm_2 = 2;
         } else if (data[1] == "3") {
-            tModule.flag_gsm_1 = 3;
+            tModule.flag_gsm_2 = 3;
         }
     } else {
         data[1] = "";
@@ -875,4 +1084,11 @@ void formModule::on_pbEditModule_clicked()
 
 //    module_name = work->editModule(Main->modelTree, Main->ui->treeView, title);
 //    module_count++;
+}
+
+void formModule::delay(int v_ms)
+{
+    QTime dieTime = QTime::currentTime().addMSecs(v_ms);
+    while (QTime::currentTime() < dieTime)
+        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
 }
