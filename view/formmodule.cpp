@@ -610,7 +610,7 @@ void formModule::on_tabWidget_tabBarClicked(int index)
 
 void formModule::on_pbGet_clicked()
 {
-    //    Serial->write_data(Serial_Com, "Test\r\n");
+//        Serial->write_data(Serial_Com, "Test\r\n");
         this->ui->pbGet->setEnabled(false);
         if (!Serial_Com->isOpen())
         {
@@ -635,7 +635,7 @@ void formModule::readData()
     str_data.append(Serial_Com->readAll());
     if (GetNoSeri.isEmpty()) {
         if (str_data.indexOf("<ENV") > 0 && str_data.indexOf("ENV>") > 0) {
-            str_data = str_data.mid(str_data.indexOf("<ENV"), str_data.indexOf("ENV>")+4);
+            str_data = str_data.mid(str_data.indexOf("<ENV"), str_data.indexOf("ENV>"));
             val_data = str_data
                         .remove(" ")
                         .remove("<ENV")
@@ -662,7 +662,7 @@ void formModule::readData()
     } else {
         if (NoSeri == GetNoSeri) {
             if (str_data.indexOf("<I/O") > 0 && str_data.indexOf("I/O>") > 0) {
-                str_data = str_data.mid(str_data.indexOf("<I/O"), str_data.indexOf("I/O>")+4);
+                str_data = str_data.mid(str_data.indexOf("<I/O"), str_data.indexOf("I/O>"));
                 val_data = str_data
                             .remove(" ")
                             .remove("<I/O")
@@ -676,7 +676,7 @@ void formModule::readData()
                 str_data.clear();
                 this->ui->pbGet->setEnabled(true);
             } else if (str_data.indexOf("<SIM") > 0 && str_data.indexOf("SIM>") > 0) {
-                str_data = str_data.mid(str_data.indexOf("<SIM"), str_data.indexOf("SIM>")+4);
+                str_data = str_data.mid(str_data.indexOf("<SIM"), str_data.indexOf("SIM>"));
                 val_data = str_data
                             .remove(" ")
                             .remove("<SIM")
@@ -1078,12 +1078,11 @@ void formModule::on_pbEditModule_clicked()
 
     if (faddModule->accept == 0) return;
 
+    Address_Module = faddModule->currentFile;
     this->setInterface(Address_Module);
-//    QString title;
-//    title.sprintf("%s", faddModule->ui->edit_module_name->text().toUtf8().data());
-
-//    module_name = work->editModule(Main->modelTree, Main->ui->treeView, title);
-//    module_count++;
+    this->setWindowTitle(
+                Address_Module.mid(Address_Module.indexOf("m_")+2,
+                                   Address_Module.indexOf(".ini")).remove(".ini"));
 }
 
 void formModule::delay(int v_ms)

@@ -22,6 +22,7 @@ public:
     bool edit;
     int accept;
     int flag_gsm_2_active;
+    QString currentFile;
 
 private slots:
     void on_buttonBox_accepted();
@@ -35,7 +36,6 @@ private slots:
 
 private:
     module mod;
-
 };
 
 #endif // FORM_ADDMODULE_H

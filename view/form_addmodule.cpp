@@ -13,13 +13,14 @@ form_addModule::form_addModule(QWidget *parent, bool create, QString address) :
     if (edit) {
         struct t_module tModule;
         mod.read_module(&tModule, address);
+        currentFile = address;
         QString modules;
 
         this->on_ck_flag_active_gsm_2_clicked(tModule.flag_dual_gsm);
         this->on_cb_com_1_currentIndexChanged(tModule.flag_com_gsm_1);
         this->on_cb_com_2_currentIndexChanged(tModule.flag_com_gsm_2);
 
-        this->ui->edit_module_name->setEnabled(false);
+//        this->ui->edit_module_name->setEnabled(false);
         modules.sprintf("%s", tModule.module_name);
         this->ui->edit_module_name->setText(modules);
         modules.sprintf("%s", tModule.serial_number);
@@ -55,9 +56,9 @@ form_addModule::form_addModule(QWidget *parent, bool create, QString address) :
         this->ui->edit_user_2->setText(modules);
         modules.sprintf("%s", tModule.passwd_gsm_2);
         this->ui->edit_passwd_2->setText(modules);
-    } else {
+    } /*else {
         this->ui->edit_module_name->setEnabled(true);
-    }
+    }*/
 }
 
 form_addModule::~form_addModule()
@@ -72,7 +73,7 @@ void form_addModule::on_buttonBox_accepted()
     QString newFiles;
     strcpy(tModule.module_name, this->ui->edit_module_name->text().toLatin1());
     newFiles.sprintf("m_%s.ini", tModule.module_name);
-    mod.read_module(&tModule, newFiles.prepend("data/module/"));
+    mod.read_module(&tModule, currentFile);
 
     tModule.flag_active = 1;
     strcpy(tModule.module_name, this->ui->edit_module_name->text().toLatin1());
@@ -143,18 +144,24 @@ void form_addModule::on_buttonBox_accepted()
         if(newFiles == QString(files.at(i))) cek = true;
     }
 
-    if (edit) {
-        mod.write_module(&tModule);
-//        mod.update_module(&tModule, newFiles.prepend("data/module/"));
-//        mod.update_communication(&tModule, newFiles.prepend("data/module/"));
-        accept = 1;
-
-        close();
+    if (cek) {
+        accept = 0;
+        QMessageBox::warning(this, tr("Warning!"), tr("Nama Module sudah terpakai!", 0,0));
+        return;
     } else {
-        if (cek) {
-            accept = 0;
-            QMessageBox::warning(this, tr("Warning!"), tr("Nama Module sudah terpakai!", 0,0));
-            return;
+        if (edit) {
+
+            QFile CurrFile(currentFile);
+            QString CurrNameFile = CurrFile.fileName();
+            CurrFile.rename(CurrNameFile, newFiles);  // rename the backup file as original
+//            CurrFile.close();
+
+            mod.write_module(&tModule);
+//            mod.update_module(&tModule, newFiles.prepend("data/module/"));
+//            mod.update_communication(&tModule, newFiles.prepend("data/module/"));
+            accept = 1;
+            currentFile = newFiles.prepend("data/module/");
+            close();
         } else {
             /** INPUT **/
             strcpy(tModule.input_a1, "A;1;0;0.000;0.000");

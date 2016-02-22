@@ -109,7 +109,7 @@
    <addaction name="actionConnect"/>
    <addaction name="actionDisconnect"/>
    <addaction name="actionConfig"/>
-   <addaction name="actionMenu"/>
+   <addaction name="actionRefresh"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionNew">
@@ -148,9 +148,12 @@
     <string>Save</string>
    </property>
   </action>
-  <action name="actionMenu">
+  <action name="actionRefresh">
    <property name="text">
-    <string>Menu</string>
+    <string>Refresh</string>
+   </property>
+   <property name="toolTip">
+    <string>Refresh</string>
    </property>
   </action>
  </widget>

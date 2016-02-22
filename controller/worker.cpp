@@ -125,6 +125,7 @@ bool worker::checkIfmodule(QString name){
 bool worker::state_of_module(int num, QString newModule, QString *existModule){
     bool cek;
     int  ceknt = num+1;
+    existModule->prepend("m_").append(".ini");
 
     for(int n = 0; n < ceknt; n++){
         if(newModule != existModule[n]){

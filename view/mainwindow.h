@@ -35,6 +35,8 @@ public:
     /** main variable **/
     QStandardItemModel *modelTree;
 
+    void Refresh_Tree();
+
 public slots:
     void on_actionConnect_triggered();
     void on_actionDisconnect_triggered();
@@ -46,6 +48,8 @@ private slots:
 
     void on_actionLoad_triggered();
     void on_treeView_doubleClicked(const QModelIndex &index);
+
+    void on_actionRefresh_triggered();
 
 private:
     /** Other Class **/

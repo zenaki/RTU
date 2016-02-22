@@ -22,27 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
     module_count = 0;
 
     modelTree = new QStandardItemModel();
-    mTree.add_firstItem(modelTree, ui->treeView, "Module");
-
-    /** check current module active **/
-    QDir path("data/module");
-    QStringList files = path.entryList(QDir::Files);
-
-    QString moduleName;
-    QString filePath;
-    for(int i = 0; i < files.count(); i++){
-        moduleName = work->check_statusModule(QString(files.at(i)));
-
-        if(moduleName != "none"){
-            filePath.sprintf("data/module/%s", moduleName.toUtf8().data());
-
-            module_name[module_count] = work->loadModule(modelTree, this->ui->treeView, filePath);
-            module_count++;
-        }
-    }
-
-    mTree.add_firstItem(modelTree, ui->treeView, "Text");
-    //mTree.add_firstItem(modelTree, ui->treeView, "Configuration");
+    this->Refresh_Tree();
 
     this->ui->bottom_message->setStyleSheet("QLabel { color : black; }");
     this->ui->bottom_message->setText("Not Connected");
@@ -136,6 +116,7 @@ void MainWindow::on_actionLoad_triggered()
         else{
             command.sprintf("Module :\n\n%s\n\nSudah terdaftar didalam list!", file.toUtf8().data());
             QMessageBox::warning(this, tr("Warning!"), command, 0,0);
+
         }
     }
 }
@@ -219,4 +200,36 @@ void MainWindow::on_actionDisconnect_triggered()
     this->ui->actionConnect->setEnabled(true);
     this->ui->actionDisconnect->setEnabled(false);
     this->ui->actionConfig->setEnabled(true);
+}
+
+void MainWindow::Refresh_Tree()
+{
+    modelTree->clear();
+    module_count = 0;
+    mTree.add_firstItem(modelTree, ui->treeView, "Module");
+
+    /** check current module active **/
+    QDir path("data/module");
+    QStringList files = path.entryList(QDir::Files);
+
+    QString moduleName;
+    QString filePath;
+    for(int i = 0; i < files.count(); i++){
+        moduleName = work->check_statusModule(QString(files.at(i)));
+
+        if(moduleName != "none"){
+            filePath.sprintf("data/module/%s", moduleName.toUtf8().data());
+
+            module_name[module_count] = work->loadModule(modelTree, this->ui->treeView, filePath);
+            module_count++;
+        }
+    }
+
+    mTree.add_firstItem(modelTree, ui->treeView, "Text");
+    //mTree.add_firstItem(modelTree, ui->treeView, "Configuration");
+}
+
+void MainWindow::on_actionRefresh_triggered()
+{
+    this->Refresh_Tree();
 }
