@@ -38,6 +38,8 @@ formModule::formModule(QWidget *parent, QString address, QSerialPort *SerialPort
     this->ui->Busy->hide();
 
     this->ui->request->hide();
+
+    this->ui->pbGet->setText("Sync");
 }
 
 formModule::~formModule()
@@ -259,6 +261,7 @@ void formModule::on_pbSet_clicked()
 
     if (Serial_Com->isOpen()) {
         if (NoSeri == GetNoSeri) {
+            this->ui->pbGet->setEnabled(false);
             this->ui->pbSet->setEnabled(false);
             this->ui->Busy->show();
             this->ui->request->show();
@@ -551,6 +554,7 @@ void formModule::on_pbSet_clicked()
         Message.append("\n\n Syncronize first for Setting to Board ..");
         QMessageBox::information(this, "Success!!", Message, 0, 0);
     }
+    this->ui->pbGet->setEnabled(true);
     this->ui->pbSet->setEnabled(true);
     this->ui->Busy->hide();
     Request = "";
@@ -612,11 +616,13 @@ void formModule::on_pbGet_clicked()
 {
 //        Serial->write_data(Serial_Com, "Test\r\n");
         this->ui->pbGet->setEnabled(false);
+        this->ui->pbSet->setEnabled(false);
         if (!Serial_Com->isOpen())
         {
 //            Main->on_actionConnect_triggered();
             QMessageBox::warning(this, "Serial Comunication !!", "Protocol is not open ..", 0, 0);
             this->ui->pbGet->setEnabled(true);
+            this->ui->pbSet->setEnabled(true);
         } else
         {
             if (GetNoSeri.isEmpty() || GetNamaBoard.isEmpty()) {
@@ -652,11 +658,15 @@ void formModule::readData()
             if (NoSeri == GetNoSeri) {
                 QMessageBox::information(this, "Syncronize Success !!!", "Serial Number Syncronized !!!", 0, 0);
                 this->ui->pbGet->setEnabled(true);
+                this->ui->pbSet->setEnabled(true);
+                this->ui->pbGet->setText("Get Setting");
             } else {
                 QMessageBox::warning(this, "Syncronize Error !!!", "Different Serial Number !!!", 0, 0);
                 GetNamaBoard = "";
                 GetNoSeri = "";
                 this->ui->pbGet->setEnabled(true);
+                this->ui->pbSet->setEnabled(true);
+                this->ui->pbGet->setText("Sync");
             }
         }
     } else {
@@ -675,6 +685,7 @@ void formModule::readData()
 //                qDebug() << str_data;
                 str_data.clear();
                 this->ui->pbGet->setEnabled(true);
+                this->ui->pbSet->setEnabled(true);
             } else if (str_data.indexOf("<SIM") > 0 && str_data.indexOf("SIM>") > 0) {
                 str_data = str_data.mid(str_data.indexOf("<SIM"), str_data.indexOf("SIM>"));
                 val_data = str_data
@@ -687,14 +698,17 @@ void formModule::readData()
                             .remove("\r").remove("\n").remove("(X)").split("*");
                 this->Sync_SIM();
 //                qDebug() << str_data;
+                QMessageBox::information(this, "Success!!", "Setting Syncronized ..", 0, 0);
                 str_data.clear();
                 this->ui->pbGet->setEnabled(true);
+                this->ui->pbSet->setEnabled(true);
             }
         } else {
             QMessageBox::warning(this, "Syncronize Error !!", "Different Serial Number !!!", 0, 0);
             val_data.clear();
             str_data.clear();
             this->ui->pbGet->setEnabled(true);
+            this->ui->pbSet->setEnabled(true);
         }
     }
 }
@@ -881,8 +895,6 @@ void formModule::Sync_IO()
     module mod;
     mod.update_setting(&tModule, Address_Module);
     this->setInterface(Address_Module);
-
-//    QMessageBox::information(this, "Success!!", "Setting Syncronized ..", 0, 0);
 }
 
 void formModule::Sync_SIM()
@@ -1064,8 +1076,6 @@ void formModule::Sync_SIM()
     module mod;
     mod.update_communication(&tModule, Address_Module);
     this->setInterface(Address_Module);
-
-    QMessageBox::information(this, "Success!!", "Setting Syncronized ..", 0, 0);
 }
 
 void formModule::on_pbEditModule_clicked()
