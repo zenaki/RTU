@@ -153,7 +153,7 @@ void form_addModule::on_buttonBox_accepted()
 
             QFile CurrFile(currentFile);
             QString CurrNameFile = CurrFile.fileName();
-            CurrFile.rename(CurrNameFile, newFiles);  // rename the backup file as original
+            CurrFile.rename(CurrNameFile, newFiles);
 //            CurrFile.close();
 
             mod.write_module(&tModule);

@@ -37,13 +37,16 @@ QString worker::editModule(QStandardItemModel *tree, QTreeView *treeView, QStrin
     return modules;
 }
 
-QString worker::loadModule(QStandardItemModel *tree, QTreeView *treeView, QString address){
+QString worker::loadModule(QStandardItemModel *tree, QTreeView *treeView, QString address, QString NewName){
     struct t_module tModule;
 
     mod.read_module(&tModule, address);
 
     tModule.flag_active = 1;
 
+    if (!NewName.isEmpty()) {
+        strcpy(tModule.module_name, NewName.toLatin1());
+    }
     mod.write_module(&tModule);
 
     QString modules;
@@ -125,9 +128,12 @@ bool worker::checkIfmodule(QString name){
 bool worker::state_of_module(int num, QString newModule, QString *existModule){
     bool cek;
     int  ceknt = num+1;
+//    QString currModule;
     existModule->prepend("m_").append(".ini");
 
     for(int n = 0; n < ceknt; n++){
+//        currModule = existModule->at(n);
+//        currModule.prepend("m_").append(".ini");
         if(newModule != existModule[n]){
             cek = true;
         }

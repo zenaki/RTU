@@ -256,3 +256,86 @@ void module::read_module(struct t_module *tmodule, QString addressModule){
     strcpy(tmodule->user_gsm_2, sett.value("GSM_2/USER_GSM_2").toString().toLatin1());
     strcpy(tmodule->passwd_gsm_2, sett.value("GSM_2/PASSWD_GSM_2").toString().toLatin1());
 }
+
+void module::save_as_module(struct t_module *tmodule, QString address){
+    QString pth = address;
+    QSettings sett(pth, QSettings::IniFormat);
+
+    sett.beginGroup( "MODULE" );
+    sett.setValue("ACTIVE", tmodule->flag_active);
+    sett.setValue("MODULE_NAME", tmodule->module_name);
+    sett.setValue("SN", tmodule->serial_number);
+    sett.setValue("FLAG_DUAL_GSM", tmodule->flag_dual_gsm);
+    sett.endGroup();
+
+    sett.beginGroup( "INPUT" );
+    sett.setValue("INPUT_A1", tmodule->input_a1);
+    sett.setValue("INPUT_A1_NAME", tmodule->input_a1_name);
+    sett.setValue("INPUT_A2", tmodule->input_a2);
+    sett.setValue("INPUT_A2_NAME", tmodule->input_a2_name);
+    sett.setValue("INPUT_A3", tmodule->input_a3);
+    sett.setValue("INPUT_A3_NAME", tmodule->input_a3_name);
+    sett.setValue("INPUT_A4", tmodule->input_a4);
+    sett.setValue("INPUT_A4_NAME", tmodule->input_a4_name);
+    sett.setValue("INPUT_A5", tmodule->input_a5);
+    sett.setValue("INPUT_A5_NAME", tmodule->input_a5_name);
+    sett.setValue("INPUT_A6", tmodule->input_a6);
+    sett.setValue("INPUT_A6_NAME", tmodule->input_a6_name);
+
+    sett.setValue("INPUT_D1", tmodule->input_d1);
+    sett.setValue("INPUT_D1_NAME", tmodule->input_d1_name);
+    sett.setValue("INPUT_D2", tmodule->input_d2);
+    sett.setValue("INPUT_D2_NAME", tmodule->input_d2_name);
+    sett.setValue("INPUT_D3", tmodule->input_d3);
+    sett.setValue("INPUT_D3_NAME", tmodule->input_d3_name);
+    sett.setValue("INPUT_D4", tmodule->input_d4);
+    sett.setValue("INPUT_D4_NAME", tmodule->input_d4_name);
+    sett.setValue("INPUT_D5", tmodule->input_d5);
+    sett.setValue("INPUT_D5_NAME", tmodule->input_d5_name);
+    sett.setValue("INPUT_D6", tmodule->input_d6);
+    sett.setValue("INPUT_D6_NAME", tmodule->input_d6_name);
+    sett.setValue("INPUT_D7", tmodule->input_d7);
+    sett.setValue("INPUT_D7_NAME", tmodule->input_d7_name);
+    sett.setValue("INPUT_D8", tmodule->input_d8);
+    sett.setValue("INPUT_D8_NAME", tmodule->input_d8_name);
+    sett.endGroup();
+
+    sett.beginGroup( "OUTPUT" );
+    sett.setValue("OUTPUT_R1", tmodule->output_r1);
+    sett.setValue("OUTPUT_R1_NAME", tmodule->output_r1_name);
+    sett.setValue("OUTPUT_R2", tmodule->output_r2);
+    sett.setValue("OUTPUT_R2_NAME", tmodule->output_r2_name);
+    sett.setValue("OUTPUT_R3", tmodule->output_r3);
+    sett.setValue("OUTPUT_R3_NAME", tmodule->output_r3_name);
+    sett.setValue("OUTPUT_R4", tmodule->output_r4);
+    sett.setValue("OUTPUT_R4_NAME", tmodule->output_r4_name);
+    sett.endGroup();
+
+    sett.beginGroup( "GSM_1" );
+    sett.setValue("FLAG_GSM_1", tmodule->flag_gsm_1);
+    sett.setValue("GSM_NAME_1", tmodule->name_gsm_1);
+    sett.setValue("DEVICE_NAME_1", tmodule->device_name_gsm_1);
+    sett.setValue("FLAG_STATUS_GSM_1", tmodule->flag_status_active_gsm_1);
+    sett.setValue("STATUS_GSM_1", tmodule->status_gsm_1);
+    sett.setValue("FLAG_COM_GSM_1", tmodule->flag_com_gsm_1);
+    sett.setValue("COM_GSM_1", tmodule->com_gsm_1);
+    sett.setValue("NUMBER_GSM_1", tmodule->number_gsm_1);
+    sett.setValue("APN_GSM_1", tmodule->apn_gsm_1);
+    sett.setValue("USER_GSM_1", tmodule->user_gsm_1);
+    sett.setValue("PASSWD_GSM_1", tmodule->passwd_gsm_1);
+    sett.endGroup();
+
+    sett.beginGroup( "GSM_2" );
+    sett.setValue("FLAG_GSM_2", tmodule->flag_gsm_2);
+    sett.setValue("GSM_NAME_2", tmodule->name_gsm_2);
+    sett.setValue("DEVICE_NAME_2", tmodule->device_name_gsm_2);
+    sett.setValue("FLAG_STATUS_GSM_2", tmodule->flag_status_active_gsm_2);
+    sett.setValue("STATUS_GSM_2", tmodule->status_gsm_2);
+    sett.setValue("FLAG_COM_GSM_2", tmodule->flag_com_gsm_2);
+    sett.setValue("COM_GSM_2", tmodule->com_gsm_2);
+    sett.setValue("NUMBER_GSM_2", tmodule->number_gsm_2);
+    sett.setValue("APN_GSM_2", tmodule->apn_gsm_2);
+    sett.setValue("USER_GSM_2", tmodule->user_gsm_2);
+    sett.setValue("PASSWD_GSM_2", tmodule->passwd_gsm_2);
+    sett.endGroup();
+}

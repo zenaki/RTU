@@ -14,6 +14,7 @@
 
 #include <view/settingsdialog.h>
 #include <view/mainwindow.h>
+#include <model/module.h>
 
 namespace Ui {
 class MainWindow;
@@ -21,6 +22,7 @@ class MainWindow;
 
 class worker;
 class serial;
+class module;
 
 class MainWindow : public QMainWindow
 {
@@ -46,10 +48,15 @@ private slots:
     void update_activeWindow();
     void setActiveSubWindow(QWidget *window);
 
+    void on_actionSave_triggered();
     void on_actionLoad_triggered();
+
+    void on_treeView_clicked(const QModelIndex &index);
     void on_treeView_doubleClicked(const QModelIndex &index);
 
     void on_actionRefresh_triggered();
+
+    void on_actionConfig_triggered();
 
 private:
     /** Other Class **/
@@ -65,10 +72,15 @@ private:
     int num_window;
     QSignalMapper *windowMapper;
 
-    QString module_name[MAX_MODULE];\
+    QString module_name[MAX_MODULE];
+//    QStringList module_name;
     int module_count;
 
     void init_signalSlots();
+    module *mod;
+
+    QString module_address_sv; //for save
+    QString module_name_sv; //for save
 };
 
 #endif // MAINWINDOW_H

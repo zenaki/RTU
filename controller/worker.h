@@ -19,7 +19,7 @@ public:
 
     QString newModule(QStandardItemModel *tree, QTreeView *treeView, QString title);
     QString editModule(QStandardItemModel *tree, QTreeView *treeView, QString title);
-    QString loadModule(QStandardItemModel *tree, QTreeView *treeView, QString address);
+    QString loadModule(QStandardItemModel *tree, QTreeView *treeView, QString address, QString NewName);
     QString checkModule(QString address);
     QString check_statusModule(QString address);
 

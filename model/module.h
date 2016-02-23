@@ -19,6 +19,7 @@ public:
     void update_module(struct t_module *tmodule, QString addressModule);
     void update_communication(struct t_module *tmodule, QString addressModule);
     void read_module(struct t_module *tmodule, QString addressModule);
+    void save_as_module(struct t_module *tmodule, QString address);
 };
 
 #endif // MODULE_H

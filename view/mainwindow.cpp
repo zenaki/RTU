@@ -96,8 +96,29 @@ void MainWindow::on_actionNew_triggered()
 
 }
 
+void MainWindow::on_actionSave_triggered()
+{
+    QString Message;
+    if (!module_name_sv.isEmpty()) {
+        struct t_module tModule;
+        mod->read_module(&tModule, module_address_sv);
+        QString newAddress = QFileDialog::getSaveFileName(this, tr("Save As Module"), module_address_sv, tr("(*.ini)"));
+        mod->save_as_module(&tModule, newAddress);
+        Message = "Module with name : " + module_name_sv + " was saved on \n\n";
+        Message.append(newAddress);
+        QMessageBox::information(this, "Saving Successfully ..", Message, 0, 0);
+    } else {
+        QMessageBox::information(this, "Cannot Saving ..", "Please Select Module Name Before Save Module ..", 0, 0);
+    }
+}
+
 void MainWindow::on_actionLoad_triggered()
 {
+    struct t_module tModule;
+    bool cek;
+    QString currName;
+    QString newName;
+    int cpy_num = 0;
     QString file;
     QString command;
 
@@ -106,18 +127,77 @@ void MainWindow::on_actionLoad_triggered()
     if (fileName.isEmpty()) return;
 
     for(int i = 0; i < fileName.count(); i++){
-        file = work->checkModule(QString(fileName.at(i)).toUtf8().data());
-
-        if(work->state_of_module(module_count, file, module_name)){
+        mod->read_module(&tModule, fileName.at(i));
+        file.sprintf("m_%s.ini", tModule.module_name);
+//        file = work->checkModule(QString(fileName.at(i)).toUtf8().data());
+        cek = false;
+        for (int j = 0; j < module_count; j++) {
+            currName = module_name[j];
+            if (currName.prepend("m_").append(".ini") == file) {
+                cek = true;
+                break;
+            } else {
+                cek = false;
+            }
+        }
+        if(!cek) {
             QApplication::processEvents();
-            module_name[module_count] = work->loadModule(modelTree, this->ui->treeView, QString(fileName.at(i)).toUtf8().data());
+            module_name[module_count] = work->loadModule(modelTree, this->ui->treeView, QString(fileName.at(i)).toUtf8().data(), "");
             module_count++;
+//            this->Refresh_Tree();
         }
-        else{
-            command.sprintf("Module :\n\n%s\n\nSudah terdaftar didalam list!", file.toUtf8().data());
-            QMessageBox::warning(this, tr("Warning!"), command, 0,0);
+        else {
+            command.sprintf("Module : %s\nis Exist !!\n\n", file.toUtf8().data());
+            command.append("Replace it ??");
+            QMessageBox::StandardButton reply;
+            reply = QMessageBox::question(this, "Attention !!", command,
+                                          QMessageBox::Yes|QMessageBox::No);
+            if (reply == QMessageBox::Yes) {
+                mod->read_module(&tModule, fileName[i]);
+                mod->write_module(&tModule);
+                return;
+            } else {
+                mod->read_module(&tModule, fileName[i]);
+                cek = false;
+                while (1) {
+                    cpy_num++;
+                    newName.sprintf("%s_%d", tModule.module_name, cpy_num);
+                    for (int l = 0; l < module_count; l++) {
+                        currName = module_name[l];
+                        if (currName == newName) {
+                            cek = true;
+                            break;
+                        } else {
+                            cek = false;
+                        }
+                    }
+                    if (!cek)
+                        break;
+                }
+                if(!cek) {
+                    QApplication::processEvents();
+                    module_name[module_count] = work->loadModule(modelTree, this->ui->treeView, QString(fileName.at(i)).toUtf8().data(), newName);
+                    module_count++;
+                    break;
+                }
+            }
+        }
+    }
+}
 
-        }
+void MainWindow::on_treeView_clicked(const QModelIndex &index)
+{
+    QString name = index.data(Qt::DisplayRole).toString();
+
+
+    if(work->checkIfmodule(name)) {
+        module_name_sv = name;
+        module_name_sv.prepend("m_").append(".ini");
+        module_address_sv = "data/module/" + module_name_sv;
+    } else {
+        module_name_sv = "";
+        module_address_sv = "";
+        return;
     }
 }
 
@@ -202,6 +282,16 @@ void MainWindow::on_actionDisconnect_triggered()
     this->ui->actionConfig->setEnabled(true);
 }
 
+void MainWindow::on_actionConfig_triggered()
+{
+    int exe;
+    settings_dialog = new SettingsDialog(this);
+    settings_dialog->setWindowTitle("Serial Communication Setting");
+    settings_dialog->setModal(true);
+    exe = settings_dialog->exec();
+    if(exe == 0) return;
+}
+
 void MainWindow::Refresh_Tree()
 {
     modelTree->clear();
@@ -220,7 +310,7 @@ void MainWindow::Refresh_Tree()
         if(moduleName != "none"){
             filePath.sprintf("data/module/%s", moduleName.toUtf8().data());
 
-            module_name[module_count] = work->loadModule(modelTree, this->ui->treeView, filePath);
+            module_name[module_count] = work->loadModule(modelTree, this->ui->treeView, filePath, "");
             module_count++;
         }
     }
