@@ -113,51 +113,93 @@
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionNew">
+   <property name="icon">
+    <iconset resource="../image.qrc">
+     <normaloff>:/new/prefix1/image/filenew.png</normaloff>:/new/prefix1/image/filenew.png</iconset>
+   </property>
    <property name="text">
     <string>New</string>
    </property>
+   <property name="toolTip">
+    <string>New Module</string>
+   </property>
   </action>
   <action name="actionLoad">
+   <property name="icon">
+    <iconset resource="../image.qrc">
+     <normaloff>:/new/prefix1/image/fileopen.png</normaloff>:/new/prefix1/image/fileopen.png</iconset>
+   </property>
    <property name="text">
     <string>Load</string>
    </property>
+   <property name="toolTip">
+    <string>Load Module</string>
+   </property>
   </action>
   <action name="actionConnect">
+   <property name="icon">
+    <iconset resource="../image.qrc">
+     <normaloff>:/new/prefix1/image/connect.png</normaloff>:/new/prefix1/image/connect.png</iconset>
+   </property>
    <property name="text">
     <string>Connect</string>
    </property>
+   <property name="toolTip">
+    <string>Connect to Serial</string>
+   </property>
   </action>
   <action name="actionDisconnect">
+   <property name="icon">
+    <iconset resource="../image.qrc">
+     <normaloff>:/new/prefix1/image/disconnect.png</normaloff>:/new/prefix1/image/disconnect.png</iconset>
+   </property>
    <property name="text">
     <string>Disconnect</string>
    </property>
    <property name="toolTip">
-    <string>Disconnect</string>
+    <string>Disconnect from Serial</string>
    </property>
   </action>
   <action name="actionConfig">
+   <property name="icon">
+    <iconset resource="../image.qrc">
+     <normaloff>:/new/prefix1/image/settings.png</normaloff>:/new/prefix1/image/settings.png</iconset>
+   </property>
    <property name="text">
     <string>Config</string>
    </property>
    <property name="toolTip">
-    <string>Config</string>
+    <string>Config Serial</string>
    </property>
   </action>
   <action name="actionSave">
+   <property name="icon">
+    <iconset resource="../image.qrc">
+     <normaloff>:/new/prefix1/image/editcopy.png</normaloff>:/new/prefix1/image/editcopy.png</iconset>
+   </property>
    <property name="text">
     <string>Save</string>
    </property>
+   <property name="toolTip">
+    <string>Save As  Module</string>
+   </property>
   </action>
   <action name="actionRefresh">
+   <property name="icon">
+    <iconset resource="../image.qrc">
+     <normaloff>:/new/prefix1/image/view-refresh.png</normaloff>:/new/prefix1/image/view-refresh.png</iconset>
+   </property>
    <property name="text">
     <string>Refresh</string>
    </property>
    <property name="toolTip">
-    <string>Refresh</string>
+    <string>Refresh Tree</string>
    </property>
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="../image.qrc"/>
+ </resources>
  <connections/>
 </ui>

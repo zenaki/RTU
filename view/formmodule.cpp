@@ -255,8 +255,8 @@ void formModule::on_pbSet_clicked()
     QString Message;
     QString Request;
     int indx;
-    int diff = 0;
     int jeda = 1000;
+    int diff = 0;
     int reset = 0;
 
     if (Serial_Com->isOpen()) {
@@ -1093,6 +1093,16 @@ void formModule::on_pbEditModule_clicked()
     this->setWindowTitle(
                 Address_Module.mid(Address_Module.indexOf("m_")+2,
                                    Address_Module.indexOf(".ini")).remove(".ini"));
+
+    struct t_module tModule;
+    QString Request;
+    mod.read_module(&tModule, Address_Module.prepend("m_").append(".ini"));
+    Request.sprintf("set_env nama %s\r\n", tModule.module_name);
+    Serial->write_data(Serial_Com, Request);
+    this->delay(1000);
+    Request.sprintf("set_env SN %s\r\n", tModule.serial_number);
+    Serial->write_data(Serial_Com, Request);
+    this->delay(1000);
 }
 
 void formModule::delay(int v_ms)
