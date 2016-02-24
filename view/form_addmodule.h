@@ -23,6 +23,7 @@ public:
     int accept;
     int flag_gsm_2_active;
     QString currentFile;
+    QString currentName;
 
 private slots:
     void on_buttonBox_accepted();

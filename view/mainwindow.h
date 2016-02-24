@@ -55,13 +55,23 @@ private slots:
     void on_treeView_doubleClicked(const QModelIndex &index);
 
     void on_actionRefresh_triggered();
-
+    void readData();
     void on_actionConfig_triggered();
 
 private:
     /** Other Class **/
-
+    QString GetNamaBoard;
+    QString GetNoSeri;
+    QString NoSeri;
+    QString str_data;
+    QStringList val_data;
+    QStringList val_data_io;
+    QStringList val_data_sim;
     QSerialPort *SerialPort;
+
+    void Get_Setting(struct t_module *tModule);
+    void delay(int v_ms);
+
     QString StatusMessage;
 
     mTreeview mTree;

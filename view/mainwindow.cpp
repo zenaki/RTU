@@ -5,6 +5,7 @@
 
 #include <QMessageBox>
 #include <QDebug>
+#include <QTime>
 #include <QtSerialPort/QSerialPort>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -31,9 +32,9 @@ MainWindow::MainWindow(QWidget *parent) :
 //    SettingsDialogForm = new SettingsDialog(this);
 
 //    connect(serial, SIGNAL(error(QSerialPort::SerialPortError)), this, SLOT(handleError(QSerialPort::SerialPortError)));
-//    connect(serial, SIGNAL(readyRead()), this, SLOT(readData()));
 
     SerialPort = new  QSerialPort(this);
+    connect(SerialPort, SIGNAL(readyRead()), this, SLOT(readData()));
 
     this->ui->actionConnect->setEnabled(true);
     this->ui->actionDisconnect->setEnabled(false);
@@ -80,20 +81,91 @@ void MainWindow::setActiveSubWindow(QWidget *window)
 
 void MainWindow::on_actionNew_triggered()
 {
-    faddModule = new form_addModule(this, true);
-    faddModule->setWindowTitle("New Module");
-    faddModule->setModal(true);
+    if (SerialPort->isOpen()) {
+        SerialPort->write("hmi_cek_env\r\n");
+        this->delay(1000);
 
-    faddModule->exec();
+        struct t_module tModule;
+        bool cek = false;
+        QString command;
+        QString newFiles;
+        QDir path("data/module");
+        QStringList files = path.entryList(QDir::Files);
 
-    if (faddModule->accept == 0) return;
+        newFiles = GetNamaBoard;
+        newFiles.prepend("m_").append(".ini");
 
-    QString title;
-    title.sprintf("%s", faddModule->ui->edit_module_name->text().toUtf8().data());
+        /* cek apakah nama module sudah dipakai atau belum */
+        for(int i = 0; i < files.count(); i++){
+            if(newFiles == QString(files.at(i))) {
+                cek = true;
+                break;
+            } else {
+                cek = false;
+            }
+        }
 
-    module_name[module_count] = work->newModule(modelTree, this->ui->treeView, title);
-    module_count++;
+        if (cek) {
+            command.sprintf("Module : %s\nis Exist !!\n\n", GetNamaBoard.toUtf8().data());
+            command.append("Replace it ??");
+            QMessageBox::StandardButton reply;
+            reply = QMessageBox::question(this, "Attention !!", command,
+                                          QMessageBox::Yes|QMessageBox::No);
+            if (reply == QMessageBox::Yes) {
+                SerialPort->write("hmi_sync\r\n");
+                this->delay(1000);
+                SerialPort->write("hmi_cek_cfg_sim\r\n");
+                this->delay(1000);
 
+                this->Get_Setting(&tModule);
+                mod->write_module(&tModule);
+            } else {
+                SerialPort->write("hmi_sync\r\n");
+                this->delay(1000);
+                SerialPort->write("hmi_cek_cfg_sim\r\n");
+                this->delay(1000);
+
+                this->Get_Setting(&tModule);
+                GetNamaBoard.append("_new");
+                QString newModule = "m_" + GetNamaBoard + ".ini";
+                strcpy(tModule.module_name, GetNamaBoard.toUtf8().data());
+                QString Address = "data/module/" + newModule;
+                mod->write_module(&tModule);
+
+                faddModule = new form_addModule(this, false, Address);
+                faddModule->setWindowTitle("Edit Module");
+                faddModule->setModal(true);
+
+                faddModule->exec();
+
+                if (faddModule->accept == 0) return;
+
+                this->Refresh_Tree();
+            }
+        } else {
+            SerialPort->write("hmi_sync\r\n");
+            this->delay(1000);
+            SerialPort->write("hmi_cek_cfg_sim\r\n");
+            this->delay(1000);
+
+            this->Get_Setting(&tModule);
+            mod->write_module(&tModule);
+        }
+    } else {
+        faddModule = new form_addModule(this, true);
+        faddModule->setWindowTitle("New Module");
+        faddModule->setModal(true);
+
+        faddModule->exec();
+
+        if (faddModule->accept == 0) return;
+
+        QString title;
+        title.sprintf("%s", faddModule->ui->edit_module_name->text().toUtf8().data());
+
+        module_name[module_count] = work->newModule(modelTree, this->ui->treeView, title);
+        module_count++;
+    }
 }
 
 void MainWindow::on_actionSave_triggered()
@@ -282,6 +354,63 @@ void MainWindow::on_actionDisconnect_triggered()
     this->ui->actionConfig->setEnabled(true);
 }
 
+void MainWindow::readData()
+{
+    str_data.append(SerialPort->readAll());
+    if (GetNoSeri.isEmpty()) {
+        if (str_data.indexOf("<ENV") > 0 && str_data.indexOf("ENV>") > 0) {
+            int a = str_data.indexOf("<ENV");
+            int b = str_data.indexOf("ENV>");
+            str_data = str_data.mid(a+4, b-a);
+            val_data = str_data
+                        .remove(" ")
+                        .remove("<ENV")
+                        .remove("<ENVani$")
+                        .remove("ENV>")
+                        .remove("Rinjani$")
+                        .remove("hmi_cek_env")
+                        .remove("\r").remove("\n").split(";");
+            GetNamaBoard = val_data[0];
+            GetNoSeri = val_data[1];
+
+            val_data.clear();
+            str_data.clear();
+        }
+    } else {
+        if (str_data.indexOf("<I/O") > 0 && str_data.indexOf("I/O>") > 0) {
+            int a = str_data.indexOf("<I/O");
+            int b = str_data.indexOf("I/O>");
+            str_data = str_data.mid(a+4, b-a);
+            val_data_io = str_data
+                          .remove(" ")
+                          .remove("<I/O")
+                          .remove("<I/Oani$")
+                          .remove("I/O>")
+                          .remove("Rinjani$")
+                          .remove("hmi_sync")
+                          .remove("\r").remove("\n").remove("(X)").split("*");
+
+            str_data.clear();
+            val_data.clear();
+        } else if (str_data.indexOf("<SIM") > 0 && str_data.indexOf("SIM>") > 0) {
+            int a = str_data.indexOf("<SIM");
+            int b = str_data.indexOf("SIM>");
+            str_data = str_data.mid(a+4, b-a);
+            val_data_sim = str_data
+                           .remove(" ")
+                           .remove("<SIM")
+                           .remove("<SIMani$")
+                           .remove("SIM>")
+                           .remove("Rinjani$")
+                           .remove("hmi_cek_cfg_sim")
+                           .remove("\r").remove("\n").remove("(X)").split("*");
+
+            str_data.clear();
+            val_data.clear();
+        }
+    }
+}
+
 void MainWindow::on_actionConfig_triggered()
 {
     int exe;
@@ -322,4 +451,252 @@ void MainWindow::Refresh_Tree()
 void MainWindow::on_actionRefresh_triggered()
 {
     this->Refresh_Tree();
+}
+
+void MainWindow::Get_Setting(struct t_module *tModule)
+{   
+    QString temp;
+
+    QString str_sim_1 = val_data_sim.at(0);
+    QString str_sim_2 = val_data_sim.at(1);
+
+    QStringList list_sim_1 = str_sim_1.split(";");
+    QStringList list_sim_2 = str_sim_2.split(";");
+
+    /** MODUlE **/
+    strcpy(tModule->module_name, GetNamaBoard.toUtf8().data());
+    strcpy(tModule->serial_number, GetNoSeri.toUtf8().data());
+    tModule->flag_active = 1;
+    if (list_sim_2.at(3) != "-") {tModule->flag_dual_gsm = 1;}
+    else {tModule->flag_dual_gsm = 0;}
+
+    /** GSM_1 **/
+    temp = list_sim_1.at(1);
+    if (temp == "-") {
+        strcpy(tModule->device_name_gsm_1, "");
+    } else {
+        strcpy(tModule->device_name_gsm_1, temp.toUtf8().data());
+    }
+    temp = list_sim_1.at(2);
+    if (temp == "-") {
+        strcpy(tModule->name_gsm_1, "");
+        tModule->flag_gsm_1 = 0;
+    } else {
+        strcpy(tModule->name_gsm_1, temp.toUtf8().data());
+        if (temp == "TELKOMSEL") {
+            tModule->flag_gsm_1 = 0;
+        } else if (temp == "INDOSAT") {
+            tModule->flag_gsm_1 = 1;
+        } else if (temp == "XL") {
+            tModule->flag_gsm_1 = 2;
+        } else if (temp == "3") {
+            tModule->flag_gsm_1 = 3;
+        }
+    }
+    temp = list_sim_1.at(3);
+    if (temp == "-") {
+        strcpy(tModule->number_gsm_1, "");
+    } else {
+        strcpy(tModule->number_gsm_1, temp.toUtf8().data());
+    }
+    temp = list_sim_1.at(4);
+    if (temp == "0") {
+        tModule->flag_status_active_gsm_1 = temp.toInt();
+        temp = "NOT ACTIVE";
+        strcpy(tModule->status_gsm_1, temp.toUtf8().data());
+    } else if (temp == "1") {
+        tModule->flag_status_active_gsm_1 = temp.toInt();
+        temp = "ACTIVE";
+        strcpy(tModule->status_gsm_1, temp.toUtf8().data());
+    }
+    temp = list_sim_1.at(8);
+    if (temp == "GSM") {
+        temp = "SMS";
+        strcpy(tModule->com_gsm_1, temp.toUtf8().data());
+        tModule->flag_com_gsm_1 = 0;
+    } else if (temp == "GPRS") {
+        strcpy(tModule->com_gsm_1, temp.toUtf8().data());
+        tModule->flag_com_gsm_1 = 1;
+    } else {
+        strcpy(tModule->com_gsm_1, "");
+        tModule->flag_com_gsm_1 = 0;
+    }
+    if (tModule->flag_com_gsm_1 == 0) {
+        temp = "";
+        strcpy(tModule->apn_gsm_1, temp.toUtf8().data());
+        strcpy(tModule->user_gsm_1, temp.toUtf8().data());
+        strcpy(tModule->passwd_gsm_1, temp.toUtf8().data());
+    } else if (tModule->flag_com_gsm_1 == 1) {
+        temp = list_sim_1.at(5);
+        if (temp == "-") {
+            strcpy(tModule->apn_gsm_1, "");
+        } else {
+            strcpy(tModule->apn_gsm_1, temp.toUtf8().data());
+        }
+        temp = list_sim_1.at(6);
+        if (temp == "-") {
+            strcpy(tModule->user_gsm_1, "");
+        } else {
+            strcpy(tModule->user_gsm_1, temp.toUtf8().data());
+        }
+        temp = list_sim_1.at(7);
+        if (temp == "-") {
+            strcpy(tModule->passwd_gsm_1, "");
+        } else {
+            strcpy(tModule->passwd_gsm_1, temp.toUtf8().data());
+        }
+    }
+
+    /** GSM_2 **/
+    if (tModule->flag_dual_gsm == 0) {
+        strcpy(tModule->device_name_gsm_2, "");
+        strcpy(tModule->name_gsm_2, "");
+        tModule->flag_gsm_2 = 0;
+        strcpy(tModule->number_gsm_2, "");
+        tModule->flag_status_active_gsm_2 = 0;
+        strcpy(tModule->status_gsm_2, "");
+        strcpy(tModule->com_gsm_2, "");
+        tModule->flag_com_gsm_2 = 0;
+        strcpy(tModule->apn_gsm_2, "");
+        strcpy(tModule->user_gsm_2, "");
+        strcpy(tModule->passwd_gsm_2, "");
+    } else if (tModule->flag_dual_gsm == 1) {
+        temp = list_sim_2.at(1);
+        if (temp == "-") {
+            strcpy(tModule->device_name_gsm_2, "");
+        } else {
+            strcpy(tModule->device_name_gsm_2, temp.toUtf8().data());
+        }
+        temp = list_sim_2.at(2);
+        if (temp == "-") {
+            strcpy(tModule->name_gsm_2, "");
+            tModule->flag_gsm_2 = 0;
+        } else {
+            strcpy(tModule->name_gsm_2, temp.toUtf8().data());
+            if (temp == "TELKOMSEL") {
+                tModule->flag_gsm_2 = 0;
+            } else if (temp == "INDOSAT") {
+                tModule->flag_gsm_2 = 1;
+            } else if (temp == "XL") {
+                tModule->flag_gsm_2 = 2;
+            } else if (temp == "3") {
+                tModule->flag_gsm_2 = 3;
+            }
+        }
+        temp = list_sim_2.at(3);
+        if (temp == "-") {
+            strcpy(tModule->number_gsm_2, "");
+        } else {
+            strcpy(tModule->number_gsm_2, temp.toUtf8().data());
+        }
+        temp = list_sim_2.at(4);
+        if (temp == "0") {
+            tModule->flag_status_active_gsm_2 = temp.toInt();
+            temp = "NOT ACTIVE";
+            strcpy(tModule->status_gsm_2, temp.toUtf8().data());
+        } else if (temp == "1") {
+            tModule->flag_status_active_gsm_2 = temp.toInt();
+            temp = "ACTIVE";
+            strcpy(tModule->status_gsm_2, temp.toUtf8().data());
+        }
+        temp = list_sim_2.at(8);
+        if (temp == "GSM") {
+            temp = "SMS";
+            strcpy(tModule->com_gsm_2, temp.toUtf8().data());
+            tModule->flag_com_gsm_2 = 0;
+        } else if (temp == "GPRS") {
+            strcpy(tModule->com_gsm_2, temp.toUtf8().data());
+            tModule->flag_com_gsm_2 = 1;
+        } else {
+            strcpy(tModule->com_gsm_2, "");
+            tModule->flag_com_gsm_2 = 0;
+        }
+        if (tModule->flag_com_gsm_2 == 0) {
+            temp = "";
+            strcpy(tModule->apn_gsm_2, temp.toUtf8().data());
+            strcpy(tModule->user_gsm_2, temp.toUtf8().data());
+            strcpy(tModule->passwd_gsm_2, temp.toUtf8().data());
+        } else if (tModule->flag_com_gsm_2 == 1) {
+            temp = list_sim_2.at(5);
+            if (temp == "-") {
+                strcpy(tModule->apn_gsm_2, "");
+            } else {
+                strcpy(tModule->apn_gsm_2, temp.toUtf8().data());
+            }
+            temp = list_sim_2.at(6);
+            if (temp == "-") {
+                strcpy(tModule->user_gsm_2, "");
+            } else {
+                strcpy(tModule->user_gsm_2, temp.toUtf8().data());
+            }
+            temp = list_sim_2.at(7);
+            if (temp == "-") {
+                strcpy(tModule->passwd_gsm_2, "");
+            } else {
+                strcpy(tModule->passwd_gsm_2, temp.toUtf8().data());
+            }
+        }
+    }
+
+    temp = val_data_io.at(0);
+    strcpy(tModule->input_a1, temp.toUtf8().data());
+    strcpy(tModule->input_a1_name, "");
+    temp = val_data_io.at(1);
+    strcpy(tModule->input_a2, temp.toUtf8().data());
+    strcpy(tModule->input_a2_name, "");
+    temp = val_data_io.at(2);
+    strcpy(tModule->input_a3, temp.toUtf8().data());
+    strcpy(tModule->input_a3_name, "");
+    temp = val_data_io.at(3);
+    strcpy(tModule->input_a4, temp.toUtf8().data());
+    strcpy(tModule->input_a4_name, "");
+    temp = val_data_io.at(4);
+    strcpy(tModule->input_a5, temp.toUtf8().data());
+    strcpy(tModule->input_a5_name, "");
+    temp = val_data_io.at(5);
+    strcpy(tModule->input_a6, temp.toUtf8().data());
+    strcpy(tModule->input_a6_name, "");
+    temp = val_data_io.at(6);
+    strcpy(tModule->input_d1, temp.toUtf8().data());
+    strcpy(tModule->input_d1_name, "");
+    temp = val_data_io.at(7);
+    strcpy(tModule->input_d2, temp.toUtf8().data());
+    strcpy(tModule->input_d2_name, "");
+    temp = val_data_io.at(8);
+    strcpy(tModule->input_d3, temp.toUtf8().data());
+    strcpy(tModule->input_d3_name, "");
+    temp = val_data_io.at(9);
+    strcpy(tModule->input_d4, temp.toUtf8().data());
+    strcpy(tModule->input_d4_name, "");
+    temp = val_data_io.at(10);
+    strcpy(tModule->input_d5, temp.toUtf8().data());
+    strcpy(tModule->input_d5_name, "");
+    temp = val_data_io.at(11);
+    strcpy(tModule->input_d6, temp.toUtf8().data());
+    strcpy(tModule->input_d6_name, "");
+    temp = val_data_io.at(12);
+    strcpy(tModule->input_d7, temp.toUtf8().data());
+    strcpy(tModule->input_d7_name, "");
+    temp = val_data_io.at(13);
+    strcpy(tModule->input_d8, temp.toUtf8().data());
+    strcpy(tModule->input_d8_name, "");
+    temp = val_data_io.at(14);
+    strcpy(tModule->output_r1, temp.toUtf8().data());
+    strcpy(tModule->output_r1_name, "");
+    temp = val_data_io.at(15);
+    strcpy(tModule->output_r2, temp.toUtf8().data());
+    strcpy(tModule->output_r2_name, "");
+    temp = val_data_io.at(16);
+    strcpy(tModule->output_r3, temp.toUtf8().data());
+    strcpy(tModule->output_r3_name, "");
+    temp = val_data_io.at(17);
+    strcpy(tModule->output_r4, temp.toUtf8().data());
+    strcpy(tModule->output_r4_name, "");
+}
+
+void MainWindow::delay(int v_ms)
+{
+    QTime dieTime = QTime::currentTime().addMSecs(v_ms);
+    while (QTime::currentTime() < dieTime)
+        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
 }

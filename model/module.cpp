@@ -76,17 +76,31 @@ void module::write_module(struct t_module *tmodule){
     sett.endGroup();
 
     sett.beginGroup( "GSM_2" );
-    sett.setValue("FLAG_GSM_2", tmodule->flag_gsm_2);
-    sett.setValue("GSM_NAME_2", tmodule->name_gsm_2);
-    sett.setValue("DEVICE_NAME_2", tmodule->device_name_gsm_2);
-    sett.setValue("FLAG_STATUS_GSM_2", tmodule->flag_status_active_gsm_2);
-    sett.setValue("STATUS_GSM_2", tmodule->status_gsm_2);
-    sett.setValue("FLAG_COM_GSM_2", tmodule->flag_com_gsm_2);
-    sett.setValue("COM_GSM_2", tmodule->com_gsm_2);
-    sett.setValue("NUMBER_GSM_2", tmodule->number_gsm_2);
-    sett.setValue("APN_GSM_2", tmodule->apn_gsm_2);
-    sett.setValue("USER_GSM_2", tmodule->user_gsm_2);
-    sett.setValue("PASSWD_GSM_2", tmodule->passwd_gsm_2);
+    if (tmodule->flag_dual_gsm == 1) {
+        sett.setValue("FLAG_GSM_2", tmodule->flag_gsm_2);
+        sett.setValue("GSM_NAME_2", tmodule->name_gsm_2);
+        sett.setValue("DEVICE_NAME_2", tmodule->device_name_gsm_2);
+        sett.setValue("FLAG_STATUS_GSM_2", tmodule->flag_status_active_gsm_2);
+        sett.setValue("STATUS_GSM_2", tmodule->status_gsm_2);
+        sett.setValue("FLAG_COM_GSM_2", tmodule->flag_com_gsm_2);
+        sett.setValue("COM_GSM_2", tmodule->com_gsm_2);
+        sett.setValue("NUMBER_GSM_2", tmodule->number_gsm_2);
+        sett.setValue("APN_GSM_2", tmodule->apn_gsm_2);
+        sett.setValue("USER_GSM_2", tmodule->user_gsm_2);
+        sett.setValue("PASSWD_GSM_2", tmodule->passwd_gsm_2);
+    } else {
+        sett.setValue("FLAG_GSM_2", "");
+        sett.setValue("GSM_NAME_2", "");
+        sett.setValue("DEVICE_NAME_2", "");
+        sett.setValue("FLAG_STATUS_GSM_2", "");
+        sett.setValue("STATUS_GSM_2", "");
+        sett.setValue("FLAG_COM_GSM_2", "");
+        sett.setValue("COM_GSM_2", "");
+        sett.setValue("NUMBER_GSM_2", "");
+        sett.setValue("APN_GSM_2", "");
+        sett.setValue("USER_GSM_2", "");
+        sett.setValue("PASSWD_GSM_2", "");
+    }
     sett.endGroup();
 }
 
@@ -157,17 +171,31 @@ void module::update_communication(struct t_module *tmodule, QString addressModul
     sett.endGroup();
 
     sett.beginGroup( "GSM_2" );
-    sett.setValue("FLAG_GSM_2", tmodule->flag_gsm_2);
-    sett.setValue("GSM_NAME_2", tmodule->name_gsm_2);
-    sett.setValue("DEVICE_NAME_2", tmodule->device_name_gsm_2);
-    sett.setValue("FLAG_STATUS_GSM_2", tmodule->flag_status_active_gsm_2);
-    sett.setValue("STATUS_GSM_2", tmodule->status_gsm_2);
-    sett.setValue("FLAG_COM_GSM_2", tmodule->flag_com_gsm_2);
-    sett.setValue("COM_GSM_2", tmodule->com_gsm_2);
-    sett.setValue("NUMBER_GSM_2", tmodule->number_gsm_2);
-    sett.setValue("APN_GSM_2", tmodule->apn_gsm_2);
-    sett.setValue("USER_GSM_2", tmodule->user_gsm_2);
-    sett.setValue("PASSWD_GSM_2", tmodule->passwd_gsm_2);
+    if (tmodule->flag_dual_gsm == 1) {
+        sett.setValue("FLAG_GSM_2", tmodule->flag_gsm_2);
+        sett.setValue("GSM_NAME_2", tmodule->name_gsm_2);
+        sett.setValue("DEVICE_NAME_2", tmodule->device_name_gsm_2);
+        sett.setValue("FLAG_STATUS_GSM_2", tmodule->flag_status_active_gsm_2);
+        sett.setValue("STATUS_GSM_2", tmodule->status_gsm_2);
+        sett.setValue("FLAG_COM_GSM_2", tmodule->flag_com_gsm_2);
+        sett.setValue("COM_GSM_2", tmodule->com_gsm_2);
+        sett.setValue("NUMBER_GSM_2", tmodule->number_gsm_2);
+        sett.setValue("APN_GSM_2", tmodule->apn_gsm_2);
+        sett.setValue("USER_GSM_2", tmodule->user_gsm_2);
+        sett.setValue("PASSWD_GSM_2", tmodule->passwd_gsm_2);
+    } else {
+        sett.setValue("FLAG_GSM_2", "");
+        sett.setValue("GSM_NAME_2", "");
+        sett.setValue("DEVICE_NAME_2", "");
+        sett.setValue("FLAG_STATUS_GSM_2", "");
+        sett.setValue("STATUS_GSM_2", "");
+        sett.setValue("FLAG_COM_GSM_2", "");
+        sett.setValue("COM_GSM_2", "");
+        sett.setValue("NUMBER_GSM_2", "");
+        sett.setValue("APN_GSM_2", "");
+        sett.setValue("USER_GSM_2", "");
+        sett.setValue("PASSWD_GSM_2", "");
+    }
     sett.endGroup();
 }
 

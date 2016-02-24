@@ -86,7 +86,7 @@
      <item>
       <widget class="QPushButton" name="applyButton">
        <property name="text">
-        <string>Connect</string>
+        <string>Apply</string>
        </property>
       </widget>
      </item>

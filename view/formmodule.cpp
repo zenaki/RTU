@@ -39,7 +39,7 @@ formModule::formModule(QWidget *parent, QString address, QSerialPort *SerialPort
 
     this->ui->request->hide();
 
-    this->ui->pbGet->setText("Sync");
+//    this->ui->pbGet->setText("Sync");
 }
 
 formModule::~formModule()
@@ -260,12 +260,17 @@ void formModule::on_pbSet_clicked()
     int reset = 0;
 
     if (Serial_Com->isOpen()) {
+        this->ui->pbGet->setEnabled(false);
+        this->ui->pbSet->setEnabled(false);
+        this->ui->pbEditModule->setEnabled(false);
+        this->ui->Busy->show();
+        this->ui->request->show();
+
+        Request = "hmi_cek_env\r\n";
+        Serial->write_data(Serial_Com, Request);
+        this->ui->request->setText(Request);
+        this->delay(jeda);
         if (NoSeri == GetNoSeri) {
-            this->ui->pbGet->setEnabled(false);
-            this->ui->pbSet->setEnabled(false);
-            this->ui->Busy->show();
-            this->ui->request->show();
-            this->ui->request->setText(Request);
             for (int i = 0; i < ui->tabel_input->rowCount(); i++)
             {
                 Request.sprintf("set_kanal %d %.3f %.3f\r\n", i+1, calib_m[i]->text().toFloat(), calib_x[i]->text().toFloat());
@@ -551,11 +556,12 @@ void formModule::on_pbSet_clicked()
         QMessageBox::information(this, "Success!!", Message, 0, 0);
     } else if (diff == 2) {
         Message.prepend("Setting ").append(" Saved");
-        Message.append("\n\n Syncronize first for Setting to Board ..");
+        Message.append("\nBoard is not have Serial Number ..");
         QMessageBox::information(this, "Success!!", Message, 0, 0);
     }
     this->ui->pbGet->setEnabled(true);
     this->ui->pbSet->setEnabled(true);
+    this->ui->pbEditModule->setEnabled(true);
     this->ui->Busy->hide();
     Request = "";
     this->ui->request->setText(Request);
@@ -615,24 +621,40 @@ void formModule::on_tabWidget_tabBarClicked(int index)
 void formModule::on_pbGet_clicked()
 {
 //        Serial->write_data(Serial_Com, "Test\r\n");
+        this->ui->Busy->show();
         this->ui->pbGet->setEnabled(false);
         this->ui->pbSet->setEnabled(false);
+        this->ui->pbEditModule->setEnabled(false);
         if (!Serial_Com->isOpen())
         {
 //            Main->on_actionConnect_triggered();
             QMessageBox::warning(this, "Serial Comunication !!", "Protocol is not open ..", 0, 0);
             this->ui->pbGet->setEnabled(true);
             this->ui->pbSet->setEnabled(true);
+            this->ui->pbEditModule->setEnabled(true);
         } else
         {
-            if (GetNoSeri.isEmpty() || GetNamaBoard.isEmpty()) {
-                Serial->write_data(Serial_Com, "hmi_cek_env\r\n");
+            QString Request;
+            Request = "hmi_cek_env\r\n";
+            Serial->write_data(Serial_Com, Request);
+            this->ui->request->setText(Request);
+            this->delay(1000);
+            Request = "hmi_sync\r\n";
+            Serial->write_data(Serial_Com, Request);
+            this->ui->request->setText(Request);
+            this->delay(1000);
+            Request = "hmi_cek_cfg_sim\r\n";
+            Serial->write_data(Serial_Com, Request);
+            this->ui->request->setText(Request);
+            this->delay(1000);
+//            if (GetNoSeri.isEmpty() || GetNamaBoard.isEmpty()) {
+//                Serial->write_data(Serial_Com, "hmi_cek_env\r\n");
+////                Serial->write_data(Serial_Com, "hmi_sync\r\n");
+////                Serial->write_data(Serial_Com, "hmi_cek_cfg_sim\r\n");
+//            } else {
 //                Serial->write_data(Serial_Com, "hmi_sync\r\n");
 //                Serial->write_data(Serial_Com, "hmi_cek_cfg_sim\r\n");
-            } else {
-                Serial->write_data(Serial_Com, "hmi_sync\r\n");
-                Serial->write_data(Serial_Com, "hmi_cek_cfg_sim\r\n");
-            }
+//            }
         }
 }
 
@@ -641,7 +663,9 @@ void formModule::readData()
     str_data.append(Serial_Com->readAll());
     if (GetNoSeri.isEmpty()) {
         if (str_data.indexOf("<ENV") > 0 && str_data.indexOf("ENV>") > 0) {
-            str_data = str_data.mid(str_data.indexOf("<ENV"), str_data.indexOf("ENV>"));
+            int a = str_data.indexOf("<ENV");
+            int b = str_data.indexOf("ENV>");
+            str_data = str_data.mid(a+4, b-a);
             val_data = str_data
                         .remove(" ")
                         .remove("<ENV")
@@ -655,24 +679,28 @@ void formModule::readData()
 //            qDebug() << str_data;
             val_data.clear();
             str_data.clear();
-            if (NoSeri == GetNoSeri) {
-                QMessageBox::information(this, "Syncronize Success !!!", "Serial Number Syncronized !!!", 0, 0);
-                this->ui->pbGet->setEnabled(true);
-                this->ui->pbSet->setEnabled(true);
-                this->ui->pbGet->setText("Get Setting");
-            } else {
-                QMessageBox::warning(this, "Syncronize Error !!!", "Different Serial Number !!!", 0, 0);
-                GetNamaBoard = "";
-                GetNoSeri = "";
-                this->ui->pbGet->setEnabled(true);
-                this->ui->pbSet->setEnabled(true);
-                this->ui->pbGet->setText("Sync");
-            }
+//            if (NoSeri == GetNoSeri) {
+//                QMessageBox::information(this, "Syncronize Success !!!", "Serial Number Syncronized !!!", 0, 0);
+//                this->ui->pbGet->setEnabled(true);
+//                this->ui->pbSet->setEnabled(true);
+//                this->ui->pbEditModule->setEnabled(true);
+//                this->ui->pbGet->setText("Get Setting");
+//            } else {
+//                QMessageBox::warning(this, "Syncronize Error !!!", "Different Serial Number !!!", 0, 0);
+//                GetNamaBoard = "";
+//                GetNoSeri = "";
+//                this->ui->pbGet->setEnabled(true);
+//                this->ui->pbSet->setEnabled(true);
+//                this->ui->pbEditModule->setEnabled(true);
+//                this->ui->pbGet->setText("Sync");
+//            }
         }
     } else {
         if (NoSeri == GetNoSeri) {
             if (str_data.indexOf("<I/O") > 0 && str_data.indexOf("I/O>") > 0) {
-                str_data = str_data.mid(str_data.indexOf("<I/O"), str_data.indexOf("I/O>"));
+                int a = str_data.indexOf("<I/O");
+                int b = str_data.indexOf("I/O>");
+                str_data = str_data.mid(a+4, b-a);
                 val_data = str_data
                             .remove(" ")
                             .remove("<I/O")
@@ -684,10 +712,14 @@ void formModule::readData()
                 this->Sync_IO();
 //                qDebug() << str_data;
                 str_data.clear();
+                val_data.clear();
                 this->ui->pbGet->setEnabled(true);
                 this->ui->pbSet->setEnabled(true);
+                this->ui->pbEditModule->setEnabled(true);
             } else if (str_data.indexOf("<SIM") > 0 && str_data.indexOf("SIM>") > 0) {
-                str_data = str_data.mid(str_data.indexOf("<SIM"), str_data.indexOf("SIM>"));
+                int a = str_data.indexOf("<SIM");
+                int b = str_data.indexOf("SIM>");
+                str_data = str_data.mid(a+4, b-a);
                 val_data = str_data
                             .remove(" ")
                             .remove("<SIM")
@@ -700,8 +732,10 @@ void formModule::readData()
 //                qDebug() << str_data;
                 QMessageBox::information(this, "Success!!", "Setting Syncronized ..", 0, 0);
                 str_data.clear();
+                val_data.clear();
                 this->ui->pbGet->setEnabled(true);
                 this->ui->pbSet->setEnabled(true);
+                this->ui->pbEditModule->setEnabled(true);
             }
         } else {
             QMessageBox::warning(this, "Syncronize Error !!", "Different Serial Number !!!", 0, 0);
@@ -709,6 +743,7 @@ void formModule::readData()
             str_data.clear();
             this->ui->pbGet->setEnabled(true);
             this->ui->pbSet->setEnabled(true);
+            this->ui->pbEditModule->setEnabled(true);
         }
     }
 }
@@ -1096,13 +1131,25 @@ void formModule::on_pbEditModule_clicked()
 
     struct t_module tModule;
     QString Request;
-    mod.read_module(&tModule, Address_Module.prepend("m_").append(".ini"));
-    Request.sprintf("set_env nama %s\r\n", tModule.module_name);
-    Serial->write_data(Serial_Com, Request);
-    this->delay(1000);
-    Request.sprintf("set_env SN %s\r\n", tModule.serial_number);
-    Serial->write_data(Serial_Com, Request);
-    this->delay(1000);
+    mod.read_module(&tModule, Address_Module);
+    if (Serial_Com->isOpen()) {
+        this->ui->Busy->show();
+        this->ui->pbGet->setEnabled(false);
+        this->ui->pbSet->setEnabled(false);
+        this->ui->pbEditModule->setEnabled(false);
+
+        Request.sprintf("set_env nama %s\r\n", tModule.module_name);
+        Serial->write_data(Serial_Com, Request);
+        this->delay(1000);
+        Request.sprintf("set_env SN %s\r\n", tModule.serial_number);
+        Serial->write_data(Serial_Com, Request);
+
+        this->delay(1000);
+        this->ui->Busy->hide();
+        this->ui->pbGet->setEnabled(true);
+        this->ui->pbSet->setEnabled(true);
+        this->ui->pbEditModule->setEnabled(true);
+    }
 }
 
 void formModule::delay(int v_ms)

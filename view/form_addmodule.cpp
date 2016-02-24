@@ -23,6 +23,7 @@ form_addModule::form_addModule(QWidget *parent, bool create, QString address) :
 //        this->ui->edit_module_name->setEnabled(false);
         modules.sprintf("%s", tModule.module_name);
         this->ui->edit_module_name->setText(modules);
+        currentName = modules;
         modules.sprintf("%s", tModule.serial_number);
         this->ui->edit_sn->setText(modules);
         if (tModule.flag_dual_gsm == 1) {
@@ -71,9 +72,9 @@ void form_addModule::on_buttonBox_accepted()
 {
     struct t_module tModule;
     QString newFiles;
+    mod.read_module(&tModule, currentFile);
     strcpy(tModule.module_name, this->ui->edit_module_name->text().toLatin1());
     newFiles.sprintf("m_%s.ini", tModule.module_name);
-    mod.read_module(&tModule, currentFile);
 
     tModule.flag_active = 1;
     strcpy(tModule.module_name, this->ui->edit_module_name->text().toLatin1());
@@ -139,10 +140,22 @@ void form_addModule::on_buttonBox_accepted()
 
     newFiles.sprintf("m_%s.ini", tModule.module_name);
 
+    if (newFiles.indexOf(" ") > 0) {
+        accept = 0;
+        QMessageBox::warning(this, tr("Warning!"), tr("Tidak boleh menggunakan spasi di nama module!", 0,0));
+        return;
+    }
+
     /* cek apakah nama module sudah dipakai atau belum */
     for(int i = 0; i < files.count(); i++){
-        if(newFiles == QString(files.at(i))) cek = true;
+        if(newFiles == QString(files.at(i))) {
+            cek = true;
+            break;
+        } else {
+            cek = false;
+        }
     }
+    if (newFiles == currentName.prepend("m_").append(".ini")) cek = false;
 
     if (cek) {
         accept = 0;
@@ -150,8 +163,8 @@ void form_addModule::on_buttonBox_accepted()
         return;
     } else {
         if (edit) {
-
             QFile CurrFile(currentFile);
+            CurrFile.remove();
             QString CurrNameFile = CurrFile.fileName();
             CurrFile.rename(CurrNameFile, newFiles);
 //            CurrFile.close();
