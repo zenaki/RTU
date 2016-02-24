@@ -138,7 +138,123 @@ void MainWindow::on_actionNew_triggered()
 
                 faddModule->exec();
 
-                if (faddModule->accept == 0) return;
+                if (faddModule->accept == 0) {
+                    QFile CurrFile(Address);
+                    CurrFile.remove();
+                    return;
+                }
+
+                Address = faddModule->currentFile;
+                mod->read_module(&tModule, Address);
+
+                command.sprintf("set_env nama %s\r\n", tModule.module_name);
+                SerialPort->write(command.toUtf8().data());
+                this->delay(1000);
+                command.sprintf("set_env SN %s\r\n", tModule.serial_number);
+                SerialPort->write(command.toUtf8().data());
+                this->delay(1000);
+
+                command.sprintf("set_cfg_sim 1 nama %s\r\n", tModule.device_name_gsm_1);
+                SerialPort->write(command.toUtf8().data());
+                this->delay(1000);
+                command.sprintf("set_cfg_sim 1 operator %s\r\n", tModule.name_gsm_1);
+                SerialPort->write(command.toUtf8().data());
+                this->delay(1000);
+                command.sprintf("set_cfg_sim 1 nomor %s\r\n", tModule.number_gsm_1);
+                SerialPort->write(command.toUtf8().data());
+                this->delay(1000);
+                command.sprintf("set_cfg_sim 1 status %d\r\n", tModule.flag_status_active_gsm_1);
+                SerialPort->write(command.toUtf8().data());
+                this->delay(1000);
+                if (tModule.flag_gsm_1 == 1) {
+                    command.sprintf("set_cfg_sim 1 apn %s\r\n", tModule.apn_gsm_1);
+                    SerialPort->write(command.toUtf8().data());
+                    this->delay(1000);
+                    command.sprintf("set_cfg_sim 1 user %s\r\n", tModule.user_gsm_1);
+                    SerialPort->write(command.toUtf8().data());
+                    this->delay(1000);
+                    command.sprintf("set_cfg_sim 1 pass %s\r\n", tModule.passwd_gsm_1);
+                    SerialPort->write(command.toUtf8().data());
+                    this->delay(1000);
+                } else {
+                    command = "set_cfg_sim 1 apn -\r\n";
+                    SerialPort->write(command.toUtf8().data());
+                    this->delay(1000);
+                    command = "set_cfg_sim 1 user -\r\n";
+                    SerialPort->write(command.toUtf8().data());
+                    this->delay(1000);
+                    command = "set_cfg_sim 1 pass -\r\n";
+                    SerialPort->write(command.toUtf8().data());
+                    this->delay(1000);
+                }
+                command.sprintf("set_cfg_sim 1 mode %s\r\n", tModule.com_gsm_1);
+                SerialPort->write(command.toUtf8().data());
+                this->delay(1000);
+
+                command.sprintf("%s", tModule.name_gsm_2);
+                if (!command.isEmpty()) {
+                    command.sprintf("set_cfg_sim 2 nama %s\r\n", tModule.device_name_gsm_2);
+                    SerialPort->write(command.toUtf8().data());
+                    this->delay(1000);
+                    command.sprintf("set_cfg_sim 2 operator %s\r\n", tModule.name_gsm_2);
+                    SerialPort->write(command.toUtf8().data());
+                    this->delay(1000);
+                    command.sprintf("set_cfg_sim 2 nomor %s\r\n", tModule.number_gsm_2);
+                    SerialPort->write(command.toUtf8().data());
+                    this->delay(1000);
+                    command.sprintf("set_cfg_sim 2 status %d\r\n", tModule.flag_status_active_gsm_2);
+                    SerialPort->write(command.toUtf8().data());
+                    this->delay(1000);
+                    if (tModule.flag_gsm_2 == 1) {
+                        command.sprintf("set_cfg_sim 2 apn %s\r\n", tModule.apn_gsm_2);
+                        SerialPort->write(command.toUtf8().data());
+                        this->delay(1000);
+                        command.sprintf("set_cfg_sim 2 user %s\r\n", tModule.user_gsm_2);
+                        SerialPort->write(command.toUtf8().data());
+                        this->delay(1000);
+                        command.sprintf("set_cfg_sim 2 pass %s\r\n", tModule.passwd_gsm_2);
+                        SerialPort->write(command.toUtf8().data());
+                        this->delay(1000);
+                    } else {
+                        command = "set_cfg_sim 2 apn -\r\n";
+                        SerialPort->write(command.toUtf8().data());
+                        this->delay(1000);
+                        command = "set_cfg_sim 2 user -\r\n";
+                        SerialPort->write(command.toUtf8().data());
+                        this->delay(1000);
+                        command = "set_cfg_sim 2 pass -\r\n";
+                        SerialPort->write(command.toUtf8().data());
+                        this->delay(1000);
+                    }
+                    command.sprintf("set_cfg_sim 2 mode %s\r\n", tModule.com_gsm_2);
+                    SerialPort->write(command.toUtf8().data());
+                    this->delay(1000);
+                } else {
+                    command = "set_env_sim 2 nama -\r\n";
+                    SerialPort->write(command.toUtf8().data());
+                    this->delay(1000);
+                    command = "set_env_sim 2 operator -\r\n";
+                    SerialPort->write(command.toUtf8().data());
+                    this->delay(1000);
+                    command = "set_env_sim 2 nomor -\r\n";
+                    SerialPort->write(command.toUtf8().data());
+                    this->delay(1000);
+                    command = "set_env_sim 2 status 0\r\n";
+                    SerialPort->write(command.toUtf8().data());
+                    this->delay(1000);
+                    command = "set_cfg_sim 2 apn -\r\n";
+                    SerialPort->write(command.toUtf8().data());
+                    this->delay(1000);
+                    command = "set_cfg_sim 2 user -\r\n";
+                    SerialPort->write(command.toUtf8().data());
+                    this->delay(1000);
+                    command = "set_cfg_sim 2 pass -\r\n";
+                    SerialPort->write(command.toUtf8().data());
+                    this->delay(1000);
+                    command = "set_env_sim 2 mode GSM\r\n";
+                    SerialPort->write(command.toUtf8().data());
+                    this->delay(1000);
+                }
 
                 this->Refresh_Tree();
             }

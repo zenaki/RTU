@@ -445,6 +445,15 @@ void formModule::on_pbSet_clicked()
             this->ui->request->setText(Request);
             this->delay(jeda);
 
+            Request = "hmi_sync\r\n";
+            Serial->write_data(Serial_Com, Request);
+            this->ui->request->setText(Request);
+            this->delay(jeda);
+            Request = "hmi_cek_cfg_sim\r\n";
+            Serial->write_data(Serial_Com, Request);
+            this->ui->request->setText(Request);
+            this->delay(jeda);
+
             Message = "On-Board";
         } else {
             Message = "On-Local";
