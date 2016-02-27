@@ -9,6 +9,13 @@
 #include <model/module.h>
 #include <view/formmodule.h>
 #include <ui_formmodule.h>
+#include "model/communication/serial.h"
+
+#include <QSerialPort>
+#include <QTime>
+
+class formModule;
+class serial;
 
 class worker
 {
@@ -16,6 +23,8 @@ public:
     worker();
     module mod;
     mTreeview mTree;
+    formModule *FormModule;
+    serial *Serial;
 
     QString newModule(QStandardItemModel *tree, QTreeView *treeView, QString title);
     QString editModule(QStandardItemModel *tree, QTreeView *treeView, QString title);
@@ -27,6 +36,17 @@ public:
 
     bool checkIfmodule(QString name);
     bool state_of_module(int num, QString newModule, QString *existModule);
+
+    void Get_ENV(struct t_module *tModule, QStringList data);
+    void Get_IO(struct t_module *tModule, QStringList data);
+    void Get_SIM(struct t_module *tModule, QStringList data);
+    void Get_SIG(struct t_module *tModule, QStringList data);
+
+    void Set_ENV(QSerialPort *Serial_Com, struct t_module *tModule);
+    void Set_IO(QSerialPort *Serial_Com, struct t_module *tModule);
+    void Set_SIM(QSerialPort *Serial_Com, struct t_module *tModule);
+
+    void delay(int ms);
 };
 
 #endif // WORKER_H

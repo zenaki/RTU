@@ -39,6 +39,14 @@ public:
 
     void Refresh_Tree();
 
+    QString GetNamaBoard;
+    QString GetNoSeri;
+
+    QString str_data;
+    QStringList val_data;
+    QStringList val_data_io;
+    QStringList val_data_sim;
+
 public slots:
     void on_actionConnect_triggered();
     void on_actionDisconnect_triggered();
@@ -60,17 +68,9 @@ private slots:
 
 private:
     /** Other Class **/
-    QString GetNamaBoard;
-    QString GetNoSeri;
     QString NoSeri;
-    QString str_data;
-    QStringList val_data;
-    QStringList val_data_io;
-    QStringList val_data_sim;
     QSerialPort *SerialPort;
-
-    void Get_Setting(struct t_module *tModule);
-    void delay(int v_ms);
+    serial *Serial;
 
     QString StatusMessage;
 

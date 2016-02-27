@@ -9,6 +9,8 @@ namespace Ui {
 class form_addModule;
 }
 
+class worker;
+
 class form_addModule : public QDialog
 {
     Q_OBJECT

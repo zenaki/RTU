@@ -204,18 +204,12 @@ void form_addModule::on_buttonBox_accepted()
             strcpy(tModule.input_d6_name, "");
             strcpy(tModule.input_d7, "D;7;0;0.000;0.000");
             strcpy(tModule.input_d7_name, "");
-            strcpy(tModule.input_d8, "D;8;0;0.000;0.000");
-            strcpy(tModule.input_d8_name, "");
 
             /** OUTPUT **/
             strcpy(tModule.output_r1, "R;1;0;0");
             strcpy(tModule.output_r1_name, "");
             strcpy(tModule.output_r2, "R;2;0;0");
             strcpy(tModule.output_r2_name, "");
-            strcpy(tModule.output_r3, "R;3;0;0");
-            strcpy(tModule.output_r3_name, "");
-            strcpy(tModule.output_r4, "R;4;0;0");
-            strcpy(tModule.output_r4_name, "");
 
             mod.write_module(&tModule);
             accept = 1;

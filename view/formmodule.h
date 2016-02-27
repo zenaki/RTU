@@ -40,11 +40,9 @@ public:
 private slots:
     void on_pbSet_clicked();
     void on_pbGet_clicked();
+    void on_pbEditModule_clicked();
 
     void on_tabWidget_tabBarClicked(int index);
-    void readData();
-
-    void on_pbEditModule_clicked();
 
 private:
     worker *work;
@@ -52,8 +50,6 @@ private:
     QString module_name;\
 
     QString Address_Module;
-    QString GetNamaBoard;
-    QString GetNoSeri;
     QString NoSeri;
     module mod;
     QSerialPort *Serial_Com;
@@ -76,13 +72,9 @@ private:
     void Sync_IO();
     void Sync_SIM();
 
-    void delay(int v_ms);
-
     MainWindow *Main;
     serial *Serial;
     setting *Setting;
-    QString str_data;
-    QStringList val_data;
 };
 
 #endif // FORMMODULE_H

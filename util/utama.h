@@ -52,11 +52,15 @@ struct data_port{
 };
 
 struct t_module{
-    int flag_active;
+    char get_module_name[32];
+    char get_serial_number[32];
+
+    int  flag_active;
     char module_name[32];
     char serial_number[32];
 
     int  flag_dual_gsm;
+    int  last_signal;
 
     int  flag_gsm_1;
     char name_gsm_1[32];
@@ -111,17 +115,11 @@ struct t_module{
     char input_d6_name[32];
     char input_d7[128];
     char input_d7_name[32];
-    char input_d8[128];
-    char input_d8_name[32];
 
     char output_r1[128];
     char output_r1_name[32];
     char output_r2[128];
     char output_r2_name[32];
-    char output_r3[128];
-    char output_r3_name[32];
-    char output_r4[128];
-    char output_r4_name[32];
 };
 
 struct t_serial_settings {

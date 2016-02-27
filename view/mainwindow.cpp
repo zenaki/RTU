@@ -5,7 +5,6 @@
 
 #include <QMessageBox>
 #include <QDebug>
-#include <QTime>
 #include <QtSerialPort/QSerialPort>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -34,6 +33,7 @@ MainWindow::MainWindow(QWidget *parent) :
 //    connect(serial, SIGNAL(error(QSerialPort::SerialPortError)), this, SLOT(handleError(QSerialPort::SerialPortError)));
 
     SerialPort = new  QSerialPort(this);
+    Serial = new serial();
     connect(SerialPort, SIGNAL(readyRead()), this, SLOT(readData()));
 
     this->ui->actionConnect->setEnabled(true);
@@ -81,9 +81,11 @@ void MainWindow::setActiveSubWindow(QWidget *window)
 
 void MainWindow::on_actionNew_triggered()
 {
+    int jeda = 1000;
+
     if (SerialPort->isOpen()) {
-        SerialPort->write("hmi_cek_env\r\n");
-        this->delay(1000);
+        Serial->write_data(SerialPort, "hmi_cek_env\r\n");
+        work->delay(jeda);
 
         struct t_module tModule;
         bool cek = false;
@@ -112,20 +114,24 @@ void MainWindow::on_actionNew_triggered()
             reply = QMessageBox::question(this, "Attention !!", command,
                                           QMessageBox::Yes|QMessageBox::No);
             if (reply == QMessageBox::Yes) {
-                SerialPort->write("hmi_sync\r\n");
-                this->delay(1000);
-                SerialPort->write("hmi_cek_cfg_sim\r\n");
-                this->delay(1000);
+                Serial->write_data(SerialPort, "hmi_sync\r\n");
+                work->delay(jeda);
+                Serial->write_data(SerialPort, "hmi_cek_cfg_sim\r\n");
+                work->delay(jeda);
 
-                this->Get_Setting(&tModule);
+                work->Get_IO(&tModule, val_data_io);
+                work->Get_SIM(&tModule, val_data_sim);
+
                 mod->write_module(&tModule);
             } else {
-                SerialPort->write("hmi_sync\r\n");
-                this->delay(1000);
-                SerialPort->write("hmi_cek_cfg_sim\r\n");
-                this->delay(1000);
+                Serial->write_data(SerialPort, "hmi_sync\r\n");
+                work->delay(jeda);
+                Serial->write_data(SerialPort, "hmi_cek_cfg_sim\r\n");
+                work->delay(jeda);
 
-                this->Get_Setting(&tModule);
+                work->Get_IO(&tModule, val_data_io);
+                work->Get_SIM(&tModule, val_data_sim);
+
                 GetNamaBoard.append("_new");
                 QString newModule = "m_" + GetNamaBoard + ".ini";
                 strcpy(tModule.module_name, GetNamaBoard.toUtf8().data());
@@ -148,124 +154,132 @@ void MainWindow::on_actionNew_triggered()
                 mod->read_module(&tModule, Address);
 
                 command.sprintf("set_env nama %s\r\n", tModule.module_name);
-                SerialPort->write(command.toUtf8().data());
-                this->delay(1000);
+                Serial->write_data(SerialPort, command);
+                work->delay(jeda);
                 command.sprintf("set_env SN %s\r\n", tModule.serial_number);
-                SerialPort->write(command.toUtf8().data());
-                this->delay(1000);
+                Serial->write_data(SerialPort, command);
+                work->delay(jeda);
 
                 command.sprintf("set_cfg_sim 1 nama %s\r\n", tModule.device_name_gsm_1);
-                SerialPort->write(command.toUtf8().data());
-                this->delay(1000);
+                Serial->write_data(SerialPort, command);
+                work->delay(jeda);
                 command.sprintf("set_cfg_sim 1 operator %s\r\n", tModule.name_gsm_1);
-                SerialPort->write(command.toUtf8().data());
-                this->delay(1000);
+                Serial->write_data(SerialPort, command);
+                work->delay(jeda);
                 command.sprintf("set_cfg_sim 1 nomor %s\r\n", tModule.number_gsm_1);
-                SerialPort->write(command.toUtf8().data());
-                this->delay(1000);
+                Serial->write_data(SerialPort, command);
+                work->delay(jeda);
                 command.sprintf("set_cfg_sim 1 status %d\r\n", tModule.flag_status_active_gsm_1);
-                SerialPort->write(command.toUtf8().data());
-                this->delay(1000);
+                Serial->write_data(SerialPort, command);
+                work->delay(jeda);
                 if (tModule.flag_gsm_1 == 1) {
                     command.sprintf("set_cfg_sim 1 apn %s\r\n", tModule.apn_gsm_1);
-                    SerialPort->write(command.toUtf8().data());
-                    this->delay(1000);
+                    Serial->write_data(SerialPort, command);
+                    work->delay(jeda);
                     command.sprintf("set_cfg_sim 1 user %s\r\n", tModule.user_gsm_1);
-                    SerialPort->write(command.toUtf8().data());
-                    this->delay(1000);
+                    Serial->write_data(SerialPort, command);
+                    work->delay(jeda);
                     command.sprintf("set_cfg_sim 1 pass %s\r\n", tModule.passwd_gsm_1);
-                    SerialPort->write(command.toUtf8().data());
-                    this->delay(1000);
+                    Serial->write_data(SerialPort, command);
+                    work->delay(jeda);
                 } else {
                     command = "set_cfg_sim 1 apn -\r\n";
-                    SerialPort->write(command.toUtf8().data());
-                    this->delay(1000);
+                    Serial->write_data(SerialPort, command);
+                    work->delay(jeda);
                     command = "set_cfg_sim 1 user -\r\n";
-                    SerialPort->write(command.toUtf8().data());
-                    this->delay(1000);
+                    Serial->write_data(SerialPort, command);
+                    work->delay(jeda);
                     command = "set_cfg_sim 1 pass -\r\n";
-                    SerialPort->write(command.toUtf8().data());
-                    this->delay(1000);
+                    Serial->write_data(SerialPort, command);
+                    work->delay(jeda);
                 }
                 command.sprintf("set_cfg_sim 1 mode %s\r\n", tModule.com_gsm_1);
-                SerialPort->write(command.toUtf8().data());
-                this->delay(1000);
+                Serial->write_data(SerialPort, command);
+                work->delay(jeda);
 
                 command.sprintf("%s", tModule.name_gsm_2);
                 if (!command.isEmpty()) {
                     command.sprintf("set_cfg_sim 2 nama %s\r\n", tModule.device_name_gsm_2);
-                    SerialPort->write(command.toUtf8().data());
-                    this->delay(1000);
+                    Serial->write_data(SerialPort, command);
+                    work->delay(jeda);
                     command.sprintf("set_cfg_sim 2 operator %s\r\n", tModule.name_gsm_2);
-                    SerialPort->write(command.toUtf8().data());
-                    this->delay(1000);
+                    Serial->write_data(SerialPort, command);
+                    work->delay(jeda);
                     command.sprintf("set_cfg_sim 2 nomor %s\r\n", tModule.number_gsm_2);
-                    SerialPort->write(command.toUtf8().data());
-                    this->delay(1000);
+                    Serial->write_data(SerialPort, command);
+                    work->delay(jeda);
                     command.sprintf("set_cfg_sim 2 status %d\r\n", tModule.flag_status_active_gsm_2);
-                    SerialPort->write(command.toUtf8().data());
-                    this->delay(1000);
+                    Serial->write_data(SerialPort, command);
+                    work->delay(jeda);
                     if (tModule.flag_gsm_2 == 1) {
                         command.sprintf("set_cfg_sim 2 apn %s\r\n", tModule.apn_gsm_2);
-                        SerialPort->write(command.toUtf8().data());
-                        this->delay(1000);
+                        Serial->write_data(SerialPort, command);
+                        work->delay(jeda);
                         command.sprintf("set_cfg_sim 2 user %s\r\n", tModule.user_gsm_2);
-                        SerialPort->write(command.toUtf8().data());
-                        this->delay(1000);
+                        Serial->write_data(SerialPort, command);
+                        work->delay(jeda);
                         command.sprintf("set_cfg_sim 2 pass %s\r\n", tModule.passwd_gsm_2);
-                        SerialPort->write(command.toUtf8().data());
-                        this->delay(1000);
+                        Serial->write_data(SerialPort, command);
+                        work->delay(jeda);
                     } else {
                         command = "set_cfg_sim 2 apn -\r\n";
-                        SerialPort->write(command.toUtf8().data());
-                        this->delay(1000);
+                        Serial->write_data(SerialPort, command);
+                        work->delay(jeda);
                         command = "set_cfg_sim 2 user -\r\n";
-                        SerialPort->write(command.toUtf8().data());
-                        this->delay(1000);
+                        Serial->write_data(SerialPort, command);
+                        work->delay(jeda);
                         command = "set_cfg_sim 2 pass -\r\n";
-                        SerialPort->write(command.toUtf8().data());
-                        this->delay(1000);
+                        Serial->write_data(SerialPort, command);
+                        work->delay(jeda);
                     }
                     command.sprintf("set_cfg_sim 2 mode %s\r\n", tModule.com_gsm_2);
-                    SerialPort->write(command.toUtf8().data());
-                    this->delay(1000);
+                    Serial->write_data(SerialPort, command);
+                    work->delay(jeda);
                 } else {
                     command = "set_env_sim 2 nama -\r\n";
-                    SerialPort->write(command.toUtf8().data());
-                    this->delay(1000);
+                    Serial->write_data(SerialPort, command);
+                    work->delay(jeda);
                     command = "set_env_sim 2 operator -\r\n";
-                    SerialPort->write(command.toUtf8().data());
-                    this->delay(1000);
+                    Serial->write_data(SerialPort, command);
+                    work->delay(jeda);
                     command = "set_env_sim 2 nomor -\r\n";
-                    SerialPort->write(command.toUtf8().data());
-                    this->delay(1000);
+                    Serial->write_data(SerialPort, command);
+                    work->delay(jeda);
                     command = "set_env_sim 2 status 0\r\n";
-                    SerialPort->write(command.toUtf8().data());
-                    this->delay(1000);
+                    Serial->write_data(SerialPort, command);
+                    work->delay(jeda);
                     command = "set_cfg_sim 2 apn -\r\n";
-                    SerialPort->write(command.toUtf8().data());
-                    this->delay(1000);
+                    Serial->write_data(SerialPort, command);
+                    work->delay(jeda);
                     command = "set_cfg_sim 2 user -\r\n";
-                    SerialPort->write(command.toUtf8().data());
-                    this->delay(1000);
+                    Serial->write_data(SerialPort, command);
+                    work->delay(jeda);
                     command = "set_cfg_sim 2 pass -\r\n";
-                    SerialPort->write(command.toUtf8().data());
-                    this->delay(1000);
+                    Serial->write_data(SerialPort, command);
+                    work->delay(jeda);
                     command = "set_env_sim 2 mode GSM\r\n";
-                    SerialPort->write(command.toUtf8().data());
-                    this->delay(1000);
+                    Serial->write_data(SerialPort, command);
+                    work->delay(jeda);
                 }
 
                 this->Refresh_Tree();
             }
         } else {
-            SerialPort->write("hmi_sync\r\n");
-            this->delay(1000);
-            SerialPort->write("hmi_cek_cfg_sim\r\n");
-            this->delay(1000);
+            Serial->write_data(SerialPort, "hmi_sync\r\n");
+            work->delay(jeda);
+            Serial->write_data(SerialPort, "hmi_cek_cfg_sim\r\n");
+            work->delay(jeda);
 
-            this->Get_Setting(&tModule);
+            work->Get_IO(&tModule, val_data_io);
+            work->Get_SIM(&tModule, val_data_sim);
+
             mod->write_module(&tModule);
+
+            QString title;
+            title.sprintf("%s", tModule.module_name);
+
+            module_name[module_count] = work->newModule(modelTree, this->ui->treeView, title);
+            module_count++;
         }
     } else {
         faddModule = new form_addModule(this, true);
@@ -567,252 +581,4 @@ void MainWindow::Refresh_Tree()
 void MainWindow::on_actionRefresh_triggered()
 {
     this->Refresh_Tree();
-}
-
-void MainWindow::Get_Setting(struct t_module *tModule)
-{   
-    QString temp;
-
-    QString str_sim_1 = val_data_sim.at(0);
-    QString str_sim_2 = val_data_sim.at(1);
-
-    QStringList list_sim_1 = str_sim_1.split(";");
-    QStringList list_sim_2 = str_sim_2.split(";");
-
-    /** MODUlE **/
-    strcpy(tModule->module_name, GetNamaBoard.toUtf8().data());
-    strcpy(tModule->serial_number, GetNoSeri.toUtf8().data());
-    tModule->flag_active = 1;
-    if (list_sim_2.at(3) != "-") {tModule->flag_dual_gsm = 1;}
-    else {tModule->flag_dual_gsm = 0;}
-
-    /** GSM_1 **/
-    temp = list_sim_1.at(1);
-    if (temp == "-") {
-        strcpy(tModule->device_name_gsm_1, "");
-    } else {
-        strcpy(tModule->device_name_gsm_1, temp.toUtf8().data());
-    }
-    temp = list_sim_1.at(2);
-    if (temp == "-") {
-        strcpy(tModule->name_gsm_1, "");
-        tModule->flag_gsm_1 = 0;
-    } else {
-        strcpy(tModule->name_gsm_1, temp.toUtf8().data());
-        if (temp == "TELKOMSEL") {
-            tModule->flag_gsm_1 = 0;
-        } else if (temp == "INDOSAT") {
-            tModule->flag_gsm_1 = 1;
-        } else if (temp == "XL") {
-            tModule->flag_gsm_1 = 2;
-        } else if (temp == "3") {
-            tModule->flag_gsm_1 = 3;
-        }
-    }
-    temp = list_sim_1.at(3);
-    if (temp == "-") {
-        strcpy(tModule->number_gsm_1, "");
-    } else {
-        strcpy(tModule->number_gsm_1, temp.toUtf8().data());
-    }
-    temp = list_sim_1.at(4);
-    if (temp == "0") {
-        tModule->flag_status_active_gsm_1 = temp.toInt();
-        temp = "NOT ACTIVE";
-        strcpy(tModule->status_gsm_1, temp.toUtf8().data());
-    } else if (temp == "1") {
-        tModule->flag_status_active_gsm_1 = temp.toInt();
-        temp = "ACTIVE";
-        strcpy(tModule->status_gsm_1, temp.toUtf8().data());
-    }
-    temp = list_sim_1.at(8);
-    if (temp == "GSM") {
-        temp = "SMS";
-        strcpy(tModule->com_gsm_1, temp.toUtf8().data());
-        tModule->flag_com_gsm_1 = 0;
-    } else if (temp == "GPRS") {
-        strcpy(tModule->com_gsm_1, temp.toUtf8().data());
-        tModule->flag_com_gsm_1 = 1;
-    } else {
-        strcpy(tModule->com_gsm_1, "");
-        tModule->flag_com_gsm_1 = 0;
-    }
-    if (tModule->flag_com_gsm_1 == 0) {
-        temp = "";
-        strcpy(tModule->apn_gsm_1, temp.toUtf8().data());
-        strcpy(tModule->user_gsm_1, temp.toUtf8().data());
-        strcpy(tModule->passwd_gsm_1, temp.toUtf8().data());
-    } else if (tModule->flag_com_gsm_1 == 1) {
-        temp = list_sim_1.at(5);
-        if (temp == "-") {
-            strcpy(tModule->apn_gsm_1, "");
-        } else {
-            strcpy(tModule->apn_gsm_1, temp.toUtf8().data());
-        }
-        temp = list_sim_1.at(6);
-        if (temp == "-") {
-            strcpy(tModule->user_gsm_1, "");
-        } else {
-            strcpy(tModule->user_gsm_1, temp.toUtf8().data());
-        }
-        temp = list_sim_1.at(7);
-        if (temp == "-") {
-            strcpy(tModule->passwd_gsm_1, "");
-        } else {
-            strcpy(tModule->passwd_gsm_1, temp.toUtf8().data());
-        }
-    }
-
-    /** GSM_2 **/
-    if (tModule->flag_dual_gsm == 0) {
-        strcpy(tModule->device_name_gsm_2, "");
-        strcpy(tModule->name_gsm_2, "");
-        tModule->flag_gsm_2 = 0;
-        strcpy(tModule->number_gsm_2, "");
-        tModule->flag_status_active_gsm_2 = 0;
-        strcpy(tModule->status_gsm_2, "");
-        strcpy(tModule->com_gsm_2, "");
-        tModule->flag_com_gsm_2 = 0;
-        strcpy(tModule->apn_gsm_2, "");
-        strcpy(tModule->user_gsm_2, "");
-        strcpy(tModule->passwd_gsm_2, "");
-    } else if (tModule->flag_dual_gsm == 1) {
-        temp = list_sim_2.at(1);
-        if (temp == "-") {
-            strcpy(tModule->device_name_gsm_2, "");
-        } else {
-            strcpy(tModule->device_name_gsm_2, temp.toUtf8().data());
-        }
-        temp = list_sim_2.at(2);
-        if (temp == "-") {
-            strcpy(tModule->name_gsm_2, "");
-            tModule->flag_gsm_2 = 0;
-        } else {
-            strcpy(tModule->name_gsm_2, temp.toUtf8().data());
-            if (temp == "TELKOMSEL") {
-                tModule->flag_gsm_2 = 0;
-            } else if (temp == "INDOSAT") {
-                tModule->flag_gsm_2 = 1;
-            } else if (temp == "XL") {
-                tModule->flag_gsm_2 = 2;
-            } else if (temp == "3") {
-                tModule->flag_gsm_2 = 3;
-            }
-        }
-        temp = list_sim_2.at(3);
-        if (temp == "-") {
-            strcpy(tModule->number_gsm_2, "");
-        } else {
-            strcpy(tModule->number_gsm_2, temp.toUtf8().data());
-        }
-        temp = list_sim_2.at(4);
-        if (temp == "0") {
-            tModule->flag_status_active_gsm_2 = temp.toInt();
-            temp = "NOT ACTIVE";
-            strcpy(tModule->status_gsm_2, temp.toUtf8().data());
-        } else if (temp == "1") {
-            tModule->flag_status_active_gsm_2 = temp.toInt();
-            temp = "ACTIVE";
-            strcpy(tModule->status_gsm_2, temp.toUtf8().data());
-        }
-        temp = list_sim_2.at(8);
-        if (temp == "GSM") {
-            temp = "SMS";
-            strcpy(tModule->com_gsm_2, temp.toUtf8().data());
-            tModule->flag_com_gsm_2 = 0;
-        } else if (temp == "GPRS") {
-            strcpy(tModule->com_gsm_2, temp.toUtf8().data());
-            tModule->flag_com_gsm_2 = 1;
-        } else {
-            strcpy(tModule->com_gsm_2, "");
-            tModule->flag_com_gsm_2 = 0;
-        }
-        if (tModule->flag_com_gsm_2 == 0) {
-            temp = "";
-            strcpy(tModule->apn_gsm_2, temp.toUtf8().data());
-            strcpy(tModule->user_gsm_2, temp.toUtf8().data());
-            strcpy(tModule->passwd_gsm_2, temp.toUtf8().data());
-        } else if (tModule->flag_com_gsm_2 == 1) {
-            temp = list_sim_2.at(5);
-            if (temp == "-") {
-                strcpy(tModule->apn_gsm_2, "");
-            } else {
-                strcpy(tModule->apn_gsm_2, temp.toUtf8().data());
-            }
-            temp = list_sim_2.at(6);
-            if (temp == "-") {
-                strcpy(tModule->user_gsm_2, "");
-            } else {
-                strcpy(tModule->user_gsm_2, temp.toUtf8().data());
-            }
-            temp = list_sim_2.at(7);
-            if (temp == "-") {
-                strcpy(tModule->passwd_gsm_2, "");
-            } else {
-                strcpy(tModule->passwd_gsm_2, temp.toUtf8().data());
-            }
-        }
-    }
-
-    temp = val_data_io.at(0);
-    strcpy(tModule->input_a1, temp.toUtf8().data());
-    strcpy(tModule->input_a1_name, "");
-    temp = val_data_io.at(1);
-    strcpy(tModule->input_a2, temp.toUtf8().data());
-    strcpy(tModule->input_a2_name, "");
-    temp = val_data_io.at(2);
-    strcpy(tModule->input_a3, temp.toUtf8().data());
-    strcpy(tModule->input_a3_name, "");
-    temp = val_data_io.at(3);
-    strcpy(tModule->input_a4, temp.toUtf8().data());
-    strcpy(tModule->input_a4_name, "");
-    temp = val_data_io.at(4);
-    strcpy(tModule->input_a5, temp.toUtf8().data());
-    strcpy(tModule->input_a5_name, "");
-    temp = val_data_io.at(5);
-    strcpy(tModule->input_a6, temp.toUtf8().data());
-    strcpy(tModule->input_a6_name, "");
-    temp = val_data_io.at(6);
-    strcpy(tModule->input_d1, temp.toUtf8().data());
-    strcpy(tModule->input_d1_name, "");
-    temp = val_data_io.at(7);
-    strcpy(tModule->input_d2, temp.toUtf8().data());
-    strcpy(tModule->input_d2_name, "");
-    temp = val_data_io.at(8);
-    strcpy(tModule->input_d3, temp.toUtf8().data());
-    strcpy(tModule->input_d3_name, "");
-    temp = val_data_io.at(9);
-    strcpy(tModule->input_d4, temp.toUtf8().data());
-    strcpy(tModule->input_d4_name, "");
-    temp = val_data_io.at(10);
-    strcpy(tModule->input_d5, temp.toUtf8().data());
-    strcpy(tModule->input_d5_name, "");
-    temp = val_data_io.at(11);
-    strcpy(tModule->input_d6, temp.toUtf8().data());
-    strcpy(tModule->input_d6_name, "");
-    temp = val_data_io.at(12);
-    strcpy(tModule->input_d7, temp.toUtf8().data());
-    strcpy(tModule->input_d7_name, "");
-    temp = val_data_io.at(13);
-    strcpy(tModule->input_d8, temp.toUtf8().data());
-    strcpy(tModule->input_d8_name, "");
-    temp = val_data_io.at(14);
-    strcpy(tModule->output_r1, temp.toUtf8().data());
-    strcpy(tModule->output_r1_name, "");
-    temp = val_data_io.at(15);
-    strcpy(tModule->output_r2, temp.toUtf8().data());
-    strcpy(tModule->output_r2_name, "");
-    temp = val_data_io.at(16);
-    strcpy(tModule->output_r3, temp.toUtf8().data());
-    strcpy(tModule->output_r3_name, "");
-    temp = val_data_io.at(17);
-    strcpy(tModule->output_r4, temp.toUtf8().data());
-    strcpy(tModule->output_r4_name, "");
-}
-
-void MainWindow::delay(int v_ms)
-{
-    QTime dieTime = QTime::currentTime().addMSecs(v_ms);
-    while (QTime::currentTime() < dieTime)
-        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
 }

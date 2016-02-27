@@ -46,8 +46,6 @@ void module::write_module(struct t_module *tmodule){
     sett.setValue("INPUT_D6_NAME", tmodule->input_d6_name);
     sett.setValue("INPUT_D7", tmodule->input_d7);
     sett.setValue("INPUT_D7_NAME", tmodule->input_d7_name);
-    sett.setValue("INPUT_D8", tmodule->input_d8);
-    sett.setValue("INPUT_D8_NAME", tmodule->input_d8_name);
     sett.endGroup();
 
     sett.beginGroup( "OUTPUT" );
@@ -55,10 +53,6 @@ void module::write_module(struct t_module *tmodule){
     sett.setValue("OUTPUT_R1_NAME", tmodule->output_r1_name);
     sett.setValue("OUTPUT_R2", tmodule->output_r2);
     sett.setValue("OUTPUT_R2_NAME", tmodule->output_r2_name);
-    sett.setValue("OUTPUT_R3", tmodule->output_r3);
-    sett.setValue("OUTPUT_R3_NAME", tmodule->output_r3_name);
-    sett.setValue("OUTPUT_R4", tmodule->output_r4);
-    sett.setValue("OUTPUT_R4_NAME", tmodule->output_r4_name);
     sett.endGroup();
 
     sett.beginGroup( "GSM_1" );
@@ -136,8 +130,6 @@ void module::update_setting(struct t_module *tmodule, QString addressModule){
     sett.setValue("INPUT_D6_NAME", tmodule->input_d6_name);
     sett.setValue("INPUT_D7", tmodule->input_d7);
     sett.setValue("INPUT_D7_NAME", tmodule->input_d7_name);
-    sett.setValue("INPUT_D8", tmodule->input_d8);
-    sett.setValue("INPUT_D8_NAME", tmodule->input_d8_name);
     sett.endGroup();
 
     sett.beginGroup( "OUTPUT" );
@@ -145,10 +137,6 @@ void module::update_setting(struct t_module *tmodule, QString addressModule){
     sett.setValue("OUTPUT_R1_NAME", tmodule->output_r1_name);
     sett.setValue("OUTPUT_R2", tmodule->output_r2);
     sett.setValue("OUTPUT_R2_NAME", tmodule->output_r2_name);
-    sett.setValue("OUTPUT_R3", tmodule->output_r3);
-    sett.setValue("OUTPUT_R3_NAME", tmodule->output_r3_name);
-    sett.setValue("OUTPUT_R4", tmodule->output_r4);
-    sett.setValue("OUTPUT_R4_NAME", tmodule->output_r4_name);
     sett.endGroup();
 }
 
@@ -248,17 +236,11 @@ void module::read_module(struct t_module *tmodule, QString addressModule){
     strcpy(tmodule->input_d6_name, sett.value("INPUT/INPUT_D6_NAME").toString().toLatin1());
     strcpy(tmodule->input_d7, sett.value("INPUT/INPUT_D7").toString().toLatin1());
     strcpy(tmodule->input_d7_name, sett.value("INPUT/INPUT_D7_NAME").toString().toLatin1());
-    strcpy(tmodule->input_d8, sett.value("INPUT/INPUT_D8").toString().toLatin1());
-    strcpy(tmodule->input_d8_name, sett.value("INPUT/INPUT_D8_NAME").toString().toLatin1());
 
     strcpy(tmodule->output_r1, sett.value("OUTPUT/OUTPUT_R1").toString().toLatin1());
     strcpy(tmodule->output_r1_name, sett.value("OUTPUT/OUTPUT_R1_NAME").toString().toLatin1());
     strcpy(tmodule->output_r2, sett.value("OUTPUT/OUTPUT_R2").toString().toLatin1());
     strcpy(tmodule->output_r2_name, sett.value("OUTPUT/OUTPUT_R2_NAME").toString().toLatin1());
-    strcpy(tmodule->output_r3, sett.value("OUTPUT/OUTPUT_R3").toString().toLatin1());
-    strcpy(tmodule->output_r3_name, sett.value("OUTPUT/OUTPUT_R3_NAME").toString().toLatin1());
-    strcpy(tmodule->output_r4, sett.value("OUTPUT/OUTPUT_R4").toString().toLatin1());
-    strcpy(tmodule->output_r4_name, sett.value("OUTPUT/OUTPUT_R4_NAME").toString().toLatin1());
 
     tmodule->flag_gsm_1 = sett.value("GSM_1/FLAG_GSM_1").toInt();
     strcpy(tmodule->name_gsm_1, sett.value("GSM_1/GSM_NAME_1").toString().toLatin1());
@@ -324,8 +306,6 @@ void module::save_as_module(struct t_module *tmodule, QString address){
     sett.setValue("INPUT_D6_NAME", tmodule->input_d6_name);
     sett.setValue("INPUT_D7", tmodule->input_d7);
     sett.setValue("INPUT_D7_NAME", tmodule->input_d7_name);
-    sett.setValue("INPUT_D8", tmodule->input_d8);
-    sett.setValue("INPUT_D8_NAME", tmodule->input_d8_name);
     sett.endGroup();
 
     sett.beginGroup( "OUTPUT" );
@@ -333,10 +313,6 @@ void module::save_as_module(struct t_module *tmodule, QString address){
     sett.setValue("OUTPUT_R1_NAME", tmodule->output_r1_name);
     sett.setValue("OUTPUT_R2", tmodule->output_r2);
     sett.setValue("OUTPUT_R2_NAME", tmodule->output_r2_name);
-    sett.setValue("OUTPUT_R3", tmodule->output_r3);
-    sett.setValue("OUTPUT_R3_NAME", tmodule->output_r3_name);
-    sett.setValue("OUTPUT_R4", tmodule->output_r4);
-    sett.setValue("OUTPUT_R4_NAME", tmodule->output_r4_name);
     sett.endGroup();
 
     sett.beginGroup( "GSM_1" );
