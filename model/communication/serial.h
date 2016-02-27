@@ -25,6 +25,12 @@ public:
     void close_serial(QSerialPort *SerialPort);
     void write_data(QSerialPort *port, QString data);
 
+    void write_parsing_env(struct t_serial_settings *tSerial);
+    void write_parsing_io(struct t_serial_settings *tSerial);
+    void write_parsing_sim(struct t_serial_settings *tSerial);
+
+    void read_parsing(struct t_serial_settings *tSerial);
+
 public slots:
     void read_data(QString str_data, QStringList val_data);
     void handleError(QSerialPort::SerialPortError error);

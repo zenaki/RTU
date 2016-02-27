@@ -134,6 +134,10 @@ struct t_serial_settings {
     QString stringStopBits;
     QSerialPort::FlowControl flowControl;
     QString stringFlowControl;
+
+    QString str_data_env;
+    QString str_data_io;
+    QString str_data_sim;
 };
 
 #include "model/debug.h"

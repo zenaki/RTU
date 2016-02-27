@@ -180,15 +180,15 @@ void form_addModule::on_buttonBox_accepted()
             strcpy(tModule.input_a1, "A;1;0;0.000;0.000");
             strcpy(tModule.input_a1_name, "");
             strcpy(tModule.input_a2, "A;2;0;0.000;0.000");
-            strcpy(tModule.input_a1_name, "");
+            strcpy(tModule.input_a2_name, "");
             strcpy(tModule.input_a3, "A;3;0;0.000;0.000");
-            strcpy(tModule.input_a1_name, "");
+            strcpy(tModule.input_a3_name, "");
             strcpy(tModule.input_a4, "A;4;0;0.000;0.000");
-            strcpy(tModule.input_a1_name, "");
+            strcpy(tModule.input_a4_name, "");
             strcpy(tModule.input_a5, "A;5;0;0.000;0.000");
-            strcpy(tModule.input_a1_name, "");
+            strcpy(tModule.input_a5_name, "");
             strcpy(tModule.input_a6, "A;6;0;0.000;0.000");
-            strcpy(tModule.input_a1_name, "");
+            strcpy(tModule.input_a6_name, "");
 
             strcpy(tModule.input_d1, "D;1;0;0.000;0.000");
             strcpy(tModule.input_d1_name, "");

@@ -384,10 +384,12 @@ void worker::Set_ENV(QSerialPort *Serial_Com, struct t_module *tModule)
     int jeda = 1000;
 
     Request.sprintf("set_env nama %s\r\n", tModule->module_name);
-    Serial->write_data(Serial_Com, Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
     Request.sprintf("set_env SN %s\r\n", tModule->serial_number);
-    Serial->write_data(Serial_Com, Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 }
 
@@ -402,78 +404,92 @@ void worker::Set_IO(QSerialPort *Serial_Com, struct t_module *tModule)
     temp.sprintf("%s", tModule->input_d1);
     val = temp.split(";");
     Request = "set_kanal 1 status " + val.at(2) + "\r\n";
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
     Request = "set_kanal 1 " + val.at(3) + " " + val.at(4) + "\r\n";
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
 
     temp.sprintf("%s", tModule->input_d2);
     val = temp.split(";");
     Request = "set_kanal 2 status " + val.at(2) + "\r\n";
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
     Request = "set_kanal 2 " + val.at(3) + " " + val.at(4) + "\r\n";
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
 
     temp.sprintf("%s", tModule->input_d3);
     val = temp.split(";");
     Request = "set_kanal 3 status " + val.at(2) + "\r\n";
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
     Request = "set_kanal 3 " + val.at(3) + " " + val.at(4) + "\r\n";
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
 
     temp.sprintf("%s", tModule->input_d4);
     val = temp.split(";");
     Request = "set_kanal 4 status " + val.at(2) + "\r\n";
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
     Request = "set_kanal 4 " + val.at(3) + " " + val.at(4) + "\r\n";
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
 
     temp.sprintf("%s", tModule->input_d5);
     val = temp.split(";");
     Request = "set_kanal 5 status " + val.at(2) + "\r\n";
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
     Request = "set_kanal 5 " + val.at(3) + " " + val.at(4) + "\r\n";
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
 
     temp.sprintf("%s", tModule->input_d6);
     val = temp.split(";");
     Request = "set_kanal 6 status " + val.at(2) + "\r\n";
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
     Request = "set_kanal 6 " + val.at(3) + " " + val.at(4) + "\r\n";
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
 
     temp.sprintf("%s", tModule->input_d7);
     val = temp.split(";");
     Request = "set_kanal 7 status " + val.at(2) + "\r\n";
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
     Request = "set_kanal 7 " + val.at(3) + " " + val.at(4) + "\r\n";
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
 
 
@@ -481,68 +497,108 @@ void worker::Set_IO(QSerialPort *Serial_Com, struct t_module *tModule)
     temp.sprintf("%s", tModule->input_a1);
     val = temp.split(";");
     Request = "set_kanal 8 status " + val.at(2) + "\r\n";
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
     Request = "set_kanal 8 " + val.at(3) + " " + val.at(4) + "\r\n";
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
 
     temp.sprintf("%s", tModule->input_a2);
     val = temp.split(";");
     Request = "set_kanal 9 status " + val.at(2) + "\r\n";
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
     Request = "set_kanal 9 " + val.at(3) + " " + val.at(4) + "\r\n";
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
 
     temp.sprintf("%s", tModule->input_a3);
     val = temp.split(";");
     Request = "set_kanal 10 status " + val.at(2) + "\r\n";
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
     Request = "set_kanal 10 " + val.at(3) + " " + val.at(4) + "\r\n";
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
 
     temp.sprintf("%s", tModule->input_a4);
     val = temp.split(";");
     Request = "set_kanal 11 status " + val.at(2) + "\r\n";
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
     Request = "set_kanal 11 " + val.at(3) + " " + val.at(4) + "\r\n";
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
 
     temp.sprintf("%s", tModule->input_a5);
     val = temp.split(";");
     Request = "set_kanal 12 status " + val.at(2) + "\r\n";
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
     Request = "set_kanal 12 " + val.at(3) + " " + val.at(4) + "\r\n";
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
 
     temp.sprintf("%s", tModule->input_a6);
     val = temp.split(";");
     Request = "set_kanal 13 status " + val.at(2) + "\r\n";
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
     Request = "set_kanal 13 " + val.at(3) + " " + val.at(4) + "\r\n";
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
+
+
+    /** SET I/O RELAY **/
+    temp.sprintf("%s", tModule->output_r1);
+    val = temp.split(";");
+    Request = "set_relay 1 " + val.at(2) + "\r\n";
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
+    this->delay(jeda);
+//    Request = "set_relay 1 " + val.at(2) + "\r\n";
+//    Serial->write_data(Serial_Com, Request);
+//    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
+//    this->delay(jeda);
+
+    temp.sprintf("%s", tModule->output_r2);
+    val = temp.split(";");
+    Request = "set_relay 2 " + val.at(2) + "\r\n";
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
+    this->delay(jeda);
+//    Request = "set_relay 1 " + val.at(2) + "\r\n";
+//    Serial->write_data(Serial_Com, Request);
+//    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
+//    this->delay(jeda);
 }
 
 void worker::Set_SIM(QSerialPort *Serial_Com, struct t_module *tModule)
@@ -558,8 +614,9 @@ void worker::Set_SIM(QSerialPort *Serial_Com, struct t_module *tModule)
     } else {
         Request = "set_cfg_sim 1 nama " + temp + "\r\n";
     }
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
     temp.sprintf("%s", tModule->name_gsm_1);
     if (temp.isEmpty()) {
@@ -567,8 +624,9 @@ void worker::Set_SIM(QSerialPort *Serial_Com, struct t_module *tModule)
     } else {
         Request = "set_cfg_sim 1 operator " + temp + "\r\n";
     }
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
     temp.sprintf("%s", tModule->number_gsm_1);
     if (temp.isEmpty()) {
@@ -576,8 +634,9 @@ void worker::Set_SIM(QSerialPort *Serial_Com, struct t_module *tModule)
     } else {
         Request = "set_cfg_sim 1 nomor " + temp + "\r\n";
     }
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
     temp.sprintf("%d", tModule->flag_status_active_gsm_1);
     if (temp.isEmpty()) {
@@ -585,8 +644,9 @@ void worker::Set_SIM(QSerialPort *Serial_Com, struct t_module *tModule)
     } else {
         Request = "set_cfg_sim 1 status " + temp + "\r\n";
     }
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
     temp.sprintf("%s", tModule->apn_gsm_1);
     if (temp.isEmpty()) {
@@ -594,8 +654,9 @@ void worker::Set_SIM(QSerialPort *Serial_Com, struct t_module *tModule)
     } else {
         Request = "set+cfg_sim 1 apn " + temp + "\r\n";
     }
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
     temp.sprintf("%s", tModule->user_gsm_1);
     if (temp.isEmpty()) {
@@ -603,8 +664,9 @@ void worker::Set_SIM(QSerialPort *Serial_Com, struct t_module *tModule)
     } else {
         Request = "set_cfg_sim 1 user " + temp + "\r\n";
     }
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
     temp.sprintf("%s", tModule->passwd_gsm_1);
     if (temp.isEmpty()) {
@@ -612,8 +674,9 @@ void worker::Set_SIM(QSerialPort *Serial_Com, struct t_module *tModule)
     } else {
         Request = "set_cfg_sim 1 pass " + temp + "\r\n";
     }
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
     temp.sprintf("%s", tModule->com_gsm_1);
     if (temp.isEmpty()) {
@@ -621,6 +684,10 @@ void worker::Set_SIM(QSerialPort *Serial_Com, struct t_module *tModule)
     } else {
         Request = "set_cfg_sim 1 mode " + temp + "\r\n";
     }
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
+    this->delay(jeda);
 
 
     /** SET SIM 2 **/
@@ -630,8 +697,9 @@ void worker::Set_SIM(QSerialPort *Serial_Com, struct t_module *tModule)
     } else {
         Request = "set_cfg_sim 2 nama " + temp + "\r\n";
     }
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
     temp.sprintf("%s", tModule->name_gsm_2);
     if (temp.isEmpty()) {
@@ -639,8 +707,9 @@ void worker::Set_SIM(QSerialPort *Serial_Com, struct t_module *tModule)
     } else {
         Request = "set_cfg_sim 2 operator " + temp + "\r\n";
     }
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
     temp.sprintf("%s", tModule->number_gsm_2);
     if (temp.isEmpty()) {
@@ -648,8 +717,9 @@ void worker::Set_SIM(QSerialPort *Serial_Com, struct t_module *tModule)
     } else {
         Request = "set_cfg_sim 2 nomor " + temp + "\r\n";
     }
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
     temp.sprintf("%d", tModule->flag_status_active_gsm_2);
     if (temp.isEmpty()) {
@@ -657,8 +727,9 @@ void worker::Set_SIM(QSerialPort *Serial_Com, struct t_module *tModule)
     } else {
         Request = "set_cfg_sim 2 status " + temp + "\r\n";
     }
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
     temp.sprintf("%s", tModule->apn_gsm_2);
     if (temp.isEmpty()) {
@@ -666,8 +737,9 @@ void worker::Set_SIM(QSerialPort *Serial_Com, struct t_module *tModule)
     } else {
         Request = "set+cfg_sim 2 apn " + temp + "\r\n";
     }
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
     temp.sprintf("%s", tModule->user_gsm_2);
     if (temp.isEmpty()) {
@@ -675,8 +747,9 @@ void worker::Set_SIM(QSerialPort *Serial_Com, struct t_module *tModule)
     } else {
         Request = "set_cfg_sim 2 user " + temp + "\r\n";
     }
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
     temp.sprintf("%s", tModule->passwd_gsm_2);
     if (temp.isEmpty()) {
@@ -684,8 +757,9 @@ void worker::Set_SIM(QSerialPort *Serial_Com, struct t_module *tModule)
     } else {
         Request = "set_cfg_sim 2 pass " + temp + "\r\n";
     }
-    Serial->write_data(Serial_Com, Request);
-    FormModule->ui->request->setText(Request);
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
     temp.sprintf("%s", tModule->com_gsm_2);
     if (temp.isEmpty()) {
@@ -693,6 +767,10 @@ void worker::Set_SIM(QSerialPort *Serial_Com, struct t_module *tModule)
     } else {
         Request = "set_cfg_sim 2 mode " + temp + "\r\n";
     }
+//    Serial->write_data(Serial_Com, Request);
+    Serial_Com->write(Request.toUtf8().data());
+//    FormModule->ui->request->setText(Request);
+    this->delay(jeda);
 }
 
 void worker::delay(int ms)

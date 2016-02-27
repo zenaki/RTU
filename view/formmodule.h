@@ -69,8 +69,6 @@ private:
 
     /** Function **/
     void setInterface(QString address);
-    void Sync_IO();
-    void Sync_SIM();
 
     MainWindow *Main;
     serial *Serial;

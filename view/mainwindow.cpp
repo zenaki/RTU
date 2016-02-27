@@ -119,6 +119,10 @@ void MainWindow::on_actionNew_triggered()
                 Serial->write_data(SerialPort, "hmi_cek_cfg_sim\r\n");
                 work->delay(jeda);
 
+                QString address = "data/module/" + newFiles;
+                mod->read_module(&tModule, address);
+                strcpy(tModule.serial_number, GetNoSeri.toLatin1());
+
                 work->Get_IO(&tModule, val_data_io);
                 work->Get_SIM(&tModule, val_data_sim);
 
@@ -132,9 +136,30 @@ void MainWindow::on_actionNew_triggered()
                 work->Get_IO(&tModule, val_data_io);
                 work->Get_SIM(&tModule, val_data_sim);
 
+                /** INPUT **/
+                strcpy(tModule.input_a1_name, "");
+                strcpy(tModule.input_a2_name, "");
+                strcpy(tModule.input_a3_name, "");
+                strcpy(tModule.input_a4_name, "");
+                strcpy(tModule.input_a5_name, "");
+                strcpy(tModule.input_a6_name, "");
+
+                strcpy(tModule.input_d1_name, "");
+                strcpy(tModule.input_d2_name, "");
+                strcpy(tModule.input_d3_name, "");
+                strcpy(tModule.input_d4_name, "");
+                strcpy(tModule.input_d5_name, "");
+                strcpy(tModule.input_d6_name, "");
+                strcpy(tModule.input_d7_name, "");
+
+                /** OUTPUT **/
+                strcpy(tModule.output_r1_name, "");
+                strcpy(tModule.output_r2_name, "");
+
                 GetNamaBoard.append("_new");
                 QString newModule = "m_" + GetNamaBoard + ".ini";
                 strcpy(tModule.module_name, GetNamaBoard.toUtf8().data());
+                strcpy(tModule.serial_number, GetNoSeri.toLatin1());
                 QString Address = "data/module/" + newModule;
                 mod->write_module(&tModule);
 
@@ -153,114 +178,8 @@ void MainWindow::on_actionNew_triggered()
                 Address = faddModule->currentFile;
                 mod->read_module(&tModule, Address);
 
-                command.sprintf("set_env nama %s\r\n", tModule.module_name);
-                Serial->write_data(SerialPort, command);
-                work->delay(jeda);
-                command.sprintf("set_env SN %s\r\n", tModule.serial_number);
-                Serial->write_data(SerialPort, command);
-                work->delay(jeda);
-
-                command.sprintf("set_cfg_sim 1 nama %s\r\n", tModule.device_name_gsm_1);
-                Serial->write_data(SerialPort, command);
-                work->delay(jeda);
-                command.sprintf("set_cfg_sim 1 operator %s\r\n", tModule.name_gsm_1);
-                Serial->write_data(SerialPort, command);
-                work->delay(jeda);
-                command.sprintf("set_cfg_sim 1 nomor %s\r\n", tModule.number_gsm_1);
-                Serial->write_data(SerialPort, command);
-                work->delay(jeda);
-                command.sprintf("set_cfg_sim 1 status %d\r\n", tModule.flag_status_active_gsm_1);
-                Serial->write_data(SerialPort, command);
-                work->delay(jeda);
-                if (tModule.flag_gsm_1 == 1) {
-                    command.sprintf("set_cfg_sim 1 apn %s\r\n", tModule.apn_gsm_1);
-                    Serial->write_data(SerialPort, command);
-                    work->delay(jeda);
-                    command.sprintf("set_cfg_sim 1 user %s\r\n", tModule.user_gsm_1);
-                    Serial->write_data(SerialPort, command);
-                    work->delay(jeda);
-                    command.sprintf("set_cfg_sim 1 pass %s\r\n", tModule.passwd_gsm_1);
-                    Serial->write_data(SerialPort, command);
-                    work->delay(jeda);
-                } else {
-                    command = "set_cfg_sim 1 apn -\r\n";
-                    Serial->write_data(SerialPort, command);
-                    work->delay(jeda);
-                    command = "set_cfg_sim 1 user -\r\n";
-                    Serial->write_data(SerialPort, command);
-                    work->delay(jeda);
-                    command = "set_cfg_sim 1 pass -\r\n";
-                    Serial->write_data(SerialPort, command);
-                    work->delay(jeda);
-                }
-                command.sprintf("set_cfg_sim 1 mode %s\r\n", tModule.com_gsm_1);
-                Serial->write_data(SerialPort, command);
-                work->delay(jeda);
-
-                command.sprintf("%s", tModule.name_gsm_2);
-                if (!command.isEmpty()) {
-                    command.sprintf("set_cfg_sim 2 nama %s\r\n", tModule.device_name_gsm_2);
-                    Serial->write_data(SerialPort, command);
-                    work->delay(jeda);
-                    command.sprintf("set_cfg_sim 2 operator %s\r\n", tModule.name_gsm_2);
-                    Serial->write_data(SerialPort, command);
-                    work->delay(jeda);
-                    command.sprintf("set_cfg_sim 2 nomor %s\r\n", tModule.number_gsm_2);
-                    Serial->write_data(SerialPort, command);
-                    work->delay(jeda);
-                    command.sprintf("set_cfg_sim 2 status %d\r\n", tModule.flag_status_active_gsm_2);
-                    Serial->write_data(SerialPort, command);
-                    work->delay(jeda);
-                    if (tModule.flag_gsm_2 == 1) {
-                        command.sprintf("set_cfg_sim 2 apn %s\r\n", tModule.apn_gsm_2);
-                        Serial->write_data(SerialPort, command);
-                        work->delay(jeda);
-                        command.sprintf("set_cfg_sim 2 user %s\r\n", tModule.user_gsm_2);
-                        Serial->write_data(SerialPort, command);
-                        work->delay(jeda);
-                        command.sprintf("set_cfg_sim 2 pass %s\r\n", tModule.passwd_gsm_2);
-                        Serial->write_data(SerialPort, command);
-                        work->delay(jeda);
-                    } else {
-                        command = "set_cfg_sim 2 apn -\r\n";
-                        Serial->write_data(SerialPort, command);
-                        work->delay(jeda);
-                        command = "set_cfg_sim 2 user -\r\n";
-                        Serial->write_data(SerialPort, command);
-                        work->delay(jeda);
-                        command = "set_cfg_sim 2 pass -\r\n";
-                        Serial->write_data(SerialPort, command);
-                        work->delay(jeda);
-                    }
-                    command.sprintf("set_cfg_sim 2 mode %s\r\n", tModule.com_gsm_2);
-                    Serial->write_data(SerialPort, command);
-                    work->delay(jeda);
-                } else {
-                    command = "set_env_sim 2 nama -\r\n";
-                    Serial->write_data(SerialPort, command);
-                    work->delay(jeda);
-                    command = "set_env_sim 2 operator -\r\n";
-                    Serial->write_data(SerialPort, command);
-                    work->delay(jeda);
-                    command = "set_env_sim 2 nomor -\r\n";
-                    Serial->write_data(SerialPort, command);
-                    work->delay(jeda);
-                    command = "set_env_sim 2 status 0\r\n";
-                    Serial->write_data(SerialPort, command);
-                    work->delay(jeda);
-                    command = "set_cfg_sim 2 apn -\r\n";
-                    Serial->write_data(SerialPort, command);
-                    work->delay(jeda);
-                    command = "set_cfg_sim 2 user -\r\n";
-                    Serial->write_data(SerialPort, command);
-                    work->delay(jeda);
-                    command = "set_cfg_sim 2 pass -\r\n";
-                    Serial->write_data(SerialPort, command);
-                    work->delay(jeda);
-                    command = "set_env_sim 2 mode GSM\r\n";
-                    Serial->write_data(SerialPort, command);
-                    work->delay(jeda);
-                }
+                work->Set_ENV(SerialPort, &tModule);
+                work->Set_SIM(SerialPort, &tModule);
 
                 this->Refresh_Tree();
             }
@@ -270,8 +189,31 @@ void MainWindow::on_actionNew_triggered()
             Serial->write_data(SerialPort, "hmi_cek_cfg_sim\r\n");
             work->delay(jeda);
 
+            strcpy(tModule.module_name, GetNamaBoard.toUtf8().data());
+            strcpy(tModule.serial_number, GetNoSeri.toLatin1());
+
             work->Get_IO(&tModule, val_data_io);
             work->Get_SIM(&tModule, val_data_sim);
+
+            /** INPUT **/
+            strcpy(tModule.input_a1_name, "");
+            strcpy(tModule.input_a2_name, "");
+            strcpy(tModule.input_a3_name, "");
+            strcpy(tModule.input_a4_name, "");
+            strcpy(tModule.input_a5_name, "");
+            strcpy(tModule.input_a6_name, "");
+
+            strcpy(tModule.input_d1_name, "");
+            strcpy(tModule.input_d2_name, "");
+            strcpy(tModule.input_d3_name, "");
+            strcpy(tModule.input_d4_name, "");
+            strcpy(tModule.input_d5_name, "");
+            strcpy(tModule.input_d6_name, "");
+            strcpy(tModule.input_d7_name, "");
+
+            /** OUTPUT **/
+            strcpy(tModule.output_r1_name, "");
+            strcpy(tModule.output_r2_name, "");
 
             mod->write_module(&tModule);
 
@@ -486,6 +428,7 @@ void MainWindow::on_actionDisconnect_triggered()
 
 void MainWindow::readData()
 {
+    struct t_serial_settings tSerial;
     str_data.append(SerialPort->readAll());
     if (GetNoSeri.isEmpty()) {
         if (str_data.indexOf("<ENV") > 0 && str_data.indexOf("ENV>") > 0) {
@@ -502,7 +445,8 @@ void MainWindow::readData()
                         .remove("\r").remove("\n").split(";");
             GetNamaBoard = val_data[0];
             GetNoSeri = val_data[1];
-
+            tSerial.str_data_env = str_data;
+            Serial->write_parsing_env(&tSerial);
             val_data.clear();
             str_data.clear();
         }
@@ -519,7 +463,8 @@ void MainWindow::readData()
                           .remove("Rinjani$")
                           .remove("hmi_sync")
                           .remove("\r").remove("\n").remove("(X)").split("*");
-
+            tSerial.str_data_io = str_data;
+            Serial->write_parsing_io(&tSerial);
             str_data.clear();
             val_data.clear();
         } else if (str_data.indexOf("<SIM") > 0 && str_data.indexOf("SIM>") > 0) {
@@ -534,7 +479,8 @@ void MainWindow::readData()
                            .remove("Rinjani$")
                            .remove("hmi_cek_cfg_sim")
                            .remove("\r").remove("\n").remove("(X)").split("*");
-
+            tSerial.str_data_sim = str_data;
+            Serial->write_parsing_sim(&tSerial);
             str_data.clear();
             val_data.clear();
         }

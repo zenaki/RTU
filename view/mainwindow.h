@@ -51,6 +51,8 @@ public slots:
     void on_actionConnect_triggered();
     void on_actionDisconnect_triggered();
 
+    void readData();
+
 private slots:
     void on_actionNew_triggered();
     void update_activeWindow();
@@ -63,7 +65,6 @@ private slots:
     void on_treeView_doubleClicked(const QModelIndex &index);
 
     void on_actionRefresh_triggered();
-    void readData();
     void on_actionConfig_triggered();
 
 private:

@@ -327,20 +327,30 @@ void formModule::on_pbSet_clicked()
 
     mod.update_setting(&tModule, Address_Module);
 
+    /** ON BOARD **/
     if (Serial_Com->isOpen()) {
         this->ui->pbGet->setEnabled(false);
         this->ui->pbSet->setEnabled(false);
         this->ui->pbEditModule->setEnabled(false);
         this->ui->Busy->show();
 
+        struct t_serial_settings tSerial;
+        QStringList val_data;
+
         Request = "hmi_cek_env\r\n";
         Serial->write_data(Serial_Com, Request);
-        this->ui->request->setText(Request);
+//        this->ui->request->setText(Request);
         work->delay(jeda);
 
-        if (NoSeri == Main->GetNoSeri) {
+        Serial->read_parsing(&tSerial);
+        val_data = tSerial.str_data_env.split(";");
+        if (NoSeri == val_data.at(1)) {
             work->Set_IO(Serial_Com, &tModule);
             work->Set_SIM(Serial_Com, &tModule);
+
+            Request = "reset\r\n";
+            Serial->write_data(Serial_Com, Request);
+            work->delay(jeda*5);
 
             Message = "On-Board";
         } else {
@@ -358,7 +368,7 @@ void formModule::on_pbSet_clicked()
     if (reset == 1) {
         Request = "reset\r\n";
         Serial->write_data(Serial_Com, Request);
-        this->ui->request->setText(Request);
+//        this->ui->request->setText(Request);
         work->delay(jeda*5);
     }
 
@@ -378,8 +388,8 @@ void formModule::on_pbSet_clicked()
     this->ui->pbSet->setEnabled(true);
     this->ui->pbEditModule->setEnabled(true);
     this->ui->Busy->hide();
-    Request = "";
-    this->ui->request->setText(Request);
+//    Request = "";
+//    this->ui->request->setText(Request);
 }
 
 void formModule::on_tabWidget_tabBarClicked(int index)
@@ -435,13 +445,17 @@ void formModule::on_tabWidget_tabBarClicked(int index)
 void formModule::on_pbGet_clicked()
 {
         int jeda = 1000;
+        struct t_module tModule;
+        struct t_serial_settings tSerial;
+        QStringList val_data;
+
         this->ui->Busy->show();
         this->ui->pbGet->setEnabled(false);
         this->ui->pbSet->setEnabled(false);
         this->ui->pbEditModule->setEnabled(false);
         if (!Serial_Com->isOpen())
         {
-            QMessageBox::warning(this, "Serial Comunication !!", "Protocol is not open ..", 0, 0);
+            QMessageBox::warning(this, "Serial Comunication !!", "Protocol is not open ..!!", 0, 0);
             this->ui->Busy->hide();
             this->ui->pbGet->setEnabled(true);
             this->ui->pbSet->setEnabled(true);
@@ -450,39 +464,47 @@ void formModule::on_pbGet_clicked()
             QString RequestFromModule;
             RequestFromModule = "hmi_cek_env\r\n";
             Serial->write_data(Serial_Com, RequestFromModule);
-            this->ui->request->setText(RequestFromModule);
+//            this->ui->request->setText(RequestFromModule);
             work->delay(jeda);
-            RequestFromModule = "hmi_sync\r\n";
-            Serial->write_data(Serial_Com, RequestFromModule);
-            this->ui->request->setText(RequestFromModule);
-            work->delay(jeda);
-            RequestFromModule = "hmi_cek_cfg_sim\r\n";
-            Serial->write_data(Serial_Com, RequestFromModule);
-            this->ui->request->setText(RequestFromModule);
-            work->delay(jeda);
+
+            Serial->read_parsing(&tSerial);
+            val_data = tSerial.str_data_env.split(";");
+            if (NoSeri == val_data.at(1)) {
+                module mod;
+                mod.read_module(&tModule, Address_Module);
+
+                RequestFromModule = "hmi_sync\r\n";
+                Serial->write_data(Serial_Com, RequestFromModule);
+//                this->ui->request->setText(RequestFromModule);
+                work->delay(jeda);
+
+                RequestFromModule = "hmi_cek_cfg_sim\r\n";
+                Serial->write_data(Serial_Com, RequestFromModule);
+//                this->ui->request->setText(RequestFromModule);
+                work->delay(jeda);
+
+                Serial->read_parsing(&tSerial);
+                val_data = tSerial.str_data_io.split("*");
+                work->Get_IO(&tModule, val_data);
+                val_data = tSerial.str_data_sim.split("*");
+                work->Get_SIM(&tModule, val_data);
+
+                mod.update_setting(&tModule, Address_Module);
+                this->setInterface(Address_Module);
+
+//                QMessageBox::warning(this, "Serial Comunication !!", "Serial Number is not syncronize ..!!", 0, 0);
+                this->ui->Busy->hide();
+                this->ui->pbGet->setEnabled(true);
+                this->ui->pbSet->setEnabled(true);
+                this->ui->pbEditModule->setEnabled(true);
+            } else {
+                QMessageBox::warning(this, "Serial Comunication !!", "Serial Number is not syncronize ..!!", 0, 0);
+                this->ui->Busy->hide();
+                this->ui->pbGet->setEnabled(true);
+                this->ui->pbSet->setEnabled(true);
+                this->ui->pbEditModule->setEnabled(true);
+            }
         }
-}
-
-void formModule::Sync_IO()
-{
-    struct t_module tModule;
-
-    work->Get_IO(&tModule, Main->val_data_io);
-
-    module mod;
-    mod.update_setting(&tModule, Address_Module);
-    this->setInterface(Address_Module);
-}
-
-void formModule::Sync_SIM()
-{
-    struct t_module tModule;
-
-    work->Get_SIM(&tModule, Main->val_data_sim);
-
-    module mod;
-    mod.update_communication(&tModule, Address_Module);
-    this->setInterface(Address_Module);
 }
 
 void formModule::on_pbEditModule_clicked()

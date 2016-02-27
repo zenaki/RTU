@@ -11,7 +11,7 @@
 #include <ui_formmodule.h>
 #include "model/communication/serial.h"
 
-#include <QSerialPort>
+#include <QtSerialPort/QSerialPort>
 #include <QTime>
 
 class formModule;
@@ -23,7 +23,6 @@ public:
     worker();
     module mod;
     mTreeview mTree;
-    formModule *FormModule;
     serial *Serial;
 
     QString newModule(QStandardItemModel *tree, QTreeView *treeView, QString title);

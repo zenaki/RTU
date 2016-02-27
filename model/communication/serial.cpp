@@ -24,26 +24,42 @@ void serial::close_serial(QSerialPort *SerialPort)
 void serial::write_data(QSerialPort *port, QString data)
 {
     port->write(data.toUtf8().data());
-    //SerialPort->write(data);
 }
 
-//void serial::read_data(QString str_data, QStringList val_data)
-//{
-//    str_data.append(SerialPort->readAll());
-//    if (str_data.indexOf("(x)") > 0)
-//    {
-//        str_data.remove("\r").remove("\n").remove("(x)");
-//        val_data.append(str_data.split(";"));
-//        qDebug() << str_data;
-//        str_data.clear();
-//    }
-//    val_data.clear();
-//}
+void serial::write_parsing_env(struct t_serial_settings *tSerial)
+{
+    QString pth;
+    pth = "data/config/serial_parsing.ini";
+    QSettings sett(pth, QSettings::IniFormat);
 
-//void serial::handleError(QSerialPort::SerialPortError error)
-//{
-//    if (error == QSerialPort::ResourceError) {
-//        QMessageBox::critical(this, tr("Critical Error"), serial->errorString());
-//        serial.close_serial();
-//    }
-//}
+    sett.setValue("STR_DATA_ENV", tSerial->str_data_env);
+}
+
+void serial::write_parsing_io(struct t_serial_settings *tSerial)
+{
+    QString pth;
+    pth = "data/config/serial_parsing.ini";
+    QSettings sett(pth, QSettings::IniFormat);
+
+    sett.setValue("STR_DATA_IO", tSerial->str_data_io);
+}
+
+void serial::write_parsing_sim(struct t_serial_settings *tSerial)
+{
+    QString pth;
+    pth = "data/config/serial_parsing.ini";
+    QSettings sett(pth, QSettings::IniFormat);
+
+    sett.setValue("STR_DATA_SIM", tSerial->str_data_sim);
+}
+
+void serial::read_parsing(struct t_serial_settings *tSerial)
+{
+    QString pth;
+    pth = "data/config/serial_parsing.ini";
+    QSettings sett(pth, QSettings::IniFormat);
+
+    tSerial->str_data_env = sett.value("STR_DATA_ENV").toString();
+    tSerial->str_data_io = sett.value("STR_DATA_IO").toString();
+    tSerial->str_data_sim = sett.value("STR_DATA_SIM").toString();
+}
