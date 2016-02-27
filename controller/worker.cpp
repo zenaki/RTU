@@ -378,11 +378,6 @@ void worker::Get_SIM(struct t_module *tModule, QStringList data)
     }
 }
 
-void worker::Get_SIG(struct t_module *tModule, QStringList data)
-{
-
-}
-
 void worker::Set_ENV(QSerialPort *Serial_Com, struct t_module *tModule)
 {
     QString Request;
