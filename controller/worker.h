@@ -14,6 +14,14 @@
 #include <QtSerialPort/QSerialPort>
 #include <QTime>
 
+#include <model/interface_manipulator/qlightboxwidget.h>
+
+#include <QString>
+#include <QLabel>
+#include <QMovie>
+#include <QPushButton>
+#include <QGridLayout>
+
 class formModule;
 class serial;
 
@@ -43,9 +51,9 @@ public:
 
 //    QString Request;
 
-    void Set_ENV(QSerialPort *Serial_Com, struct t_module *tModule);
-    void Set_IO(QSerialPort *Serial_Com, struct t_module *tModule);
-    void Set_SIM(QSerialPort *Serial_Com, struct t_module *tModule);
+    void Set_ENV(QWidget *parent, QString desc, QSerialPort *Serial_Com, struct t_module *tModule);
+    void Set_IO(QWidget *parent, QString desc, QSerialPort *Serial_Com, struct t_module *tModule);
+    void Set_SIM(QWidget *parent, QString desc, QSerialPort *Serial_Com, struct t_module *tModule);
 
     void delay(int ms);
 };

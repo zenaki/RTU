@@ -7,10 +7,6 @@
 #include <QDebug>
 #include <QtSerialPort/QSerialPort>
 
-#include <QMovie>
-#include <QPushButton>
-#include <QGridLayout>
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -43,39 +39,6 @@ MainWindow::MainWindow(QWidget *parent) :
     this->ui->actionConnect->setEnabled(true);
     this->ui->actionDisconnect->setEnabled(false);
     this->ui->actionConfig->setEnabled(true);
-
-    /** Set Light Box for Busy **/
-    QLightBoxWidget* lightBox = new QLightBoxWidget(this);
-    QPushButton* showLB = new QPushButton(tr("Show"));
-    QGridLayout* mainLayout = new QGridLayout;
-    mainLayout->addWidget(showLB);
-
-    this->setLayout(mainLayout);
-
-    QLabel* lbTitle = new QLabel(tr("MONITA RTU"));
-    lbTitle->setStyleSheet("font-size: 28px; font-weight: bold; color: white");
-    QLabel* lbProgress = new QLabel;
-    QMovie* progressMovie = new QMovie(":/new/prefix1/image/loader.gif");
-    lbProgress->setMovie(progressMovie);
-    progressMovie->start();
-    QLabel* lbDescription = new QLabel(tr("wait a second\n"
-                                          "Processing..."));
-    lbDescription->setStyleSheet("color: white");
-    QPushButton* lbClose = new QPushButton(tr("Close"));
-
-    QGridLayout* lbLayout = new QGridLayout;
-    lbLayout->setRowStretch(0, 1);
-    lbLayout->setColumnStretch(0, 1);
-    lbLayout->addWidget(lbTitle, 1, 1);
-    lbLayout->addWidget(lbProgress, 1, 2, Qt::AlignRight);
-    lbLayout->setColumnStretch(3, 1);
-    lbLayout->addWidget(lbDescription, 2, 1, 1, 2);
-    lbLayout->addWidget(lbClose, 3, 2);
-    lbLayout->setRowStretch(4, 1);
-
-    connect(showLB, SIGNAL(clicked()), lightBox, SLOT(show()));
-    connect(lbClose, SIGNAL(clicked()), lightBox, SLOT(hide()));
-    lightBox->setLayout(lbLayout);
 }
 
 MainWindow::~MainWindow()
@@ -119,7 +82,6 @@ void MainWindow::setActiveSubWindow(QWidget *window)
 void MainWindow::on_actionNew_triggered()
 {
     int jeda = 1000;
-
     if (SerialPort->isOpen()) {
         Serial->write_data(SerialPort, "hmi_cek_env\r\n");
         work->delay(jeda);
@@ -215,8 +177,8 @@ void MainWindow::on_actionNew_triggered()
                 Address = faddModule->currentFile;
                 mod->read_module(&tModule, Address);
 
-                work->Set_ENV(SerialPort, &tModule);
-                work->Set_SIM(SerialPort, &tModule);
+                work->Set_ENV(this, "Set Environment ...", SerialPort, &tModule);
+                work->Set_SIM(this, "Set Configuration SIM ...", SerialPort, &tModule);
 
                 this->Refresh_Tree();
             }

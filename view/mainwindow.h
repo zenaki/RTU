@@ -15,8 +15,7 @@
 #include <view/settingsdialog.h>
 #include <view/mainwindow.h>
 #include <model/module.h>
-
-#include <model/interface_manipulator/qlightboxwidget.h>
+#include <view/wait_process.h>
 
 namespace Ui {
 class MainWindow;
@@ -25,6 +24,7 @@ class MainWindow;
 class worker;
 class serial;
 class module;
+class wait_process;
 
 class MainWindow : public QMainWindow
 {
@@ -48,6 +48,8 @@ public:
     QStringList val_data;
     QStringList val_data_io;
     QStringList val_data_sim;
+
+    wait_process *wait;
 
 public slots:
     void on_actionConnect_triggered();

@@ -24,8 +24,6 @@ formModule::formModule(QWidget *parent, QString address, QSerialPort *SerialPort
     Serial = new serial();
     Setting = new setting();
 
-    connect(Serial_Com, SIGNAL(readyRead()), this, SLOT(readData()));
-
     this->setInterface(address);
 
     this->ui->pbEditModule->setHidden(true);
@@ -98,19 +96,6 @@ void formModule::setInterface(QString address){
     }
 
     QString str;
-    str.append(tModule.input_a1_name).append(";");
-    str.append(tModule.input_a1).append(";");
-    str.append(tModule.input_a2_name).append(";");
-    str.append(tModule.input_a2).append(";");
-    str.append(tModule.input_a3_name).append(";");
-    str.append(tModule.input_a3).append(";");
-    str.append(tModule.input_a4_name).append(";");
-    str.append(tModule.input_a4).append(";");
-    str.append(tModule.input_a5_name).append(";");
-    str.append(tModule.input_a5).append(";");
-    str.append(tModule.input_a6_name).append(";");
-    str.append(tModule.input_a6).append(";");
-
     str.append(tModule.input_d1_name).append(";");
     str.append(tModule.input_d1).append(";");
     str.append(tModule.input_d2_name).append(";");
@@ -125,6 +110,19 @@ void formModule::setInterface(QString address){
     str.append(tModule.input_d6).append(";");
     str.append(tModule.input_d7_name).append(";");
     str.append(tModule.input_d7).append(";");
+
+    str.append(tModule.input_a1_name).append(";");
+    str.append(tModule.input_a1).append(";");
+    str.append(tModule.input_a2_name).append(";");
+    str.append(tModule.input_a2).append(";");
+    str.append(tModule.input_a3_name).append(";");
+    str.append(tModule.input_a3).append(";");
+    str.append(tModule.input_a4_name).append(";");
+    str.append(tModule.input_a4).append(";");
+    str.append(tModule.input_a5_name).append(";");
+    str.append(tModule.input_a5).append(";");
+    str.append(tModule.input_a6_name).append(";");
+    str.append(tModule.input_a6).append(";");
 
     QStringList list = str.split(';');
 
@@ -345,14 +343,11 @@ void formModule::on_pbSet_clicked()
         Serial->read_parsing(&tSerial);
         val_data = tSerial.str_data_env.split(";");
         if (NoSeri == val_data.at(1)) {
-            work->Set_IO(Serial_Com, &tModule);
-            work->Set_SIM(Serial_Com, &tModule);
-
-            Request = "reset\r\n";
-            Serial->write_data(Serial_Com, Request);
-            work->delay(jeda*5);
+            work->Set_IO(this, "Set I/O Setting ...", Serial_Com, &tModule);
+            work->Set_SIM(this, "Set Configuration SIM ...", Serial_Com, &tModule);
 
             Message = "On-Board";
+
         } else {
             Message = "On-Local";
             if (!Main->GetNoSeri.isEmpty()) {
@@ -533,8 +528,8 @@ void formModule::on_pbEditModule_clicked()
         this->ui->pbEditModule->setEnabled(false);
 
 
-        work->Set_ENV(Serial_Com, &tModule);
-        work->Set_SIM(Serial_Com, &tModule);
+        work->Set_ENV(this, "Set Environment ...", Serial_Com, &tModule);
+        work->Set_SIM(this, "Set Configuration SIM ...", Serial_Com, &tModule);
 
         this->ui->Busy->hide();
         this->ui->pbGet->setEnabled(true);

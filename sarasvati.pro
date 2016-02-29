@@ -32,6 +32,7 @@ SOURCES += \
     controller/worker.cpp \
     view/settingsdialog.cpp \
     model/interface_manipulator/qlightboxwidget.cpp \
+    view/wait_process.cpp
 
 HEADERS += \
     util/debug.h \
@@ -50,6 +51,7 @@ HEADERS += \
     controller/worker.h \
     view/settingsdialog.h \
     model/interface_manipulator/qlightboxwidget.h \
+    view/wait_process.h
 
 FORMS += \
     view/mainwindow.ui \

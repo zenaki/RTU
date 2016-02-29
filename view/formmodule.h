@@ -17,6 +17,7 @@
 #include <view/form_addmodule.h>
 #include <ui_form_addmodule.h>
 #include <ui_mainwindow.h>
+#include <view/wait_process.h>
 
 namespace Ui {
 class formModule;
@@ -26,6 +27,7 @@ class worker;
 class MainWindow;
 class serial;
 class setting;
+class wait_process;
 
 class formModule : public QDialog
 {
@@ -37,6 +39,7 @@ public:
     explicit formModule(QWidget *parent = 0, QString address = 0, QSerialPort *SerialPort = 0);
     ~formModule();
 
+    wait_process *wait;
 private slots:
     void on_pbSet_clicked();
     void on_pbGet_clicked();
