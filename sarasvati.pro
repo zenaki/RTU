@@ -30,7 +30,8 @@ SOURCES += \
     model/setting.cpp \
     view/form_addmodule.cpp \
     controller/worker.cpp \
-    view/settingsdialog.cpp
+    view/settingsdialog.cpp \
+    model/interface_manipulator/qlightboxwidget.cpp \
 
 HEADERS += \
     util/debug.h \
@@ -47,7 +48,8 @@ HEADERS += \
     model/setting.h \
     view/form_addmodule.h \
     controller/worker.h \
-    view/settingsdialog.h
+    view/settingsdialog.h \
+    model/interface_manipulator/qlightboxwidget.h \
 
 FORMS += \
     view/mainwindow.ui \

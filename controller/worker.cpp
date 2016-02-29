@@ -380,7 +380,6 @@ void worker::Get_SIM(struct t_module *tModule, QStringList data)
 
 void worker::Set_ENV(QSerialPort *Serial_Com, struct t_module *tModule)
 {
-    QString Request;
     int jeda = 1000;
 
     Request.sprintf("set_env nama %s\r\n", tModule->module_name);
@@ -396,7 +395,6 @@ void worker::Set_ENV(QSerialPort *Serial_Com, struct t_module *tModule)
 void worker::Set_IO(QSerialPort *Serial_Com, struct t_module *tModule)
 {
     int jeda = 1000;
-    QString Request;
     QString temp;
     QStringList val;
 
@@ -604,7 +602,6 @@ void worker::Set_IO(QSerialPort *Serial_Com, struct t_module *tModule)
 void worker::Set_SIM(QSerialPort *Serial_Com, struct t_module *tModule)
 {
     int jeda = 1000;
-    QString Request;
     QString temp;
 
     /** SET SIM 1 **/

@@ -16,6 +16,8 @@
 #include <view/mainwindow.h>
 #include <model/module.h>
 
+#include <model/interface_manipulator/qlightboxwidget.h>
+
 namespace Ui {
 class MainWindow;
 }

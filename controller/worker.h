@@ -41,6 +41,8 @@ public:
     void Get_SIM(struct t_module *tModule, QStringList data);
     void Get_SIG(struct t_module *tModule, QStringList data);
 
+    QString Request;
+
     void Set_ENV(QSerialPort *Serial_Com, struct t_module *tModule);
     void Set_IO(QSerialPort *Serial_Com, struct t_module *tModule);
     void Set_SIM(QSerialPort *Serial_Com, struct t_module *tModule);

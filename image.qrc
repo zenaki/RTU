@@ -10,5 +10,6 @@
         <file>image/fileopen.png</file>
         <file>image/editcopy.png</file>
         <file>image/view-refresh.png</file>
+        <file>image/loader.gif</file>
     </qresource>
 </RCC>
