@@ -19,6 +19,9 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="1">
@@ -83,6 +86,7 @@
     <property name="title">
      <string>Help</string>
     </property>
+    <addaction name="actionPlugin"/>
    </widget>
    <widget class="QMenu" name="menuActive_Window">
     <property name="title">
@@ -194,6 +198,11 @@
    </property>
    <property name="toolTip">
     <string>Refresh Tree</string>
+   </property>
+  </action>
+  <action name="actionPlugin">
+   <property name="text">
+    <string>plugin</string>
    </property>
   </action>
  </widget>

@@ -69,6 +69,8 @@ private slots:
     void on_actionRefresh_triggered();
     void on_actionConfig_triggered();
 
+    void on_actionPlugin_triggered();
+
 private:
     /** Other Class **/
     QString NoSeri;

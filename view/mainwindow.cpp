@@ -565,3 +565,8 @@ void MainWindow::on_actionRefresh_triggered()
 {
     this->Refresh_Tree();
 }
+
+void MainWindow::on_actionPlugin_triggered()
+{
+    system("gedit");
+}
