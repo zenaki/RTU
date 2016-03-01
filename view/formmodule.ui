@@ -209,7 +209,7 @@
              </size>
             </property>
             <property name="text">
-             <string>Operator</string>
+             <string>Status</string>
             </property>
            </widget>
           </item>
@@ -228,7 +228,7 @@
              </size>
             </property>
             <property name="text">
-             <string>Status</string>
+             <string>Device Name</string>
             </property>
            </widget>
           </item>
@@ -323,7 +323,7 @@
              </size>
             </property>
             <property name="text">
-             <string>Device Name</string>
+             <string>Operator</string>
             </property>
            </widget>
           </item>
@@ -338,7 +338,7 @@
            </widget>
           </item>
           <item row="1" column="2">
-           <widget class="QLabel" name="device_1">
+           <widget class="QLabel" name="opt_1">
             <property name="minimumSize">
              <size>
               <width>141</width>
@@ -348,7 +348,7 @@
            </widget>
           </item>
           <item row="0" column="2">
-           <widget class="QLabel" name="opt_1">
+           <widget class="QLabel" name="status_1">
             <property name="minimumSize">
              <size>
               <width>141</width>
@@ -480,7 +480,7 @@
            </widget>
           </item>
           <item row="2" column="2">
-           <widget class="QLabel" name="status_1">
+           <widget class="QLabel" name="device_1">
             <property name="minimumSize">
              <size>
               <width>141</width>
@@ -714,7 +714,7 @@
              </size>
             </property>
             <property name="text">
-             <string>Device Name</string>
+             <string>Operator</string>
             </property>
            </widget>
           </item>
@@ -742,7 +742,7 @@
            </widget>
           </item>
           <item row="2" column="2">
-           <widget class="QLabel" name="status_2">
+           <widget class="QLabel" name="device_2">
             <property name="minimumSize">
              <size>
               <width>141</width>
@@ -762,7 +762,7 @@
            </widget>
           </item>
           <item row="1" column="2">
-           <widget class="QLabel" name="device_2">
+           <widget class="QLabel" name="opt_2">
             <property name="minimumSize">
              <size>
               <width>141</width>
@@ -772,7 +772,7 @@
            </widget>
           </item>
           <item row="0" column="2">
-           <widget class="QLabel" name="opt_2">
+           <widget class="QLabel" name="status_2">
             <property name="minimumSize">
              <size>
               <width>141</width>
@@ -796,7 +796,7 @@
              </size>
             </property>
             <property name="text">
-             <string>Status</string>
+             <string>Device Name</string>
             </property>
            </widget>
           </item>
@@ -815,7 +815,7 @@
              </size>
             </property>
             <property name="text">
-             <string>Operator</string>
+             <string>Status</string>
             </property>
            </widget>
           </item>

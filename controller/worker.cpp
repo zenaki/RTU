@@ -82,7 +82,7 @@ QString worker::check_statusModule(QString address){
     return "none";
 }
 
-void worker::showModule(QWidget *parent, QMdiArea *mdiArea, QString module, QSerialPort *SerialPort){
+void worker::showModule(QWidget *parent, QMdiArea *mdiArea, QString module, QSerialPort *SerialPort, QLightBoxWidget *LightBox){
     struct t_module tModule;
     QString address;
 
@@ -92,7 +92,7 @@ void worker::showModule(QWidget *parent, QMdiArea *mdiArea, QString module, QSer
 
     formModule *fModule;
 
-    fModule = new formModule(parent, address, SerialPort);
+    fModule = new formModule(parent, address, SerialPort, LightBox);
     fModule->setModal(true);
     fModule->setWindowTitle(tModule.module_name);
 //    fModule->setMaximumWidth(700);
@@ -144,6 +144,34 @@ bool worker::state_of_module(int num, QString newModule, QString *existModule){
     }
 
     return cek;
+}
+
+void worker::Request_ENV(QSerialPort *Serial_Com, int jeda)
+{
+//    Serial->write_data(Serial_Com, "hmi_cek_env\r\n");
+    Serial_Com->write("hmi_cek_env\r\n");
+    this->delay(jeda);
+}
+
+void worker::Request_IO(QSerialPort *Serial_Com, int jeda)
+{
+//    Serial->write_data(Serial_Com, "hmi_sync\r\n");
+    Serial_Com->write("hmi_sync\r\n");
+    this->delay(jeda);
+}
+
+void worker::Request_SIM(QSerialPort *Serial_Com, int jeda)
+{
+//    Serial->write_data(Serial_Com, "hmi_cek_cfg_sim\r\n");
+    Serial_Com->write("hmi_cek_cfg_sim\r\n");
+    this->delay(jeda);
+}
+
+void worker::Request_SIG(QSerialPort *Serial_Com, int jeda)
+{
+//    Serial->write_data(Serial_Com, "hmi_cek_signal\r\n");
+    Serial_Com->write("hmi_cek_signal\r\n");
+    this->delay(jeda);
 }
 
 void worker::Get_ENV(struct t_module *tModule, QStringList data)
@@ -378,10 +406,12 @@ void worker::Get_SIM(struct t_module *tModule, QStringList data)
     }
 }
 
-void worker::Set_ENV(QWidget *parent, QString desc, QSerialPort *Serial_Com, struct t_module *tModule)
+void worker::Set_ENV(QWidget *parent, QLightBoxWidget *lBox, QString desc, QSerialPort *Serial_Com, struct t_module *tModule)
 {
     /** Set Light Box for Busy **/
     QLightBoxWidget* lightBox = new QLightBoxWidget(parent);
+    lightBox = lBox;
+    lightBox->repaint();
 
     QLabel* lbTitle = new QLabel("MONITA RTU");
     lbTitle->setStyleSheet("font-size: 28px; font-weight: bold; color: white");
@@ -390,8 +420,8 @@ void worker::Set_ENV(QWidget *parent, QString desc, QSerialPort *Serial_Com, str
     lbProgress->setMovie(progressMovie);
     progressMovie->start();
     desc.prepend("wait a second\n");
-    QLabel* lbDescription = new QLabel(desc.toUtf8().data());
-    lbDescription->setStyleSheet("color: white");
+    QLabel* lbDescriptionENV = new QLabel(desc.toUtf8().data());
+    lbDescriptionENV->setStyleSheet("color: white");
 
     QGridLayout* lbLayout = new QGridLayout;
     lbLayout->setRowStretch(0, 1);
@@ -399,7 +429,7 @@ void worker::Set_ENV(QWidget *parent, QString desc, QSerialPort *Serial_Com, str
     lbLayout->addWidget(lbTitle, 1, 1);
     lbLayout->addWidget(lbProgress, 1, 2, Qt::AlignRight);
     lbLayout->setColumnStretch(3, 1);
-    lbLayout->addWidget(lbDescription, 2, 1, 1, 2);
+    lbLayout->addWidget(lbDescriptionENV, 2, 1, 1, 2);
     lbLayout->setRowStretch(4, 1);
 
     lightBox->setLayout(lbLayout);
@@ -410,23 +440,25 @@ void worker::Set_ENV(QWidget *parent, QString desc, QSerialPort *Serial_Com, str
 
     Request.sprintf("set_env nama %s\r\n", tModule->module_name);
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionENV->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
     Request.sprintf("set_env SN %s\r\n", tModule->serial_number);
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionENV->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
     lightBox->close();
 }
 
-void worker::Set_IO(QWidget *parent, QString desc, QSerialPort *Serial_Com, struct t_module *tModule)
+void worker::Set_IO(QWidget *parent, QLightBoxWidget *lBox, QString desc, QSerialPort *Serial_Com, struct t_module *tModule)
 {
     /** Set Light Box for Busy **/
     QLightBoxWidget* lightBox = new QLightBoxWidget(parent);
+    lightBox = lBox;
+    lightBox->repaint();
 
     QLabel* lbTitle = new QLabel("MONITA RTU");
     lbTitle->setStyleSheet("font-size: 28px; font-weight: bold; color: white");
@@ -435,8 +467,8 @@ void worker::Set_IO(QWidget *parent, QString desc, QSerialPort *Serial_Com, stru
     lbProgress->setMovie(progressMovie);
     progressMovie->start();
     desc.prepend("wait a second\n");
-    QLabel* lbDescription = new QLabel(desc.toUtf8().data());
-    lbDescription->setStyleSheet("color: white");
+    QLabel* lbDescriptionIO = new QLabel(desc.toUtf8().data());
+    lbDescriptionIO->setStyleSheet("color: white");
 
     QGridLayout* lbLayout = new QGridLayout;
     lbLayout->setRowStretch(0, 1);
@@ -444,7 +476,7 @@ void worker::Set_IO(QWidget *parent, QString desc, QSerialPort *Serial_Com, stru
     lbLayout->addWidget(lbTitle, 1, 1);
     lbLayout->addWidget(lbProgress, 1, 2, Qt::AlignRight);
     lbLayout->setColumnStretch(3, 1);
-    lbLayout->addWidget(lbDescription, 2, 1, 1, 2);
+    lbLayout->addWidget(lbDescriptionIO, 2, 1, 1, 2);
     lbLayout->setRowStretch(4, 1);
 
     lightBox->setLayout(lbLayout);
@@ -461,13 +493,13 @@ void worker::Set_IO(QWidget *parent, QString desc, QSerialPort *Serial_Com, stru
 
     Request = "set_kanal 1 status " + val.at(2) + "\r\n";
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionIO->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
     Request = "set_kanal 1 " + val.at(3) + " " + val.at(4) + "\r\n";
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionIO->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
@@ -476,13 +508,13 @@ void worker::Set_IO(QWidget *parent, QString desc, QSerialPort *Serial_Com, stru
 
     Request = "set_kanal 2 status " + val.at(2) + "\r\n";
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionIO->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
     Request = "set_kanal 2 " + val.at(3) + " " + val.at(4) + "\r\n";
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionIO->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
@@ -491,13 +523,13 @@ void worker::Set_IO(QWidget *parent, QString desc, QSerialPort *Serial_Com, stru
 
     Request = "set_kanal 3 status " + val.at(2) + "\r\n";
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionIO->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
     Request = "set_kanal 3 " + val.at(3) + " " + val.at(4) + "\r\n";
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionIO->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
@@ -506,13 +538,13 @@ void worker::Set_IO(QWidget *parent, QString desc, QSerialPort *Serial_Com, stru
 
     Request = "set_kanal 4 status " + val.at(2) + "\r\n";
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionIO->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
     Request = "set_kanal 4 " + val.at(3) + " " + val.at(4) + "\r\n";
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionIO->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
@@ -521,13 +553,13 @@ void worker::Set_IO(QWidget *parent, QString desc, QSerialPort *Serial_Com, stru
 
     Request = "set_kanal 5 status " + val.at(2) + "\r\n";
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionIO->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
     Request = "set_kanal 5 " + val.at(3) + " " + val.at(4) + "\r\n";
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionIO->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
@@ -536,13 +568,13 @@ void worker::Set_IO(QWidget *parent, QString desc, QSerialPort *Serial_Com, stru
 
     Request = "set_kanal 6 status " + val.at(2) + "\r\n";
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionIO->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
     Request = "set_kanal 6 " + val.at(3) + " " + val.at(4) + "\r\n";
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionIO->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
@@ -551,13 +583,13 @@ void worker::Set_IO(QWidget *parent, QString desc, QSerialPort *Serial_Com, stru
 
     Request = "set_kanal 7 status " + val.at(2) + "\r\n";
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionIO->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
     Request = "set_kanal 7 " + val.at(3) + " " + val.at(4) + "\r\n";
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionIO->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
@@ -568,13 +600,13 @@ void worker::Set_IO(QWidget *parent, QString desc, QSerialPort *Serial_Com, stru
 
     Request = "set_kanal 8 status " + val.at(2) + "\r\n";
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionIO->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
     Request = "set_kanal 8 " + val.at(3) + " " + val.at(4) + "\r\n";
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionIO->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
@@ -583,13 +615,13 @@ void worker::Set_IO(QWidget *parent, QString desc, QSerialPort *Serial_Com, stru
 
     Request = "set_kanal 9 status " + val.at(2) + "\r\n";
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionIO->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
     Request = "set_kanal 9 " + val.at(3) + " " + val.at(4) + "\r\n";
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionIO->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
@@ -598,13 +630,13 @@ void worker::Set_IO(QWidget *parent, QString desc, QSerialPort *Serial_Com, stru
 
     Request = "set_kanal 10 status " + val.at(2) + "\r\n";
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionIO->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
     Request = "set_kanal 10 " + val.at(3) + " " + val.at(4) + "\r\n";
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionIO->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
@@ -613,13 +645,13 @@ void worker::Set_IO(QWidget *parent, QString desc, QSerialPort *Serial_Com, stru
 
     Request = "set_kanal 11 status " + val.at(2) + "\r\n";
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionIO->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
     Request = "set_kanal 11 " + val.at(3) + " " + val.at(4) + "\r\n";
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionIO->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
@@ -628,13 +660,13 @@ void worker::Set_IO(QWidget *parent, QString desc, QSerialPort *Serial_Com, stru
 
     Request = "set_kanal 12 status " + val.at(2) + "\r\n";
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionIO->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
     Request = "set_kanal 12 " + val.at(3) + " " + val.at(4) + "\r\n";
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionIO->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
@@ -643,13 +675,13 @@ void worker::Set_IO(QWidget *parent, QString desc, QSerialPort *Serial_Com, stru
 
     Request = "set_kanal 13 status " + val.at(2) + "\r\n";
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionIO->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
     Request = "set_kanal 13 " + val.at(3) + " " + val.at(4) + "\r\n";
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionIO->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
@@ -659,7 +691,7 @@ void worker::Set_IO(QWidget *parent, QString desc, QSerialPort *Serial_Com, stru
     val = temp.split(";");
     Request = "set_relay 1 " + val.at(2) + "\r\n";
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionIO->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 //    Request = "set_relay 1 " + val.at(2) + "\r\n";
@@ -672,7 +704,7 @@ void worker::Set_IO(QWidget *parent, QString desc, QSerialPort *Serial_Com, stru
     val = temp.split(";");
     Request = "set_relay 2 " + val.at(2) + "\r\n";
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionIO->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 //    Request = "set_relay 1 " + val.at(2) + "\r\n";
@@ -681,19 +713,15 @@ void worker::Set_IO(QWidget *parent, QString desc, QSerialPort *Serial_Com, stru
 //    FormModule->ui->request->setText(Request);
 //    this->delay(jeda);
 
-    Request = "reset\r\n";
-    desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
-    Serial_Com->write(Request.toUtf8().data());
-    this->delay(jeda*5);
-
     lightBox->close();
 }
 
-void worker::Set_SIM(QWidget *parent, QString desc, QSerialPort *Serial_Com, struct t_module *tModule)
+void worker::Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QString desc, QSerialPort *Serial_Com, struct t_module *tModule)
 {
     /** Set Light Box for Busy **/
     QLightBoxWidget* lightBox = new QLightBoxWidget(parent);
+    lightBox = lBox;
+    lightBox->repaint();
 
     QLabel* lbTitle = new QLabel("MONITA RTU");
     lbTitle->setStyleSheet("font-size: 28px; font-weight: bold; color: white");
@@ -702,8 +730,8 @@ void worker::Set_SIM(QWidget *parent, QString desc, QSerialPort *Serial_Com, str
     lbProgress->setMovie(progressMovie);
     progressMovie->start();
     desc.prepend("wait a second\n");
-    QLabel* lbDescription = new QLabel(desc.toUtf8().data());
-    lbDescription->setStyleSheet("color: white");
+    QLabel* lbDescriptionSIM = new QLabel(desc.toUtf8().data());
+    lbDescriptionSIM->setStyleSheet("color: white");
 
     QGridLayout* lbLayout = new QGridLayout;
     lbLayout->setRowStretch(0, 1);
@@ -711,7 +739,7 @@ void worker::Set_SIM(QWidget *parent, QString desc, QSerialPort *Serial_Com, str
     lbLayout->addWidget(lbTitle, 1, 1);
     lbLayout->addWidget(lbProgress, 1, 2, Qt::AlignRight);
     lbLayout->setColumnStretch(3, 1);
-    lbLayout->addWidget(lbDescription, 2, 1, 1, 2);
+    lbLayout->addWidget(lbDescriptionSIM, 2, 1, 1, 2);
     lbLayout->setRowStretch(4, 1);
 
     lightBox->setLayout(lbLayout);
@@ -729,7 +757,7 @@ void worker::Set_SIM(QWidget *parent, QString desc, QSerialPort *Serial_Com, str
         Request = "set_cfg_sim 1 nama " + temp + "\r\n";
     }
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionSIM->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
@@ -740,7 +768,7 @@ void worker::Set_SIM(QWidget *parent, QString desc, QSerialPort *Serial_Com, str
         Request = "set_cfg_sim 1 operator " + temp + "\r\n";
     }
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionSIM->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
@@ -751,7 +779,7 @@ void worker::Set_SIM(QWidget *parent, QString desc, QSerialPort *Serial_Com, str
         Request = "set_cfg_sim 1 nomor " + temp + "\r\n";
     }
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionSIM->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
@@ -762,7 +790,7 @@ void worker::Set_SIM(QWidget *parent, QString desc, QSerialPort *Serial_Com, str
         Request = "set_cfg_sim 1 status " + temp + "\r\n";
     }
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionSIM->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
@@ -773,7 +801,7 @@ void worker::Set_SIM(QWidget *parent, QString desc, QSerialPort *Serial_Com, str
         Request = "set+cfg_sim 1 apn " + temp + "\r\n";
     }
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionSIM->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
@@ -784,7 +812,7 @@ void worker::Set_SIM(QWidget *parent, QString desc, QSerialPort *Serial_Com, str
         Request = "set_cfg_sim 1 user " + temp + "\r\n";
     }
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionSIM->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
@@ -795,7 +823,7 @@ void worker::Set_SIM(QWidget *parent, QString desc, QSerialPort *Serial_Com, str
         Request = "set_cfg_sim 1 pass " + temp + "\r\n";
     }
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionSIM->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
@@ -806,7 +834,7 @@ void worker::Set_SIM(QWidget *parent, QString desc, QSerialPort *Serial_Com, str
         Request = "set_cfg_sim 1 mode " + temp + "\r\n";
     }
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionSIM->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
@@ -819,7 +847,7 @@ void worker::Set_SIM(QWidget *parent, QString desc, QSerialPort *Serial_Com, str
         Request = "set_cfg_sim 2 nama " + temp + "\r\n";
     }
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionSIM->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
@@ -830,7 +858,7 @@ void worker::Set_SIM(QWidget *parent, QString desc, QSerialPort *Serial_Com, str
         Request = "set_cfg_sim 2 operator " + temp + "\r\n";
     }
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionSIM->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
@@ -841,7 +869,7 @@ void worker::Set_SIM(QWidget *parent, QString desc, QSerialPort *Serial_Com, str
         Request = "set_cfg_sim 2 nomor " + temp + "\r\n";
     }
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionSIM->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
@@ -852,7 +880,7 @@ void worker::Set_SIM(QWidget *parent, QString desc, QSerialPort *Serial_Com, str
         Request = "set_cfg_sim 2 status " + temp + "\r\n";
     }
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionSIM->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
     this->delay(jeda);
 
@@ -863,40 +891,82 @@ void worker::Set_SIM(QWidget *parent, QString desc, QSerialPort *Serial_Com, str
         Request = "set+cfg_sim 2 apn " + temp + "\r\n";
     }
     desc = "wait a second ...\n" + Request;
-    lbDescription->setText(desc);
+    lbDescriptionSIM->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
-//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
+
     temp.sprintf("%s", tModule->user_gsm_2);
     if (temp.isEmpty()) {
         Request = "set_cfg_sim 2 user -\r\n";
     } else {
         Request = "set_cfg_sim 2 user " + temp + "\r\n";
     }
-//    Serial->write_data(Serial_Com, Request);
+    desc = "wait a second ...\n" + Request;
+    lbDescriptionSIM->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
-//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
+
     temp.sprintf("%s", tModule->passwd_gsm_2);
     if (temp.isEmpty()) {
         Request = "set_cfg_sim 2 pass -\r\n";
     } else {
         Request = "set_cfg_sim 2 pass " + temp + "\r\n";
     }
-//    Serial->write_data(Serial_Com, Request);
+    desc = "wait a second ...\n" + Request;
+    lbDescriptionSIM->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
-//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
+
     temp.sprintf("%s", tModule->com_gsm_2);
     if (temp.isEmpty()) {
         Request = "set_cfg_sim 2 mode -\r\n";
     } else {
         Request = "set_cfg_sim 2 mode " + temp + "\r\n";
     }
-//    Serial->write_data(Serial_Com, Request);
+    desc = "wait a second ...\n" + Request;
+    lbDescriptionSIM->setText(desc);
     Serial_Com->write(Request.toUtf8().data());
-//    FormModule->ui->request->setText(Request);
     this->delay(jeda);
+
+    lightBox->close();
+}
+
+void worker::Reset_Board(QWidget *parent, QLightBoxWidget *lBox, QString desc, QSerialPort *Serial_Com)
+{
+    /** Set Light Box for Busy **/
+    QLightBoxWidget* lightBox = new QLightBoxWidget(parent);
+    lightBox = lBox;
+    lightBox->repaint();
+
+    QLabel* lbTitle = new QLabel("MONITA RTU");
+    lbTitle->setStyleSheet("font-size: 28px; font-weight: bold; color: white");
+    QLabel* lbProgress = new QLabel;
+    QMovie* progressMovie = new QMovie(":/new/prefix1/image/loader.gif");
+    lbProgress->setMovie(progressMovie);
+    progressMovie->start();
+    desc.prepend("wait a second\n");
+    QLabel* lbDescription = new QLabel(desc.toUtf8().data());
+    lbDescription->setStyleSheet("color: white");
+
+    QGridLayout* lbLayout = new QGridLayout;
+    lbLayout->setRowStretch(0, 1);
+    lbLayout->setColumnStretch(0, 1);
+    lbLayout->addWidget(lbTitle, 1, 1);
+    lbLayout->addWidget(lbProgress, 1, 2, Qt::AlignRight);
+    lbLayout->setColumnStretch(3, 1);
+    lbLayout->addWidget(lbDescription, 2, 1, 1, 2);
+    lbLayout->setRowStretch(4, 1);
+
+    lightBox->setLayout(lbLayout);
+    lightBox->show();
+
+    int jeda = 1000;
+    QString Request;
+    QString temp;
+
+    Request = "reset\r\n";
+    Serial_Com->write(Request.toUtf8().data());
+    this->delay(jeda*10);
 
     lightBox->close();
 }

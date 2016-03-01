@@ -24,6 +24,7 @@
 
 class formModule;
 class serial;
+class QLightBoxWidget;
 
 class worker
 {
@@ -39,21 +40,34 @@ public:
     QString checkModule(QString address);
     QString check_statusModule(QString address);
 
-    void showModule(QWidget *parent, QMdiArea *mdiArea, QString module, QSerialPort *SerialPort);
+    void showModule(QWidget *parent, QMdiArea *mdiArea, QString module, QSerialPort *SerialPort, QLightBoxWidget *LightBox);
 
     bool checkIfmodule(QString name);
     bool state_of_module(int num, QString newModule, QString *existModule);
+
+    void Request_ENV(QSerialPort *Serial_Com, int jeda);
+    void Request_IO(QSerialPort *Serial_Com, int jeda);
+    void Request_SIM(QSerialPort *Serial_Com, int jeda);
+    void Request_SIG(QSerialPort *Serial_Com, int jeda);
 
     void Get_ENV(struct t_module *tModule, QStringList data);
     void Get_IO(struct t_module *tModule, QStringList data);
     void Get_SIM(struct t_module *tModule, QStringList data);
     void Get_SIG(struct t_module *tModule, QStringList data);
 
+//    QLightBoxWidget *lightBox;
+//    QLabel *lbTitle;
+//    QLabel *lbProgress;
+//    QMovie *progressMovie;
+//    QLabel *lbDescription;
+//    QGridLayout *lbLayout;
+
 //    QString Request;
 
-    void Set_ENV(QWidget *parent, QString desc, QSerialPort *Serial_Com, struct t_module *tModule);
-    void Set_IO(QWidget *parent, QString desc, QSerialPort *Serial_Com, struct t_module *tModule);
-    void Set_SIM(QWidget *parent, QString desc, QSerialPort *Serial_Com, struct t_module *tModule);
+    void Set_ENV(QWidget *parent, QLightBoxWidget *lBox, QString desc, QSerialPort *Serial_Com, struct t_module *tModule);
+    void Set_IO(QWidget *parent, QLightBoxWidget *lBox, QString desc, QSerialPort *Serial_Com, struct t_module *tModule);
+    void Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QString desc, QSerialPort *Serial_Com, struct t_module *tModule);
+    void Reset_Board(QWidget *parent, QLightBoxWidget *lBox, QString desc, QSerialPort *Serial_Com);
 
     void delay(int ms);
 };

@@ -47,7 +47,7 @@ bool QLightBoxWidget::eventFilter(QObject* _object, QEvent* _event)
 		QChildEvent* childEvent = dynamic_cast<QChildEvent*>(_event);
 		if (childEvent->child() != this) {
 			QWidget* parent = parentWidget();
-			setParent(0);
+//			setParent(0);
 			setParent(parent);
 		}
 	}

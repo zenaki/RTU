@@ -6,6 +6,7 @@
 #include <QMessageBox>
 #include <QDebug>
 #include <QtSerialPort/QSerialPort>
+#include <QWidget>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -39,6 +40,8 @@ MainWindow::MainWindow(QWidget *parent) :
     this->ui->actionConnect->setEnabled(true);
     this->ui->actionDisconnect->setEnabled(false);
     this->ui->actionConfig->setEnabled(true);
+
+    busy = new QLightBoxWidget(this);
 }
 
 MainWindow::~MainWindow()
@@ -83,8 +86,7 @@ void MainWindow::on_actionNew_triggered()
 {
     int jeda = 1000;
     if (SerialPort->isOpen()) {
-        Serial->write_data(SerialPort, "hmi_cek_env\r\n");
-        work->delay(jeda);
+        work->Request_ENV(SerialPort, jeda);
 
         struct t_module tModule;
         bool cek = false;
@@ -113,10 +115,8 @@ void MainWindow::on_actionNew_triggered()
             reply = QMessageBox::question(this, "Attention !!", command,
                                           QMessageBox::Yes|QMessageBox::No);
             if (reply == QMessageBox::Yes) {
-                Serial->write_data(SerialPort, "hmi_sync\r\n");
-                work->delay(jeda);
-                Serial->write_data(SerialPort, "hmi_cek_cfg_sim\r\n");
-                work->delay(jeda);
+                work->Request_IO(SerialPort, jeda);
+                work->Request_SIM(SerialPort, jeda);
 
                 QString address = "data/module/" + newFiles;
                 mod->read_module(&tModule, address);
@@ -127,10 +127,8 @@ void MainWindow::on_actionNew_triggered()
 
                 mod->write_module(&tModule);
             } else {
-                Serial->write_data(SerialPort, "hmi_sync\r\n");
-                work->delay(jeda);
-                Serial->write_data(SerialPort, "hmi_cek_cfg_sim\r\n");
-                work->delay(jeda);
+                work->Request_IO(SerialPort, jeda);
+                work->Request_SIM(SerialPort, jeda);
 
                 work->Get_IO(&tModule, val_data_io);
                 work->Get_SIM(&tModule, val_data_sim);
@@ -177,22 +175,21 @@ void MainWindow::on_actionNew_triggered()
                 Address = faddModule->currentFile;
                 mod->read_module(&tModule, Address);
 
-                work->Set_ENV(this, "Set Environment ...", SerialPort, &tModule);
-                work->Set_SIM(this, "Set Configuration SIM ...", SerialPort, &tModule);
+                work->Set_ENV(this, busy, "Set Environment ...", SerialPort, &tModule);
+                work->Set_SIM(this, busy, "Set Configuration SIM ...", SerialPort, &tModule);
 
                 this->Refresh_Tree();
             }
         } else {
-            Serial->write_data(SerialPort, "hmi_sync\r\n");
-            work->delay(jeda);
-            Serial->write_data(SerialPort, "hmi_cek_cfg_sim\r\n");
-            work->delay(jeda);
+            work->Request_IO(SerialPort, jeda);
+            work->Request_SIM(SerialPort, jeda);
 
             strcpy(tModule.module_name, GetNamaBoard.toUtf8().data());
             strcpy(tModule.serial_number, GetNoSeri.toLatin1());
 
             work->Get_IO(&tModule, val_data_io);
             work->Get_SIM(&tModule, val_data_sim);
+
 
             /** INPUT **/
             strcpy(tModule.input_a1_name, "");
@@ -332,7 +329,6 @@ void MainWindow::on_treeView_clicked(const QModelIndex &index)
 {
     QString name = index.data(Qt::DisplayRole).toString();
 
-
     if(work->checkIfmodule(name)) {
         module_name_sv = name;
         module_name_sv.prepend("m_").append(".ini");
@@ -347,10 +343,22 @@ void MainWindow::on_treeView_clicked(const QModelIndex &index)
 void MainWindow::on_treeView_doubleClicked(const QModelIndex &index)
 {
     QString name = index.data(Qt::DisplayRole).toString();
+    QList<QMdiSubWindow *> windows = ui->mdiArea->subWindowList();
+    bool cek = false;
+    for (int i = 0; i < windows.size(); i++){
+        QWidget *sublist = qobject_cast<QWidget *>(windows.at(i)->widget());
 
+        if (name == sublist->windowTitle()) {
+            sublist->setFocus();
+            cek = true;
+        }
+    }
+
+    if (cek)
+        return;
 
     if(work->checkIfmodule(name))
-        work->showModule(this, this->ui->mdiArea, name, SerialPort);
+        work->showModule(this, this->ui->mdiArea, name, SerialPort, busy);
     else
         return;
 }
@@ -429,60 +437,57 @@ void MainWindow::readData()
 {
     struct t_serial_settings tSerial;
     str_data.append(SerialPort->readAll());
-    if (GetNoSeri.isEmpty()) {
-        if (str_data.indexOf("<ENV") > 0 && str_data.indexOf("ENV>") > 0) {
-            int a = str_data.indexOf("<ENV");
-            int b = str_data.indexOf("ENV>");
-            str_data = str_data.mid(a+4, b-a);
-            val_data = str_data
-                        .remove(" ")
-                        .remove("<ENV")
-                        .remove("<ENVani$")
-                        .remove("ENV>")
-                        .remove("Rinjani$")
-                        .remove("hmi_cek_env")
-                        .remove("\r").remove("\n").split(";");
-            GetNamaBoard = val_data[0];
-            GetNoSeri = val_data[1];
-            tSerial.str_data_env = str_data;
-            Serial->write_parsing_env(&tSerial);
-            val_data.clear();
-            str_data.clear();
-        }
-    } else {
-        if (str_data.indexOf("<I/O") > 0 && str_data.indexOf("I/O>") > 0) {
-            int a = str_data.indexOf("<I/O");
-            int b = str_data.indexOf("I/O>");
-            str_data = str_data.mid(a+4, b-a);
-            val_data_io = str_data
-                          .remove(" ")
-                          .remove("<I/O")
-                          .remove("<I/Oani$")
-                          .remove("I/O>")
-                          .remove("Rinjani$")
-                          .remove("hmi_sync")
-                          .remove("\r").remove("\n").remove("(X)").split("*");
-            tSerial.str_data_io = str_data;
-            Serial->write_parsing_io(&tSerial);
-            str_data.clear();
-            val_data.clear();
-        } else if (str_data.indexOf("<SIM") > 0 && str_data.indexOf("SIM>") > 0) {
-            int a = str_data.indexOf("<SIM");
-            int b = str_data.indexOf("SIM>");
-            str_data = str_data.mid(a+4, b-a);
-            val_data_sim = str_data
-                           .remove(" ")
-                           .remove("<SIM")
-                           .remove("<SIMani$")
-                           .remove("SIM>")
-                           .remove("Rinjani$")
-                           .remove("hmi_cek_cfg_sim")
-                           .remove("\r").remove("\n").remove("(X)").split("*");
-            tSerial.str_data_sim = str_data;
-            Serial->write_parsing_sim(&tSerial);
-            str_data.clear();
-            val_data.clear();
-        }
+    if (str_data.indexOf("<ENV") > 0 && str_data.indexOf("ENV>") > 0) {
+        int a = str_data.indexOf("<ENV");
+        int b = str_data.indexOf("ENV>");
+        str_data = str_data.mid(a+4, b-a);
+        val_data = str_data
+                    .remove(" ")
+                    .remove("<ENV")
+                    .remove("<ENVani$")
+                    .remove("ENV>")
+                    .remove("Rinjani$")
+                    .remove("hmi_cek_env")
+                    .remove("\r").remove("\n").split(";");
+        GetNamaBoard = val_data[0];
+        GetNoSeri = val_data[1];
+        tSerial.str_data_env = str_data;
+        Serial->write_parsing_env(&tSerial);
+        val_data.clear();
+        str_data.clear();
+    }
+    if (str_data.indexOf("<I/O") > 0 && str_data.indexOf("I/O>") > 0) {
+        int a = str_data.indexOf("<I/O");
+        int b = str_data.indexOf("I/O>");
+        str_data = str_data.mid(a+4, b-a);
+        val_data_io = str_data
+                      .remove(" ")
+                      .remove("<I/O")
+                      .remove("<I/Oani$")
+                      .remove("I/O>")
+                      .remove("Rinjani$")
+                      .remove("hmi_sync")
+                      .remove("\r").remove("\n").remove("(X)").split("*");
+        tSerial.str_data_io = str_data;
+        Serial->write_parsing_io(&tSerial);
+        str_data.clear();
+        val_data.clear();
+    } else if (str_data.indexOf("<SIM") > 0 && str_data.indexOf("SIM>") > 0) {
+        int a = str_data.indexOf("<SIM");
+        int b = str_data.indexOf("SIM>");
+        str_data = str_data.mid(a+4, b-a);
+        val_data_sim = str_data
+                       .remove(" ")
+                       .remove("<SIM")
+                       .remove("<SIMani$")
+                       .remove("SIM>")
+                       .remove("Rinjani$")
+                       .remove("hmi_cek_cfg_sim")
+                       .remove("\r").remove("\n").remove("(X)").split("*");
+        tSerial.str_data_sim = str_data;
+        Serial->write_parsing_sim(&tSerial);
+        str_data.clear();
+        val_data.clear();
     }
 }
 

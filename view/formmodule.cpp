@@ -4,7 +4,7 @@
 #include <QDebug>
 #include <QtGui>
 
-formModule::formModule(QWidget *parent, QString address, QSerialPort *SerialPort) :
+formModule::formModule(QWidget *parent, QString address, QSerialPort *SerialPort, QLightBoxWidget *LightBox) :
     QDialog(parent),
     ui(new Ui::formModule)
 {
@@ -20,9 +20,12 @@ formModule::formModule(QWidget *parent, QString address, QSerialPort *SerialPort
     Serial_Com = new QSerialPort(this);
     Serial_Com = SerialPort;
 
-    Main = new MainWindow();
+    Main = new MainWindow(this);
     Serial = new serial();
     Setting = new setting();
+
+    busyForm = new QLightBoxWidget(this);
+    busyForm = LightBox;
 
     this->setInterface(address);
 
@@ -335,22 +338,20 @@ void formModule::on_pbSet_clicked()
         struct t_serial_settings tSerial;
         QStringList val_data;
 
-        Request = "hmi_cek_env\r\n";
-        Serial->write_data(Serial_Com, Request);
-//        this->ui->request->setText(Request);
-        work->delay(jeda);
+        work->Request_ENV(Serial_Com, jeda);
 
         Serial->read_parsing(&tSerial);
         val_data = tSerial.str_data_env.split(";");
         if (NoSeri == val_data.at(1)) {
-            work->Set_IO(this, "Set I/O Setting ...", Serial_Com, &tModule);
-            work->Set_SIM(this, "Set Configuration SIM ...", Serial_Com, &tModule);
+            work->Set_IO(this, busyForm, "Set I/O Setting ...", Serial_Com, &tModule);
+            work->Set_SIM(this, busyForm, "Set Configuration SIM ...", Serial_Com, &tModule);
+//            work->Reset_Board(busyForm, "Reset Board ...", Serial_Com);
 
             Message = "On-Board";
 
         } else {
             Message = "On-Local";
-            if (!Main->GetNoSeri.isEmpty()) {
+            if (val_data.at(1) != "") {
                 diff = 1;
             } else {
                 diff = 2;
@@ -361,10 +362,9 @@ void formModule::on_pbSet_clicked()
     }
 
     if (reset == 1) {
-        Request = "reset\r\n";
-        Serial->write_data(Serial_Com, Request);
-//        this->ui->request->setText(Request);
-        work->delay(jeda*5);
+//        Request = "reset\r\n";
+//        Serial->write_data(Serial_Com, Request);
+//        work->delay(jeda*5);
     }
 
     if (diff == 0) {
@@ -456,11 +456,7 @@ void formModule::on_pbGet_clicked()
             this->ui->pbSet->setEnabled(true);
             this->ui->pbEditModule->setEnabled(true);
         } else {
-            QString RequestFromModule;
-            RequestFromModule = "hmi_cek_env\r\n";
-            Serial->write_data(Serial_Com, RequestFromModule);
-//            this->ui->request->setText(RequestFromModule);
-            work->delay(jeda);
+            work->Request_ENV(Serial_Com, jeda);
 
             Serial->read_parsing(&tSerial);
             val_data = tSerial.str_data_env.split(";");
@@ -468,15 +464,8 @@ void formModule::on_pbGet_clicked()
                 module mod;
                 mod.read_module(&tModule, Address_Module);
 
-                RequestFromModule = "hmi_sync\r\n";
-                Serial->write_data(Serial_Com, RequestFromModule);
-//                this->ui->request->setText(RequestFromModule);
-                work->delay(jeda);
-
-                RequestFromModule = "hmi_cek_cfg_sim\r\n";
-                Serial->write_data(Serial_Com, RequestFromModule);
-//                this->ui->request->setText(RequestFromModule);
-                work->delay(jeda);
+                work->Request_IO(Serial_Com, jeda);
+                work->Request_SIM(Serial_Com, jeda);
 
                 Serial->read_parsing(&tSerial);
                 val_data = tSerial.str_data_io.split("*");
@@ -487,7 +476,7 @@ void formModule::on_pbGet_clicked()
                 mod.update_setting(&tModule, Address_Module);
                 this->setInterface(Address_Module);
 
-//                QMessageBox::warning(this, "Serial Comunication !!", "Serial Number is not syncronize ..!!", 0, 0);
+                QMessageBox::information(this, "Syncronization Board !!", "Setting is Syncronized ..!!", 0, 0);
                 this->ui->Busy->hide();
                 this->ui->pbGet->setEnabled(true);
                 this->ui->pbSet->setEnabled(true);
@@ -528,8 +517,8 @@ void formModule::on_pbEditModule_clicked()
         this->ui->pbEditModule->setEnabled(false);
 
 
-        work->Set_ENV(this, "Set Environment ...", Serial_Com, &tModule);
-        work->Set_SIM(this, "Set Configuration SIM ...", Serial_Com, &tModule);
+        work->Set_ENV(this, busyForm, "Set Environment ...", Serial_Com, &tModule);
+        work->Set_SIM(this, busyForm, "Set Configuration SIM ...", Serial_Com, &tModule);
 
         this->ui->Busy->hide();
         this->ui->pbGet->setEnabled(true);

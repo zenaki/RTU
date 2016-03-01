@@ -16,7 +16,9 @@
 
 #include <view/form_addmodule.h>
 #include <ui_form_addmodule.h>
+#include <view/mainwindow.h>
 #include <ui_mainwindow.h>
+#include <model/interface_manipulator/qlightboxwidget.h>
 #include <view/wait_process.h>
 
 namespace Ui {
@@ -27,6 +29,7 @@ class worker;
 class MainWindow;
 class serial;
 class setting;
+class QLightBoxWidget;
 class wait_process;
 
 class formModule : public QDialog
@@ -36,9 +39,10 @@ class formModule : public QDialog
 public:
     Ui::formModule *ui;
 
-    explicit formModule(QWidget *parent = 0, QString address = 0, QSerialPort *SerialPort = 0);
+    explicit formModule(QWidget *parent = 0, QString address = 0, QSerialPort *SerialPort = 0, QLightBoxWidget *LightBox = 0);
     ~formModule();
 
+    QLightBoxWidget *busyForm;
     wait_process *wait;
 private slots:
     void on_pbSet_clicked();
