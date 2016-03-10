@@ -45,10 +45,10 @@ public:
     bool checkIfmodule(QString name);
     bool state_of_module(int num, QString newModule, QString *existModule);
 
-    void Request_ENV(QSerialPort *Serial_Com, int jeda);
-    void Request_IO(QSerialPort *Serial_Com, int jeda);
-    void Request_SIM(QSerialPort *Serial_Com, int jeda);
-    void Request_SIG(QSerialPort *Serial_Com, int jeda);
+    void Request_ENV(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, int jeda);
+    void Request_IO(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, int jeda);
+    void Request_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, int jeda);
+    void Request_SIG(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, int jeda);
 
     void Get_ENV(struct t_module *tModule, QStringList data);
     void Get_IO(struct t_module *tModule, QStringList data);
@@ -64,12 +64,13 @@ public:
 
 //    QString Request;
 
-    void Set_ENV(QWidget *parent, QLightBoxWidget *lBox, QString desc, QSerialPort *Serial_Com, struct t_module *tModule);
-    void Set_IO(QWidget *parent, QLightBoxWidget *lBox, QString desc, QSerialPort *Serial_Com, struct t_module *tModule);
-    void Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QString desc, QSerialPort *Serial_Com, struct t_module *tModule);
-    void Reset_Board(QWidget *parent, QLightBoxWidget *lBox, QString desc, QSerialPort *Serial_Com);
+    void Set_ENV(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, struct t_module *tModule);
+    void Set_IO(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, struct t_module *tModule);
+    void Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, struct t_module *tModule);
+    void Reset_Board(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com);
 
-    void delay(int ms);
+    void delay(QWidget *parent, QLightBoxWidget *lBox, QString desc, int ms);
+    void delay_set(QWidget *parent, QLightBoxWidget *lBox, QString desc);
 };
 
 #endif // WORKER_H

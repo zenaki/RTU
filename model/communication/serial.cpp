@@ -63,3 +63,22 @@ void serial::read_parsing(struct t_serial_settings *tSerial)
     tSerial->str_data_io = sett.value("STR_DATA_IO").toString();
     tSerial->str_data_sim = sett.value("STR_DATA_SIM").toString();
 }
+
+void serial::write_FinishRead(bool FinishRead)
+{
+    QString pth;
+    pth = "data/config/serial_parsing.ini";
+    QSettings sett(pth, QSettings::IniFormat);
+
+    sett.setValue("FINISH_READ", FinishRead);
+}
+
+bool serial::read_FinishRead()
+{
+    QString pth;
+    pth = "data/config/serial_parsing.ini";
+    QSettings sett(pth, QSettings::IniFormat);
+
+    bool FinishRead = sett.value("FINISH_READ").toBool();
+    return FinishRead;
+}

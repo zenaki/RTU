@@ -49,7 +49,8 @@ void formModule::setInterface(QString address){
     mod.read_module(&tModule, Address_Module);
     QString modules;
 
-    int rowInput = 13;
+    int rowInputDigital = 6;
+    int rowInputAnalog = 6;
     int rowOutput = 2;
     QString type_IO;
 
@@ -60,7 +61,7 @@ void formModule::setInterface(QString address){
     this->ui->tabel_input->setColumnWidth(2, 150);
 //    this->ui->tabel_input->setColumnWidth(3, 100);
 //    this->ui->tabel_input->setColumnWidth(4, 100);
-    this->ui->tabel_input->setRowCount(rowInput);
+    this->ui->tabel_input->setRowCount(rowInputDigital + rowInputAnalog);
 
     this->ui->tabel_output->verticalHeader()->setHidden(true);
     this->ui->tabel_output->setColumnCount(4);
@@ -70,11 +71,11 @@ void formModule::setInterface(QString address){
     //    this->ui->tabel_output->setColumnWidth(3, 100);
     this->ui->tabel_output->setRowCount(rowOutput);
 
-    for (int i = 0; i < rowInput; i++){
+    for (int i = 0; i < rowInputDigital + rowInputAnalog; i++){
         name_input[i] = new QLineEdit(this);
 
         type_input[i] = new QComboBox(this);
-        if (i >= 7) {
+        if (i >= rowInputDigital) {
             type_input[i]->addItem("Analog Monita",250);
             type_input[i]->addItem("Analog Running Hours",230);
         } else
@@ -111,8 +112,8 @@ void formModule::setInterface(QString address){
     str.append(tModule.input_d5).append(";");
     str.append(tModule.input_d6_name).append(";");
     str.append(tModule.input_d6).append(";");
-    str.append(tModule.input_d7_name).append(";");
-    str.append(tModule.input_d7).append(";");
+//    str.append(tModule.input_d7_name).append(";");
+//    str.append(tModule.input_d7).append(";");
 
     str.append(tModule.input_a1_name).append(";");
     str.append(tModule.input_a1).append(";");
@@ -129,8 +130,8 @@ void formModule::setInterface(QString address){
 
     QStringList list = str.split(';');
 
-    for(int i = 0; i < rowInput; i++){
-        if (i >= 7) {
+    for(int i = 0; i < rowInputDigital + rowInputAnalog; i++){
+        if (i >= rowInputDigital) {
             type_IO = " - Analog";
         } else {
             type_IO = " - Digital";
@@ -259,12 +260,12 @@ void formModule::on_pbSet_clicked()
         tModule.d_port[i].calib_m = calib_m[i]->text().toFloat();
         tModule.d_port[i].calib_x = calib_x[i]->text().toFloat();
 
-        if (i >= 7) {
+        if (i >= 6) {
             if (type_input[i]->currentIndex() == 0) {indx = 250;}
             if (type_input[i]->currentIndex() == 1) {indx = 230;}
             tModule.d_port[i].type_input = indx;
 
-            data[i].sprintf("A;%d;%d;%.3f;%.3f", i-7+1
+            data[i].sprintf("A;%d;%d;%.3f;%.3f", i-6+1
                             , indx
                             , tModule.d_port[i].calib_m
                             , tModule.d_port[i].calib_x);
@@ -295,21 +296,19 @@ void formModule::on_pbSet_clicked()
     strcpy(tModule.input_d5_name,name_input[4]->text().toLatin1());
     strcpy(tModule.input_d6,data[5].toLatin1());
     strcpy(tModule.input_d6_name,name_input[5]->text().toLatin1());
-    strcpy(tModule.input_d7,data[6].toLatin1());
-    strcpy(tModule.input_d7_name,name_input[6]->text().toLatin1());
 
-    strcpy(tModule.input_a1,data[7].toLatin1());
-    strcpy(tModule.input_a1_name,name_input[7]->text().toLatin1());
-    strcpy(tModule.input_a2,data[8].toLatin1());
-    strcpy(tModule.input_a2_name,name_input[8]->text().toLatin1());
-    strcpy(tModule.input_a3,data[9].toLatin1());
-    strcpy(tModule.input_a3_name,name_input[9]->text().toLatin1());
-    strcpy(tModule.input_a4,data[10].toLatin1());
-    strcpy(tModule.input_a4_name,name_input[10]->text().toLatin1());
-    strcpy(tModule.input_a5,data[11].toLatin1());
-    strcpy(tModule.input_a5_name,name_input[11]->text().toLatin1());
-    strcpy(tModule.input_a6,data[12].toLatin1());
-    strcpy(tModule.input_a6_name,name_input[12]->text().toLatin1());
+    strcpy(tModule.input_a1,data[6].toLatin1());
+    strcpy(tModule.input_a1_name,name_input[6]->text().toLatin1());
+    strcpy(tModule.input_a2,data[7].toLatin1());
+    strcpy(tModule.input_a2_name,name_input[7]->text().toLatin1());
+    strcpy(tModule.input_a3,data[8].toLatin1());
+    strcpy(tModule.input_a3_name,name_input[8]->text().toLatin1());
+    strcpy(tModule.input_a4,data[9].toLatin1());
+    strcpy(tModule.input_a4_name,name_input[9]->text().toLatin1());
+    strcpy(tModule.input_a5,data[10].toLatin1());
+    strcpy(tModule.input_a5_name,name_input[10]->text().toLatin1());
+    strcpy(tModule.input_a6,data[11].toLatin1());
+    strcpy(tModule.input_a6_name,name_input[11]->text().toLatin1());
 
     for (int i = 0; i < ui->tabel_output->rowCount(); i++)
     {
@@ -338,13 +337,13 @@ void formModule::on_pbSet_clicked()
         struct t_serial_settings tSerial;
         QStringList val_data;
 
-        work->Request_ENV(Serial_Com, jeda);
+        work->Request_ENV(this, busyForm, Serial_Com, jeda);
 
         Serial->read_parsing(&tSerial);
         val_data = tSerial.str_data_env.split(";");
         if (NoSeri == val_data.at(1)) {
-            work->Set_IO(this, busyForm, "Set I/O Setting ...", Serial_Com, &tModule);
-            work->Set_SIM(this, busyForm, "Set Configuration SIM ...", Serial_Com, &tModule);
+            work->Set_IO(this, busyForm, Serial_Com, &tModule);
+            work->Set_SIM(this, busyForm, Serial_Com, &tModule);
 //            work->Reset_Board(busyForm, "Reset Board ...", Serial_Com);
 
             Message = "On-Board";
@@ -456,7 +455,7 @@ void formModule::on_pbGet_clicked()
             this->ui->pbSet->setEnabled(true);
             this->ui->pbEditModule->setEnabled(true);
         } else {
-            work->Request_ENV(Serial_Com, jeda);
+            work->Request_ENV(this, busyForm, Serial_Com, jeda);
 
             Serial->read_parsing(&tSerial);
             val_data = tSerial.str_data_env.split(";");
@@ -464,8 +463,8 @@ void formModule::on_pbGet_clicked()
                 module mod;
                 mod.read_module(&tModule, Address_Module);
 
-                work->Request_IO(Serial_Com, jeda);
-                work->Request_SIM(Serial_Com, jeda);
+                work->Request_IO(this, busyForm, Serial_Com, jeda);
+                work->Request_SIM(this, busyForm, Serial_Com, jeda);
 
                 Serial->read_parsing(&tSerial);
                 val_data = tSerial.str_data_io.split("*");
@@ -517,12 +516,14 @@ void formModule::on_pbEditModule_clicked()
         this->ui->pbEditModule->setEnabled(false);
 
 
-        work->Set_ENV(this, busyForm, "Set Environment ...", Serial_Com, &tModule);
-        work->Set_SIM(this, busyForm, "Set Configuration SIM ...", Serial_Com, &tModule);
+        work->Set_ENV(this, busyForm, Serial_Com, &tModule);
+        work->Set_SIM(this, busyForm, Serial_Com, &tModule);
 
         this->ui->Busy->hide();
         this->ui->pbGet->setEnabled(true);
         this->ui->pbSet->setEnabled(true);
         this->ui->pbEditModule->setEnabled(true);
     }
+
+    NoSeri = tModule.serial_number;
 }

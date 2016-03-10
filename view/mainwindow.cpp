@@ -86,7 +86,7 @@ void MainWindow::on_actionNew_triggered()
 {
     int jeda = 1000;
     if (SerialPort->isOpen()) {
-        work->Request_ENV(SerialPort, jeda);
+        work->Request_ENV(this, busy, SerialPort, jeda);
 
         struct t_module tModule;
         bool cek = false;
@@ -115,8 +115,8 @@ void MainWindow::on_actionNew_triggered()
             reply = QMessageBox::question(this, "Attention !!", command,
                                           QMessageBox::Yes|QMessageBox::No);
             if (reply == QMessageBox::Yes) {
-                work->Request_IO(SerialPort, jeda);
-                work->Request_SIM(SerialPort, jeda);
+                work->Request_IO(this, busy, SerialPort, jeda);
+                work->Request_SIM(this, busy, SerialPort, jeda);
 
                 QString address = "data/module/" + newFiles;
                 mod->read_module(&tModule, address);
@@ -127,8 +127,8 @@ void MainWindow::on_actionNew_triggered()
 
                 mod->write_module(&tModule);
             } else {
-                work->Request_IO(SerialPort, jeda);
-                work->Request_SIM(SerialPort, jeda);
+                work->Request_IO(this, busy, SerialPort, jeda);
+                work->Request_SIM(this, busy, SerialPort, jeda);
 
                 work->Get_IO(&tModule, val_data_io);
                 work->Get_SIM(&tModule, val_data_sim);
@@ -146,8 +146,8 @@ void MainWindow::on_actionNew_triggered()
                 strcpy(tModule.input_d3_name, "");
                 strcpy(tModule.input_d4_name, "");
                 strcpy(tModule.input_d5_name, "");
-                strcpy(tModule.input_d6_name, "");
-                strcpy(tModule.input_d7_name, "");
+//                strcpy(tModule.input_d6_name, "");
+//                strcpy(tModule.input_d7_name, "");
 
                 /** OUTPUT **/
                 strcpy(tModule.output_r1_name, "");
@@ -175,14 +175,14 @@ void MainWindow::on_actionNew_triggered()
                 Address = faddModule->currentFile;
                 mod->read_module(&tModule, Address);
 
-                work->Set_ENV(this, busy, "Set Environment ...", SerialPort, &tModule);
-                work->Set_SIM(this, busy, "Set Configuration SIM ...", SerialPort, &tModule);
+                work->Set_ENV(this, busy, SerialPort, &tModule);
+                work->Set_SIM(this, busy, SerialPort, &tModule);
 
                 this->Refresh_Tree();
             }
         } else {
-            work->Request_IO(SerialPort, jeda);
-            work->Request_SIM(SerialPort, jeda);
+            work->Request_IO(this, busy, SerialPort, jeda);
+            work->Request_SIM(this, busy, SerialPort, jeda);
 
             strcpy(tModule.module_name, GetNamaBoard.toUtf8().data());
             strcpy(tModule.serial_number, GetNoSeri.toLatin1());
@@ -205,7 +205,7 @@ void MainWindow::on_actionNew_triggered()
             strcpy(tModule.input_d4_name, "");
             strcpy(tModule.input_d5_name, "");
             strcpy(tModule.input_d6_name, "");
-            strcpy(tModule.input_d7_name, "");
+//            strcpy(tModule.input_d7_name, "");
 
             /** OUTPUT **/
             strcpy(tModule.output_r1_name, "");
@@ -455,8 +455,9 @@ void MainWindow::readData()
         Serial->write_parsing_env(&tSerial);
         val_data.clear();
         str_data.clear();
-    }
-    if (str_data.indexOf("<I/O") > 0 && str_data.indexOf("I/O>") > 0) {
+        FinishRead = true;
+        Serial->write_FinishRead(FinishRead);
+    } else if (str_data.indexOf("<I/O") > 0 && str_data.indexOf("I/O>") > 0) {
         int a = str_data.indexOf("<I/O");
         int b = str_data.indexOf("I/O>");
         str_data = str_data.mid(a+4, b-a);
@@ -472,6 +473,8 @@ void MainWindow::readData()
         Serial->write_parsing_io(&tSerial);
         str_data.clear();
         val_data.clear();
+        FinishRead = true;
+        Serial->write_FinishRead(FinishRead);
     } else if (str_data.indexOf("<SIM") > 0 && str_data.indexOf("SIM>") > 0) {
         int a = str_data.indexOf("<SIM");
         int b = str_data.indexOf("SIM>");
@@ -488,6 +491,13 @@ void MainWindow::readData()
         Serial->write_parsing_sim(&tSerial);
         str_data.clear();
         val_data.clear();
+        FinishRead = true;
+        Serial->write_FinishRead(FinishRead);
+    } else if (str_data.indexOf("OK") > 0) {
+        str_data.clear();
+        val_data.clear();
+        FinishRead = true;
+        Serial->write_FinishRead(FinishRead);
     }
 }
 
@@ -533,7 +543,21 @@ void MainWindow::on_actionRefresh_triggered()
     this->Refresh_Tree();
 }
 
-void MainWindow::on_actionPlugin_triggered()
+void MainWindow::on_actionAdd_Plugin_triggered()
 {
-    system("gedit");
+    QStringList zip_filename = QFileDialog::getOpenFileNames(this, tr("Load Module"), tr("data/module/"), tr("(*.zip)"));
+    QFile infile(zip_filename.at(0));
+    QFile outfile(QDir::currentPath() + "/plugin/plugin-01");
+    infile.open(QIODevice::ReadOnly);
+    outfile.open(QIODevice::WriteOnly);
+    QByteArray uncompressed_data = infile.readAll();
+    QByteArray compressed_data = qUncompress(uncompressed_data);
+    outfile.write(compressed_data);
+    infile.close();
+    outfile.close();
+
+    QString program = QDir::currentPath() + "/sarasvati";
+    QStringList arguments;
+    QProcess *myProcess = new QProcess(qApp);
+    myProcess->start(program, arguments);
 }

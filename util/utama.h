@@ -113,8 +113,8 @@ struct t_module{
     char input_d5_name[32];
     char input_d6[128];
     char input_d6_name[32];
-    char input_d7[128];
-    char input_d7_name[32];
+//    char input_d7[128];
+//    char input_d7_name[32];
 
     char output_r1[128];
     char output_r1_name[32];

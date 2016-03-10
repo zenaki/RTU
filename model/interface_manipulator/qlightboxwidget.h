@@ -5,7 +5,7 @@
 
 
 /**
- * @brief Класс перекрытия
+ * @brief overlap class
  */
 class QLightBoxWidget : public QWidget
 {
@@ -16,38 +16,38 @@ public:
 
 protected:
 	/**
-	 * @brief Переопределяется для отслеживания собитий родительского виджета
+     * @brief It is overridden to track parent widget events
 	 */
 	bool eventFilter(QObject* _object, QEvent* _event);
 
 	/**
-	 * @brief Переопределяется для того, чтобы эмитировать эффект перекрытия
+     * @brief Redefined in order to simulate the effect of overlap
 	 */
 	void paintEvent(QPaintEvent* _event);
 
 	/**
-	 * @brief Переопределяется для того, чтобы перед отображением настроить внешний вид
+     * @brief It is overridden to before displaying customize the appearance
 	 */
 	void showEvent(QShowEvent* _event);
 
 private:
 	/**
-	 * @brief Обновить размер и картинку фона
+     * @brief Reload size and background image
 	 */
 	void updateSelf();
 
 	/**
-	 * @brief Разрешает конфликт рекурсивного обновления
+     * @brief Resolve conflicts recursive updates
 	 */
 	bool m_isInUpdateSelf;
 
 	/**
-	 * @brief Обновить картинку фона
+     * @brief Reload background image
 	 */
 	QPixmap grabParentWidgetPixmap() const;
 
 	/**
-	 * @brief Картинка фона
+     * @brief background Image
 	 */
 	QPixmap m_parentWidgetPixmap;
 };

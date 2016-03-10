@@ -19,7 +19,6 @@
 #include <view/mainwindow.h>
 #include <ui_mainwindow.h>
 #include <model/interface_manipulator/qlightboxwidget.h>
-#include <view/wait_process.h>
 
 namespace Ui {
 class formModule;

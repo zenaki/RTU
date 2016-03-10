@@ -11,5 +11,7 @@
         <file>image/editcopy.png</file>
         <file>image/view-refresh.png</file>
         <file>image/loader.gif</file>
+        <file>image/icon-daun-biru.png</file>
+        <file>image/Logo-Daun-biru_GIF-medium.png</file>
     </qresource>
 </RCC>

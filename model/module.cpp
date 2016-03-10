@@ -44,8 +44,8 @@ void module::write_module(struct t_module *tmodule){
     sett.setValue("INPUT_D5_NAME", tmodule->input_d5_name);
     sett.setValue("INPUT_D6", tmodule->input_d6);
     sett.setValue("INPUT_D6_NAME", tmodule->input_d6_name);
-    sett.setValue("INPUT_D7", tmodule->input_d7);
-    sett.setValue("INPUT_D7_NAME", tmodule->input_d7_name);
+//    sett.setValue("INPUT_D7", tmodule->input_d7);
+//    sett.setValue("INPUT_D7_NAME", tmodule->input_d7_name);
     sett.endGroup();
 
     sett.beginGroup( "OUTPUT" );
@@ -128,8 +128,8 @@ void module::update_setting(struct t_module *tmodule, QString addressModule){
     sett.setValue("INPUT_D5_NAME", tmodule->input_d5_name);
     sett.setValue("INPUT_D6", tmodule->input_d6);
     sett.setValue("INPUT_D6_NAME", tmodule->input_d6_name);
-    sett.setValue("INPUT_D7", tmodule->input_d7);
-    sett.setValue("INPUT_D7_NAME", tmodule->input_d7_name);
+//    sett.setValue("INPUT_D7", tmodule->input_d7);
+//    sett.setValue("INPUT_D7_NAME", tmodule->input_d7_name);
     sett.endGroup();
 
     sett.beginGroup( "OUTPUT" );
@@ -234,8 +234,8 @@ void module::read_module(struct t_module *tmodule, QString addressModule){
     strcpy(tmodule->input_d5_name, sett.value("INPUT/INPUT_D5_NAME").toString().toLatin1());
     strcpy(tmodule->input_d6, sett.value("INPUT/INPUT_D6").toString().toLatin1());
     strcpy(tmodule->input_d6_name, sett.value("INPUT/INPUT_D6_NAME").toString().toLatin1());
-    strcpy(tmodule->input_d7, sett.value("INPUT/INPUT_D7").toString().toLatin1());
-    strcpy(tmodule->input_d7_name, sett.value("INPUT/INPUT_D7_NAME").toString().toLatin1());
+//    strcpy(tmodule->input_d7, sett.value("INPUT/INPUT_D7").toString().toLatin1());
+//    strcpy(tmodule->input_d7_name, sett.value("INPUT/INPUT_D7_NAME").toString().toLatin1());
 
     strcpy(tmodule->output_r1, sett.value("OUTPUT/OUTPUT_R1").toString().toLatin1());
     strcpy(tmodule->output_r1_name, sett.value("OUTPUT/OUTPUT_R1_NAME").toString().toLatin1());
@@ -304,8 +304,8 @@ void module::save_as_module(struct t_module *tmodule, QString address){
     sett.setValue("INPUT_D5_NAME", tmodule->input_d5_name);
     sett.setValue("INPUT_D6", tmodule->input_d6);
     sett.setValue("INPUT_D6_NAME", tmodule->input_d6_name);
-    sett.setValue("INPUT_D7", tmodule->input_d7);
-    sett.setValue("INPUT_D7_NAME", tmodule->input_d7_name);
+//    sett.setValue("INPUT_D7", tmodule->input_d7);
+//    sett.setValue("INPUT_D7_NAME", tmodule->input_d7_name);
     sett.endGroup();
 
     sett.beginGroup( "OUTPUT" );

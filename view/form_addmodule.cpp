@@ -202,8 +202,8 @@ void form_addModule::on_buttonBox_accepted()
             strcpy(tModule.input_d5_name, "");
             strcpy(tModule.input_d6, "D;6;0;0.000;0.000");
             strcpy(tModule.input_d6_name, "");
-            strcpy(tModule.input_d7, "D;7;0;0.000;0.000");
-            strcpy(tModule.input_d7_name, "");
+//            strcpy(tModule.input_d7, "D;7;0;0.000;0.000");
+//            strcpy(tModule.input_d7_name, "");
 
             /** OUTPUT **/
             strcpy(tModule.output_r1, "R;1;0;0");

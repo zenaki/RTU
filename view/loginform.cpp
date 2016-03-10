@@ -36,7 +36,8 @@ void loginForm::on_loginButton_clicked()
 //        tSerialSetting.serial_set = 0;
 //        tSerialSetting.serial_connect = 0;
 
-        mWindow->show();
+//        mWindow->show();
+        mWindow->showMaximized();
 
         this->hide();
     }
