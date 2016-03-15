@@ -9,13 +9,13 @@ QString worker::newModule(QStandardItemModel *tree, QTreeView *treeView, QString
     struct t_module tModule;
     QString address;
 
-    address.sprintf("data/module/m_%s.ini", title.toUtf8().data());
+    address.sprintf("data/module/m_%s.dbe", title.toUtf8().data());
 
     mod.read_module(&tModule, address);
 
     QString modules;
     modules.sprintf("%s", tModule.module_name);
-//    modules.sprintf("m_%s.ini", tModule.module_name);
+//    modules.sprintf("m_%s.dbe", tModule.module_name);
     mTree.appendItem(tree, treeView, modules);
 
     return modules;
@@ -25,13 +25,13 @@ QString worker::editModule(QStandardItemModel *tree, QTreeView *treeView, QStrin
     struct t_module tModule;
     QString address;
 
-    address.sprintf("data/module/m_%s.ini", title.toUtf8().data());
+    address.sprintf("data/module/m_%s.dbe", title.toUtf8().data());
 
     mod.read_module(&tModule, address);
 
     QString modules;
     modules.sprintf("%s", tModule.module_name);
-//    modules.sprintf("m_%s.ini", tModule.module_name);
+//    modules.sprintf("m_%s.dbe", tModule.module_name);
     mTree.appendItem(tree, treeView, modules);
 
     return modules;
@@ -51,7 +51,7 @@ QString worker::loadModule(QStandardItemModel *tree, QTreeView *treeView, QStrin
 
     QString modules;
     modules.sprintf("%s", tModule.module_name);
-//    modules.sprintf("m_%s.ini", tModule.module_name);
+//    modules.sprintf("m_%s.dbe", tModule.module_name);
     mTree.appendItem(tree, treeView, modules);
 
     return modules;
@@ -63,7 +63,7 @@ QString worker::checkModule(QString address){
     mod.read_module(&tModule, address);
 
     QString modules;
-    modules.sprintf("m_%s.ini", tModule.module_name);
+    modules.sprintf("m_%s.dbe", tModule.module_name);
     return modules;
 }
 
@@ -76,7 +76,7 @@ QString worker::check_statusModule(QString address){
 
     QString modules;
     if(tModule.flag_active){
-        modules.sprintf("m_%s.ini", tModule.module_name);
+        modules.sprintf("m_%s.dbe", tModule.module_name);
         return modules;
     }
     return "none";
@@ -86,7 +86,7 @@ void worker::showModule(QWidget *parent, QMdiArea *mdiArea, QString module, QSer
     struct t_module tModule;
     QString address;
 
-    address.sprintf("data/module/m_%s.ini", module.toUtf8().data());
+    address.sprintf("data/module/m_%s.dbe", module.toUtf8().data());
     mod.read_module(&tModule, address);
 
 
@@ -110,7 +110,7 @@ bool worker::checkIfmodule(QString name){
     QStringList files = path.entryList(QDir::Files);
 
     QString currFiles;
-    currFiles.sprintf("m_%s.ini", name.toUtf8().data());
+    currFiles.sprintf("m_%s.dbe", name.toUtf8().data());
 
     for(int i = 0; i < files.count(); i++){
         if(currFiles == QString(files.at(i))) cek = true;
@@ -119,7 +119,7 @@ bool worker::checkIfmodule(QString name){
 //    std::string sub = name.toStdString();
 //    ext = QString::fromStdString(sub.substr(index_max-3, index_max));
 
-//    if(ext == ".ini") return true;
+//    if(ext == ".dbe") return true;
 //    else return false;
 
     return cek;
@@ -129,11 +129,11 @@ bool worker::state_of_module(int num, QString newModule, QString *existModule){
     bool cek;
     int  ceknt = num+1;
 //    QString currModule;
-    existModule->prepend("m_").append(".ini");
+    existModule->prepend("m_").append(".dbe");
 
     for(int n = 0; n < ceknt; n++){
 //        currModule = existModule->at(n);
-//        currModule.prepend("m_").append(".ini");
+//        currModule.prepend("m_").append(".dbe");
         if(newModule != existModule[n]){
             cek = true;
         }
@@ -146,32 +146,48 @@ bool worker::state_of_module(int num, QString newModule, QString *existModule){
     return cek;
 }
 
-void worker::Request_ENV(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, int jeda)
+bool worker::Request_ENV(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, bool timeout)
 {
     QString Request = "hmi_cek_env\r\n";
     Serial_Com->write(Request.toUtf8().data());
-    this->delay(parent, lBox, Request, jeda);
+//    this->delay(parent, lBox, Request, jeda);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
+
+    return timeout;
 }
 
-void worker::Request_IO(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, int jeda)
+bool worker::Request_IO(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, bool timeout)
 {
     QString Request = "hmi_sync\r\n";
     Serial_Com->write(Request.toUtf8().data());
-    this->delay(parent, lBox, Request, jeda);
+//    this->delay(parent, lBox, Request, jeda);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
+
+    return timeout;
 }
 
-void worker::Request_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, int jeda)
+bool worker::Request_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, bool timeout)
 {
     QString Request = "hmi_cek_cfg_sim\r\n";
     Serial_Com->write(Request.toUtf8().data());
-    this->delay(parent, lBox, Request, jeda);
+//    this->delay(parent, lBox, Request, jeda);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
+
+    return timeout;
 }
 
-void worker::Request_SIG(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, int jeda)
+bool worker::Request_SIG(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, bool timeout)
 {
     QString Request = "hmi_cek_signal\r\n";
     Serial_Com->write(Request.toUtf8().data());
-    this->delay(parent, lBox, Request, jeda);
+//    this->delay(parent, lBox, Request, jeda);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
+
+    return timeout;
 }
 
 void worker::Get_ENV(struct t_module *tModule, QStringList data)
@@ -182,9 +198,19 @@ void worker::Get_ENV(struct t_module *tModule, QStringList data)
     strcpy(tModule->module_name, temp.toUtf8().data());
     temp = data.at(1);
     strcpy(tModule->serial_number, temp.toUtf8().data());
+//    temp = data.at(2);
+//    strcpy(tModule->ip_address, temp.toUtf8().data());
+//    temp = data.at(3);
+//    strcpy(tModule->gateway_address, temp.toUtf8().data());
+//    temp = data.at(4);
+//    strcpy(tModule->server_address, temp.toUtf8().data());
+//    temp = data.at(5);
+//    strcpy(tModule->file_address, temp.toUtf8().data());
+//    temp = data.at(6);
+//    tModule->flag_webclient = temp.toInt();
 }
 
-void worker::Get_IO(struct t_module *tModule, QStringList data)
+void worker::Get_Input(struct t_module *tModule, QStringList data)
 {
     QString temp;
 
@@ -213,6 +239,11 @@ void worker::Get_IO(struct t_module *tModule, QStringList data)
     strcpy(tModule->input_a5, temp.toUtf8().data());
     temp = data.at(11);
     strcpy(tModule->input_a6, temp.toUtf8().data());
+}
+
+void worker::Get_Output(struct t_module *tModule, QStringList data)
+{
+    QString temp;
 
     temp = data.at(12);
     strcpy(tModule->output_r1, temp.toUtf8().data());
@@ -404,169 +435,224 @@ void worker::Get_SIM(struct t_module *tModule, QStringList data)
     }
 }
 
-void worker::Set_ENV(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, struct t_module *tModule)
+bool worker::Set_ENV(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, struct t_module *tModule, bool timeout)
 {
 //    int jeda = 1000;
     QString Request;
 
     Request.sprintf("set_env nama %s\r\n", tModule->module_name);
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
     Request.sprintf("set_env SN %s\r\n", tModule->serial_number);
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
+
+//    Request.sprintf("set_env ipaddr %s\r\n", tModule->ip_address);
+//    Serial_Com->write(Request.toUtf8().data());
+//    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+//    if (timeout) {return timeout;}
+
+//    Request.sprintf("set_env gateway %s\r\n", tModule->gateway_address);
+//    Serial_Com->write(Request.toUtf8().data());
+//    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+//    if (timeout) {return timeout;}
+
+//    Request.sprintf("set_env server %s\r\n", tModule->server_address);
+//    Serial_Com->write(Request.toUtf8().data());
+//    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+//    if (timeout) {return timeout;}
+
+//    Request.sprintf("set_env file %s\r\n", tModule->file_address);
+//    Serial_Com->write(Request.toUtf8().data());
+//    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+//    if (timeout) {return timeout;}
+    return timeout;
 }
 
-void worker::Set_IO(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, struct t_module *tModule)
+bool worker::Set_Input(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, struct t_module *tModule, bool timeout)
 {
-//    int jeda = 1000;
     QString Request;
     QString temp;
     QStringList val;
 
-    /** SET I/O DIGITAL **/
+    /** SET INPUT DIGITAL **/
     temp.sprintf("%s", tModule->input_d1);
     val = temp.split(";");
 
     Request = "set_kanal 1 status " + val.at(2) + "\r\n";
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
     Request = "set_kanal 1 " + val.at(3) + " " + val.at(4) + "\r\n";
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
     temp.sprintf("%s", tModule->input_d2);
     val = temp.split(";");
 
     Request = "set_kanal 2 status " + val.at(2) + "\r\n";
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
     Request = "set_kanal 2 " + val.at(3) + " " + val.at(4) + "\r\n";
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
     temp.sprintf("%s", tModule->input_d3);
     val = temp.split(";");
 
     Request = "set_kanal 3 status " + val.at(2) + "\r\n";
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
     Request = "set_kanal 3 " + val.at(3) + " " + val.at(4) + "\r\n";
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
     temp.sprintf("%s", tModule->input_d4);
     val = temp.split(";");
 
     Request = "set_kanal 4 status " + val.at(2) + "\r\n";
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
     Request = "set_kanal 4 " + val.at(3) + " " + val.at(4) + "\r\n";
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
     temp.sprintf("%s", tModule->input_d5);
     val = temp.split(";");
 
     Request = "set_kanal 5 status " + val.at(2) + "\r\n";
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
     Request = "set_kanal 5 " + val.at(3) + " " + val.at(4) + "\r\n";
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
     temp.sprintf("%s", tModule->input_d6);
     val = temp.split(";");
 
     Request = "set_kanal 6 status " + val.at(2) + "\r\n";
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
     Request = "set_kanal 6 " + val.at(3) + " " + val.at(4) + "\r\n";
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
 
-    /** SET I/O ANALOG **/
+    /** SET INPUT ANALOG **/
     temp.sprintf("%s", tModule->input_a1);
     val = temp.split(";");
 
     Request = "set_kanal 7 status " + val.at(2) + "\r\n";
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
     Request = "set_kanal 7 " + val.at(3) + " " + val.at(4) + "\r\n";
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
     temp.sprintf("%s", tModule->input_a2);
     val = temp.split(";");
 
     Request = "set_kanal 8 status " + val.at(2) + "\r\n";
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
     Request = "set_kanal 8 " + val.at(3) + " " + val.at(4) + "\r\n";
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
     temp.sprintf("%s", tModule->input_a3);
     val = temp.split(";");
 
     Request = "set_kanal 9 status " + val.at(2) + "\r\n";
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
     Request = "set_kanal 9 " + val.at(3) + " " + val.at(4) + "\r\n";
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
     temp.sprintf("%s", tModule->input_a4);
     val = temp.split(";");
 
     Request = "set_kanal 10 status " + val.at(2) + "\r\n";
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
     Request = "set_kanal 10 " + val.at(3) + " " + val.at(4) + "\r\n";
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
     temp.sprintf("%s", tModule->input_a5);
     val = temp.split(";");
 
     Request = "set_kanal 11 status " + val.at(2) + "\r\n";
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
     Request = "set_kanal 11 " + val.at(3) + " " + val.at(4) + "\r\n";
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
     temp.sprintf("%s", tModule->input_a6);
     val = temp.split(";");
 
     Request = "set_kanal 12 status " + val.at(2) + "\r\n";
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
     Request = "set_kanal 12 " + val.at(3) + " " + val.at(4) + "\r\n";
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
+    return timeout;
+}
 
-    /** SET I/O RELAY **/
+bool worker::Set_Output(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, struct t_module *tModule, bool timeout)
+{
+    QString Request;
+    QString temp;
+    QStringList val;
+
+    /** SET OUTPUT RELAY **/
     temp.sprintf("%s", tModule->output_r1);
     val = temp.split(";");
     Request = "set_relay 1 " + val.at(2) + "\r\n";
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 //    Request = "set_relay 1 " + val.at(2) + "\r\n";
 //    Serial->write_data(Serial_Com, Request);
 //    Serial_Com->write(Request.toUtf8().data());
@@ -577,15 +663,18 @@ void worker::Set_IO(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_
     val = temp.split(";");
     Request = "set_relay 2 " + val.at(2) + "\r\n";
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 //    Request = "set_relay 1 " + val.at(2) + "\r\n";
 //    Serial->write_data(Serial_Com, Request);
 //    Serial_Com->write(Request.toUtf8().data());
 //    FormModule->ui->request->setText(Request);
 //    this->delay(jeda);
+
+    return timeout;
 }
 
-void worker::Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, struct t_module *tModule)
+bool worker::Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, struct t_module *tModule, bool timeout)
 {
 //    int jeda = 1000;
     QString Request;
@@ -599,7 +688,8 @@ void worker::Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial
         Request = "set_cfg_sim 1 nama " + temp + "\r\n";
     }
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
     temp.sprintf("%s", tModule->name_gsm_1);
     if (temp.isEmpty()) {
@@ -608,7 +698,8 @@ void worker::Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial
         Request = "set_cfg_sim 1 operator " + temp + "\r\n";
     }
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
     temp.sprintf("%s", tModule->number_gsm_1);
     if (temp.isEmpty()) {
@@ -617,7 +708,8 @@ void worker::Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial
         Request = "set_cfg_sim 1 nomor " + temp + "\r\n";
     }
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
     temp.sprintf("%d", tModule->flag_status_active_gsm_1);
     if (temp.isEmpty()) {
@@ -626,16 +718,18 @@ void worker::Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial
         Request = "set_cfg_sim 1 status " + temp + "\r\n";
     }
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
     temp.sprintf("%s", tModule->apn_gsm_1);
     if (temp.isEmpty()) {
         Request = "set_cfg_sim 1 apn -\r\n";
     } else {
-        Request = "set+cfg_sim 1 apn " + temp + "\r\n";
+        Request = "set_cfg_sim 1 apn " + temp + "\r\n";
     }
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
     temp.sprintf("%s", tModule->user_gsm_1);
     if (temp.isEmpty()) {
@@ -644,7 +738,8 @@ void worker::Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial
         Request = "set_cfg_sim 1 user " + temp + "\r\n";
     }
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
     temp.sprintf("%s", tModule->passwd_gsm_1);
     if (temp.isEmpty()) {
@@ -653,7 +748,8 @@ void worker::Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial
         Request = "set_cfg_sim 1 pass " + temp + "\r\n";
     }
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
     temp.sprintf("%s", tModule->com_gsm_1);
     if (temp.isEmpty()) {
@@ -662,7 +758,8 @@ void worker::Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial
         Request = "set_cfg_sim 1 mode " + temp + "\r\n";
     }
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
 
     /** SET SIM 2 **/
@@ -673,7 +770,8 @@ void worker::Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial
         Request = "set_cfg_sim 2 nama " + temp + "\r\n";
     }
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
     temp.sprintf("%s", tModule->name_gsm_2);
     if (temp.isEmpty()) {
@@ -682,7 +780,8 @@ void worker::Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial
         Request = "set_cfg_sim 2 operator " + temp + "\r\n";
     }
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
     temp.sprintf("%s", tModule->number_gsm_2);
     if (temp.isEmpty()) {
@@ -691,7 +790,8 @@ void worker::Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial
         Request = "set_cfg_sim 2 nomor " + temp + "\r\n";
     }
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
     temp.sprintf("%d", tModule->flag_status_active_gsm_2);
     if (temp.isEmpty()) {
@@ -700,16 +800,18 @@ void worker::Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial
         Request = "set_cfg_sim 2 status " + temp + "\r\n";
     }
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
     temp.sprintf("%s", tModule->apn_gsm_2);
     if (temp.isEmpty()) {
         Request = "set_cfg_sim 2 apn -\r\n";
     } else {
-        Request = "set+cfg_sim 2 apn " + temp + "\r\n";
+        Request = "set_cfg_sim 2 apn " + temp + "\r\n";
     }
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
     temp.sprintf("%s", tModule->user_gsm_2);
     if (temp.isEmpty()) {
@@ -718,7 +820,8 @@ void worker::Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial
         Request = "set_cfg_sim 2 user " + temp + "\r\n";
     }
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
     temp.sprintf("%s", tModule->passwd_gsm_2);
     if (temp.isEmpty()) {
@@ -727,7 +830,8 @@ void worker::Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial
         Request = "set_cfg_sim 2 pass " + temp + "\r\n";
     }
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
 
     temp.sprintf("%s", tModule->com_gsm_2);
     if (temp.isEmpty()) {
@@ -736,18 +840,23 @@ void worker::Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial
         Request = "set_cfg_sim 2 mode " + temp + "\r\n";
     }
     Serial_Com->write(Request.toUtf8().data());
-    this->delay_set(parent, lBox, Request);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
+
+    return timeout;
 }
 
-void worker::Reset_Board(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com)
+bool worker::Reset_Board(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, bool timeout)
 {
-    int jeda = 1000;
     QString Request;
     QString temp;
 
     Request = "reset\r\n";
     Serial_Com->write(Request.toUtf8().data());
-    this->delay(parent, lBox, "Reset Board ...", jeda*10);
+    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    if (timeout) {return timeout;}
+
+    return timeout;
 }
 
 void worker::delay(QWidget *parent, QLightBoxWidget *lBox, QString desc, int ms)
@@ -788,7 +897,7 @@ void worker::delay(QWidget *parent, QLightBoxWidget *lBox, QString desc, int ms)
     lightBox->close();
 }
 
-void worker::delay_set(QWidget *parent, QLightBoxWidget *lBox, QString desc)
+bool worker::waiting_set(QWidget *parent, QLightBoxWidget *lBox, QString desc, bool timeout)
 {
     /** Set Light Box for Busy **/
     QLightBoxWidget* lightBox = new QLightBoxWidget(parent, true);
@@ -818,10 +927,43 @@ void worker::delay_set(QWidget *parent, QLightBoxWidget *lBox, QString desc)
     lightBox->setLayout(lbLayout);
     lightBox->show();
 
-    bool FinishRead = false;
-    while (FinishRead) {
+    QTime dieTime = QTime::currentTime().addMSecs(5000);
+    while (!this->read_FinishRead()) {
         QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
-        FinishRead = Serial->read_FinishRead();
+        if (QTime::currentTime() >= dieTime && !timeout) {
+            timeout = true;
+//            emit TimeOut();
+            break;
+        }
     }
+
+//    Serial->write_FinishRead(false);
+
+//    QTime dieTime = QTime::currentTime().addMSecs(1000);
+//    while (QTime::currentTime() < dieTime) {
+//        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+//    }
+
     lightBox->close();
+    this->write_FinishRead(false);
+    return timeout;
+}
+
+void worker::write_FinishRead(bool FinishRead)
+{
+    QString pth;
+    pth = "data/config/serial_parsing.ini";
+    QSettings sett(pth, QSettings::IniFormat);
+
+    sett.setValue("FINISH_READ", FinishRead);
+}
+
+bool worker::read_FinishRead()
+{
+    QString pth;
+    pth = "data/config/serial_parsing.ini";
+    QSettings sett(pth, QSettings::IniFormat);
+
+    bool FinishRead = sett.value("FINISH_READ").toBool();
+    return FinishRead;
 }

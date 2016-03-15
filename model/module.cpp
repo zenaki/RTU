@@ -6,9 +6,9 @@ module::module()
 }
 
 void module::write_module(struct t_module *tmodule){
-    QString pth;
 
-    pth.sprintf("data/module/m_%s.ini",tmodule->module_name);
+    QString pth;
+    pth.sprintf("data/module/m_%s.dbe",tmodule->module_name);
     QSettings sett(pth, QSettings::IniFormat);
 
     sett.beginGroup( "MODULE" );
@@ -16,6 +16,11 @@ void module::write_module(struct t_module *tmodule){
     sett.setValue("MODULE_NAME", tmodule->module_name);
     sett.setValue("SN", tmodule->serial_number);
     sett.setValue("FLAG_DUAL_GSM", tmodule->flag_dual_gsm);
+    sett.setValue("IP_ADDRESS", tmodule->ip_address);
+    sett.setValue("SERVER_ADDRESS", tmodule->server_address);
+    sett.setValue("FILE_ADDRESS", tmodule->file_address);
+    sett.setValue("FLAG_WEBCLIENT", tmodule->flag_webclient);
+    sett.setValue("WEBCLIENT", tmodule->status_webclient);
     sett.endGroup();
 
     sett.beginGroup( "INPUT" );
@@ -44,8 +49,6 @@ void module::write_module(struct t_module *tmodule){
     sett.setValue("INPUT_D5_NAME", tmodule->input_d5_name);
     sett.setValue("INPUT_D6", tmodule->input_d6);
     sett.setValue("INPUT_D6_NAME", tmodule->input_d6_name);
-//    sett.setValue("INPUT_D7", tmodule->input_d7);
-//    sett.setValue("INPUT_D7_NAME", tmodule->input_d7_name);
     sett.endGroup();
 
     sett.beginGroup( "OUTPUT" );
@@ -128,8 +131,6 @@ void module::update_setting(struct t_module *tmodule, QString addressModule){
     sett.setValue("INPUT_D5_NAME", tmodule->input_d5_name);
     sett.setValue("INPUT_D6", tmodule->input_d6);
     sett.setValue("INPUT_D6_NAME", tmodule->input_d6_name);
-//    sett.setValue("INPUT_D7", tmodule->input_d7);
-//    sett.setValue("INPUT_D7_NAME", tmodule->input_d7_name);
     sett.endGroup();
 
     sett.beginGroup( "OUTPUT" );
@@ -196,6 +197,11 @@ void module::update_module(struct t_module *tmodule, QString addressModule){
     sett.setValue("MODULE_NAME", tmodule->module_name);
     sett.setValue("SN", tmodule->serial_number);
 //    sett.setValue("FLAG_DUAL_GSM", tmodule->flag_dual_gsm);
+    sett.setValue("IP_ADDRESS", tmodule->ip_address);
+    sett.setValue("SERVER_ADDRESS", tmodule->server_address);
+    sett.setValue("FILE_ADDRESS", tmodule->file_address);
+    sett.setValue("FLAG_WEBCLIENT", tmodule->flag_webclient);
+    sett.setValue("WEBCLIENT", tmodule->status_webclient);
     sett.endGroup();
 }
 
@@ -206,6 +212,11 @@ void module::read_module(struct t_module *tmodule, QString addressModule){
     tmodule->flag_active = sett.value("MODULE/ACTIVE").toInt();
     strcpy(tmodule->module_name, sett.value("MODULE/MODULE_NAME").toString().toLatin1());
     strcpy(tmodule->serial_number, sett.value("MODULE/SN").toString().toLatin1());
+    strcpy(tmodule->ip_address, sett.value("MODULE/IP_ADDRESS").toString().toLatin1());
+    strcpy(tmodule->server_address, sett.value("MODULE/SERVER_ADDRESS").toString().toLatin1());
+    strcpy(tmodule->file_address, sett.value("MODULE/FILE_ADDRESS").toString().toLatin1());
+    tmodule->flag_webclient = sett.value("MODULE/FLAG_WEBCLIENT").toInt();
+    strcpy(tmodule->status_webclient, sett.value("MODULE/WEBCLIENT").toString().toLatin1());
 
     tmodule->flag_dual_gsm = sett.value("MODULE/FLAG_DUAL_GSM").toInt();
 
@@ -234,8 +245,6 @@ void module::read_module(struct t_module *tmodule, QString addressModule){
     strcpy(tmodule->input_d5_name, sett.value("INPUT/INPUT_D5_NAME").toString().toLatin1());
     strcpy(tmodule->input_d6, sett.value("INPUT/INPUT_D6").toString().toLatin1());
     strcpy(tmodule->input_d6_name, sett.value("INPUT/INPUT_D6_NAME").toString().toLatin1());
-//    strcpy(tmodule->input_d7, sett.value("INPUT/INPUT_D7").toString().toLatin1());
-//    strcpy(tmodule->input_d7_name, sett.value("INPUT/INPUT_D7_NAME").toString().toLatin1());
 
     strcpy(tmodule->output_r1, sett.value("OUTPUT/OUTPUT_R1").toString().toLatin1());
     strcpy(tmodule->output_r1_name, sett.value("OUTPUT/OUTPUT_R1_NAME").toString().toLatin1());
@@ -276,6 +285,11 @@ void module::save_as_module(struct t_module *tmodule, QString address){
     sett.setValue("MODULE_NAME", tmodule->module_name);
     sett.setValue("SN", tmodule->serial_number);
     sett.setValue("FLAG_DUAL_GSM", tmodule->flag_dual_gsm);
+    sett.setValue("IP_ADDRESS", tmodule->ip_address);
+    sett.setValue("SERVER_ADDRESS", tmodule->server_address);
+    sett.setValue("FILE_ADDRESS", tmodule->file_address);
+    sett.setValue("FLAG_WEBCLIENT", tmodule->flag_webclient);
+    sett.setValue("WEBCLIENT", tmodule->status_webclient);
     sett.endGroup();
 
     sett.beginGroup( "INPUT" );
@@ -304,8 +318,6 @@ void module::save_as_module(struct t_module *tmodule, QString address){
     sett.setValue("INPUT_D5_NAME", tmodule->input_d5_name);
     sett.setValue("INPUT_D6", tmodule->input_d6);
     sett.setValue("INPUT_D6_NAME", tmodule->input_d6_name);
-//    sett.setValue("INPUT_D7", tmodule->input_d7);
-//    sett.setValue("INPUT_D7_NAME", tmodule->input_d7_name);
     sett.endGroup();
 
     sett.beginGroup( "OUTPUT" );

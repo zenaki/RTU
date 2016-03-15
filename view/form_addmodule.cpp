@@ -1,7 +1,7 @@
 #include "form_addmodule.h"
 #include "ui_form_addmodule.h"
 
-form_addModule::form_addModule(QWidget *parent, bool create, QString address) :
+form_addModule::form_addModule(QWidget *parent, bool create, QString address, int index) :
     QDialog(parent),
     ui(new Ui::form_addModule)
 {
@@ -29,6 +29,13 @@ form_addModule::form_addModule(QWidget *parent, bool create, QString address) :
         if (tModule.flag_dual_gsm == 1) {
             this->ui->ck_flag_active_gsm_2->setChecked(true);
         }
+        modules.sprintf("%s", tModule.ip_address);
+        this->ui->edit_ip_address->setText(modules);
+        modules.sprintf("%s", tModule.server_address);
+        this->ui->edit_server_address->setText(modules);
+        modules.sprintf("%s", tModule.file_address);
+        this->ui->edit_file_address->setText(modules);
+        this->ui->cb_webclient->setCurrentIndex(tModule.flag_webclient);
 
         this->ui->cb_operator_1->setCurrentIndex(tModule.flag_gsm_1);
         modules.sprintf("%s", tModule.device_name_gsm_1);
@@ -57,9 +64,43 @@ form_addModule::form_addModule(QWidget *parent, bool create, QString address) :
         this->ui->edit_user_2->setText(modules);
         modules.sprintf("%s", tModule.passwd_gsm_2);
         this->ui->edit_passwd_2->setText(modules);
-    } /*else {
+
+        if (index == 2) {
+            this->ui->edit_module_name->setEnabled(false);
+            this->ui->edit_sn->setEnabled(false);
+
+            this->ui->ck_flag_active_gsm_2->setHidden(false);
+
+            this->setFixedWidth(640);
+            this->setFixedHeight(445);
+            this->ui->gbCom->setGeometry(20,70,601,311);
+            this->ui->buttonBox->setGeometry(14,405,601,27);
+            this->ui->gbCom->setHidden(false);
+            this->ui->gbEnv->setHidden(true);
+        } else if (index == 3) {
+            this->ui->edit_module_name->setEnabled(true);
+            this->ui->edit_sn->setEnabled(true);
+            this->ui->ck_flag_active_gsm_2->setHidden(true);
+            this->ui->gbCom->setHidden(true);
+
+            this->ui->gbEnv->setGeometry(20,70,341,181);
+            this->ui->buttonBox->setGeometry(14,265,341,27);
+            this->setFixedWidth(380);
+            this->setFixedHeight(300);
+
+            this->ui->gbEnv->setHidden(false);
+        }
+    } else {
         this->ui->edit_module_name->setEnabled(true);
-    }*/
+        this->ui->edit_sn->setEnabled(true);
+        this->ui->ck_flag_active_gsm_2->setHidden(false);
+
+        this->setFixedWidth(640);
+        this->setFixedHeight(595);
+
+        this->ui->gbCom->setHidden(false);
+        this->ui->gbEnv->setHidden(false);
+    }
 }
 
 form_addModule::~form_addModule()
@@ -74,11 +115,17 @@ void form_addModule::on_buttonBox_accepted()
     QString newFiles;
     mod.read_module(&tModule, currentFile);
     strcpy(tModule.module_name, this->ui->edit_module_name->text().toLatin1());
-    newFiles.sprintf("m_%s.ini", tModule.module_name);
+    newFiles.sprintf("m_%s.dbe", tModule.module_name);
 
     tModule.flag_active = 1;
     strcpy(tModule.module_name, this->ui->edit_module_name->text().toLatin1());
     strcpy(tModule.serial_number, this->ui->edit_sn->text().toLatin1());
+
+    strcpy(tModule.ip_address, this->ui->edit_ip_address->text().toLatin1());
+    strcpy(tModule.server_address, this->ui->edit_server_address->text().toLatin1());
+    strcpy(tModule.file_address, this->ui->edit_file_address->text().toLatin1());
+    tModule.flag_webclient = this->ui->cb_webclient->currentIndex();
+    strcpy(tModule.status_webclient, this->ui->cb_webclient->currentText().toLatin1());
 
     if(this->ui->ck_flag_active_gsm_2->isChecked()) tModule.flag_dual_gsm = 1;
     else tModule.flag_dual_gsm = 0;
@@ -138,7 +185,7 @@ void form_addModule::on_buttonBox_accepted()
     QDir path("data/module");
     QStringList files = path.entryList(QDir::Files);
 
-    newFiles.sprintf("m_%s.ini", tModule.module_name);
+    newFiles.sprintf("m_%s.dbe", tModule.module_name);
 
     if (newFiles.indexOf(" ") > 0) {
         accept = 0;
@@ -155,7 +202,7 @@ void form_addModule::on_buttonBox_accepted()
             cek = false;
         }
     }
-    if (newFiles == currentName.prepend("m_").append(".ini")) cek = false;
+    if (newFiles == currentName.prepend("m_").append(".dbe")) cek = false;
 
     if (cek) {
         accept = 0;
@@ -202,8 +249,6 @@ void form_addModule::on_buttonBox_accepted()
             strcpy(tModule.input_d5_name, "");
             strcpy(tModule.input_d6, "D;6;0;0.000;0.000");
             strcpy(tModule.input_d6_name, "");
-//            strcpy(tModule.input_d7, "D;7;0;0.000;0.000");
-//            strcpy(tModule.input_d7_name, "");
 
             /** OUTPUT **/
             strcpy(tModule.output_r1, "R;1;0;0");

@@ -44,11 +44,14 @@ public:
     QLightBoxWidget *busyForm;
     wait_process *wait;
 private slots:
-    void on_pbSet_clicked();
-    void on_pbGet_clicked();
-    void on_pbEditModule_clicked();
+    void on_pbSetAll_clicked();
+    void on_pbGetAll_clicked();
+    void on_pbEdit_clicked();
 
     void on_tabWidget_tabBarClicked(int index);
+
+    void on_pbSet_clicked();
+    void on_pbGet_clicked();
 
 private:
     worker *work;
@@ -75,6 +78,7 @@ private:
 
     /** Function **/
     void setInterface(QString address);
+    void EnableButton(bool enab);
 
     MainWindow *Main;
     serial *Serial;

@@ -52,12 +52,15 @@ struct data_port{
 };
 
 struct t_module{
-    char get_module_name[32];
-    char get_serial_number[32];
-
     int  flag_active;
     char module_name[32];
     char serial_number[32];
+
+    char ip_address[32];
+    char server_address[32];
+    char file_address[32];
+    int  flag_webclient;
+    char status_webclient[32];
 
     int  flag_dual_gsm;
     int  last_signal;
@@ -113,8 +116,6 @@ struct t_module{
     char input_d5_name[32];
     char input_d6[128];
     char input_d6_name[32];
-//    char input_d7[128];
-//    char input_d7_name[32];
 
     char output_r1[128];
     char output_r1_name[32];

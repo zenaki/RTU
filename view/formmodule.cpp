@@ -28,13 +28,10 @@ formModule::formModule(QWidget *parent, QString address, QSerialPort *SerialPort
     busyForm = LightBox;
 
     this->setInterface(address);
+    this->ui->pbEdit->setHidden(true);
 
-    this->ui->pbEditModule->setHidden(true);
-
-    QMovie *movie = new QMovie(":/new/prefix1/image/circle-loading.gif");
-    this->ui->Busy->setMovie(movie);
-    movie->start();
-    this->ui->Busy->hide();
+    this->ui->pbSet->setText("Set Input Settings");
+    this->ui->pbGet->setText("Get Input Settings");
 }
 
 formModule::~formModule()
@@ -112,8 +109,6 @@ void formModule::setInterface(QString address){
     str.append(tModule.input_d5).append(";");
     str.append(tModule.input_d6_name).append(";");
     str.append(tModule.input_d6).append(";");
-//    str.append(tModule.input_d7_name).append(";");
-//    str.append(tModule.input_d7).append(";");
 
     str.append(tModule.input_a1_name).append(";");
     str.append(tModule.input_a1).append(";");
@@ -198,11 +193,6 @@ void formModule::setInterface(QString address){
     this->ui->tabel_input->setEditTriggers(QAbstractItemView::NoEditTriggers);
     this->ui->tabel_output->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    modules.sprintf("%s", tModule.module_name);
-    this->ui->module_name->setText(modules);
-    modules.sprintf("%s", tModule.serial_number);
-    this->ui->serial_number->setText(modules);
-
     modules.sprintf("%s", tModule.name_gsm_1);
     this->ui->opt_1->setText(modules);
     modules.sprintf("%s", tModule.name_gsm_2);
@@ -237,18 +227,32 @@ void formModule::setInterface(QString address){
     this->ui->apn_2->setText(modules);
     modules.sprintf("%s", tModule.passwd_gsm_2);
     this->ui->passwd_2->setText(modules);
+
+    modules.sprintf("%s", tModule.module_name);
+    this->ui->module_name->setText(modules);
+    modules.sprintf("%s", tModule.serial_number);
+    this->ui->serial_number->setText(modules);
+
+    modules.sprintf("%s", tModule.ip_address);
+    this->ui->ip_address->setText(modules);
+    modules.sprintf("%s", tModule.server_address);
+    this->ui->server_address->setText(modules);
+    modules.sprintf("%s", tModule.file_address);
+    this->ui->file_address->setText(modules);
+    modules.sprintf("%s", tModule.status_webclient);
+    this->ui->web_client->setText(modules);
 }
 
-void formModule::on_pbSet_clicked()
+void formModule::on_pbSetAll_clicked()
 {
     struct t_module tModule;
-    QString data[13];
+    QString data[12];
     QString Message;
     QString Request;
     int indx;
-    int jeda = 1000;
     int diff = 0;
     int reset = 0;
+    bool timeout = false;
 
     module mod;
     mod.read_module(&tModule, Address_Module);
@@ -329,21 +333,23 @@ void formModule::on_pbSet_clicked()
 
     /** ON BOARD **/
     if (Serial_Com->isOpen()) {
-        this->ui->pbGet->setEnabled(false);
-        this->ui->pbSet->setEnabled(false);
-        this->ui->pbEditModule->setEnabled(false);
-        this->ui->Busy->show();
+        this->EnableButton(false);
 
         struct t_serial_settings tSerial;
         QStringList val_data;
 
-        work->Request_ENV(this, busyForm, Serial_Com, jeda);
+        timeout = work->Request_ENV(this, busyForm, Serial_Com, timeout);
+        if (timeout) {QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); this->EnableButton(true); return;}
 
         Serial->read_parsing(&tSerial);
         val_data = tSerial.str_data_env.split(";");
         if (NoSeri == val_data.at(1)) {
-            work->Set_IO(this, busyForm, Serial_Com, &tModule);
-            work->Set_SIM(this, busyForm, Serial_Com, &tModule);
+            timeout = work->Set_Input(this, busyForm, Serial_Com, &tModule, timeout);
+            if (timeout) {QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); this->EnableButton(true); return;};
+            timeout = work->Set_Output(this, busyForm, Serial_Com, &tModule, timeout);
+            if (timeout) {QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); this->EnableButton(true); return;};
+            timeout = work->Set_SIM(this, busyForm, Serial_Com, &tModule, timeout);
+            if (timeout) {QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); this->EnableButton(true); return;};
 //            work->Reset_Board(busyForm, "Reset Board ...", Serial_Com);
 
             Message = "On-Board";
@@ -378,20 +384,180 @@ void formModule::on_pbSet_clicked()
         Message.append("\nBoard is not have Serial Number ..");
         QMessageBox::information(this, "Success!!", Message, 0, 0);
     }
-    this->ui->pbGet->setEnabled(true);
-    this->ui->pbSet->setEnabled(true);
-    this->ui->pbEditModule->setEnabled(true);
-    this->ui->Busy->hide();
-//    Request = "";
-//    this->ui->request->setText(Request);
+    this->EnableButton(true);
+}
+
+void formModule::on_pbSet_clicked()
+{
+    struct t_module tModule;
+    QString data[12];
+    QString Message;
+    QString Request;
+    int indx;
+    int diff = 0;
+    int reset = 0;
+    bool timeout = false;
+
+    module mod;
+    mod.read_module(&tModule, Address_Module);
+
+    if (this->ui->tabWidget->currentIndex() == 0) {
+        /** ON MODULE FILE **/
+        for (int i = 0; i < ui->tabel_input->rowCount(); i++)
+        {
+            tModule.d_port[i].calib_m = calib_m[i]->text().toFloat();
+            tModule.d_port[i].calib_x = calib_x[i]->text().toFloat();
+
+            if (i >= 6) {
+                if (type_input[i]->currentIndex() == 0) {indx = 250;}
+                if (type_input[i]->currentIndex() == 1) {indx = 230;}
+                tModule.d_port[i].type_input = indx;
+
+                data[i].sprintf("A;%d;%d;%.3f;%.3f", i-6+1
+                                , indx
+                                , tModule.d_port[i].calib_m
+                                , tModule.d_port[i].calib_x);
+            } else {
+                if (type_input[i]->currentIndex() == 0) {indx = 1;}
+                if (type_input[i]->currentIndex() == 1) {indx = 2;}
+                if (type_input[i]->currentIndex() == 2) {indx = 6;}
+                if (type_input[i]->currentIndex() == 3) {indx = 7;}
+                if (type_input[i]->currentIndex() == 4) {indx = 9;}
+                tModule.d_port[i].type_input = indx;
+
+                data[i].sprintf("D;%d;%d;%.3f;%.3f", i+1
+                                , indx
+                                , tModule.d_port[i].calib_m
+                                , tModule.d_port[i].calib_x);
+            }
+        }
+
+        strcpy(tModule.input_d1,data[0].toLatin1());
+        strcpy(tModule.input_d1_name,name_input[0]->text().toLatin1());
+        strcpy(tModule.input_d2,data[1].toLatin1());
+        strcpy(tModule.input_d2_name,name_input[1]->text().toLatin1());
+        strcpy(tModule.input_d3,data[2].toLatin1());
+        strcpy(tModule.input_d3_name,name_input[2]->text().toLatin1());
+        strcpy(tModule.input_d4,data[3].toLatin1());
+        strcpy(tModule.input_d4_name,name_input[3]->text().toLatin1());
+        strcpy(tModule.input_d5,data[4].toLatin1());
+        strcpy(tModule.input_d5_name,name_input[4]->text().toLatin1());
+        strcpy(tModule.input_d6,data[5].toLatin1());
+        strcpy(tModule.input_d6_name,name_input[5]->text().toLatin1());
+
+        strcpy(tModule.input_a1,data[6].toLatin1());
+        strcpy(tModule.input_a1_name,name_input[6]->text().toLatin1());
+        strcpy(tModule.input_a2,data[7].toLatin1());
+        strcpy(tModule.input_a2_name,name_input[7]->text().toLatin1());
+        strcpy(tModule.input_a3,data[8].toLatin1());
+        strcpy(tModule.input_a3_name,name_input[8]->text().toLatin1());
+        strcpy(tModule.input_a4,data[9].toLatin1());
+        strcpy(tModule.input_a4_name,name_input[9]->text().toLatin1());
+        strcpy(tModule.input_a5,data[10].toLatin1());
+        strcpy(tModule.input_a5_name,name_input[10]->text().toLatin1());
+        strcpy(tModule.input_a6,data[11].toLatin1());
+        strcpy(tModule.input_a6_name,name_input[11]->text().toLatin1());
+    } else if (this->ui->tabWidget->currentIndex() == 1) {
+        for (int i = 0; i < ui->tabel_output->rowCount(); i++)
+        {
+            tModule.d_port[i].status_output = state_output[i]->currentIndex();
+            tModule.d_port[i].control = control[i]->currentIndex();
+
+            data[i].sprintf("R;%d;%d;%d", i+1
+                         , tModule.d_port[i].status_output
+                         , tModule.d_port[i].control) ;
+        }
+
+        strcpy(tModule.output_r1,data[0].toLatin1());
+        strcpy(tModule.output_r1_name,name_output[0]->text().toLatin1());
+        strcpy(tModule.output_r2,data[1].toLatin1());
+        strcpy(tModule.output_r2_name,name_output[1]->text().toLatin1());
+
+        mod.update_setting(&tModule, Address_Module);
+    }
+
+    /** ON BOARD **/
+    if (Serial_Com->isOpen()) {
+        this->EnableButton(false);
+
+        struct t_serial_settings tSerial;
+        QStringList val_data;
+
+        timeout = work->Request_ENV(this, busyForm, Serial_Com, timeout);
+        if (timeout) {QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); this->EnableButton(true); return;};
+
+        Serial->read_parsing(&tSerial);
+        val_data = tSerial.str_data_env.split(";");
+        if (NoSeri == val_data.at(1)) {
+            if (this->ui->tabWidget->currentIndex() == 0) {
+                timeout = work->Set_Input(this, busyForm, Serial_Com, &tModule, timeout);
+                if (timeout) {QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); this->EnableButton(true); return;};
+            } else if (this->ui->tabWidget->currentIndex() == 1) {
+                timeout = work->Set_Output(this, busyForm, Serial_Com, &tModule, timeout);
+                if (timeout) {QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); this->EnableButton(true); return;};
+            } else if (this->ui->tabWidget->currentIndex() == 2) {
+                timeout = work->Set_SIM(this, busyForm, Serial_Com, &tModule, timeout);
+                if (timeout) {QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); this->EnableButton(true); return;};
+            } else if (this->ui->tabWidget->currentIndex() == 3) {
+                timeout = work->Set_ENV(this, busyForm, Serial_Com, &tModule, timeout);
+                if (timeout) {QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); this->EnableButton(true); return;};
+            }
+//            work->Reset_Board(busyForm, "Reset Board ...", Serial_Com);
+
+            Message = "On-Board";
+
+        } else {
+            Message = "On-Local";
+            if (val_data.at(1) != "") {
+                diff = 1;
+            } else {
+                diff = 2;
+            }
+        }
+    } else {
+        Message = "On-Local";
+    }
+
+    if (reset == 1) {
+//        Request = "reset\r\n";
+//        Serial->write_data(Serial_Com, Request);
+//        work->delay(jeda*5);
+    }
+
+    if (diff == 0) {
+        if (this->ui->tabWidget->currentIndex() == 0) {
+            Message.prepend("Input Channel ");
+        } else if (this->ui->tabWidget->currentIndex() == 1) {
+            Message.prepend("Output Channel ");
+        } else if (this->ui->tabWidget->currentIndex() == 2) {
+            Message.prepend("SIM Configuration ");
+        } else if (this->ui->tabWidget->currentIndex() == 3) {
+            Message.prepend("Environtment ");
+        }
+        Message.prepend("Setting ").append(" Saved");
+        QMessageBox::information(this, "Success!!", Message, 0, 0);
+    } else if (diff == 1) {
+        Message.prepend("Setting ").append(" Saved");
+        Message.append("\n\n Different Serial Number !!!");
+        QMessageBox::information(this, "Success!!", Message, 0, 0);
+    } else if (diff == 2) {
+        Message.prepend("Setting ").append(" Saved");
+        Message.append("\nBoard is not have Serial Number ..");
+        QMessageBox::information(this, "Success!!", Message, 0, 0);
+    }
+    this->EnableButton(true);
 }
 
 void formModule::on_tabWidget_tabBarClicked(int index)
 {
-    if (index == 2) {
-        this->ui->pbEditModule->setHidden(false);
+    if (index == 2 || index == 3) {
+        this->ui->pbSet->setHidden(true);
+        this->ui->pbGet->setHidden(true);
+        this->ui->pbEdit->setHidden(false);
     } else {
-        this->ui->pbEditModule->setHidden(true);
+        this->ui->pbSet->setHidden(false);
+        this->ui->pbGet->setHidden(false);
+        this->ui->pbEdit->setHidden(true);
     }
 
     this->ui->tabWidget->setCurrentIndex(index);
@@ -434,28 +600,41 @@ void formModule::on_tabWidget_tabBarClicked(int index)
     this->ui->apn_1->setText(modules);
     modules.sprintf("%s", tModule.apn_gsm_2);
     this->ui->apn_2->setText(modules);
+
+    if (index == 0) {
+        this->ui->pbSet->setText("Set Input Settings");
+        this->ui->pbGet->setText("Get Input Settings");
+    } else if (index == 1) {
+        this->ui->pbSet->setText("Set Output Settings");
+        this->ui->pbGet->setText("Get Output Settings");
+    } else if (index == 2) {
+        this->ui->pbEdit->setText("Edit Communication");
+    } else if (index == 3) {
+        this->ui->pbEdit->setText("Edit Environtment");
+    } else if (index == 4) {
+        this->ui->pbSet->setText("Set Sources Settings");
+        this->ui->pbGet->setText("Get Sources Settings");
+    } else if (index == 5) {
+        this->ui->pbSet->setText("Set Alarm Settings");
+        this->ui->pbGet->setText("Get Alarm Settings");
+    }
 }
 
-void formModule::on_pbGet_clicked()
+void formModule::on_pbGetAll_clicked()
 {
-        int jeda = 1000;
         struct t_module tModule;
         struct t_serial_settings tSerial;
         QStringList val_data;
+        bool timeout = false;
 
-        this->ui->Busy->show();
-        this->ui->pbGet->setEnabled(false);
-        this->ui->pbSet->setEnabled(false);
-        this->ui->pbEditModule->setEnabled(false);
+        this->EnableButton(false);
         if (!Serial_Com->isOpen())
         {
-            QMessageBox::warning(this, "Serial Comunication !!", "Protocol is not open ..!!", 0, 0);
-            this->ui->Busy->hide();
-            this->ui->pbGet->setEnabled(true);
-            this->ui->pbSet->setEnabled(true);
-            this->ui->pbEditModule->setEnabled(true);
+            QMessageBox::warning(this, "Serial Comunication", "Protocol is not open ..!!", 0, 0);
+            this->EnableButton(true);
         } else {
-            work->Request_ENV(this, busyForm, Serial_Com, jeda);
+            timeout = work->Request_ENV(this, busyForm, Serial_Com, timeout);
+            if (timeout) {QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); this->EnableButton(true); return;};
 
             Serial->read_parsing(&tSerial);
             val_data = tSerial.str_data_env.split(";");
@@ -463,39 +642,106 @@ void formModule::on_pbGet_clicked()
                 module mod;
                 mod.read_module(&tModule, Address_Module);
 
-                work->Request_IO(this, busyForm, Serial_Com, jeda);
-                work->Request_SIM(this, busyForm, Serial_Com, jeda);
+                timeout = work->Request_IO(this, busyForm, Serial_Com, timeout);
+                if (timeout) {QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); this->EnableButton(true); return;};
+                timeout = work->Request_SIM(this, busyForm, Serial_Com, timeout);
+                if (timeout) {QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); this->EnableButton(true); return;};
 
                 Serial->read_parsing(&tSerial);
                 val_data = tSerial.str_data_io.split("*");
-                work->Get_IO(&tModule, val_data);
+                work->Get_Input(&tModule, val_data);
+                work->Get_Output(&tModule, val_data);
                 val_data = tSerial.str_data_sim.split("*");
                 work->Get_SIM(&tModule, val_data);
 
                 mod.update_setting(&tModule, Address_Module);
                 this->setInterface(Address_Module);
 
-                QMessageBox::information(this, "Syncronization Board !!", "Setting is Syncronized ..!!", 0, 0);
-                this->ui->Busy->hide();
-                this->ui->pbGet->setEnabled(true);
-                this->ui->pbSet->setEnabled(true);
-                this->ui->pbEditModule->setEnabled(true);
+                QMessageBox::information(this, "Syncronization Board", "All Setting is Syncronized ..", 0, 0);
+                this->EnableButton(true);
             } else {
-                QMessageBox::warning(this, "Serial Comunication !!", "Serial Number is not syncronize ..!!", 0, 0);
-                this->ui->Busy->hide();
-                this->ui->pbGet->setEnabled(true);
-                this->ui->pbSet->setEnabled(true);
-                this->ui->pbEditModule->setEnabled(true);
+                QMessageBox::warning(this, "Serial Comunication", "Serial Number is not syncronize ..!!", 0, 0);
+                this->EnableButton(true);
             }
         }
 }
 
-void formModule::on_pbEditModule_clicked()
+void formModule::on_pbGet_clicked()
 {
-    faddModule = new form_addModule(this, false, Address_Module);
-    faddModule->setWindowTitle("Edit Module");
-    faddModule->setModal(true);
+    struct t_module tModule;
+    struct t_serial_settings tSerial;
+    QStringList val_data;
+    QString Message;
+    bool timeout = false;
 
+    this->EnableButton(false);
+    if (!Serial_Com->isOpen())
+    {
+        QMessageBox::warning(this, "Serial Comunication", "Protocol is not open ..!!", 0, 0);
+        this->EnableButton(true);
+    } else {
+        timeout = work->Request_ENV(this, busyForm, Serial_Com, timeout);
+        if (timeout) {QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); this->EnableButton(true); return;};
+
+        Serial->read_parsing(&tSerial);
+        val_data = tSerial.str_data_env.split(";");
+        if (NoSeri == val_data.at(1)) {
+            module mod;
+            mod.read_module(&tModule, Address_Module);
+
+            if (this->ui->tabWidget->currentIndex() <= 1) {
+                timeout = work->Request_IO(this, busyForm, Serial_Com, timeout);
+                if (timeout) {QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); this->EnableButton(true); return;};
+
+                Serial->read_parsing(&tSerial);
+                val_data = tSerial.str_data_io.split("*");
+                if (this->ui->tabWidget->currentIndex() == 0) {
+                    work->Get_Input(&tModule, val_data);
+                    Message = "Input Channel ";
+                } else if (this->ui->tabWidget->currentIndex() == 1) {
+                    work->Get_Output(&tModule, val_data);
+                    Message = "Output Channel ";
+                }
+            } else if (this->ui->tabWidget->currentIndex() == 2) {
+                timeout = work->Request_SIM(this, busyForm, Serial_Com, timeout);
+                if (timeout) {QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); this->EnableButton(true); return;};
+
+                val_data = tSerial.str_data_sim.split("*");
+                work->Get_SIM(&tModule, val_data);
+                Message = "SIM Configuration ";
+            } else if (this->ui->tabWidget->currentIndex() == 3) {
+                timeout = work->Request_ENV(this, busyForm, Serial_Com, timeout);
+                if (timeout) {QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); this->EnableButton(true); return;};
+
+                val_data = tSerial.str_data_sim.split("*");
+                work->Get_ENV(&tModule, val_data);
+                Message = "Environtment ";
+            }
+            mod.update_setting(&tModule, Address_Module);
+            this->setInterface(Address_Module);
+
+            Message.append(" Setting is Syncronized ..");
+            QMessageBox::information(this, "Syncronization Board", Message, 0, 0);
+            this->EnableButton(true);
+        } else {
+            QMessageBox::warning(this, "Serial Comunication", "Serial Number is not syncronize ..!!", 0, 0);
+            this->EnableButton(true);
+        }
+    }
+}
+
+void formModule::on_pbEdit_clicked()
+{
+    bool timeout = false;
+    if (this->ui->tabWidget->currentIndex() == 2) {
+        faddModule = new form_addModule(this, false, Address_Module, this->ui->tabWidget->currentIndex());
+        faddModule->setWindowTitle("Edit Communications");
+        faddModule->setModal(true);
+    } else if (this->ui->tabWidget->currentIndex() == 3) {
+        faddModule = new form_addModule(this, false, Address_Module, this->ui->tabWidget->currentIndex());
+        faddModule->setWindowTitle("Edit Environtments");
+        faddModule->setModal(true);
+    }
     faddModule->exec();
 
     if (faddModule->accept == 0) return;
@@ -504,26 +750,31 @@ void formModule::on_pbEditModule_clicked()
     this->setInterface(Address_Module);
     this->setWindowTitle(
                 Address_Module.mid(Address_Module.indexOf("m_")+2,
-                                   Address_Module.indexOf(".ini")).remove(".ini"));
-
+                                   Address_Module.indexOf(".dbe")).remove(".dbe"));
     struct t_module tModule;
 
     mod.read_module(&tModule, Address_Module);
     if (Serial_Com->isOpen()) {
-        this->ui->Busy->show();
-        this->ui->pbGet->setEnabled(false);
-        this->ui->pbSet->setEnabled(false);
-        this->ui->pbEditModule->setEnabled(false);
+        this->EnableButton(false);
 
+        timeout = work->Set_ENV(this, busyForm, Serial_Com, &tModule, timeout);
+        if (timeout) {QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); this->EnableButton(true); return;};
+        timeout = work->Set_SIM(this, busyForm, Serial_Com, &tModule, timeout);
+        if (timeout) {QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); this->EnableButton(true); return;};
 
-        work->Set_ENV(this, busyForm, Serial_Com, &tModule);
-        work->Set_SIM(this, busyForm, Serial_Com, &tModule);
+        QMessageBox::information(this, "Syncronization Board !!", "Setting Environtment and SIM Configuration Saved ..", 0, 0);
 
-        this->ui->Busy->hide();
-        this->ui->pbGet->setEnabled(true);
-        this->ui->pbSet->setEnabled(true);
-        this->ui->pbEditModule->setEnabled(true);
+        this->EnableButton(true);
     }
 
     NoSeri = tModule.serial_number;
+}
+
+void formModule::EnableButton(bool enab)
+{
+    this->ui->pbGetAll->setEnabled(enab);
+    this->ui->pbSetAll->setEnabled(enab);
+    this->ui->pbGet->setEnabled(enab);
+    this->ui->pbSet->setEnabled(enab);
+    this->ui->pbEdit->setEnabled(enab);
 }

@@ -31,9 +31,6 @@ public:
 
     void read_parsing(struct t_serial_settings *tSerial);
 
-    void write_FinishRead(bool FinishRead);
-    bool read_FinishRead();
-
 public slots:
     void read_data(QString str_data, QStringList val_data);
     void handleError(QSerialPort::SerialPortError error);

@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
 
 #include "settingsdialog.h"
@@ -84,9 +84,10 @@ void MainWindow::setActiveSubWindow(QWidget *window)
 
 void MainWindow::on_actionNew_triggered()
 {
-    int jeda = 1000;
     if (SerialPort->isOpen()) {
-        work->Request_ENV(this, busy, SerialPort, jeda);
+        bool timeout = false;
+        timeout = work->Request_ENV(this, busy, SerialPort, timeout);
+        if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
 
         struct t_module tModule;
         bool cek = false;
@@ -96,7 +97,7 @@ void MainWindow::on_actionNew_triggered()
         QStringList files = path.entryList(QDir::Files);
 
         newFiles = GetNamaBoard;
-        newFiles.prepend("m_").append(".ini");
+        newFiles.prepend("m_").append(".dbe");
 
         /* cek apakah nama module sudah dipakai atau belum */
         for(int i = 0; i < files.count(); i++){
@@ -115,22 +116,28 @@ void MainWindow::on_actionNew_triggered()
             reply = QMessageBox::question(this, "Attention !!", command,
                                           QMessageBox::Yes|QMessageBox::No);
             if (reply == QMessageBox::Yes) {
-                work->Request_IO(this, busy, SerialPort, jeda);
-                work->Request_SIM(this, busy, SerialPort, jeda);
+                timeout = work->Request_IO(this, busy, SerialPort, timeout);
+                if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
+                timeout = work->Request_SIM(this, busy, SerialPort, timeout);
+                if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
 
                 QString address = "data/module/" + newFiles;
                 mod->read_module(&tModule, address);
                 strcpy(tModule.serial_number, GetNoSeri.toLatin1());
 
-                work->Get_IO(&tModule, val_data_io);
+                work->Get_Input(&tModule, val_data_io);
+                work->Get_Output(&tModule, val_data_io);
                 work->Get_SIM(&tModule, val_data_sim);
 
                 mod->write_module(&tModule);
             } else {
-                work->Request_IO(this, busy, SerialPort, jeda);
-                work->Request_SIM(this, busy, SerialPort, jeda);
+                timeout = work->Request_IO(this, busy, SerialPort, timeout);
+                if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
+                timeout = work->Request_SIM(this, busy, SerialPort, timeout);
+                if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
 
-                work->Get_IO(&tModule, val_data_io);
+                work->Get_Input(&tModule, val_data_io);
+                work->Get_Output(&tModule, val_data_io);
                 work->Get_SIM(&tModule, val_data_sim);
 
                 /** INPUT **/
@@ -146,21 +153,20 @@ void MainWindow::on_actionNew_triggered()
                 strcpy(tModule.input_d3_name, "");
                 strcpy(tModule.input_d4_name, "");
                 strcpy(tModule.input_d5_name, "");
-//                strcpy(tModule.input_d6_name, "");
-//                strcpy(tModule.input_d7_name, "");
+                strcpy(tModule.input_d6_name, "");
 
                 /** OUTPUT **/
                 strcpy(tModule.output_r1_name, "");
                 strcpy(tModule.output_r2_name, "");
 
                 GetNamaBoard.append("_new");
-                QString newModule = "m_" + GetNamaBoard + ".ini";
+                QString newModule = "m_" + GetNamaBoard + ".dbe";
                 strcpy(tModule.module_name, GetNamaBoard.toUtf8().data());
                 strcpy(tModule.serial_number, GetNoSeri.toLatin1());
                 QString Address = "data/module/" + newModule;
                 mod->write_module(&tModule);
 
-                faddModule = new form_addModule(this, false, Address);
+                faddModule = new form_addModule(this, false, Address, 2);
                 faddModule->setWindowTitle("Edit Module");
                 faddModule->setModal(true);
 
@@ -175,19 +181,25 @@ void MainWindow::on_actionNew_triggered()
                 Address = faddModule->currentFile;
                 mod->read_module(&tModule, Address);
 
-                work->Set_ENV(this, busy, SerialPort, &tModule);
-                work->Set_SIM(this, busy, SerialPort, &tModule);
+                timeout = work->Set_ENV(this, busy, SerialPort, &tModule, timeout);
+                if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
+                timeout = work->Set_SIM(this, busy, SerialPort, &tModule, timeout);
+                if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
 
+                this->GetNamaBoard.sprintf("%s", tModule.module_name);
                 this->Refresh_Tree();
             }
         } else {
-            work->Request_IO(this, busy, SerialPort, jeda);
-            work->Request_SIM(this, busy, SerialPort, jeda);
+            timeout = work->Request_IO(this, busy, SerialPort, timeout);
+            if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
+            timeout = work->Request_SIM(this, busy, SerialPort, timeout);
+            if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
 
             strcpy(tModule.module_name, GetNamaBoard.toUtf8().data());
             strcpy(tModule.serial_number, GetNoSeri.toLatin1());
 
-            work->Get_IO(&tModule, val_data_io);
+            work->Get_Input(&tModule, val_data_io);
+            work->Get_Output(&tModule, val_data_io);
             work->Get_SIM(&tModule, val_data_sim);
 
 
@@ -205,7 +217,6 @@ void MainWindow::on_actionNew_triggered()
             strcpy(tModule.input_d4_name, "");
             strcpy(tModule.input_d5_name, "");
             strcpy(tModule.input_d6_name, "");
-//            strcpy(tModule.input_d7_name, "");
 
             /** OUTPUT **/
             strcpy(tModule.output_r1_name, "");
@@ -233,7 +244,11 @@ void MainWindow::on_actionNew_triggered()
 
         module_name[module_count] = work->newModule(modelTree, this->ui->treeView, title);
         module_count++;
+        this->GetNamaBoard = title;
     }
+    QString Message = this->GetNamaBoard;
+    Message.prepend("Module with name : \n").append("\nwas created ..");
+    QMessageBox::information(this, "New Module", Message, 0, 0);
 }
 
 void MainWindow::on_actionSave_triggered()
@@ -242,7 +257,7 @@ void MainWindow::on_actionSave_triggered()
     if (!module_name_sv.isEmpty()) {
         struct t_module tModule;
         mod->read_module(&tModule, module_address_sv);
-        QString newAddress = QFileDialog::getSaveFileName(this, tr("Save As Module"), module_address_sv, tr("(*.ini)"));
+        QString newAddress = QFileDialog::getSaveFileName(this, tr("Save As Module"), module_address_sv, tr("(*.dbe)"));
         mod->save_as_module(&tModule, newAddress);
         Message = "Module with name : " + module_name_sv + " was saved on \n\n";
         Message.append(newAddress);
@@ -262,18 +277,18 @@ void MainWindow::on_actionLoad_triggered()
     QString file;
     QString command;
 
-    QStringList fileName = QFileDialog::getOpenFileNames(this, tr("Load Module"), tr("data/module/"), tr("(*.ini)"));
+    QStringList fileName = QFileDialog::getOpenFileNames(this, tr("Load Module"), tr("data/module/"), tr("(*.dbe)"));
 
     if (fileName.isEmpty()) return;
 
     for(int i = 0; i < fileName.count(); i++){
         mod->read_module(&tModule, fileName.at(i));
-        file.sprintf("m_%s.ini", tModule.module_name);
+        file.sprintf("m_%s.dbe", tModule.module_name);
 //        file = work->checkModule(QString(fileName.at(i)).toUtf8().data());
         cek = false;
         for (int j = 0; j < module_count; j++) {
             currName = module_name[j];
-            if (currName.prepend("m_").append(".ini") == file) {
+            if (currName.prepend("m_").append(".dbe") == file) {
                 cek = true;
                 break;
             } else {
@@ -331,7 +346,7 @@ void MainWindow::on_treeView_clicked(const QModelIndex &index)
 
     if(work->checkIfmodule(name)) {
         module_name_sv = name;
-        module_name_sv.prepend("m_").append(".ini");
+        module_name_sv.prepend("m_").append(".dbe");
         module_address_sv = "data/module/" + module_name_sv;
     } else {
         module_name_sv = "";
@@ -378,6 +393,7 @@ void MainWindow::on_actionConnect_triggered()
         exe = settings_dialog->exec();
         if(exe == 0) return;
 
+        Setting.read_setting(&tSerial);
         if (!SerialPort->isOpen())
             Serial.open_serial(SerialPort, &tSerial);
     } else
@@ -456,7 +472,7 @@ void MainWindow::readData()
         val_data.clear();
         str_data.clear();
         FinishRead = true;
-        Serial->write_FinishRead(FinishRead);
+        work->write_FinishRead(FinishRead);
     } else if (str_data.indexOf("<I/O") > 0 && str_data.indexOf("I/O>") > 0) {
         int a = str_data.indexOf("<I/O");
         int b = str_data.indexOf("I/O>");
@@ -474,7 +490,7 @@ void MainWindow::readData()
         str_data.clear();
         val_data.clear();
         FinishRead = true;
-        Serial->write_FinishRead(FinishRead);
+        work->write_FinishRead(FinishRead);
     } else if (str_data.indexOf("<SIM") > 0 && str_data.indexOf("SIM>") > 0) {
         int a = str_data.indexOf("<SIM");
         int b = str_data.indexOf("SIM>");
@@ -492,12 +508,12 @@ void MainWindow::readData()
         str_data.clear();
         val_data.clear();
         FinishRead = true;
-        Serial->write_FinishRead(FinishRead);
+        work->write_FinishRead(FinishRead);
     } else if (str_data.indexOf("OK") > 0) {
         str_data.clear();
         val_data.clear();
         FinishRead = true;
-        Serial->write_FinishRead(FinishRead);
+        work->write_FinishRead(FinishRead);
     }
 }
 
@@ -545,16 +561,11 @@ void MainWindow::on_actionRefresh_triggered()
 
 void MainWindow::on_actionAdd_Plugin_triggered()
 {
-    QStringList zip_filename = QFileDialog::getOpenFileNames(this, tr("Load Module"), tr("data/module/"), tr("(*.zip)"));
-    QFile infile(zip_filename.at(0));
-    QFile outfile(QDir::currentPath() + "/plugin/plugin-01");
-    infile.open(QIODevice::ReadOnly);
-    outfile.open(QIODevice::WriteOnly);
-    QByteArray uncompressed_data = infile.readAll();
-    QByteArray compressed_data = qUncompress(uncompressed_data);
-    outfile.write(compressed_data);
-    infile.close();
-    outfile.close();
+    QString plugin = QFileDialog::getExistingDirectory(this, tr("Select Folder"), QDir::homePath(), QFileDialog::ShowDirsOnly);
+//    QStringList plugin = QFileDialog::getOpenFileNames(this, tr("Load Module"), tr("data/module/"), tr("(*.zip)"));
+    if (!QDir(QDir::currentPath() + "/plugin").exists()) {
+        QDir().mkdir(QDir::currentPath() + "/plugin");
+    }
 
     QString program = QDir::currentPath() + "/sarasvati";
     QStringList arguments;

@@ -2,7 +2,7 @@
 #define FORM_ADDMODULE_H
 
 #include <QDialog>
-
+#include <QRect>
 #include "model/module.h"
 
 namespace Ui {
@@ -18,7 +18,7 @@ class form_addModule : public QDialog
 public:
     Ui::form_addModule *ui;
 
-    explicit form_addModule(QWidget *parent = 0, bool create = true, QString address = 0);
+    explicit form_addModule(QWidget *parent = 0, bool create = true, QString address = 0, int index = 0);
     ~form_addModule();
 
     bool edit;

@@ -11,6 +11,7 @@
 #include <ui_formmodule.h>
 #include "model/communication/serial.h"
 
+//#include <QObject>
 #include <QtSerialPort/QSerialPort>
 #include <QTime>
 
@@ -26,8 +27,9 @@ class formModule;
 class serial;
 class QLightBoxWidget;
 
-class worker
+class worker /*: public QObject*/
 {
+//    Q_OBJECT
 public:
     worker();
     module mod;
@@ -45,13 +47,14 @@ public:
     bool checkIfmodule(QString name);
     bool state_of_module(int num, QString newModule, QString *existModule);
 
-    void Request_ENV(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, int jeda);
-    void Request_IO(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, int jeda);
-    void Request_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, int jeda);
-    void Request_SIG(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, int jeda);
+    bool Request_ENV(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, bool timeout = false);
+    bool Request_IO(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, bool timeout = false);
+    bool Request_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, bool timeout = false);
+    bool Request_SIG(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, bool timeout = false);
 
     void Get_ENV(struct t_module *tModule, QStringList data);
-    void Get_IO(struct t_module *tModule, QStringList data);
+    void Get_Input(struct t_module *tModule, QStringList data);
+    void Get_Output(struct t_module *tModule, QStringList data);
     void Get_SIM(struct t_module *tModule, QStringList data);
     void Get_SIG(struct t_module *tModule, QStringList data);
 
@@ -64,13 +67,19 @@ public:
 
 //    QString Request;
 
-    void Set_ENV(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, struct t_module *tModule);
-    void Set_IO(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, struct t_module *tModule);
-    void Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, struct t_module *tModule);
-    void Reset_Board(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com);
+    bool Set_ENV(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, struct t_module *tModule, bool timeout = false);
+    bool Set_Input(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, struct t_module *tModule, bool timeout = false);
+    bool Set_Output(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, struct t_module *tModule, bool timeout = false);
+    bool Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, struct t_module *tModule, bool timeout = false);
+    bool Reset_Board(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, bool timeout = false);
+
+    void write_FinishRead(bool FinishRead);
+    bool read_FinishRead();
 
     void delay(QWidget *parent, QLightBoxWidget *lBox, QString desc, int ms);
-    void delay_set(QWidget *parent, QLightBoxWidget *lBox, QString desc);
+    bool waiting_set(QWidget *parent, QLightBoxWidget *lBox, QString desc, bool timeout = false);
+//signals:
+//    void TimeOut();
 };
 
 #endif // WORKER_H

@@ -25,6 +25,10 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../image.qrc">
+    <normaloff>:/new/prefix1/image/icon-daun-biru.png</normaloff>:/new/prefix1/image/icon-daun-biru.png</iconset>
+  </property>
   <widget class="QPushButton" name="loginButton">
    <property name="geometry">
     <rect>
