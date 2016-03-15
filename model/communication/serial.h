@@ -8,6 +8,7 @@
 #include <QObject>
 #include <QDebug>
 #include <QtSerialPort/QSerialPort>
+#include <QtSerialPort/QSerialPortInfo>
 
 class SettingsDialog;
 

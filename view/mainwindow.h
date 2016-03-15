@@ -62,6 +62,7 @@ public slots:
     void on_actionDisconnect_triggered();
 
     void readData();
+    void handleError(QSerialPort::SerialPortError error);
 
 private slots:
     void on_actionNew_triggered();

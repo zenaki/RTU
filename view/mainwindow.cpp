@@ -36,6 +36,7 @@ MainWindow::MainWindow(QWidget *parent) :
     SerialPort = new  QSerialPort(this);
     Serial = new serial();
     connect(SerialPort, SIGNAL(readyRead()), this, SLOT(readData()));
+    connect(SerialPort, SIGNAL(error(QSerialPort::SerialPortError)), this,SLOT(handleError(QSerialPort::SerialPortError)));
 
     this->ui->actionConnect->setEnabled(true);
     this->ui->actionDisconnect->setEnabled(false);
@@ -433,7 +434,9 @@ void MainWindow::on_actionDisconnect_triggered()
 //    serial Serial;
 //    Serial.close_serial(SerialPort);
     if (SerialPort->isOpen()) {
-        SerialPort->close();
+        if (SerialPort->open(QIODevice::ReadWrite)) {
+            SerialPort->close();
+        }
         this->ui->bottom_message->setStyleSheet("QLabel { color : black; }");
         StatusMessage.replace("Connected to ", "Disconnected from ");
 //        StatusMessage = "Disconnect";
@@ -571,4 +574,13 @@ void MainWindow::on_actionAdd_Plugin_triggered()
     QStringList arguments;
     QProcess *myProcess = new QProcess(qApp);
     myProcess->start(program, arguments);
+}
+
+void MainWindow::handleError(QSerialPort::SerialPortError error)
+{
+    if (error == QSerialPort::ResourceError) {
+//        QMessageBox::critical(this, tr("Critical Error"), SerialPort->errorString());
+        this->on_actionDisconnect_triggered();
+        QMessageBox::critical(this, tr("Critical Error"), "Please check your connection ..!!!");
+    }
 }
