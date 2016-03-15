@@ -71,6 +71,7 @@ private:
     QLineEdit *calib_m[16];
     QLineEdit *calib_x[16];
 
+    /** Output Tab **/
     QLineEdit *name_output[16];
     QLineEdit *type_output[16];
     QComboBox *state_output[16];
@@ -83,6 +84,29 @@ private:
     MainWindow *Main;
     serial *Serial;
     setting *Setting;
+
+    /** Sources Tab **/
+    QLineEdit *name_source[16];
+    QComboBox *state_source[16];
+    QComboBox *type_source[16];
+    QLineEdit *id_source[16];
+    QLineEdit *sensor_reg_source[16];
+    QComboBox *OffsetBase_source[16];
+    QComboBox *command_source[16];
+    QLineEdit *length_source[16];
+    QLineEdit *target_reg_source[16];
+
+    /** Alarm Threshold Tab **/
+    QLineEdit *name_alarm[16];
+    QComboBox *state_alarm[16];
+    QLineEdit *input_reg_alarm[16];
+    QLineEdit *output_reg_alarm[16];
+    QLineEdit *range_l[16];
+    QLineEdit *batas_ll[16];
+    QLineEdit *batas_l[16];
+    QLineEdit *batas_h[16];
+    QLineEdit *batas_hh[16];
+    QLineEdit *range_h[16];
 };
 
 #endif // FORMMODULE_H

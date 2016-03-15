@@ -241,6 +241,142 @@ void formModule::setInterface(QString address){
     this->ui->file_address->setText(modules);
     modules.sprintf("%s", tModule.status_webclient);
     this->ui->web_client->setText(modules);
+
+    int rowSource = 6;
+    int rowAlarm = 6;
+
+    this->ui->tabel_sources->verticalHeader()->setHidden(true);
+    this->ui->tabel_sources->setColumnCount(10);
+//    this->ui->tabel_sources->setColumnWidth(0, 75);
+    this->ui->tabel_sources->setColumnWidth(1, 100);
+    this->ui->tabel_sources->setColumnWidth(2, 100);
+//    this->ui->tabel_sources->setColumnWidth(3, 75);
+    this->ui->tabel_sources->setColumnWidth(4, 50);
+    this->ui->tabel_sources->setColumnWidth(5, 85);
+    this->ui->tabel_sources->setColumnWidth(6, 85);
+    this->ui->tabel_sources->setColumnWidth(7, 150);
+//    this->ui->tabel_sources->setColumnWidth(8, 75);
+    this->ui->tabel_sources->setColumnWidth(9, 85);
+    this->ui->tabel_sources->setRowCount(rowSource);
+
+    this->ui->tabel_alarm->verticalHeader()->setHidden(true);
+    this->ui->tabel_alarm->setColumnCount(11);
+//    this->ui->tabel_alarm->setColumnWidth(0, 75);
+    this->ui->tabel_alarm->setColumnWidth(1, 100);
+//    this->ui->tabel_alarm->setColumnWidth(2, 75);
+//    this->ui->tabel_alarm->setColumnWidth(3, 75);
+    this->ui->tabel_alarm->setColumnWidth(4, 100);
+//    this->ui->tabel_alarm->setColumnWidth(5, 50);
+//    this->ui->tabel_alarm->setColumnWidth(6, 75);
+//    this->ui->tabel_alarm->setColumnWidth(7, 75);
+//    this->ui->tabel_alarm->setColumnWidth(8, 75);
+//    this->ui->tabel_alarm->setColumnWidth(9, 75);
+//    this->ui->tabel_alarm->setColumnWidth(10, 75);
+    this->ui->tabel_alarm->setRowCount(rowAlarm);
+
+    for (int i = 0; i < rowSource; i++){
+        name_source[i] = new QLineEdit(this);
+
+        state_source[i] = new QComboBox(this);
+        state_source[i]->addItem("NOT ACTIVE",0);
+        state_source[i]->addItem("ACTIVE",1);
+
+        type_source[i] = new QComboBox(this);
+        type_source[i]->addItem("Native",1);
+        type_source[i]->addItem("PM810",2);
+        type_source[i]->addItem("Santer",3);
+        type_source[i]->addItem("GWR",4);
+        type_source[i]->addItem("PM5560",5);
+
+        id_source[i] = new QLineEdit(this);
+        id_source[i]->setAlignment(Qt::AlignCenter);
+
+        sensor_reg_source[i] = new QLineEdit(this);
+        sensor_reg_source[i]->setAlignment(Qt::AlignCenter);
+
+        OffsetBase_source[i] = new QComboBox(this);
+        OffsetBase_source[i]->addItem("0",0);
+        OffsetBase_source[i]->addItem("1",1);
+
+        command_source[i] = new QComboBox(this);
+        command_source[i]->addItem("Read Holding Register",0);
+        command_source[i]->addItem("Write Holding Register",1);
+
+        length_source[i] = new QLineEdit(this);
+        length_source[i]->setAlignment(Qt::AlignCenter);
+
+        target_reg_source[i] = new QLineEdit(this);
+        target_reg_source[i]->setAlignment(Qt::AlignCenter);
+    }
+
+    for (int i = 0; i < rowSource; i++){
+        type_IO = "Source - ";
+        type_IO.append(QString::number(i+1));
+
+        this->ui->tabel_sources->setItem(i,0, new QTableWidgetItem(type_IO));
+        this->ui->tabel_sources->setCellWidget(i,1, name_source[i]);
+        this->ui->tabel_sources->setCellWidget(i,2, state_source[i]);
+        this->ui->tabel_sources->setCellWidget(i,3, type_source[i]);
+        this->ui->tabel_sources->setCellWidget(i,4, id_source[i]);
+        this->ui->tabel_sources->setCellWidget(i,5, sensor_reg_source[i]);
+        this->ui->tabel_sources->setCellWidget(i,6, OffsetBase_source[i]);
+        this->ui->tabel_sources->setCellWidget(i,7, command_source[i]);
+        this->ui->tabel_sources->setCellWidget(i,8, length_source[i]);
+        this->ui->tabel_sources->setCellWidget(i,9, target_reg_source[i]);
+    }
+
+    for (int i = 0; i < rowAlarm; i++){
+        name_alarm[i] = new QLineEdit(this);
+
+        state_alarm[i] = new QComboBox(this);
+        state_alarm[i]->addItem("NOT ACTIVE",0);
+        state_alarm[i]->addItem("ACTIVE",1);
+
+        input_reg_alarm[i] = new QLineEdit(this);
+        input_reg_alarm[i]->setAlignment(Qt::AlignCenter);
+
+        output_reg_alarm[i] = new QLineEdit(this);
+        output_reg_alarm[i]->setAlignment(Qt::AlignCenter);
+
+        range_l[i] = new QLineEdit(this);
+        range_l[i]->setAlignment(Qt::AlignCenter);
+
+        batas_ll[i] = new QLineEdit(this);
+        batas_ll[i]->setAlignment(Qt::AlignCenter);
+
+        batas_l[i] = new QLineEdit(this);
+        batas_l[i]->setAlignment(Qt::AlignCenter);
+
+        batas_h[i] = new QLineEdit(this);
+        batas_h[i]->setAlignment(Qt::AlignCenter);
+
+        batas_hh[i] = new QLineEdit(this);
+        batas_hh[i]->setAlignment(Qt::AlignCenter);
+
+        range_h[i] = new QLineEdit(this);
+        range_h[i]->setAlignment(Qt::AlignCenter);
+    }
+
+    for (int i = 0; i < rowAlarm; i++){
+        type_IO = "Alarm - ";
+        type_IO.append(QString::number(i+1));
+
+        this->ui->tabel_alarm->setItem(i,0, new QTableWidgetItem(type_IO));
+        this->ui->tabel_alarm->setCellWidget(i,1, name_alarm[i]);
+        this->ui->tabel_alarm->setCellWidget(i,2, input_reg_alarm[i]);
+        this->ui->tabel_alarm->setCellWidget(i,3, output_reg_alarm[i]);
+        this->ui->tabel_alarm->setCellWidget(i,4, state_alarm[i]);
+        this->ui->tabel_alarm->setCellWidget(i,5, range_l[i]);
+        this->ui->tabel_alarm->setCellWidget(i,6, batas_ll[i]);
+        this->ui->tabel_alarm->setCellWidget(i,7, batas_l[i]);
+        this->ui->tabel_alarm->setCellWidget(i,8, batas_h[i]);
+        this->ui->tabel_alarm->setCellWidget(i,9, batas_hh[i]);
+        this->ui->tabel_alarm->setCellWidget(i,10, range_h[i]);
+    }
+
+    this->ui->tabel_sources->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    this->ui->tabel_alarm->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
 }
 
 void formModule::on_pbSetAll_clicked()
@@ -617,6 +753,9 @@ void formModule::on_tabWidget_tabBarClicked(int index)
     } else if (index == 5) {
         this->ui->pbSet->setText("Set Alarm Settings");
         this->ui->pbGet->setText("Get Alarm Settings");
+    } else if (index == 6) {
+        this->ui->pbSet->setText("Set Data Settings");
+        this->ui->pbGet->setText("Get Data Settings");
     }
 }
 

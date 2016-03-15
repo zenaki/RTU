@@ -1350,10 +1350,67 @@
       </attribute>
       <layout class="QGridLayout" name="gridLayout_4">
        <item row="0" column="0">
-        <widget class="QTableWidget" name="tabel_sumber">
+        <widget class="QTableWidget" name="tabel_sources">
+         <property name="tabKeyNavigation">
+          <bool>true</bool>
+         </property>
+         <property name="verticalScrollMode">
+          <enum>QAbstractItemView::ScrollPerItem</enum>
+         </property>
+         <property name="horizontalScrollMode">
+          <enum>QAbstractItemView::ScrollPerItem</enum>
+         </property>
+         <attribute name="horizontalHeaderDefaultSectionSize">
+          <number>75</number>
+         </attribute>
          <column>
           <property name="text">
            <string>No.</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Name</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Status</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Type</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>ID</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Sensor Register</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Offset / Base</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Command</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Length</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Target Register</string>
           </property>
          </column>
         </widget>
@@ -1367,14 +1424,72 @@
       <layout class="QGridLayout" name="gridLayout_5">
        <item row="0" column="0">
         <widget class="QTableWidget" name="tabel_alarm">
+         <attribute name="horizontalHeaderDefaultSectionSize">
+          <number>75</number>
+         </attribute>
          <column>
           <property name="text">
            <string>No.</string>
           </property>
          </column>
+         <column>
+          <property name="text">
+           <string>Name</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Input Reg</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Output Reg</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Status</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Range_L</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Batas_LL</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Batas_L</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Batas_H</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Batas_HH</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Range_H</string>
+          </property>
+         </column>
         </widget>
        </item>
       </layout>
+     </widget>
+     <widget class="QWidget" name="tab_data">
+      <attribute name="title">
+       <string>Data Monitoring</string>
+      </attribute>
      </widget>
     </widget>
    </item>
