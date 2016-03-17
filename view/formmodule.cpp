@@ -97,31 +97,10 @@ void formModule::setInterface(QString address){
     }
 
     QString str;
-    str.append(tModule.input_d1_name).append(";");
-    str.append(tModule.input_d1).append(";");
-    str.append(tModule.input_d2_name).append(";");
-    str.append(tModule.input_d2).append(";");
-    str.append(tModule.input_d3_name).append(";");
-    str.append(tModule.input_d3).append(";");
-    str.append(tModule.input_d4_name).append(";");
-    str.append(tModule.input_d4).append(";");
-    str.append(tModule.input_d5_name).append(";");
-    str.append(tModule.input_d5).append(";");
-    str.append(tModule.input_d6_name).append(";");
-    str.append(tModule.input_d6).append(";");
-
-    str.append(tModule.input_a1_name).append(";");
-    str.append(tModule.input_a1).append(";");
-    str.append(tModule.input_a2_name).append(";");
-    str.append(tModule.input_a2).append(";");
-    str.append(tModule.input_a3_name).append(";");
-    str.append(tModule.input_a3).append(";");
-    str.append(tModule.input_a4_name).append(";");
-    str.append(tModule.input_a4).append(";");
-    str.append(tModule.input_a5_name).append(";");
-    str.append(tModule.input_a5).append(";");
-    str.append(tModule.input_a6_name).append(";");
-    str.append(tModule.input_a6).append(";");
+    for (int i = 0; i < tModule.Input.length(); i++) {
+        str.append(tModule.InputName.at(0)).append(";");
+        str.append(tModule.Input.at(0)).append(";");
+    }
 
     QStringList list = str.split(';');
 
@@ -313,16 +292,35 @@ void formModule::setInterface(QString address){
         type_IO = "Source - ";
         type_IO.append(QString::number(i+1));
 
+        if (this->checkFormula(tModule.sumber.at(i))) {
+            str = tModule.sumber.at(i);
+            list = str.split(';');
+            name_source[i]->setText(list[1]);
+            state_source[i]->setCurrentIndex(list[4].toInt());
+            type_source[i]->setCurrentIndex(list[5].toInt());
+            id_source[i]->setText(list[6]);
+            sensor_reg_source[i]->setText(list[7]);
+            OffsetBase_source[i]->setCurrentIndex(list[8].toInt());
+            command_source[i]->setCurrentIndex(list[9].toInt());
+            length_source[i]->setText(list[10]);
+            target_reg_source[i]->setText(list[11]);
+        } else {
+            str = tModule.sumber.at(i);
+            list = str.split(';');
+            name_source[i]->setText(list[1]);
+            state_source[i]->setCurrentIndex(list[4].toInt());
+        }
+
         this->ui->tabel_sources->setItem(i,0, new QTableWidgetItem(type_IO));
         this->ui->tabel_sources->setCellWidget(i,1, name_source[i]);
         this->ui->tabel_sources->setCellWidget(i,2, state_source[i]);
         this->ui->tabel_sources->setCellWidget(i,3, type_source[i]);
-        this->ui->tabel_sources->setCellWidget(i,4, id_source[i]);
-        this->ui->tabel_sources->setCellWidget(i,5, sensor_reg_source[i]);
-        this->ui->tabel_sources->setCellWidget(i,6, OffsetBase_source[i]);
-        this->ui->tabel_sources->setCellWidget(i,7, command_source[i]);
-        this->ui->tabel_sources->setCellWidget(i,8, length_source[i]);
-        this->ui->tabel_sources->setCellWidget(i,9, target_reg_source[i]);
+        this->ui->tabel_sources->setCellWidget(i,4, id_source[i]); //6
+        this->ui->tabel_sources->setCellWidget(i,5, sensor_reg_source[i]); //7
+        this->ui->tabel_sources->setCellWidget(i,6, OffsetBase_source[i]); //8
+        this->ui->tabel_sources->setCellWidget(i,7, command_source[i]); //9
+        this->ui->tabel_sources->setCellWidget(i,8, length_source[i]); //10
+        this->ui->tabel_sources->setCellWidget(i,9, target_reg_source[i]); //11
     }
 
     for (int i = 0; i < rowAlarm; i++){
@@ -379,6 +377,16 @@ void formModule::setInterface(QString address){
 
 }
 
+bool formModule::checkFormula(QString data)
+{
+    QStringList list = data.split(';');
+    if (list.length() > 6) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 void formModule::on_pbSetAll_clicked()
 {
     struct t_module tModule;
@@ -422,33 +430,9 @@ void formModule::on_pbSetAll_clicked()
                             , tModule.d_port[i].calib_m
                             , tModule.d_port[i].calib_x);
         }
+        tModule.Input[0] = data[0];
+        tModule.InputName[0] = name_input[0]->text();
     }
-
-    strcpy(tModule.input_d1,data[0].toLatin1());
-    strcpy(tModule.input_d1_name,name_input[0]->text().toLatin1());
-    strcpy(tModule.input_d2,data[1].toLatin1());
-    strcpy(tModule.input_d2_name,name_input[1]->text().toLatin1());
-    strcpy(tModule.input_d3,data[2].toLatin1());
-    strcpy(tModule.input_d3_name,name_input[2]->text().toLatin1());
-    strcpy(tModule.input_d4,data[3].toLatin1());
-    strcpy(tModule.input_d4_name,name_input[3]->text().toLatin1());
-    strcpy(tModule.input_d5,data[4].toLatin1());
-    strcpy(tModule.input_d5_name,name_input[4]->text().toLatin1());
-    strcpy(tModule.input_d6,data[5].toLatin1());
-    strcpy(tModule.input_d6_name,name_input[5]->text().toLatin1());
-
-    strcpy(tModule.input_a1,data[6].toLatin1());
-    strcpy(tModule.input_a1_name,name_input[6]->text().toLatin1());
-    strcpy(tModule.input_a2,data[7].toLatin1());
-    strcpy(tModule.input_a2_name,name_input[7]->text().toLatin1());
-    strcpy(tModule.input_a3,data[8].toLatin1());
-    strcpy(tModule.input_a3_name,name_input[8]->text().toLatin1());
-    strcpy(tModule.input_a4,data[9].toLatin1());
-    strcpy(tModule.input_a4_name,name_input[9]->text().toLatin1());
-    strcpy(tModule.input_a5,data[10].toLatin1());
-    strcpy(tModule.input_a5_name,name_input[10]->text().toLatin1());
-    strcpy(tModule.input_a6,data[11].toLatin1());
-    strcpy(tModule.input_a6_name,name_input[11]->text().toLatin1());
 
     for (int i = 0; i < ui->tabel_output->rowCount(); i++)
     {
@@ -485,6 +469,10 @@ void formModule::on_pbSetAll_clicked()
             timeout = work->Set_Output(this, busyForm, Serial_Com, &tModule, timeout);
             if (timeout) {QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); this->EnableButton(true); return;};
             timeout = work->Set_SIM(this, busyForm, Serial_Com, &tModule, timeout);
+            if (timeout) {QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); this->EnableButton(true); return;};
+            timeout = work->Set_Sumber(this, busyForm, Serial_Com, &tModule, timeout);
+            if (timeout) {QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); this->EnableButton(true); return;};
+            timeout = work->Set_Data(this, busyForm, Serial_Com, &tModule, timeout);
             if (timeout) {QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); this->EnableButton(true); return;};
 //            work->Reset_Board(busyForm, "Reset Board ...", Serial_Com);
 
@@ -533,12 +521,14 @@ void formModule::on_pbSet_clicked()
     int diff = 0;
     int reset = 0;
     bool timeout = false;
+    QStringList list;
 
     module mod;
     mod.read_module(&tModule, Address_Module);
 
+    /** ON MODULE FILE **/
     if (this->ui->tabWidget->currentIndex() == 0) {
-        /** ON MODULE FILE **/
+        /** SET INPUT **/
         for (int i = 0; i < ui->tabel_input->rowCount(); i++)
         {
             tModule.d_port[i].calib_m = calib_m[i]->text().toFloat();
@@ -566,34 +556,20 @@ void formModule::on_pbSet_clicked()
                                 , tModule.d_port[i].calib_m
                                 , tModule.d_port[i].calib_x);
             }
+            tModule.Input[i] = data[i];
+            tModule.InputName[i] = name_input[i]->text();
+
+            data[i] = tModule.data.at(i);
+            list = data[i].split(';');
+            list[2] = name_input[i]->text();
+            data[i] = list[0];
+            for (int j = 0; j < 12; j++) {
+                data[i].append(list[j]);
+            }
+            tModule.data[i] = data[i];
         }
-
-        strcpy(tModule.input_d1,data[0].toLatin1());
-        strcpy(tModule.input_d1_name,name_input[0]->text().toLatin1());
-        strcpy(tModule.input_d2,data[1].toLatin1());
-        strcpy(tModule.input_d2_name,name_input[1]->text().toLatin1());
-        strcpy(tModule.input_d3,data[2].toLatin1());
-        strcpy(tModule.input_d3_name,name_input[2]->text().toLatin1());
-        strcpy(tModule.input_d4,data[3].toLatin1());
-        strcpy(tModule.input_d4_name,name_input[3]->text().toLatin1());
-        strcpy(tModule.input_d5,data[4].toLatin1());
-        strcpy(tModule.input_d5_name,name_input[4]->text().toLatin1());
-        strcpy(tModule.input_d6,data[5].toLatin1());
-        strcpy(tModule.input_d6_name,name_input[5]->text().toLatin1());
-
-        strcpy(tModule.input_a1,data[6].toLatin1());
-        strcpy(tModule.input_a1_name,name_input[6]->text().toLatin1());
-        strcpy(tModule.input_a2,data[7].toLatin1());
-        strcpy(tModule.input_a2_name,name_input[7]->text().toLatin1());
-        strcpy(tModule.input_a3,data[8].toLatin1());
-        strcpy(tModule.input_a3_name,name_input[8]->text().toLatin1());
-        strcpy(tModule.input_a4,data[9].toLatin1());
-        strcpy(tModule.input_a4_name,name_input[9]->text().toLatin1());
-        strcpy(tModule.input_a5,data[10].toLatin1());
-        strcpy(tModule.input_a5_name,name_input[10]->text().toLatin1());
-        strcpy(tModule.input_a6,data[11].toLatin1());
-        strcpy(tModule.input_a6_name,name_input[11]->text().toLatin1());
     } else if (this->ui->tabWidget->currentIndex() == 1) {
+        /** SET OUTPUT **/
         for (int i = 0; i < ui->tabel_output->rowCount(); i++)
         {
             tModule.d_port[i].status_output = state_output[i]->currentIndex();
@@ -608,9 +584,39 @@ void formModule::on_pbSet_clicked()
         strcpy(tModule.output_r1_name,name_output[0]->text().toLatin1());
         strcpy(tModule.output_r2,data[1].toLatin1());
         strcpy(tModule.output_r2_name,name_output[1]->text().toLatin1());
+    } else if (this->ui->tabWidget->currentIndex() == 4) {
+        /** SET SUMBER **/
+        for (int i = 0; i < ui->tabel_sources->rowCount(); i++) {
+            data[i] = QString::number(i) + ";" +
+                      name_source[i]->text() + ";" +
+                      QString::number(state_source[i]->currentIndex()) + ";" +
+                      QString::number(type_source[i]->currentIndex()) + ";" +
+                      id_source[i]->text() + ";" +
+                      sensor_reg_source[i]->text() + ";" +
+                      QString::number(OffsetBase_source[i]->currentIndex()) + ";" +
+                      QString::number(command_source[i]->currentIndex()) + ";" +
+                      length_source[i]->text() + ";" +
+                      target_reg_source[i]->text();
 
-        mod.update_setting(&tModule, Address_Module);
+            tModule.sumber[i] = data[i];
+
+            data[i] = tModule.data.at(i);
+            list = data[i].split(';');
+            list[2] = name_source[i]->text();
+            data[i] = list[0];
+            for (int j = 0; j < 12; j++) {
+                data[i].append(list[j]);
+            }
+            tModule.data[i] = data[i];
+        }
+    } else if (this->ui->tabWidget->currentIndex() == 5) {
+        /** SET ALARM **/
+        for (int i = 0; i < ui->tabel_alarm->rowCount(); i++) {
+
+        }
     }
+
+    mod.write_module(&tModule);
 
     /** ON BOARD **/
     if (Serial_Com->isOpen()) {
@@ -628,6 +634,8 @@ void formModule::on_pbSet_clicked()
             if (this->ui->tabWidget->currentIndex() == 0) {
                 timeout = work->Set_Input(this, busyForm, Serial_Com, &tModule, timeout);
                 if (timeout) {QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); this->EnableButton(true); return;};
+                timeout = work->Set_Data(this, busyForm, Serial_Com, &tModule, timeout);
+                if (timeout) {QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); this->EnableButton(true); return;};
             } else if (this->ui->tabWidget->currentIndex() == 1) {
                 timeout = work->Set_Output(this, busyForm, Serial_Com, &tModule, timeout);
                 if (timeout) {QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); this->EnableButton(true); return;};
@@ -637,6 +645,13 @@ void formModule::on_pbSet_clicked()
             } else if (this->ui->tabWidget->currentIndex() == 3) {
                 timeout = work->Set_ENV(this, busyForm, Serial_Com, &tModule, timeout);
                 if (timeout) {QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); this->EnableButton(true); return;};
+            } else if (this->ui->tabWidget->currentIndex() == 4) {
+                timeout = work->Set_Sumber(this, busyForm, Serial_Com, &tModule, timeout);
+                if (timeout) {QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); this->EnableButton(true); return;};
+                timeout = work->Set_Data(this, busyForm, Serial_Com, &tModule, timeout);
+                if (timeout) {QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); this->EnableButton(true); return;};
+            } else if (this->ui->tabWidget->currentIndex() == 5) {
+
             }
 //            work->Reset_Board(busyForm, "Reset Board ...", Serial_Com);
 
@@ -783,14 +798,24 @@ void formModule::on_pbGetAll_clicked()
 
                 timeout = work->Request_IO(this, busyForm, Serial_Com, timeout);
                 if (timeout) {QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); this->EnableButton(true); return;};
-                timeout = work->Request_SIM(this, busyForm, Serial_Com, timeout);
-                if (timeout) {QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); this->EnableButton(true); return;};
-
                 Serial->read_parsing(&tSerial);
                 val_data = tSerial.str_data_io.split("*");
                 work->Get_Input(&tModule, val_data);
                 work->Get_Output(&tModule, val_data);
+
+                timeout = work->Request_SIM(this, busyForm, Serial_Com, timeout);
+                if (timeout) {QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); this->EnableButton(true); return;};
                 val_data = tSerial.str_data_sim.split("*");
+                work->Get_SIM(&tModule, val_data);
+
+                timeout = work->Request_Sumber(this, busyForm, Serial_Com, timeout);
+                if (timeout) {QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); this->EnableButton(true); return;};
+                val_data = tSerial.str_data_src.split("*");
+                work->Get_SIM(&tModule, val_data);
+
+                timeout = work->Request_Data(this, busyForm, Serial_Com, timeout);
+                if (timeout) {QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); this->EnableButton(true); return;};
+                val_data = tSerial.str_data_dat.split("*");
                 work->Get_SIM(&tModule, val_data);
 
                 mod.update_setting(&tModule, Address_Module);
@@ -836,6 +861,11 @@ void formModule::on_pbGet_clicked()
                 val_data = tSerial.str_data_io.split("*");
                 if (this->ui->tabWidget->currentIndex() == 0) {
                     work->Get_Input(&tModule, val_data);
+
+                    timeout = work->Request_Data(this, busyForm, Serial_Com, timeout);
+                    if (timeout) {QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); this->EnableButton(true); return;};
+                    work->Get_Data(&tModule, val_data);
+
                     Message = "Input Channel ";
                 } else if (this->ui->tabWidget->currentIndex() == 1) {
                     work->Get_Output(&tModule, val_data);
@@ -855,8 +885,23 @@ void formModule::on_pbGet_clicked()
                 val_data = tSerial.str_data_sim.split("*");
                 work->Get_ENV(&tModule, val_data);
                 Message = "Environtment ";
+            } else if (this->ui->tabWidget->currentIndex() == 4) {
+                timeout = work->Request_Sumber(this, busyForm, Serial_Com, timeout);
+                if (timeout) {QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); this->EnableButton(true); return;};
+
+                val_data = tSerial.str_data_src.split("*");
+                work->Get_Sumber(&tModule, val_data);
+                Message = "Sources ";
+            } else if (this->ui->tabWidget->currentIndex() == 5) {
+                timeout = work->Request_Data(this, busyForm, Serial_Com, timeout);
+                if (timeout) {QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); this->EnableButton(true); return;};
+
+                val_data = tSerial.str_data_dat.split("*");
+                work->Get_Data(&tModule, val_data);
+                Message = "Alarm ";
             }
-            mod.update_setting(&tModule, Address_Module);
+
+            mod.write_module(&tModule);
             this->setInterface(Address_Module);
 
             Message.append(" Setting is Syncronized ..");

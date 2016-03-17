@@ -28,6 +28,8 @@
 
 #include <QSettings>
 #include <QStringList>
+#include <QChar>
+#include "string.h"
 
 #include <QtSerialPort/QSerialPort>
 
@@ -91,36 +93,43 @@ struct t_module{
 
     struct data_port d_port[16];
 
-    char input_a1[128];
-    char input_a1_name[32];
-    char input_a2[128];
-    char input_a2_name[32];
-    char input_a3[128];
-    char input_a3_name[32];
-    char input_a4[128];
-    char input_a4_name[32];
-    char input_a5[128];
-    char input_a5_name[32];
-    char input_a6[128];
-    char input_a6_name[32];
+    QStringList Input;
+    QStringList InputName;
+    QStringList Output;
 
-    char input_d1[128];
-    char input_d1_name[32];
-    char input_d2[128];
-    char input_d2_name[32];
-    char input_d3[128];
-    char input_d3_name[32];
-    char input_d4[128];
-    char input_d4_name[32];
-    char input_d5[128];
-    char input_d5_name[32];
-    char input_d6[128];
-    char input_d6_name[32];
+//    char input_a1[128];
+//    char input_a1_name[32];
+//    char input_a2[128];
+//    char input_a2_name[32];
+//    char input_a3[128];
+//    char input_a3_name[32];
+//    char input_a4[128];
+//    char input_a4_name[32];
+//    char input_a5[128];
+//    char input_a5_name[32];
+//    char input_a6[128];
+//    char input_a6_name[32];
+
+//    char input_d1[128];
+//    char input_d1_name[32];
+//    char input_d2[128];
+//    char input_d2_name[32];
+//    char input_d3[128];
+//    char input_d3_name[32];
+//    char input_d4[128];
+//    char input_d4_name[32];
+//    char input_d5[128];
+//    char input_d5_name[32];
+//    char input_d6[128];
+//    char input_d6_name[32];
 
     char output_r1[128];
     char output_r1_name[32];
     char output_r2[128];
     char output_r2_name[32];
+
+    QStringList sumber;
+    QStringList data;
 };
 
 struct t_serial_settings {
@@ -139,6 +148,8 @@ struct t_serial_settings {
     QString str_data_env;
     QString str_data_io;
     QString str_data_sim;
+    QString str_data_src;
+    QString str_data_dat;
 };
 
 #include "model/debug.h"

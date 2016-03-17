@@ -80,6 +80,7 @@ private:
     /** Function **/
     void setInterface(QString address);
     void EnableButton(bool enab);
+    bool checkFormula(QString data);
 
     MainWindow *Main;
     serial *Serial;

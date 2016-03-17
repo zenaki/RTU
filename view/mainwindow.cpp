@@ -117,44 +117,48 @@ void MainWindow::on_actionNew_triggered()
             reply = QMessageBox::question(this, "Attention !!", command,
                                           QMessageBox::Yes|QMessageBox::No);
             if (reply == QMessageBox::Yes) {
+                timeout = work->Request_ENV(this, busy, SerialPort, timeout);
+                if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
+                work->Get_ENV(&tModule, val_data);
                 timeout = work->Request_IO(this, busy, SerialPort, timeout);
                 if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
+                work->Get_Input(&tModule, val_data);
+                work->Get_Output(&tModule, val_data);
                 timeout = work->Request_SIM(this, busy, SerialPort, timeout);
                 if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
+                work->Get_SIM(&tModule, val_data);
+                timeout = work->Request_Sumber(this, busy, SerialPort, timeout);
+                if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
+                work->Get_Sumber(&tModule, val_data);
+                timeout = work->Request_Data(this, busy, SerialPort, timeout);
+                if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
+                work->Get_Data(&tModule, val_data);
 
                 QString address = "data/module/" + newFiles;
                 mod->read_module(&tModule, address);
                 strcpy(tModule.serial_number, GetNoSeri.toLatin1());
 
-                work->Get_Input(&tModule, val_data_io);
-                work->Get_Output(&tModule, val_data_io);
-                work->Get_SIM(&tModule, val_data_sim);
-
                 mod->write_module(&tModule);
             } else {
+                timeout = work->Request_ENV(this, busy, SerialPort, timeout);
+                if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
+                work->Get_ENV(&tModule, val_data);
                 timeout = work->Request_IO(this, busy, SerialPort, timeout);
                 if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
+                work->Get_Input(&tModule, val_data);
+                work->Get_Output(&tModule, val_data);
                 timeout = work->Request_SIM(this, busy, SerialPort, timeout);
                 if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
-
-                work->Get_Input(&tModule, val_data_io);
-                work->Get_Output(&tModule, val_data_io);
-                work->Get_SIM(&tModule, val_data_sim);
+                work->Get_SIM(&tModule, val_data);
+                timeout = work->Request_Sumber(this, busy, SerialPort, timeout);
+                if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
+                work->Get_Sumber(&tModule, val_data);
+                timeout = work->Request_Data(this, busy, SerialPort, timeout);
+                if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
+                work->Get_Data(&tModule, val_data);
 
                 /** INPUT **/
-                strcpy(tModule.input_a1_name, "");
-                strcpy(tModule.input_a2_name, "");
-                strcpy(tModule.input_a3_name, "");
-                strcpy(tModule.input_a4_name, "");
-                strcpy(tModule.input_a5_name, "");
-                strcpy(tModule.input_a6_name, "");
-
-                strcpy(tModule.input_d1_name, "");
-                strcpy(tModule.input_d2_name, "");
-                strcpy(tModule.input_d3_name, "");
-                strcpy(tModule.input_d4_name, "");
-                strcpy(tModule.input_d5_name, "");
-                strcpy(tModule.input_d6_name, "");
+                tModule.InputName.clear();
 
                 /** OUTPUT **/
                 strcpy(tModule.output_r1_name, "");
@@ -191,37 +195,32 @@ void MainWindow::on_actionNew_triggered()
                 this->Refresh_Tree();
             }
         } else {
-            timeout = work->Request_IO(this, busy, SerialPort, timeout);
-            if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
-            timeout = work->Request_SIM(this, busy, SerialPort, timeout);
-            if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
-
-            strcpy(tModule.module_name, GetNamaBoard.toUtf8().data());
-            strcpy(tModule.serial_number, GetNoSeri.toLatin1());
-
-            work->Get_Input(&tModule, val_data_io);
-            work->Get_Output(&tModule, val_data_io);
-            work->Get_SIM(&tModule, val_data_sim);
-
-
             /** INPUT **/
-            strcpy(tModule.input_a1_name, "");
-            strcpy(tModule.input_a2_name, "");
-            strcpy(tModule.input_a3_name, "");
-            strcpy(tModule.input_a4_name, "");
-            strcpy(tModule.input_a5_name, "");
-            strcpy(tModule.input_a6_name, "");
-
-            strcpy(tModule.input_d1_name, "");
-            strcpy(tModule.input_d2_name, "");
-            strcpy(tModule.input_d3_name, "");
-            strcpy(tModule.input_d4_name, "");
-            strcpy(tModule.input_d5_name, "");
-            strcpy(tModule.input_d6_name, "");
+            tModule.InputName.clear();
 
             /** OUTPUT **/
             strcpy(tModule.output_r1_name, "");
             strcpy(tModule.output_r2_name, "");
+
+            timeout = work->Request_ENV(this, busy, SerialPort, timeout);
+            if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
+            work->Get_ENV(&tModule, val_data);
+            timeout = work->Request_IO(this, busy, SerialPort, timeout);
+            if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
+            work->Get_Input(&tModule, val_data);
+            work->Get_Output(&tModule, val_data);
+            timeout = work->Request_SIM(this, busy, SerialPort, timeout);
+            if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
+            work->Get_SIM(&tModule, val_data);
+            timeout = work->Request_Sumber(this, busy, SerialPort, timeout);
+            if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
+            work->Get_Sumber(&tModule, val_data);
+            timeout = work->Request_Data(this, busy, SerialPort, timeout);
+            if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
+            work->Get_Data(&tModule, val_data);
+
+            strcpy(tModule.module_name, GetNamaBoard.toUtf8().data());
+            strcpy(tModule.serial_number, GetNoSeri.toLatin1());
 
             mod->write_module(&tModule);
 
@@ -472,7 +471,6 @@ void MainWindow::readData()
         GetNoSeri = val_data[1];
         tSerial.str_data_env = str_data;
         Serial->write_parsing_env(&tSerial);
-        val_data.clear();
         str_data.clear();
         FinishRead = true;
         work->write_FinishRead(FinishRead);
@@ -480,41 +478,76 @@ void MainWindow::readData()
         int a = str_data.indexOf("<I/O");
         int b = str_data.indexOf("I/O>");
         str_data = str_data.mid(a+4, b-a);
-        val_data_io = str_data
-                      .remove(" ")
-                      .remove("<I/O")
-                      .remove("<I/Oani$")
-                      .remove("I/O>")
-                      .remove("Rinjani$")
-                      .remove("hmi_sync")
-                      .remove("\r").remove("\n").remove("(X)").split("*");
+        val_data = str_data
+                    .remove(" ")
+                    .remove("<I/O")
+                    .remove("<I/Oani$")
+                    .remove("I/O>")
+                    .remove("Rinjani$")
+                    .remove("hmi_sync")
+                    .remove("\r").remove("\n").remove("(X)").split("*");
         tSerial.str_data_io = str_data;
         Serial->write_parsing_io(&tSerial);
         str_data.clear();
-        val_data.clear();
         FinishRead = true;
         work->write_FinishRead(FinishRead);
     } else if (str_data.indexOf("<SIM") > 0 && str_data.indexOf("SIM>") > 0) {
         int a = str_data.indexOf("<SIM");
         int b = str_data.indexOf("SIM>");
         str_data = str_data.mid(a+4, b-a);
-        val_data_sim = str_data
-                       .remove(" ")
-                       .remove("<SIM")
-                       .remove("<SIMani$")
-                       .remove("SIM>")
-                       .remove("Rinjani$")
-                       .remove("hmi_cek_cfg_sim")
-                       .remove("\r").remove("\n").remove("(X)").split("*");
+        val_data = str_data
+                    .remove(" ")
+                    .remove("<SIM")
+                    .remove("<SIMani$")
+                    .remove("SIM>")
+                    .remove("Rinjani$")
+                    .remove("hmi_cek_cfg_sim")
+                    .remove("\r").remove("\n").remove("(X)").split("*");
         tSerial.str_data_sim = str_data;
         Serial->write_parsing_sim(&tSerial);
         str_data.clear();
-        val_data.clear();
         FinishRead = true;
         work->write_FinishRead(FinishRead);
-    } else if (str_data.indexOf("OK") > 0) {
+    } else if (str_data.indexOf("<SRC") > 0 && str_data.indexOf("SRC>") > 0) {
+        int a = str_data.indexOf("<SRC");
+        int b = str_data.indexOf("SRC>");
+        str_data = str_data.mid(a+4, b-a);
+        val_data = str_data
+                    .remove(" ")
+                    .remove("<SRC")
+                    .remove("<SRCani$")
+                    .remove("SRC>")
+                    .remove("Rinjani$")
+                    .remove("hmi_cek_sumber")
+                    .remove("\r").remove("\n").remove("(X)").split("*");
+        tSerial.str_data_src = str_data;
+        Serial->write_parsing_sim(&tSerial);
         str_data.clear();
-        val_data.clear();
+        FinishRead = true;
+        work->write_FinishRead(FinishRead);
+    } else if (str_data.indexOf("<DAT") > 0 && str_data.indexOf("DAT>") > 0) {
+        int a = str_data.indexOf("<DAT");
+        int b = str_data.indexOf("DAT>");
+        str_data = str_data.mid(a+4, b-a);
+        val_data = str_data
+                    .remove(" ")
+                    .remove("<DAT")
+                    .remove("<DATani$")
+                    .remove("DAT>")
+                    .remove("Rinjani$")
+                    .remove("hmi_cek_data")
+                    .remove("\r").remove("\n").remove("(X)").split("*");
+        tSerial.str_data_dat = str_data;
+        Serial->write_parsing_sim(&tSerial);
+        str_data.clear();
+        FinishRead = true;
+        work->write_FinishRead(FinishRead);
+    } else if (str_data.indexOf("<OK>") > 0) {
+        str_data.clear();
+        FinishRead = true;
+        work->write_FinishRead(FinishRead);
+    } else if (str_data.indexOf("<ERR>") > 0) {
+        str_data.clear();
         FinishRead = true;
         work->write_FinishRead(FinishRead);
     }

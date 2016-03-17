@@ -50,13 +50,17 @@ public:
     bool Request_ENV(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, bool timeout = false);
     bool Request_IO(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, bool timeout = false);
     bool Request_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, bool timeout = false);
-    bool Request_SIG(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, bool timeout = false);
+    bool Request_Signal(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, bool timeout = false);
+    bool Request_Sumber(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, bool timeout = false);
+    bool Request_Data(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, bool timeout = false);
 
     void Get_ENV(struct t_module *tModule, QStringList data);
     void Get_Input(struct t_module *tModule, QStringList data);
     void Get_Output(struct t_module *tModule, QStringList data);
     void Get_SIM(struct t_module *tModule, QStringList data);
-    void Get_SIG(struct t_module *tModule, QStringList data);
+    void Get_Signal(struct t_module *tModule, QStringList data);
+    void Get_Sumber(struct t_module *tModule, QStringList data);
+    void Get_Data(struct t_module *tModule, QStringList data);
 
 //    QLightBoxWidget *lightBox;
 //    QLabel *lbTitle;
@@ -71,6 +75,8 @@ public:
     bool Set_Input(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, struct t_module *tModule, bool timeout = false);
     bool Set_Output(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, struct t_module *tModule, bool timeout = false);
     bool Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, struct t_module *tModule, bool timeout = false);
+    bool Set_Sumber(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, struct t_module *tModule, bool timeout = false);
+    bool Set_Data(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, struct t_module *tModule, bool timeout = false);
     bool Reset_Board(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, bool timeout = false);
 
     void write_FinishRead(bool FinishRead);

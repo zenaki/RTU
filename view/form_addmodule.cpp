@@ -224,31 +224,16 @@ void form_addModule::on_buttonBox_accepted()
             close();
         } else {
             /** INPUT **/
-            strcpy(tModule.input_a1, "A;1;0;0.000;0.000");
-            strcpy(tModule.input_a1_name, "");
-            strcpy(tModule.input_a2, "A;2;0;0.000;0.000");
-            strcpy(tModule.input_a2_name, "");
-            strcpy(tModule.input_a3, "A;3;0;0.000;0.000");
-            strcpy(tModule.input_a3_name, "");
-            strcpy(tModule.input_a4, "A;4;0;0.000;0.000");
-            strcpy(tModule.input_a4_name, "");
-            strcpy(tModule.input_a5, "A;5;0;0.000;0.000");
-            strcpy(tModule.input_a5_name, "");
-            strcpy(tModule.input_a6, "A;6;0;0.000;0.000");
-            strcpy(tModule.input_a6_name, "");
-
-            strcpy(tModule.input_d1, "D;1;0;0.000;0.000");
-            strcpy(tModule.input_d1_name, "");
-            strcpy(tModule.input_d2, "D;2;0;0.000;0.000");
-            strcpy(tModule.input_d2_name, "");
-            strcpy(tModule.input_d3, "D;3;0;0.000;0.000");
-            strcpy(tModule.input_d3_name, "");
-            strcpy(tModule.input_d4, "D;4;0;0.000;0.000");
-            strcpy(tModule.input_d4_name, "");
-            strcpy(tModule.input_d5, "D;5;0;0.000;0.000");
-            strcpy(tModule.input_d5_name, "");
-            strcpy(tModule.input_d6, "D;6;0;0.000;0.000");
-            strcpy(tModule.input_d6_name, "");
+            QString temp;
+            int j = 0;
+            for (int i = 0; i < 16; i++) {
+                if (i < 7 && i > 10) {
+                    temp.sprintf("A;%d;0;0.000;0.000", i);
+                    tModule.Input[j] = temp;
+                    tModule.InputName[j] = "";
+                    j++;
+                }
+            }
 
             /** OUTPUT **/
             strcpy(tModule.output_r1, "R;1;0;0");

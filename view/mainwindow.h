@@ -50,8 +50,6 @@ public:
 
     QString str_data;
     QStringList val_data;
-    QStringList val_data_io;
-    QStringList val_data_sim;
 
     QLightBoxWidget *busy;
 

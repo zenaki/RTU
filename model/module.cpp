@@ -7,6 +7,7 @@ module::module()
 
 void module::write_module(struct t_module *tmodule){
 
+    QStringList temp1; QString temp2; int index;
     QString pth;
     pth.sprintf("data/module/m_%s.dbe",tmodule->module_name);
     QSettings sett(pth, QSettings::IniFormat);
@@ -24,31 +25,18 @@ void module::write_module(struct t_module *tmodule){
     sett.endGroup();
 
     sett.beginGroup( "INPUT" );
-    sett.setValue("INPUT_A1", tmodule->input_a1);
-    sett.setValue("INPUT_A1_NAME", tmodule->input_a1_name);
-    sett.setValue("INPUT_A2", tmodule->input_a2);
-    sett.setValue("INPUT_A2_NAME", tmodule->input_a2_name);
-    sett.setValue("INPUT_A3", tmodule->input_a3);
-    sett.setValue("INPUT_A3_NAME", tmodule->input_a3_name);
-    sett.setValue("INPUT_A4", tmodule->input_a4);
-    sett.setValue("INPUT_A4_NAME", tmodule->input_a4_name);
-    sett.setValue("INPUT_A5", tmodule->input_a5);
-    sett.setValue("INPUT_A5_NAME", tmodule->input_a5_name);
-    sett.setValue("INPUT_A6", tmodule->input_a6);
-    sett.setValue("INPUT_A6_NAME", tmodule->input_a6_name);
-
-    sett.setValue("INPUT_D1", tmodule->input_d1);
-    sett.setValue("INPUT_D1_NAME", tmodule->input_d1_name);
-    sett.setValue("INPUT_D2", tmodule->input_d2);
-    sett.setValue("INPUT_D2_NAME", tmodule->input_d2_name);
-    sett.setValue("INPUT_D3", tmodule->input_d3);
-    sett.setValue("INPUT_D3_NAME", tmodule->input_d3_name);
-    sett.setValue("INPUT_D4", tmodule->input_d4);
-    sett.setValue("INPUT_D4_NAME", tmodule->input_d4_name);
-    sett.setValue("INPUT_D5", tmodule->input_d5);
-    sett.setValue("INPUT_D5_NAME", tmodule->input_d5_name);
-    sett.setValue("INPUT_D6", tmodule->input_d6);
-    sett.setValue("INPUT_D6_NAME", tmodule->input_d6_name);
+    for (int i = 0; i < tmodule->Input.length()-1; i++) {
+        temp2 = tmodule->Input.at(i);
+        temp1 = temp2.split(';');
+        temp2 = "KANAL_" + temp1.at(1);
+        sett.setValue(temp2, tmodule->Input.at(i));
+    }
+    for (int i = 0; i < tmodule->InputName.length(); i++) {
+        temp2 = tmodule->Input.at(i);
+        temp1 = temp2.split(';');
+        temp2 = "KANAL_NAME_" + temp1.at(1);
+        sett.setValue(temp2, tmodule->InputName.at(i));
+    }
     sett.endGroup();
 
     sett.beginGroup( "OUTPUT" );
@@ -99,38 +87,38 @@ void module::write_module(struct t_module *tmodule){
         sett.setValue("PASSWD_GSM_2", "");
     }
     sett.endGroup();
+
+    sett.beginGroup( "SOURCES" );
+    index = tmodule->sumber.length();
+    for (int i = 0; i < index-1; i++) {
+        temp2.sprintf("SUMBER_%d", i);
+        sett.setValue(temp2, tmodule->sumber.at(i));
+    }
+    sett.endGroup();
+
+    sett.beginGroup( "DATA" );
+    index = tmodule->data.length();
+    for (int i = 0; i < index-1; i++) {
+        temp2.sprintf("DATA_%d", i);
+        sett.setValue(temp2, tmodule->data.at(i));
+    }
+    sett.endGroup();
 }
 
 void module::update_setting(struct t_module *tmodule, QString addressModule){
     QString pth = addressModule;
     QSettings sett(pth, QSettings::IniFormat);
+    QString temp;
 
     sett.beginGroup( "INPUT" );
-    sett.setValue("INPUT_A1", tmodule->input_a1);
-    sett.setValue("INPUT_A1_NAME", tmodule->input_a1_name);
-    sett.setValue("INPUT_A2", tmodule->input_a2);
-    sett.setValue("INPUT_A2_NAME", tmodule->input_a2_name);
-    sett.setValue("INPUT_A3", tmodule->input_a3);
-    sett.setValue("INPUT_A3_NAME", tmodule->input_a3_name);
-    sett.setValue("INPUT_A4", tmodule->input_a4);
-    sett.setValue("INPUT_A4_NAME", tmodule->input_a4_name);
-    sett.setValue("INPUT_A5", tmodule->input_a5);
-    sett.setValue("INPUT_A5_NAME", tmodule->input_a5_name);
-    sett.setValue("INPUT_A6", tmodule->input_a6);
-    sett.setValue("INPUT_A6_NAME", tmodule->input_a6_name);
-
-    sett.setValue("INPUT_D1", tmodule->input_d1);
-    sett.setValue("INPUT_D1_NAME", tmodule->input_d1_name);
-    sett.setValue("INPUT_D2", tmodule->input_d2);
-    sett.setValue("INPUT_D2_NAME", tmodule->input_d2_name);
-    sett.setValue("INPUT_D3", tmodule->input_d3);
-    sett.setValue("INPUT_D3_NAME", tmodule->input_d3_name);
-    sett.setValue("INPUT_D4", tmodule->input_d4);
-    sett.setValue("INPUT_D4_NAME", tmodule->input_d4_name);
-    sett.setValue("INPUT_D5", tmodule->input_d5);
-    sett.setValue("INPUT_D5_NAME", tmodule->input_d5_name);
-    sett.setValue("INPUT_D6", tmodule->input_d6);
-    sett.setValue("INPUT_D6_NAME", tmodule->input_d6_name);
+    for (int i = 0; i < tmodule->Input.length()-1; i++) {
+        temp.sprintf("KANAL_%d", i);
+        sett.setValue(temp, tmodule->Input.at(i));
+    }
+    for (int i = 0; i < tmodule->InputName.length()-1; i++) {
+        temp.sprintf("KANAL_NAME_%d", i);
+        sett.setValue(temp, tmodule->InputName.at(i));
+    }
     sett.endGroup();
 
     sett.beginGroup( "OUTPUT" );
@@ -207,6 +195,7 @@ void module::update_module(struct t_module *tmodule, QString addressModule){
 
 void module::read_module(struct t_module *tmodule, QString addressModule){
     QString pth = addressModule;
+    QString temp;
     QSettings sett(pth, QSettings::IniFormat);
 
     tmodule->flag_active = sett.value("MODULE/ACTIVE").toInt();
@@ -220,31 +209,16 @@ void module::read_module(struct t_module *tmodule, QString addressModule){
 
     tmodule->flag_dual_gsm = sett.value("MODULE/FLAG_DUAL_GSM").toInt();
 
-    strcpy(tmodule->input_a1, sett.value("INPUT/INPUT_A1").toString().toLatin1());
-    strcpy(tmodule->input_a1_name, sett.value("INPUT/INPUT_A1_NAME").toString().toLatin1());
-    strcpy(tmodule->input_a2, sett.value("INPUT/INPUT_A2").toString().toLatin1());
-    strcpy(tmodule->input_a2_name, sett.value("INPUT/INPUT_A2_NAME").toString().toLatin1());
-    strcpy(tmodule->input_a3, sett.value("INPUT/INPUT_A3").toString().toLatin1());
-    strcpy(tmodule->input_a3_name, sett.value("INPUT/INPUT_A3_NAME").toString().toLatin1());
-    strcpy(tmodule->input_a4, sett.value("INPUT/INPUT_A4").toString().toLatin1());
-    strcpy(tmodule->input_a4_name, sett.value("INPUT/INPUT_A4_NAME").toString().toLatin1());
-    strcpy(tmodule->input_a5, sett.value("INPUT/INPUT_A5").toString().toLatin1());
-    strcpy(tmodule->input_a5_name, sett.value("INPUT/INPUT_A5_NAME").toString().toLatin1());
-    strcpy(tmodule->input_a6, sett.value("INPUT/INPUT_A6").toString().toLatin1());
-    strcpy(tmodule->input_a6_name, sett.value("INPUT/INPUT_A6_NAME").toString().toLatin1());
-
-    strcpy(tmodule->input_d1, sett.value("INPUT/INPUT_D1").toString().toLatin1());
-    strcpy(tmodule->input_d1_name, sett.value("INPUT/INPUT_D1_NAME").toString().toLatin1());
-    strcpy(tmodule->input_d2, sett.value("INPUT/INPUT_D2").toString().toLatin1());
-    strcpy(tmodule->input_d2_name, sett.value("INPUT/INPUT_D2_NAME").toString().toLatin1());
-    strcpy(tmodule->input_d3, sett.value("INPUT/INPUT_D3").toString().toLatin1());
-    strcpy(tmodule->input_d3_name, sett.value("INPUT/INPUT_D3_NAME").toString().toLatin1());
-    strcpy(tmodule->input_d4, sett.value("INPUT/INPUT_D4").toString().toLatin1());
-    strcpy(tmodule->input_d4_name, sett.value("INPUT/INPUT_D4_NAME").toString().toLatin1());
-    strcpy(tmodule->input_d5, sett.value("INPUT/INPUT_D5").toString().toLatin1());
-    strcpy(tmodule->input_d5_name, sett.value("INPUT/INPUT_D5_NAME").toString().toLatin1());
-    strcpy(tmodule->input_d6, sett.value("INPUT/INPUT_D6").toString().toLatin1());
-    strcpy(tmodule->input_d6_name, sett.value("INPUT/INPUT_D6_NAME").toString().toLatin1());
+    int j = 0;
+    for (int i = 1; i <= 16; i++) {
+        if (i < 7 || i > 10) {
+            temp.sprintf("INPUT/KANAL_%d", i);
+            tmodule->Input.insert(j,sett.value(temp).toString());
+            temp.sprintf("INPUT/KANAL_NAME_%d", i);
+            tmodule->InputName.insert(j,sett.value(temp).toString());
+            j++;
+        }
+    }
 
     strcpy(tmodule->output_r1, sett.value("OUTPUT/OUTPUT_R1").toString().toLatin1());
     strcpy(tmodule->output_r1_name, sett.value("OUTPUT/OUTPUT_R1_NAME").toString().toLatin1());
@@ -274,11 +248,22 @@ void module::read_module(struct t_module *tmodule, QString addressModule){
     strcpy(tmodule->apn_gsm_2, sett.value("GSM_2/APN_GSM_2").toString().toLatin1());
     strcpy(tmodule->user_gsm_2, sett.value("GSM_2/USER_GSM_2").toString().toLatin1());
     strcpy(tmodule->passwd_gsm_2, sett.value("GSM_2/PASSWD_GSM_2").toString().toLatin1());
+
+    for (int i = 0; i < 6; i++) {
+        temp.sprintf("SOURCES/SUMBER_%d", i);
+        tmodule->sumber.insert(i,sett.value(temp).toString());
+    }
+
+    for (int i = 0; i < 12; i++) {
+        temp.sprintf("DATA/DATA_%d", i);
+        tmodule->data.insert(i,sett.value(temp).toString());
+    }
 }
 
 void module::save_as_module(struct t_module *tmodule, QString address){
     QString pth = address;
     QSettings sett(pth, QSettings::IniFormat);
+    QString temp;
 
     sett.beginGroup( "MODULE" );
     sett.setValue("ACTIVE", tmodule->flag_active);
@@ -293,31 +278,14 @@ void module::save_as_module(struct t_module *tmodule, QString address){
     sett.endGroup();
 
     sett.beginGroup( "INPUT" );
-    sett.setValue("INPUT_A1", tmodule->input_a1);
-    sett.setValue("INPUT_A1_NAME", tmodule->input_a1_name);
-    sett.setValue("INPUT_A2", tmodule->input_a2);
-    sett.setValue("INPUT_A2_NAME", tmodule->input_a2_name);
-    sett.setValue("INPUT_A3", tmodule->input_a3);
-    sett.setValue("INPUT_A3_NAME", tmodule->input_a3_name);
-    sett.setValue("INPUT_A4", tmodule->input_a4);
-    sett.setValue("INPUT_A4_NAME", tmodule->input_a4_name);
-    sett.setValue("INPUT_A5", tmodule->input_a5);
-    sett.setValue("INPUT_A5_NAME", tmodule->input_a5_name);
-    sett.setValue("INPUT_A6", tmodule->input_a6);
-    sett.setValue("INPUT_A6_NAME", tmodule->input_a6_name);
-
-    sett.setValue("INPUT_D1", tmodule->input_d1);
-    sett.setValue("INPUT_D1_NAME", tmodule->input_d1_name);
-    sett.setValue("INPUT_D2", tmodule->input_d2);
-    sett.setValue("INPUT_D2_NAME", tmodule->input_d2_name);
-    sett.setValue("INPUT_D3", tmodule->input_d3);
-    sett.setValue("INPUT_D3_NAME", tmodule->input_d3_name);
-    sett.setValue("INPUT_D4", tmodule->input_d4);
-    sett.setValue("INPUT_D4_NAME", tmodule->input_d4_name);
-    sett.setValue("INPUT_D5", tmodule->input_d5);
-    sett.setValue("INPUT_D5_NAME", tmodule->input_d5_name);
-    sett.setValue("INPUT_D6", tmodule->input_d6);
-    sett.setValue("INPUT_D6_NAME", tmodule->input_d6_name);
+    for (int i = 0; i < tmodule->Input.length()-1; i++) {
+        temp.sprintf("KANAL_%d", i);
+        sett.setValue(temp, tmodule->Input.at(i));
+    }
+    for (int i = 0; i < tmodule->InputName.length()-1; i++) {
+        temp.sprintf("KANAL_NAME_%d", i);
+        sett.setValue(temp, tmodule->InputName.at(i));
+    }
     sett.endGroup();
 
     sett.beginGroup( "OUTPUT" );
