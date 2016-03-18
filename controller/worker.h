@@ -82,8 +82,11 @@ public:
     void write_FinishRead(bool FinishRead);
     bool read_FinishRead();
 
-    void delay(QWidget *parent, QLightBoxWidget *lBox, QString desc, int ms);
+    void delay(int ms);
     bool waiting_set(QWidget *parent, QLightBoxWidget *lBox, QString desc, bool timeout = false);
+
+    void writeLogFile(QString log);
+
 //signals:
 //    void TimeOut();
 };

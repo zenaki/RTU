@@ -433,9 +433,7 @@ void MainWindow::on_actionDisconnect_triggered()
 //    serial Serial;
 //    Serial.close_serial(SerialPort);
     if (SerialPort->isOpen()) {
-        if (SerialPort->open(QIODevice::ReadWrite)) {
-            SerialPort->close();
-        }
+        SerialPort->close();
         this->ui->bottom_message->setStyleSheet("QLabel { color : black; }");
         StatusMessage.replace("Connected to ", "Disconnected from ");
 //        StatusMessage = "Disconnect";
@@ -521,7 +519,7 @@ void MainWindow::readData()
                     .remove("hmi_cek_sumber")
                     .remove("\r").remove("\n").remove("(X)").split("*");
         tSerial.str_data_src = str_data;
-        Serial->write_parsing_sim(&tSerial);
+        Serial->write_parsing_src(&tSerial);
         str_data.clear();
         FinishRead = true;
         work->write_FinishRead(FinishRead);
@@ -538,7 +536,7 @@ void MainWindow::readData()
                     .remove("hmi_cek_data")
                     .remove("\r").remove("\n").remove("(X)").split("*");
         tSerial.str_data_dat = str_data;
-        Serial->write_parsing_sim(&tSerial);
+        Serial->write_parsing_dat(&tSerial);
         str_data.clear();
         FinishRead = true;
         work->write_FinishRead(FinishRead);

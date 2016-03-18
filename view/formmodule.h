@@ -53,6 +53,8 @@ private slots:
     void on_pbSet_clicked();
     void on_pbGet_clicked();
 
+    void writeLogFile();
+
 private:
     worker *work;
     form_addModule *faddModule;
@@ -70,6 +72,7 @@ private:
     QComboBox *state_input[16];
     QLineEdit *calib_m[16];
     QLineEdit *calib_x[16];
+    QLineEdit *reg_input[16];
 
     /** Output Tab **/
     QLineEdit *name_output[16];
@@ -88,6 +91,8 @@ private:
 
     /** Sources Tab **/
     QLineEdit *name_source[16];
+    QLineEdit *ip_source[16];
+    QLineEdit *port_source[16];
     QComboBox *state_source[16];
     QComboBox *type_source[16];
     QLineEdit *id_source[16];

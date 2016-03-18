@@ -88,7 +88,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>5</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="tab_input">
       <attribute name="title">
@@ -126,6 +126,11 @@
          <column>
           <property name="text">
            <string>Calibration X</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Register</string>
           </property>
          </column>
          <column>
@@ -1371,6 +1376,16 @@
          <column>
           <property name="text">
            <string>Name</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>IP Address</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Port</string>
           </property>
          </column>
          <column>

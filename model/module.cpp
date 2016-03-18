@@ -25,7 +25,7 @@ void module::write_module(struct t_module *tmodule){
     sett.endGroup();
 
     sett.beginGroup( "INPUT" );
-    for (int i = 0; i < tmodule->Input.length()-1; i++) {
+    for (int i = 0; i < tmodule->Input.length(); i++) {
         temp2 = tmodule->Input.at(i);
         temp1 = temp2.split(';');
         temp2 = "KANAL_" + temp1.at(1);
