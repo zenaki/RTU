@@ -2,7 +2,9 @@
 #define FORMMODULE_H
 
 #include <QDialog>
+#include "model/header_checkbox.h"
 #include <QPushButton>
+#include <QCheckBox>
 #include <QSignalMapper>
 #include <QLineEdit>
 #include <QComboBox>
@@ -26,6 +28,7 @@ namespace Ui {
 class formModule;
 }
 
+class MyHeader;
 class worker;
 class MainWindow;
 class serial;
@@ -60,6 +63,8 @@ private slots:
     void on_pbAddRow_clicked();
     void del_src_clicked(int index);
     void del_alrm_clicked(int index);
+
+    void on_pbDeleteRows_clicked();
 
 private:
     worker *work;
@@ -103,6 +108,8 @@ private:
     setting *Setting;
 
     /** Sources Tab **/
+    MyHeader *cb_header_source;
+    QCheckBox *check_source[16];
     QPushButton *delete_source[16];
     QSignalMapper *SigMapDel_Source;
     QLineEdit *name_source[16];
@@ -118,6 +125,8 @@ private:
     QLineEdit *target_reg_source[16];
 
     /** Alarm Threshold Tab **/
+    MyHeader *cb_header_alarm;
+    QCheckBox *check_alarm[16];
     QPushButton *delete_alarm[16];
     QSignalMapper *SigMapDel_Alarm;
     QLineEdit *name_alarm[16];

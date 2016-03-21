@@ -30,6 +30,7 @@ formModule::formModule(QWidget *parent, QString address, QSerialPort *SerialPort
     this->setInterface(address);
     this->ui->pbEdit->setHidden(true);
     this->ui->pbAddRow->setHidden(true);
+    this->ui->pbDeleteRows->setHidden(true);
 
     this->ui->pbSet->setText("Set Input Settings");
     this->ui->pbGet->setText("Get Input Settings");
@@ -288,26 +289,31 @@ void formModule::setInterface_Sumber(QString address)
 
     int rowSource = tModule.jml_sumber;
     QString type;
+    cb_header_source = new MyHeader(Qt::Horizontal, this->ui->tabel_sources);
+    this->ui->tabel_sources->setHorizontalHeader(cb_header_source);
 
     this->ui->tabel_sources->verticalHeader()->setHidden(true);
-    this->ui->tabel_sources->setColumnCount(13);
+    this->ui->tabel_sources->setColumnCount(14);
     this->ui->tabel_sources->setColumnWidth(0, 25);
-//    this->ui->tabel_sources->setColumnWidth(1, 75);
-    this->ui->tabel_sources->setColumnWidth(2, 100);
+//    this->ui->tabel_sources->setHorizontalHeaderItem(0, cb_header_source);
+    this->ui->tabel_sources->setColumnWidth(1, 25);
+//    this->ui->tabel_sources->setColumnWidth(2, 75);
     this->ui->tabel_sources->setColumnWidth(3, 100);
-//    this->ui->tabel_sources->setColumnWidth(4, 75);
-    this->ui->tabel_sources->setColumnWidth(5, 100);
-//    this->ui->tabel_sources->setColumnWidth(6, 75);
-    this->ui->tabel_sources->setColumnWidth(7, 50);
-    this->ui->tabel_sources->setColumnWidth(8, 85);
+    this->ui->tabel_sources->setColumnWidth(4, 100);
+//    this->ui->tabel_sources->setColumnWidth(5, 75);
+    this->ui->tabel_sources->setColumnWidth(6, 100);
+//    this->ui->tabel_sources->setColumnWidth(7, 75);
+    this->ui->tabel_sources->setColumnWidth(8, 50);
     this->ui->tabel_sources->setColumnWidth(9, 85);
-    this->ui->tabel_sources->setColumnWidth(10, 150);
-//    this->ui->tabel_sources->setColumnWidth(11, 75);
-    this->ui->tabel_sources->setColumnWidth(12, 85);
+    this->ui->tabel_sources->setColumnWidth(10, 85);
+    this->ui->tabel_sources->setColumnWidth(11, 150);
+//    this->ui->tabel_sources->setColumnWidth(12, 75);
+    this->ui->tabel_sources->setColumnWidth(13, 85);
     this->ui->tabel_sources->setRowCount(rowSource);
 
     SigMapDel_Source = new QSignalMapper(this);
     for (int i = 0; i < rowSource; i++){
+        check_source[i] = new QCheckBox(this);
         delete_source[i] = new QPushButton("Del", this);
         SigMapDel_Source->setMapping(delete_source[i], i);
         connect(delete_source[i],SIGNAL(clicked()),SigMapDel_Source,SLOT(map()));
@@ -386,19 +392,20 @@ void formModule::setInterface_Sumber(QString address)
             }
         }
 
-        this->ui->tabel_sources->setCellWidget(i,0, delete_source[i]);
-        this->ui->tabel_sources->setItem(i,1, new QTableWidgetItem(type));
-        this->ui->tabel_sources->setCellWidget(i,2, name_source[i]);
-        this->ui->tabel_sources->setCellWidget(i,3, ip_source[i]);
-        this->ui->tabel_sources->setCellWidget(i,4, port_source[i]);
-        this->ui->tabel_sources->setCellWidget(i,5, state_source[i]);
-        this->ui->tabel_sources->setCellWidget(i,6, type_source[i]);
-        this->ui->tabel_sources->setCellWidget(i,7, id_source[i]);
-        this->ui->tabel_sources->setCellWidget(i,8, sensor_reg_source[i]);
-        this->ui->tabel_sources->setCellWidget(i,9, OffsetBase_source[i]);
-        this->ui->tabel_sources->setCellWidget(i,10, command_source[i]);
-        this->ui->tabel_sources->setCellWidget(i,11, length_source[i]);
-        this->ui->tabel_sources->setCellWidget(i,12, target_reg_source[i]);
+        this->ui->tabel_sources->setCellWidget(i,0, check_source[i]);
+        this->ui->tabel_sources->setCellWidget(i,1, delete_source[i]);
+        this->ui->tabel_sources->setItem(i,2, new QTableWidgetItem(type));
+        this->ui->tabel_sources->setCellWidget(i,3, name_source[i]);
+        this->ui->tabel_sources->setCellWidget(i,4, ip_source[i]);
+        this->ui->tabel_sources->setCellWidget(i,5, port_source[i]);
+        this->ui->tabel_sources->setCellWidget(i,6, state_source[i]);
+        this->ui->tabel_sources->setCellWidget(i,7, type_source[i]);
+        this->ui->tabel_sources->setCellWidget(i,8, id_source[i]);
+        this->ui->tabel_sources->setCellWidget(i,9, sensor_reg_source[i]);
+        this->ui->tabel_sources->setCellWidget(i,10, OffsetBase_source[i]);
+        this->ui->tabel_sources->setCellWidget(i,11, command_source[i]);
+        this->ui->tabel_sources->setCellWidget(i,12, length_source[i]);
+        this->ui->tabel_sources->setCellWidget(i,13, target_reg_source[i]);
     }
 
     this->ui->tabel_sources->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -416,23 +423,25 @@ void formModule::setInterface_Alarm(QString address)
     QString type;
 
     this->ui->tabel_alarm->verticalHeader()->setHidden(true);
-    this->ui->tabel_alarm->setColumnCount(12);
+    this->ui->tabel_alarm->setColumnCount(13);
     this->ui->tabel_alarm->setColumnWidth(0, 25);
-//    this->ui->tabel_alarm->setColumnWidth(1, 75);
-    this->ui->tabel_alarm->setColumnWidth(2, 100);
-//    this->ui->tabel_alarm->setColumnWidth(3, 75);
+    this->ui->tabel_alarm->setColumnWidth(1, 25);
+//    this->ui->tabel_alarm->setColumnWidth(2, 75);
+    this->ui->tabel_alarm->setColumnWidth(3, 100);
 //    this->ui->tabel_alarm->setColumnWidth(4, 75);
-    this->ui->tabel_alarm->setColumnWidth(5, 100);
-//    this->ui->tabel_alarm->setColumnWidth(6, 50);
-//    this->ui->tabel_alarm->setColumnWidth(7, 75);
+//    this->ui->tabel_alarm->setColumnWidth(5, 75);
+    this->ui->tabel_alarm->setColumnWidth(6, 100);
+//    this->ui->tabel_alarm->setColumnWidth(7, 50);
 //    this->ui->tabel_alarm->setColumnWidth(8, 75);
 //    this->ui->tabel_alarm->setColumnWidth(9, 75);
 //    this->ui->tabel_alarm->setColumnWidth(10, 75);
 //    this->ui->tabel_alarm->setColumnWidth(11, 75);
+//    this->ui->tabel_alarm->setColumnWidth(12, 75);
     this->ui->tabel_alarm->setRowCount(rowAlarm);
 
     SigMapDel_Alarm = new QSignalMapper(this);
     for (int i = 0; i < rowAlarm; i++){
+        check_alarm[i] = new QCheckBox(this);
         delete_alarm[i] = new QPushButton("Del", this);
         SigMapDel_Alarm->setMapping(delete_alarm[i], i);
         connect(delete_alarm[i],SIGNAL(clicked()),SigMapDel_Alarm,SLOT(map()));
@@ -492,18 +501,19 @@ void formModule::setInterface_Alarm(QString address)
             range_h[i]->setText(list[10]);
         }
 
-        this->ui->tabel_alarm->setCellWidget(i,0, delete_alarm[i]);
-        this->ui->tabel_alarm->setItem(i,1, new QTableWidgetItem(type));
-        this->ui->tabel_alarm->setCellWidget(i,2, name_alarm[i]);
-        this->ui->tabel_alarm->setCellWidget(i,3, input_reg_alarm[i]);
-        this->ui->tabel_alarm->setCellWidget(i,4, output_reg_alarm[i]);
-        this->ui->tabel_alarm->setCellWidget(i,5, state_alarm[i]);
-        this->ui->tabel_alarm->setCellWidget(i,6, range_l[i]);
-        this->ui->tabel_alarm->setCellWidget(i,7, batas_ll[i]);
-        this->ui->tabel_alarm->setCellWidget(i,8, batas_l[i]);
-        this->ui->tabel_alarm->setCellWidget(i,9, batas_h[i]);
-        this->ui->tabel_alarm->setCellWidget(i,10, batas_hh[i]);
-        this->ui->tabel_alarm->setCellWidget(i,11, range_h[i]);
+        this->ui->tabel_alarm->setCellWidget(i,0, check_alarm[i]);
+        this->ui->tabel_alarm->setCellWidget(i,1, delete_alarm[i]);
+        this->ui->tabel_alarm->setItem(i,2, new QTableWidgetItem(type));
+        this->ui->tabel_alarm->setCellWidget(i,3, name_alarm[i]);
+        this->ui->tabel_alarm->setCellWidget(i,4, input_reg_alarm[i]);
+        this->ui->tabel_alarm->setCellWidget(i,5, output_reg_alarm[i]);
+        this->ui->tabel_alarm->setCellWidget(i,6, state_alarm[i]);
+        this->ui->tabel_alarm->setCellWidget(i,7, range_l[i]);
+        this->ui->tabel_alarm->setCellWidget(i,8, batas_ll[i]);
+        this->ui->tabel_alarm->setCellWidget(i,9, batas_l[i]);
+        this->ui->tabel_alarm->setCellWidget(i,10, batas_h[i]);
+        this->ui->tabel_alarm->setCellWidget(i,11, batas_hh[i]);
+        this->ui->tabel_alarm->setCellWidget(i,12, range_h[i]);
     }
 
     this->ui->tabel_alarm->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -866,14 +876,17 @@ void formModule::on_tabWidget_tabBarClicked(int index)
         this->ui->pbGet->setHidden(true);
         this->ui->pbEdit->setHidden(false);
         this->ui->pbAddRow->setHidden(true);
+        this->ui->pbDeleteRows->setHidden(true);
     } else {
         this->ui->pbSet->setHidden(false);
         this->ui->pbGet->setHidden(false);
         this->ui->pbEdit->setHidden(true);
         if (index == 4 || index == 5) {
             this->ui->pbAddRow->setHidden(false);
+            this->ui->pbDeleteRows->setHidden(false);
         } else {
             this->ui->pbAddRow->setHidden(true);
+            this->ui->pbDeleteRows->setHidden(true);
         }
     }
 
@@ -931,11 +944,9 @@ void formModule::on_tabWidget_tabBarClicked(int index)
     } else if (index == 4) {
         this->ui->pbSet->setText("Set Sources Settings");
         this->ui->pbGet->setText("Get Sources Settings");
-        this->ui->pbAddRow->setText("Add Row Sources");
     } else if (index == 5) {
         this->ui->pbSet->setText("Set Alarm Settings");
         this->ui->pbGet->setText("Get Alarm Settings");
-        this->ui->pbAddRow->setText("Add Row Alarm");
     } else if (index == 6) {
         this->ui->pbSet->setText("Set Data Settings");
         this->ui->pbGet->setText("Get Data Settings");
@@ -1239,4 +1250,66 @@ void formModule::del_alrm_clicked(int index)
     }
     mod.write_module(&tModule);
     this->setInterface_Alarm(Address_Module);
+}
+
+void formModule::on_pbDeleteRows_clicked()
+{
+    struct t_module tModule; module mod;
+    Address_Module = "data/module/m_" + this->windowTitle() + ".dbe";
+    QString tmp; QStringList list1; QStringList list2;
+    mod.read_module(&tModule, Address_Module);
+    if (this->ui->tabWidget->currentIndex() == 4) {
+        list1 = tModule.sumber;
+        for (int i = 0; i < tModule.jml_sumber; i++) {
+            if (check_source[i]->isChecked()) {
+                list1[i] = "";
+            }
+        }
+        tModule.sumber.clear(); tModule.jml_sumber = 0;
+        for (int i = 0; i < list1.length(); i++) {
+            if (list1.at(i) != "") {
+              tmp = list1.at(i);
+                list2 = tmp.split(';');
+                tmp = QString::number(tModule.jml_sumber+1) + ";" +
+                        list2.at(1) + ";" +
+                        list2.at(2) + ";" +
+                        list2.at(3) + ";" +
+                        list2.at(4) + ";" +
+                        list2.at(5);
+                tModule.sumber.insert(tModule.jml_sumber,tmp);
+                tModule.jml_sumber++;
+            }
+        }
+        mod.write_module(&tModule);
+        this->setInterface_Sumber(Address_Module);
+    } else if (this->ui->tabWidget->currentIndex() == 5) {
+        list1 = tModule.alarm;
+        for (int i = 0; i < tModule.jml_alarm; i++) {
+            if (check_alarm[i]->isChecked()) {
+                list1[i] = "";
+            }
+        }
+        tModule.alarm.clear(); tModule.jml_alarm = 0;
+        for (int i = 0; i < list1.length(); i++) {
+            if (list1.at(i) != "") {
+                tmp = list1.at(i);
+                list2 = tmp.split(';');
+                tmp = QString::number(tModule.jml_alarm+1) + ";" +
+                        list2.at(1) + ";" +
+                        list2.at(2) + ";" +
+                        list2.at(3) + ";" +
+                        list2.at(4) + ";" +
+                        list2.at(5) + ";" +
+                        list2.at(6) + ";" +
+                        list2.at(7) + ";" +
+                        list2.at(8) + ";" +
+                        list2.at(9) + ";" +
+                        list2.at(10);
+                tModule.alarm.insert(tModule.jml_alarm,tmp);
+                tModule.jml_alarm++;
+            }
+        }
+        mod.write_module(&tModule);
+        this->setInterface_Alarm(Address_Module);
+    }
 }

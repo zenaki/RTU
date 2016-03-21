@@ -49,7 +49,8 @@ HEADERS += \
     view/form_addmodule.h \
     controller/worker.h \
     view/settingsdialog.h \
-    model/interface_manipulator/qlightboxwidget.h
+    model/interface_manipulator/qlightboxwidget.h \
+    model/header_checkbox.h
 
 FORMS += \
     view/mainwindow.ui \
