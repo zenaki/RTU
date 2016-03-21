@@ -120,19 +120,19 @@ void MainWindow::on_actionNew_triggered()
                 timeout = work->Request_ENV(this, busy, SerialPort, timeout);
                 if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
                 work->Get_ENV(&tModule, val_data);
+                timeout = work->Request_SIM(this, busy, SerialPort, timeout);
+                if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
+                work->Get_SIM(&tModule, val_data);
+                timeout = work->Request_Data(this, busy, SerialPort, timeout);
+                if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
+                work->Get_Data(&tModule, val_data);
                 timeout = work->Request_IO(this, busy, SerialPort, timeout);
                 if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
                 work->Get_Input(&tModule, val_data);
                 work->Get_Output(&tModule, val_data);
-                timeout = work->Request_SIM(this, busy, SerialPort, timeout);
-                if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
-                work->Get_SIM(&tModule, val_data);
                 timeout = work->Request_Sumber(this, busy, SerialPort, timeout);
                 if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
                 work->Get_Sumber(&tModule, val_data);
-                timeout = work->Request_Data(this, busy, SerialPort, timeout);
-                if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
-                work->Get_Data(&tModule, val_data);
 
                 QString address = "data/module/" + newFiles;
                 mod->read_module(&tModule, address);
@@ -143,26 +143,22 @@ void MainWindow::on_actionNew_triggered()
                 timeout = work->Request_ENV(this, busy, SerialPort, timeout);
                 if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
                 work->Get_ENV(&tModule, val_data);
+                timeout = work->Request_SIM(this, busy, SerialPort, timeout);
+                if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
+                work->Get_SIM(&tModule, val_data);
+                timeout = work->Request_Data(this, busy, SerialPort, timeout);
+                if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
+                work->Get_Data(&tModule, val_data);
                 timeout = work->Request_IO(this, busy, SerialPort, timeout);
                 if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
                 work->Get_Input(&tModule, val_data);
                 work->Get_Output(&tModule, val_data);
-                timeout = work->Request_SIM(this, busy, SerialPort, timeout);
-                if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
-                work->Get_SIM(&tModule, val_data);
                 timeout = work->Request_Sumber(this, busy, SerialPort, timeout);
                 if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
                 work->Get_Sumber(&tModule, val_data);
-                timeout = work->Request_Data(this, busy, SerialPort, timeout);
-                if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
-                work->Get_Data(&tModule, val_data);
 
-                /** INPUT **/
                 tModule.InputName.clear();
-
-                /** OUTPUT **/
-                strcpy(tModule.output_r1_name, "");
-                strcpy(tModule.output_r2_name, "");
+                tModule.OutputName.clear();
 
                 GetNamaBoard.append("_new");
                 QString newModule = "m_" + GetNamaBoard + ".dbe";
@@ -195,29 +191,26 @@ void MainWindow::on_actionNew_triggered()
                 this->Refresh_Tree();
             }
         } else {
-            /** INPUT **/
             tModule.InputName.clear();
-
-            /** OUTPUT **/
-            strcpy(tModule.output_r1_name, "");
-            strcpy(tModule.output_r2_name, "");
+            tModule.OutputName.clear();
 
             timeout = work->Request_ENV(this, busy, SerialPort, timeout);
             if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
             work->Get_ENV(&tModule, val_data);
+            timeout = work->Request_SIM(this, busy, SerialPort, timeout);
+            if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
+            work->Get_SIM(&tModule, val_data);
+            timeout = work->Request_Data(this, busy, SerialPort, timeout);
+            if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
+            work->Get_Data(&tModule, val_data);
             timeout = work->Request_IO(this, busy, SerialPort, timeout);
             if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
             work->Get_Input(&tModule, val_data);
             work->Get_Output(&tModule, val_data);
-            timeout = work->Request_SIM(this, busy, SerialPort, timeout);
-            if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
-            work->Get_SIM(&tModule, val_data);
             timeout = work->Request_Sumber(this, busy, SerialPort, timeout);
             if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
             work->Get_Sumber(&tModule, val_data);
-            timeout = work->Request_Data(this, busy, SerialPort, timeout);
-            if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
-            work->Get_Data(&tModule, val_data);
+            tModule.jml_alarm = 0;
 
             strcpy(tModule.module_name, GetNamaBoard.toUtf8().data());
             strcpy(tModule.serial_number, GetNoSeri.toLatin1());

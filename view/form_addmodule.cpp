@@ -226,7 +226,7 @@ void form_addModule::on_buttonBox_accepted()
             /** INPUT **/
             QString temp;
             int j = 0;
-            for (int i = 0; i < 16; i++) {
+            for (int i = 1; i < tModule.jml_input_digital + tModule.jml_input_analog; i++) {
                 if (i < 7 && i > 10) {
                     temp.sprintf("A;%d;0;0.000;0.000", i);
                     tModule.Input[j] = temp;
@@ -236,10 +236,11 @@ void form_addModule::on_buttonBox_accepted()
             }
 
             /** OUTPUT **/
-            strcpy(tModule.output_r1, "R;1;0;0");
-            strcpy(tModule.output_r1_name, "");
-            strcpy(tModule.output_r2, "R;2;0;0");
-            strcpy(tModule.output_r2_name, "");
+            for (int i = 1; i < tModule.jml_output; i++) {
+                temp.sprintf("R;%d;0;0.000;0.000", i);
+                tModule.Output[i-1] = temp;
+                tModule.OutputName[i-1] = "";
+            }
 
             mod.write_module(&tModule);
             accept = 1;

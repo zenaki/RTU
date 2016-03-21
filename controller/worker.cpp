@@ -247,24 +247,48 @@ void worker::Get_Input(struct t_module *tModule, QStringList data)
 {
     QString temp;
     tModule->Input.clear();
+    int index = 0;
     for (int i = 0; i < data.length(); i++) {
         temp = data.at(i);
-        if (temp.mid(0,1) != "R") {
-            if (!temp.isEmpty()) {
-                tModule->Input.insert(i,data.at(i));
-            }
+        if (temp.mid(0,1) == "D" || temp.mid(0,1) == "A") {
+            tModule->Input.insert(index, data.at(i));
+            index++;
         }
+    }
+    tModule->jml_input_digital = 0;
+    tModule->jml_input_analog = 0;
+    for (int i = 0; i < tModule->Input.length(); i++) {
+        temp = tModule->Input.at(i);
+        if (temp.mid(0,1) == "D") {
+            tModule->jml_input_digital++;
+        } else if (temp.mid(0,1) == "A") {
+            tModule->jml_input_analog++;
+        }
+    }
+    QStringList list;
+    tModule->InputName.clear();
+    for (int i = 0; i < tModule->Input.length(); i++) {
+        temp = tModule->data.at(i);
+        list = temp.split(';');
+        tModule->InputName.insert(i, list.at(2));
     }
 }
 
 void worker::Get_Output(struct t_module *tModule, QStringList data)
 {
     QString temp;
-
-    temp = data.at(12);
-    strcpy(tModule->output_r1, temp.toUtf8().data());
-    temp = data.at(13);
-    strcpy(tModule->output_r2, temp.toUtf8().data());
+    tModule->Output.clear();
+    int index = 0;
+    for (int i = 0; i < data.length(); i++) {
+        temp = data.at(i);
+        if (temp.mid(0,1) == "R") {
+            tModule->Output.insert(index, data.at(i));
+        }
+    }
+    tModule->jml_output = tModule->Output.length();
+    for (int i = 0; i < tModule->Output.length(); i++) {
+        tModule->OutputName.insert(i, "");
+    }
 }
 
 void worker::Get_SIM(struct t_module *tModule, QStringList data)
@@ -458,19 +482,25 @@ void worker::Get_Signal(t_module *tModule, QStringList data)
 
 void worker::Get_Sumber(t_module *tModule, QStringList data)
 {
-    tModule->sumber = data;
+    tModule->sumber.clear();
+    tModule->jml_sumber = 0;
+    for (int i = 0; i < data.length(); i++) {
+        if (data.at(i) != "") {
+            tModule->sumber.insert(tModule->jml_sumber, data.at(i));
+            tModule->jml_sumber++;
+        }
+    }
 }
 
 void worker::Get_Data(t_module *tModule, QStringList data)
 {
-    QString temp;
-    QStringList list;
-    tModule->data = data;
-    tModule->InputName.clear();
-    for (int i = 0; i < tModule->data.length()-1; i++) {
-        temp = tModule->data.at(i);
-        list = temp.split(';');
-        tModule->InputName.insert(i, list.at(2));
+    tModule->data.clear();
+    tModule->jml_data = 0;
+    for (int i = 0; i < data.length(); i++) {
+        if (data.at(i) != "") {
+            tModule->data.insert(tModule->jml_data, data.at(i));
+            tModule->jml_data++;
+        }
     }
 }
 
@@ -556,34 +586,15 @@ bool worker::Set_Output(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Ser
     QStringList val;
 
     /** SET OUTPUT RELAY **/
-    temp.sprintf("%s", tModule->output_r1);
-    val = temp.split(";");
-    Request = "set_relay 1 " + val.at(2) + "\r\n";
-    Serial_Com->write(Request.toUtf8().data());
-    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
-    if (timeout) {return timeout;}
-    this->writeLogFile(Request);
-
-//    Request = "set_relay 1 " + val.at(2) + "\r\n";
-//    Serial->write_data(Serial_Com, Request);
-//    Serial_Com->write(Request.toUtf8().data());
-//    FormModule->ui->request->setText(Request);
-//    this->delay(jeda);
-
-    temp.sprintf("%s", tModule->output_r2);
-    val = temp.split(";");
-    Request = "set_relay 2 " + val.at(2) + "\r\n";
-    Serial_Com->write(Request.toUtf8().data());
-    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
-    if (timeout) {return timeout;}
-    this->writeLogFile(Request);
-
-//    Request = "set_relay 1 " + val.at(2) + "\r\n";
-//    Serial->write_data(Serial_Com, Request);
-//    Serial_Com->write(Request.toUtf8().data());
-//    FormModule->ui->request->setText(Request);
-//    this->delay(jeda);
-
+    for (int i = 0; i < tModule->Output.length(); i++) {
+        temp = tModule->Output.at(i);
+        val = temp.split(';');
+        Request = "set_relay_" + val.at(1) + " " + val.at(2) + "\r\n";
+        Serial_Com->write(Request.toUtf8().data());
+        if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+        if (timeout) {return timeout;}
+        this->writeLogFile(Request);
+    }
     return timeout;
 }
 

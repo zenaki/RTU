@@ -37,13 +37,20 @@ void module::write_module(struct t_module *tmodule){
         temp2 = "KANAL_NAME_" + temp1.at(1);
         sett.setValue(temp2, tmodule->InputName.at(i));
     }
+    sett.setValue("JML_INPUT_DIGITAL", tmodule->jml_input_digital);
+    sett.setValue("JML_INPUT_ANALOG", tmodule->jml_input_analog);
     sett.endGroup();
 
     sett.beginGroup( "OUTPUT" );
-    sett.setValue("OUTPUT_R1", tmodule->output_r1);
-    sett.setValue("OUTPUT_R1_NAME", tmodule->output_r1_name);
-    sett.setValue("OUTPUT_R2", tmodule->output_r2);
-    sett.setValue("OUTPUT_R2_NAME", tmodule->output_r2_name);
+    for (int i = 0; i < tmodule->Output.length(); i++) {
+        temp2 = tmodule->Output.at(i);
+        temp1 = temp2.split(';');
+        temp2 = "RELAY_" + temp1.at(1);
+        sett.setValue(temp2, tmodule->Output.at(i));
+        temp2 = "RELAY_NAME_" + temp1.at(1);
+        sett.setValue(temp2, tmodule->OutputName.at(i));
+    }
+    sett.setValue("JML_OUTPUT", tmodule->jml_output);
     sett.endGroup();
 
     sett.beginGroup( "GSM_1" );
@@ -90,42 +97,65 @@ void module::write_module(struct t_module *tmodule){
 
     sett.beginGroup( "SOURCES" );
     index = tmodule->sumber.length();
-    for (int i = 0; i < index-1; i++) {
-        temp2.sprintf("SUMBER_%d", i);
+    for (int i = 0; i < index; i++) {
+        temp2.sprintf("SUMBER_%d", i+1);
         sett.setValue(temp2, tmodule->sumber.at(i));
     }
+    sett.setValue("JML_SUMBER", tmodule->jml_sumber);
+    sett.endGroup();
+
+    sett.beginGroup( "ALARM" );
+    index = tmodule->alarm.length();
+    for (int i = 0; i < index; i++) {
+        temp2.sprintf("ALARM_%d", i+1);
+        sett.setValue(temp2, tmodule->alarm.at(i));
+    }
+    sett.setValue("JML_ALARM", tmodule->jml_alarm);
     sett.endGroup();
 
     sett.beginGroup( "DATA" );
     index = tmodule->data.length();
-    for (int i = 0; i < index-1; i++) {
-        temp2.sprintf("DATA_%d", i);
+    for (int i = 0; i < index; i++) {
+        temp2.sprintf("DATA_%d", i+1);
         sett.setValue(temp2, tmodule->data.at(i));
     }
+    sett.setValue("JML_DATA", tmodule->jml_data);
     sett.endGroup();
 }
 
-void module::update_setting(struct t_module *tmodule, QString addressModule){
+void module::update_IO(struct t_module *tmodule, QString addressModule){
+    QStringList temp1; QString temp2;
     QString pth = addressModule;
     QSettings sett(pth, QSettings::IniFormat);
     QString temp;
 
     sett.beginGroup( "INPUT" );
-    for (int i = 0; i < tmodule->Input.length()-1; i++) {
-        temp.sprintf("KANAL_%d", i);
-        sett.setValue(temp, tmodule->Input.at(i));
+    for (int i = 0; i < tmodule->Input.length(); i++) {
+        temp2 = tmodule->Input.at(i);
+        temp1 = temp2.split(';');
+        temp2 = "KANAL_" + temp1.at(1);
+        sett.setValue(temp2, tmodule->Input.at(i));
     }
-    for (int i = 0; i < tmodule->InputName.length()-1; i++) {
-        temp.sprintf("KANAL_NAME_%d", i);
-        sett.setValue(temp, tmodule->InputName.at(i));
+    for (int i = 0; i < tmodule->InputName.length(); i++) {
+        temp2 = tmodule->Input.at(i);
+        temp1 = temp2.split(';');
+        temp2 = "KANAL_NAME_" + temp1.at(1);
+        sett.setValue(temp2, tmodule->InputName.at(i));
     }
+    sett.setValue("JML_INPUT_DIGITAL", tmodule->jml_input_digital);
+    sett.setValue("JML_INPUT_ANALOG", tmodule->jml_input_analog);
     sett.endGroup();
 
     sett.beginGroup( "OUTPUT" );
-    sett.setValue("OUTPUT_R1", tmodule->output_r1);
-    sett.setValue("OUTPUT_R1_NAME", tmodule->output_r1_name);
-    sett.setValue("OUTPUT_R2", tmodule->output_r2);
-    sett.setValue("OUTPUT_R2_NAME", tmodule->output_r2_name);
+    for (int i = 0; i < tmodule->Output.length(); i++) {
+        temp2 = tmodule->Output.at(i);
+        temp1 = temp2.split(';');
+        temp2 = "RELAY_" + temp1.at(1);
+        sett.setValue(temp2, tmodule->Output.at(i));
+        temp2 = "RELAY_NAME_" + temp1.at(1);
+        sett.setValue(temp2, tmodule->OutputName.at(i));
+    }
+    sett.setValue("JML_OUTPUT", tmodule->jml_output);
     sett.endGroup();
 }
 
@@ -193,6 +223,57 @@ void module::update_module(struct t_module *tmodule, QString addressModule){
     sett.endGroup();
 }
 
+void module::update_sources(t_module *tmodule, QString addressModule)
+{
+    QString temp;
+    int index;
+    QString pth = addressModule;
+    QSettings sett(pth, QSettings::IniFormat);
+
+    sett.beginGroup( "SOURCES" );
+    index = tmodule->sumber.length();
+    for (int i = 0; i < index; i++) {
+        temp.sprintf("SUMBER_%d", i+1);
+        sett.setValue(temp, tmodule->sumber.at(i));
+    }
+    sett.setValue("JML_SUMBER", tmodule->jml_sumber);
+    sett.endGroup();
+}
+
+void module::update_alarm(t_module *tmodule, QString addressModule)
+{
+    QString temp;
+    int index;
+    QString pth = addressModule;
+    QSettings sett(pth, QSettings::IniFormat);
+
+    sett.beginGroup( "ALARM" );
+    index = tmodule->alarm.length();
+    for (int i = 0; i < index; i++) {
+        temp.sprintf("ALARM_%d", i+1);
+        sett.setValue(temp, tmodule->alarm.at(i));
+    }
+    sett.setValue("JML_ALARM", tmodule->jml_alarm);
+    sett.endGroup();
+}
+
+void module::update_data(t_module *tmodule, QString addressModule)
+{
+    QString temp;
+    int index;
+    QString pth = addressModule;
+    QSettings sett(pth, QSettings::IniFormat);
+
+    sett.beginGroup( "DATA" );
+    index = tmodule->data.length();
+    for (int i = 0; i < index; i++) {
+        temp.sprintf("DATA_%d", i+1);
+        sett.setValue(temp, tmodule->data.at(i));
+    }
+    sett.setValue("JML_DATA", tmodule->jml_data);
+    sett.endGroup();
+}
+
 void module::read_module(struct t_module *tmodule, QString addressModule){
     QString pth = addressModule;
     QString temp;
@@ -209,21 +290,32 @@ void module::read_module(struct t_module *tmodule, QString addressModule){
 
     tmodule->flag_dual_gsm = sett.value("MODULE/FLAG_DUAL_GSM").toInt();
 
+    tmodule->jml_input_digital = sett.value("INPUT/JML_INPUT_DIGITAL").toInt();
+    tmodule->jml_input_analog = sett.value("INPUT/JML_INPUT_ANALOG").toInt();
     int j = 0;
-    for (int i = 1; i <= 16; i++) {
-        if (i < 7 || i > 10) {
+    for (int i = 1; i <= tmodule->jml_input_digital + tmodule->jml_input_analog; i++) {
+        if (i <= tmodule->jml_input_digital) {
             temp.sprintf("INPUT/KANAL_%d", i);
             tmodule->Input.insert(j,sett.value(temp).toString());
             temp.sprintf("INPUT/KANAL_NAME_%d", i);
             tmodule->InputName.insert(j,sett.value(temp).toString());
             j++;
+        } else {
+            temp.sprintf("INPUT/KANAL_%d", i+(10-tmodule->jml_input_digital));
+            tmodule->Input.insert(j,sett.value(temp).toString());
+            temp.sprintf("INPUT/KANAL_NAME_%d", i+(10-tmodule->jml_input_digital));
+            tmodule->InputName.insert(j,sett.value(temp).toString());
+            j++;
         }
     }
 
-    strcpy(tmodule->output_r1, sett.value("OUTPUT/OUTPUT_R1").toString().toLatin1());
-    strcpy(tmodule->output_r1_name, sett.value("OUTPUT/OUTPUT_R1_NAME").toString().toLatin1());
-    strcpy(tmodule->output_r2, sett.value("OUTPUT/OUTPUT_R2").toString().toLatin1());
-    strcpy(tmodule->output_r2_name, sett.value("OUTPUT/OUTPUT_R2_NAME").toString().toLatin1());
+    tmodule->jml_output = sett.value("OUTPUT/JML_OUTPUT").toInt();
+    for (int i = 1; i <= tmodule->jml_output; i++) {
+        temp.sprintf("OUTPUT/RELAY_%d", i);
+        tmodule->Output.insert(i-1,sett.value(temp).toString());
+        temp.sprintf("OUTPUT/RELAY_NAME_%d", i);
+        tmodule->OutputName.insert(i-1,sett.value(temp).toString());
+    }
 
     tmodule->flag_gsm_1 = sett.value("GSM_1/FLAG_GSM_1").toInt();
     strcpy(tmodule->name_gsm_1, sett.value("GSM_1/GSM_NAME_1").toString().toLatin1());
@@ -249,18 +341,27 @@ void module::read_module(struct t_module *tmodule, QString addressModule){
     strcpy(tmodule->user_gsm_2, sett.value("GSM_2/USER_GSM_2").toString().toLatin1());
     strcpy(tmodule->passwd_gsm_2, sett.value("GSM_2/PASSWD_GSM_2").toString().toLatin1());
 
-    for (int i = 0; i < 6; i++) {
+    tmodule->jml_sumber = sett.value("SOURCES/JML_SUMBER").toInt();
+    for (int i = 1; i <= tmodule->jml_sumber; i++) {
         temp.sprintf("SOURCES/SUMBER_%d", i);
-        tmodule->sumber.insert(i,sett.value(temp).toString());
+        tmodule->sumber.insert(i-1,sett.value(temp).toString());
     }
 
-    for (int i = 0; i < 12; i++) {
+    tmodule->jml_alarm = sett.value("ALARM/JML_ALARM").toInt();
+    for (int i = 1; i <= tmodule->jml_alarm; i++) {
+        temp.sprintf("ALARM/ALARM_%d", i);
+        tmodule->alarm.insert(i-1,sett.value(temp).toString());
+    }
+
+    tmodule->jml_data = sett.value("DATA/JML_DATA").toInt();
+    for (int i = 1; i <= tmodule->jml_data; i++) {
         temp.sprintf("DATA/DATA_%d", i);
-        tmodule->data.insert(i,sett.value(temp).toString());
+        tmodule->data.insert(i-1,sett.value(temp).toString());
     }
 }
 
 void module::save_as_module(struct t_module *tmodule, QString address){
+    QStringList temp1; QString temp2;
     QString pth = address;
     QSettings sett(pth, QSettings::IniFormat);
     QString temp;
@@ -278,21 +379,32 @@ void module::save_as_module(struct t_module *tmodule, QString address){
     sett.endGroup();
 
     sett.beginGroup( "INPUT" );
-    for (int i = 0; i < tmodule->Input.length()-1; i++) {
-        temp.sprintf("KANAL_%d", i);
-        sett.setValue(temp, tmodule->Input.at(i));
+    for (int i = 0; i < tmodule->Input.length(); i++) {
+        temp2 = tmodule->Input.at(i);
+        temp1 = temp2.split(';');
+        temp2 = "KANAL_" + temp1.at(1);
+        sett.setValue(temp2, tmodule->Input.at(i));
     }
-    for (int i = 0; i < tmodule->InputName.length()-1; i++) {
-        temp.sprintf("KANAL_NAME_%d", i);
-        sett.setValue(temp, tmodule->InputName.at(i));
+    for (int i = 0; i < tmodule->InputName.length(); i++) {
+        temp2 = tmodule->Input.at(i);
+        temp1 = temp2.split(';');
+        temp2 = "KANAL_NAME_" + temp1.at(1);
+        sett.setValue(temp2, tmodule->InputName.at(i));
     }
+    sett.setValue("JML_INPUT_DIGITAL", tmodule->jml_input_digital);
+    sett.setValue("JML_INPUT_ANALOG", tmodule->jml_input_analog);
     sett.endGroup();
 
     sett.beginGroup( "OUTPUT" );
-    sett.setValue("OUTPUT_R1", tmodule->output_r1);
-    sett.setValue("OUTPUT_R1_NAME", tmodule->output_r1_name);
-    sett.setValue("OUTPUT_R2", tmodule->output_r2);
-    sett.setValue("OUTPUT_R2_NAME", tmodule->output_r2_name);
+    for (int i = 0; i < tmodule->Output.length(); i++) {
+        temp2 = tmodule->Output.at(i);
+        temp1 = temp2.split(';');
+        temp2 = "RELAY_" + temp1.at(1);
+        sett.setValue(temp2, tmodule->Output.at(i));
+        temp2 = "RELAY_NAME_" + temp1.at(1);
+        sett.setValue(temp2, tmodule->OutputName.at(i));
+    }
+    sett.setValue("JML_OUTPUT", tmodule->jml_output);
     sett.endGroup();
 
     sett.beginGroup( "GSM_1" );

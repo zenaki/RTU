@@ -39,7 +39,7 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="2">
+     <item row="0" column="3">
       <spacer name="horizontalSpacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -52,21 +52,21 @@
        </property>
       </spacer>
      </item>
-     <item row="0" column="5">
+     <item row="0" column="6">
       <widget class="QPushButton" name="pbSetAll">
        <property name="text">
         <string>Set All Setting</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="6">
+     <item row="0" column="7">
       <widget class="QPushButton" name="pbGetAll">
        <property name="text">
         <string>Get All Setting</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="4">
+     <item row="0" column="5">
       <widget class="QPushButton" name="pbEdit">
        <property name="enabled">
         <bool>true</bool>
@@ -83,12 +83,19 @@
        </property>
       </widget>
      </item>
+     <item row="0" column="2">
+      <widget class="QPushButton" name="pbAddRow">
+       <property name="text">
+        <string>Add Row</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>4</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="tab_input">
       <attribute name="title">
@@ -1370,6 +1377,11 @@
          </attribute>
          <column>
           <property name="text">
+           <string/>
+          </property>
+         </column>
+         <column>
+          <property name="text">
            <string>No.</string>
           </property>
          </column>
@@ -1442,6 +1454,11 @@
          <attribute name="horizontalHeaderDefaultSectionSize">
           <number>75</number>
          </attribute>
+         <column>
+          <property name="text">
+           <string/>
+          </property>
+         </column>
          <column>
           <property name="text">
            <string>No.</string>

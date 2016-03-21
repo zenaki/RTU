@@ -95,41 +95,18 @@ struct t_module{
 
     QStringList Input;
     QStringList InputName;
+    int  jml_input_digital;
+    int  jml_input_analog;
     QStringList Output;
-
-//    char input_a1[128];
-//    char input_a1_name[32];
-//    char input_a2[128];
-//    char input_a2_name[32];
-//    char input_a3[128];
-//    char input_a3_name[32];
-//    char input_a4[128];
-//    char input_a4_name[32];
-//    char input_a5[128];
-//    char input_a5_name[32];
-//    char input_a6[128];
-//    char input_a6_name[32];
-
-//    char input_d1[128];
-//    char input_d1_name[32];
-//    char input_d2[128];
-//    char input_d2_name[32];
-//    char input_d3[128];
-//    char input_d3_name[32];
-//    char input_d4[128];
-//    char input_d4_name[32];
-//    char input_d5[128];
-//    char input_d5_name[32];
-//    char input_d6[128];
-//    char input_d6_name[32];
-
-    char output_r1[128];
-    char output_r1_name[32];
-    char output_r2[128];
-    char output_r2_name[32];
+    QStringList OutputName;
+    int  jml_output;
 
     QStringList sumber;
+    int  jml_sumber;
+    QStringList alarm;
+    int  jml_alarm;
     QStringList data;
+    int  jml_data;
 };
 
 struct t_serial_settings {

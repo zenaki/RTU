@@ -2,6 +2,8 @@
 #define FORMMODULE_H
 
 #include <QDialog>
+#include <QPushButton>
+#include <QSignalMapper>
 #include <QLineEdit>
 #include <QComboBox>
 #include <QStandardItem>
@@ -55,6 +57,10 @@ private slots:
 
     void writeLogFile();
 
+    void on_pbAddRow_clicked();
+    void del_src_clicked(int index);
+    void del_alrm_clicked(int index);
+
 private:
     worker *work;
     form_addModule *faddModule;
@@ -82,6 +88,13 @@ private:
 
     /** Function **/
     void setInterface(QString address);
+    void setInterface_Input(QString address);
+    void setInterface_Output(QString address);
+    void setInterface_Communication(QString address);
+    void setInterface_Environtment(QString address);
+    void setInterface_Sumber(QString address);
+    void setInterface_Alarm(QString address);
+    void setInterface_Data(QString address);
     void EnableButton(bool enab);
     bool checkFormula(QString data);
 
@@ -90,6 +103,8 @@ private:
     setting *Setting;
 
     /** Sources Tab **/
+    QPushButton *delete_source[16];
+    QSignalMapper *SigMapDel_Source;
     QLineEdit *name_source[16];
     QLineEdit *ip_source[16];
     QLineEdit *port_source[16];
@@ -103,6 +118,8 @@ private:
     QLineEdit *target_reg_source[16];
 
     /** Alarm Threshold Tab **/
+    QPushButton *delete_alarm[16];
+    QSignalMapper *SigMapDel_Alarm;
     QLineEdit *name_alarm[16];
     QComboBox *state_alarm[16];
     QLineEdit *input_reg_alarm[16];
