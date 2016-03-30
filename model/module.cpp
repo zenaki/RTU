@@ -11,6 +11,7 @@ void module::write_module(struct t_module *tmodule){
     QString pth;
     pth.sprintf("data/module/m_%s.dbe",tmodule->module_name);
     QSettings sett(pth, QSettings::IniFormat);
+    sett.setIniCodec(CODEC);
 
     sett.beginGroup( "MODULE" );
     sett.setValue("ACTIVE", tmodule->flag_active);
@@ -127,6 +128,7 @@ void module::update_IO(struct t_module *tmodule, QString addressModule){
     QStringList temp1; QString temp2;
     QString pth = addressModule;
     QSettings sett(pth, QSettings::IniFormat);
+    sett.setIniCodec(CODEC);
     QString temp;
 
     sett.beginGroup( "INPUT" );
@@ -162,6 +164,7 @@ void module::update_IO(struct t_module *tmodule, QString addressModule){
 void module::update_communication(struct t_module *tmodule, QString addressModule){
     QString pth = addressModule;
     QSettings sett(pth, QSettings::IniFormat);
+    sett.setIniCodec(CODEC);
 
     sett.beginGroup( "GSM_1" );
     sett.setValue("FLAG_GSM_1", tmodule->flag_gsm_1);
@@ -209,6 +212,7 @@ void module::update_communication(struct t_module *tmodule, QString addressModul
 void module::update_module(struct t_module *tmodule, QString addressModule){
     QString pth = addressModule;
     QSettings sett(pth, QSettings::IniFormat);
+    sett.setIniCodec(CODEC);
 
     sett.beginGroup( "MODULE" );
 //    sett.setValue("ACTIVE", tmodule->flag_active);
@@ -229,6 +233,7 @@ void module::update_sources(t_module *tmodule, QString addressModule)
     int index;
     QString pth = addressModule;
     QSettings sett(pth, QSettings::IniFormat);
+    sett.setIniCodec(CODEC);
 
     sett.beginGroup( "SOURCES" );
     index = tmodule->sumber.length();
@@ -246,6 +251,7 @@ void module::update_alarm(t_module *tmodule, QString addressModule)
     int index;
     QString pth = addressModule;
     QSettings sett(pth, QSettings::IniFormat);
+    sett.setIniCodec(CODEC);
 
     sett.beginGroup( "ALARM" );
     index = tmodule->alarm.length();
@@ -263,6 +269,7 @@ void module::update_data(t_module *tmodule, QString addressModule)
     int index;
     QString pth = addressModule;
     QSettings sett(pth, QSettings::IniFormat);
+    sett.setIniCodec(CODEC);
 
     sett.beginGroup( "DATA" );
     index = tmodule->data.length();
@@ -278,6 +285,7 @@ void module::read_module(struct t_module *tmodule, QString addressModule){
     QString pth = addressModule;
     QString temp;
     QSettings sett(pth, QSettings::IniFormat);
+    sett.setIniCodec(CODEC);
 
     tmodule->flag_active = sett.value("MODULE/ACTIVE").toInt();
     strcpy(tmodule->module_name, sett.value("MODULE/MODULE_NAME").toString().toLatin1());
@@ -301,9 +309,9 @@ void module::read_module(struct t_module *tmodule, QString addressModule){
             tmodule->InputName.insert(j,sett.value(temp).toString());
             j++;
         } else {
-            temp.sprintf("INPUT/KANAL_%d", i+(10-tmodule->jml_input_digital));
+            temp.sprintf("INPUT/KANAL_%d", i+(DATA_PERIOD-tmodule->jml_input_digital));
             tmodule->Input.insert(j,sett.value(temp).toString());
-            temp.sprintf("INPUT/KANAL_NAME_%d", i+(10-tmodule->jml_input_digital));
+            temp.sprintf("INPUT/KANAL_NAME_%d", i+(DATA_PERIOD-tmodule->jml_input_digital));
             tmodule->InputName.insert(j,sett.value(temp).toString());
             j++;
         }
@@ -361,9 +369,10 @@ void module::read_module(struct t_module *tmodule, QString addressModule){
 }
 
 void module::save_as_module(struct t_module *tmodule, QString address){
-    QStringList temp1; QString temp2;
+    QStringList temp1; QString temp2; int index;
     QString pth = address;
     QSettings sett(pth, QSettings::IniFormat);
+    sett.setIniCodec(CODEC);
     QString temp;
 
     sett.beginGroup( "MODULE" );
@@ -422,16 +431,57 @@ void module::save_as_module(struct t_module *tmodule, QString address){
     sett.endGroup();
 
     sett.beginGroup( "GSM_2" );
-    sett.setValue("FLAG_GSM_2", tmodule->flag_gsm_2);
-    sett.setValue("GSM_NAME_2", tmodule->name_gsm_2);
-    sett.setValue("DEVICE_NAME_2", tmodule->device_name_gsm_2);
-    sett.setValue("FLAG_STATUS_GSM_2", tmodule->flag_status_active_gsm_2);
-    sett.setValue("STATUS_GSM_2", tmodule->status_gsm_2);
-    sett.setValue("FLAG_COM_GSM_2", tmodule->flag_com_gsm_2);
-    sett.setValue("COM_GSM_2", tmodule->com_gsm_2);
-    sett.setValue("NUMBER_GSM_2", tmodule->number_gsm_2);
-    sett.setValue("APN_GSM_2", tmodule->apn_gsm_2);
-    sett.setValue("USER_GSM_2", tmodule->user_gsm_2);
-    sett.setValue("PASSWD_GSM_2", tmodule->passwd_gsm_2);
+    if (tmodule->flag_dual_gsm == 1) {
+        sett.setValue("FLAG_GSM_2", tmodule->flag_gsm_2);
+        sett.setValue("GSM_NAME_2", tmodule->name_gsm_2);
+        sett.setValue("DEVICE_NAME_2", tmodule->device_name_gsm_2);
+        sett.setValue("FLAG_STATUS_GSM_2", tmodule->flag_status_active_gsm_2);
+        sett.setValue("STATUS_GSM_2", tmodule->status_gsm_2);
+        sett.setValue("FLAG_COM_GSM_2", tmodule->flag_com_gsm_2);
+        sett.setValue("COM_GSM_2", tmodule->com_gsm_2);
+        sett.setValue("NUMBER_GSM_2", tmodule->number_gsm_2);
+        sett.setValue("APN_GSM_2", tmodule->apn_gsm_2);
+        sett.setValue("USER_GSM_2", tmodule->user_gsm_2);
+        sett.setValue("PASSWD_GSM_2", tmodule->passwd_gsm_2);
+    } else {
+        sett.setValue("FLAG_GSM_2", "");
+        sett.setValue("GSM_NAME_2", "");
+        sett.setValue("DEVICE_NAME_2", "");
+        sett.setValue("FLAG_STATUS_GSM_2", "");
+        sett.setValue("STATUS_GSM_2", "");
+        sett.setValue("FLAG_COM_GSM_2", "");
+        sett.setValue("COM_GSM_2", "");
+        sett.setValue("NUMBER_GSM_2", "");
+        sett.setValue("APN_GSM_2", "");
+        sett.setValue("USER_GSM_2", "");
+        sett.setValue("PASSWD_GSM_2", "");
+    }
+    sett.endGroup();
+
+    sett.beginGroup( "SOURCES" );
+    index = tmodule->sumber.length();
+    for (int i = 0; i < index; i++) {
+        temp2.sprintf("SUMBER_%d", i+1);
+        sett.setValue(temp2, tmodule->sumber.at(i));
+    }
+    sett.setValue("JML_SUMBER", tmodule->jml_sumber);
+    sett.endGroup();
+
+    sett.beginGroup( "ALARM" );
+    index = tmodule->alarm.length();
+    for (int i = 0; i < index; i++) {
+        temp2.sprintf("ALARM_%d", i+1);
+        sett.setValue(temp2, tmodule->alarm.at(i));
+    }
+    sett.setValue("JML_ALARM", tmodule->jml_alarm);
+    sett.endGroup();
+
+    sett.beginGroup( "DATA" );
+    index = tmodule->data.length();
+    for (int i = 0; i < index; i++) {
+        temp2.sprintf("DATA_%d", i+1);
+        sett.setValue(temp2, tmodule->data.at(i));
+    }
+    sett.setValue("JML_DATA", tmodule->jml_data);
     sett.endGroup();
 }

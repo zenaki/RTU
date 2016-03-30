@@ -33,8 +33,9 @@ void setting::write_setting(SettingsDialog *s_d, struct t_serial_settings *tSeri
     tSerial->stringFlowControl = s_d->ui->flowControlBox->currentText();
 
     QString pth;
-    pth = "data/config/serial_setting.ini";
+    pth = "data/config/serial_setting";
     QSettings sett(pth, QSettings::IniFormat);
+    sett.setIniCodec(CODEC);
 
     sett.beginGroup( "SERIAL_CONFIGURATION" );
     sett.setValue("NAME", tSerial->name);
@@ -54,40 +55,40 @@ void setting::write_setting(SettingsDialog *s_d, struct t_serial_settings *tSeri
 void setting::read_setting(t_serial_settings *tSerial)
 {
     QString pth;
-    pth = "data/config/serial_setting.ini";
+    pth = "data/config/serial_setting";
     QSettings sett(pth, QSettings::IniFormat);
+    sett.setIniCodec(CODEC);
     QString val;
 
-    sett.beginGroup( "SERIAL_CONFIGURATION" );
-    tSerial->name = sett.value("NAME").toString();
-    tSerial->baudRate = sett.value("BAUDRATE", 0).toInt();
-    tSerial->stringBaudRate = sett.value("STR_BAUDRATE", "").toString().toUtf8();
+    tSerial->name = sett.value("SERIAL_CONFIGURATION/NAME").toString().toUtf8();
+    tSerial->baudRate = sett.value("SERIAL_CONFIGURATION/BAUDRATE", 0).toInt();
+    tSerial->stringBaudRate = sett.value("SERIAL_CONFIGURATION/STR_BAUDRATE", "").toString().toUtf8();
 
-    val = sett.value("DATA_BITS").toString();
+    val = sett.value("SERIAL_CONFIGURATION/DATA_BITS").toString();
     if (val == "8") { tSerial->dataBits = static_cast<QSerialPort::DataBits>(QSerialPort::Data8); }
     else if (val == "7") { tSerial->dataBits = static_cast<QSerialPort::DataBits>(QSerialPort::Data7); }
     else if (val == "6") { tSerial->dataBits = static_cast<QSerialPort::DataBits>(QSerialPort::Data6); }
     else if (val == "5") { tSerial->dataBits = static_cast<QSerialPort::DataBits>(QSerialPort::Data5); }
-    tSerial->stringDataBits = sett.value("STR_DATA_BITS").toString();
+    tSerial->stringDataBits = sett.value("SERIAL_CONFIGURATION/STR_DATA_BITS").toString();
 
-    val = sett.value("PARITY").toString();
+    val = sett.value("SERIAL_CONFIGURATION/PARITY").toString();
     if (val == "0") { tSerial->parity = static_cast<QSerialPort::Parity>(QSerialPort::NoParity); }
     else if (val == "2") { tSerial->parity = static_cast<QSerialPort::Parity>(QSerialPort::EvenParity); }
     else if (val == "3") { tSerial->parity = static_cast<QSerialPort::Parity>(QSerialPort::OddParity); }
     else if (val == "5") { tSerial->parity = static_cast<QSerialPort::Parity>(QSerialPort::MarkParity); }
     else if (val == "4") { tSerial->parity = static_cast<QSerialPort::Parity>(QSerialPort::SpaceParity); }
-    tSerial->stringParity = sett.value("STR_PARITY").toString();
+    tSerial->stringParity = sett.value("SERIAL_CONFIGURATION/STR_PARITY").toString();
 
-    val = sett.value("STOP_BITS").toString();
+    val = sett.value("SERIAL_CONFIGURATION/STOP_BITS").toString();
     if (val == "1") { tSerial->stopBits = static_cast<QSerialPort::StopBits>(QSerialPort::OneStop); }
     else { tSerial->stopBits = static_cast<QSerialPort::StopBits>(QSerialPort::TwoStop); }
-    tSerial->stringStopBits = sett.value("STR_STOP_BITS").toString();
+    tSerial->stringStopBits = sett.value("SERIAL_CONFIGURATION/STR_STOP_BITS").toString();
 
-    val = sett.value("FLOW_CONTROL").toString();
+    val = sett.value("SERIAL_CONFIGURATION/FLOW_CONTROL").toString();
     if (val == "0") { tSerial->flowControl = static_cast<QSerialPort::FlowControl>(QSerialPort::NoFlowControl); }
     else if (val == "1") { tSerial->flowControl = static_cast<QSerialPort::FlowControl>(QSerialPort::HardwareControl); }
     else if (val == "2") { tSerial->flowControl = static_cast<QSerialPort::FlowControl>(QSerialPort::SoftwareControl); }
-    tSerial->stringFlowControl = sett.value("STR_FLOW_CONTROL").toString();
+    tSerial->stringFlowControl = sett.value("SERIAL_CONFIGURATION/STR_FLOW_CONTROL").toString();
     sett.endGroup();
 }
 
@@ -96,7 +97,7 @@ bool setting::checkSetting(){
     QDir path("data/config");
     QStringList files = path.entryList(QDir::Files);
 
-    QString currFiles = "serial_setting.ini";
+    QString currFiles = "serial_setting";
 
     for(int i = 0; i < files.count(); i++){
         if(currFiles == QString(files.at(i))) cek = true;

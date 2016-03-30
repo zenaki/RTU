@@ -25,6 +25,7 @@
 
 #include <QMessageBox>
 #include <QMessageLogger>
+#include <QDebug>
 
 #include <QSettings>
 #include <QStringList>
@@ -34,9 +35,26 @@
 #include <QtSerialPort/QSerialPort>
 
 /** DEFINE LIB **/
-#define  MAX_MODULE    256
+#define  MAX_MODULE          256
 
+#define Analog_Monita        250
+#define Analog_Running_Hours 230
+#define RPM                  1
+#define ON_OFF               2
+//#define PUSH_BUTTON          3
+#define FLOW_X               6
+#define RPM_RH               7
+//#define RUNNING_HOURS        8
+#define ON_OFF_RH            9
 
+#define DATA_PERIOD          10
+
+#define DELAY_MS             50
+#define TIMEOUT              10000
+#define STR_TIMEOUT          "Time Out !! \r\nPlease try again .."
+
+#define CODEC                "UTF-8"
+//#define DECODEC              "UTF-8"
 
 /** STRUCT **/
 
@@ -127,6 +145,12 @@ struct t_serial_settings {
     QString str_data_sim;
     QString str_data_src;
     QString str_data_dat;
+};
+
+struct t_plugin {
+    QStringList PluginName;
+    QStringList PluginExec;
+    int jml_plugin;
 };
 
 #include "model/debug.h"

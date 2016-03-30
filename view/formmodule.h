@@ -2,7 +2,6 @@
 #define FORMMODULE_H
 
 #include <QDialog>
-#include "model/header_checkbox.h"
 #include <QPushButton>
 #include <QCheckBox>
 #include <QSignalMapper>
@@ -28,7 +27,6 @@ namespace Ui {
 class formModule;
 }
 
-class MyHeader;
 class worker;
 class MainWindow;
 class serial;
@@ -61,10 +59,13 @@ private slots:
     void writeLogFile();
 
     void on_pbAddRow_clicked();
+    void set_kanal_clicked(int index);
     void del_src_clicked(int index);
     void del_alrm_clicked(int index);
 
     void on_pbDeleteRows_clicked();
+
+    void on_pbRefresh_clicked();
 
 private:
     worker *work;
@@ -77,19 +78,9 @@ private:
     QSerialPort *Serial_Com;
     QLabel *type[16];
 
-    /** Input Tab **/
-    QLineEdit *name_input[16];
-    QComboBox *type_input[16];
-    QComboBox *state_input[16];
-    QLineEdit *calib_m[16];
-    QLineEdit *calib_x[16];
-    QLineEdit *reg_input[16];
-
-    /** Output Tab **/
-    QLineEdit *name_output[16];
-    QLineEdit *type_output[16];
-    QComboBox *state_output[16];
-    QComboBox *control[16];
+    MainWindow *Main;
+    serial *Serial;
+    setting *Setting;
 
     /** Function **/
     void setInterface(QString address);
@@ -101,14 +92,24 @@ private:
     void setInterface_Alarm(QString address);
     void setInterface_Data(QString address);
     void EnableButton(bool enab);
-    bool checkFormula(QString data);
 
-    MainWindow *Main;
-    serial *Serial;
-    setting *Setting;
+    /** Input Tab **/
+    QPushButton *set_input[16];
+    QSignalMapper *SigMapSet_input;
+    QLineEdit *name_input[16];
+    QComboBox *type_input[16];
+    QComboBox *state_input[16];
+    QLineEdit *calib_m[16];
+    QLineEdit *calib_x[16];
+    QComboBox *reg_input[16];
+
+    /** Output Tab **/
+    QLineEdit *name_output[16];
+    QLineEdit *type_output[16];
+    QComboBox *state_output[16];
+    QComboBox *control[16];
 
     /** Sources Tab **/
-    MyHeader *cb_header_source;
     QCheckBox *check_source[16];
     QPushButton *delete_source[16];
     QSignalMapper *SigMapDel_Source;
@@ -124,8 +125,9 @@ private:
     QLineEdit *length_source[16];
     QLineEdit *target_reg_source[16];
 
+    bool checkFormula(QString data);
+
     /** Alarm Threshold Tab **/
-    MyHeader *cb_header_alarm;
     QCheckBox *check_alarm[16];
     QPushButton *delete_alarm[16];
     QSignalMapper *SigMapDel_Alarm;
@@ -139,6 +141,14 @@ private:
     QLineEdit *batas_h[16];
     QLineEdit *batas_hh[16];
     QLineEdit *range_h[16];
+
+    /** Data Monitoring **/
+    QLineEdit *reg_data[16];
+    QLineEdit *name_data[16];
+    QLineEdit *value_data[16];
+    QLineEdit *unit_data[16];
+
+    void data_monitoring();
 };
 
 #endif // FORMMODULE_H

@@ -25,8 +25,12 @@ MainWindow::MainWindow(QWidget *parent) :
     modelTree = new QStandardItemModel();
     this->Refresh_Tree();
 
-    this->ui->bottom_message->setStyleSheet("QLabel { color : black; }");
-    this->ui->bottom_message->setText("Not Connected");
+    bottom_message = new QLabel(this);
+    this->ui->statusBar->addPermanentWidget(bottom_message,1);
+    bottom_message->setStyleSheet("QLabel { color : black; }");
+    bottom_message->setText("Not Connected");
+//    this->ui->statusBar->setStyleSheet("QLabel { color : black; }");
+//    this->ui->statusBar->showMessage("Not Connected");
 
 //    serial = new QSerialPort(this);
 //    SettingsDialogForm = new SettingsDialog(this);
@@ -43,6 +47,9 @@ MainWindow::MainWindow(QWidget *parent) :
     this->ui->actionConfig->setEnabled(true);
 
     busy = new QLightBoxWidget(this);
+
+    SigMapPlugin = new QSignalMapper(this);
+    this->readPlugin();
 }
 
 MainWindow::~MainWindow()
@@ -398,21 +405,25 @@ void MainWindow::on_actionConnect_triggered()
 
     if (SerialPort->open(QIODevice::ReadWrite)) {
         Setting.read_setting(&tSerial);
-        this->ui->bottom_message->setStyleSheet("QLabel { color : blue; }");
+        bottom_message->setStyleSheet("QLabel { color : blue; }");
+//        this->ui->statusBar->setStyleSheet("QLabel { color : blue; }");
         StatusMessage = QString("Connected to ") + tSerial.name +
                         QString(", BR = ") + tSerial.stringBaudRate +
                         QString(", DB = ") + tSerial.stringDataBits +
                         QString(", PR = ") + tSerial.stringParity +
                         QString(", SB = ") + tSerial.stringStopBits +
                         QString(", FC = ") + tSerial.stringFlowControl;
-        this->ui->bottom_message->setText(StatusMessage);
+        bottom_message->setText(StatusMessage);
+        this->ui->statusBar->showMessage(StatusMessage);
         this->ui->actionConnect->setEnabled(false);
         this->ui->actionDisconnect->setEnabled(true);
         this->ui->actionConfig->setEnabled(false);
     } else {
 //        QMessageBox::critical(this, tr("Error"), SerialPort->errorString());
-        this->ui->bottom_message->setStyleSheet("QLabel { color : red; }");
-        this->ui->bottom_message->setText("Connecting Fail");
+        bottom_message->setStyleSheet("QLabel { color : red; }");
+        bottom_message->setText("Connecting Fail");
+//        this->ui->statusBar->setStyleSheet("QLabel { color : red; }");
+//        this->ui->statusBar->showMessage("Connecting Fail");
         if (SerialPort->isOpen())
             SerialPort->close();
         this->ui->actionConnect->setEnabled(true);
@@ -426,15 +437,21 @@ void MainWindow::on_actionDisconnect_triggered()
 //    serial Serial;
 //    Serial.close_serial(SerialPort);
     if (SerialPort->isOpen()) {
-        SerialPort->close();
-        this->ui->bottom_message->setStyleSheet("QLabel { color : black; }");
+        if (SerialPort->open(QIODevice::ReadWrite)) {
+            SerialPort->close();
+        }
+        bottom_message->setStyleSheet("QLabel { color : black; }");
+//        this->ui->statusBar->setStyleSheet("QLabel { color : black; }");
         StatusMessage.replace("Connected to ", "Disconnected from ");
 //        StatusMessage = "Disconnect";
-        this->ui->bottom_message->setText(StatusMessage);
+        bottom_message->setText(StatusMessage);
+//        this->ui->statusBar->showMessage(StatusMessage);
     } else {
-        this->ui->bottom_message->setStyleSheet("QLabel { color : black; }");
+        bottom_message->setStyleSheet("QLabel { color : black; }");
+//        this->ui->statusBar->setStyleSheet("QLabel { color : black; }");
         StatusMessage = "Disconnect";
-        this->ui->bottom_message->setText(StatusMessage);
+        bottom_message->setText(StatusMessage);
+//        this->ui->statusBar->showMessage(StatusMessage);
     }
 
     this->ui->actionConnect->setEnabled(true);
@@ -444,6 +461,7 @@ void MainWindow::on_actionDisconnect_triggered()
 
 void MainWindow::readData()
 {
+    QCoreApplication::processEvents();
     struct t_serial_settings tSerial;
     str_data.append(SerialPort->readAll());
     if (str_data.indexOf("<ENV") > 0 && str_data.indexOf("ENV>") > 0) {
@@ -464,7 +482,7 @@ void MainWindow::readData()
         Serial->write_parsing_env(&tSerial);
         str_data.clear();
         FinishRead = true;
-        work->write_FinishRead(FinishRead);
+        work->write_FinishRead(FinishRead, 0, "");
     } else if (str_data.indexOf("<I/O") > 0 && str_data.indexOf("I/O>") > 0) {
         int a = str_data.indexOf("<I/O");
         int b = str_data.indexOf("I/O>");
@@ -481,7 +499,7 @@ void MainWindow::readData()
         Serial->write_parsing_io(&tSerial);
         str_data.clear();
         FinishRead = true;
-        work->write_FinishRead(FinishRead);
+        work->write_FinishRead(FinishRead, 0, "");
     } else if (str_data.indexOf("<SIM") > 0 && str_data.indexOf("SIM>") > 0) {
         int a = str_data.indexOf("<SIM");
         int b = str_data.indexOf("SIM>");
@@ -498,7 +516,7 @@ void MainWindow::readData()
         Serial->write_parsing_sim(&tSerial);
         str_data.clear();
         FinishRead = true;
-        work->write_FinishRead(FinishRead);
+        work->write_FinishRead(FinishRead, 0, "");
     } else if (str_data.indexOf("<SRC") > 0 && str_data.indexOf("SRC>") > 0) {
         int a = str_data.indexOf("<SRC");
         int b = str_data.indexOf("SRC>");
@@ -515,7 +533,7 @@ void MainWindow::readData()
         Serial->write_parsing_src(&tSerial);
         str_data.clear();
         FinishRead = true;
-        work->write_FinishRead(FinishRead);
+        work->write_FinishRead(FinishRead, 0, "");
     } else if (str_data.indexOf("<DAT") > 0 && str_data.indexOf("DAT>") > 0) {
         int a = str_data.indexOf("<DAT");
         int b = str_data.indexOf("DAT>");
@@ -532,15 +550,15 @@ void MainWindow::readData()
         Serial->write_parsing_dat(&tSerial);
         str_data.clear();
         FinishRead = true;
-        work->write_FinishRead(FinishRead);
+        work->write_FinishRead(FinishRead, 0, "");
     } else if (str_data.indexOf("<OK>") > 0) {
         str_data.clear();
         FinishRead = true;
-        work->write_FinishRead(FinishRead);
+        work->write_FinishRead(FinishRead, 0, "");
     } else if (str_data.indexOf("<ERR>") > 0) {
         str_data.clear();
         FinishRead = true;
-        work->write_FinishRead(FinishRead);
+        work->write_FinishRead(FinishRead, 1, "");
     }
 }
 
@@ -588,16 +606,103 @@ void MainWindow::on_actionRefresh_triggered()
 
 void MainWindow::on_actionAdd_Plugin_triggered()
 {
-    QString plugin = QFileDialog::getExistingDirectory(this, tr("Select Folder"), QDir::homePath(), QFileDialog::ShowDirsOnly);
-//    QStringList plugin = QFileDialog::getOpenFileNames(this, tr("Load Module"), tr("data/module/"), tr("(*.zip)"));
-    if (!QDir(QDir::currentPath() + "/plugin").exists()) {
-        QDir().mkdir(QDir::currentPath() + "/plugin");
-    }
+//    QString plugin = QFileDialog::getExistingDirectory(this, tr("Select Folder"), QDir::homePath(), QFileDialog::ShowDirsOnly);
+    QStringList plugin = QFileDialog::getOpenFileNames(this, tr("Load Module"), tr("data/module/"), tr("(*.zip)"));
+    if (plugin.isEmpty()) return;
+    QStringList file; bool fail = false;
+    QStringList PluginName; QStringList PluginExec;
 
-    QString program = QDir::currentPath() + "/sarasvati";
-    QStringList arguments;
-    QProcess *myProcess = new QProcess(qApp);
-    myProcess->start(program, arguments);
+    for (int i = 0; i < plugin.length(); i++) {
+        file = work->ListContents(plugin.at(i));
+        if (file.indexOf(QRegExp("^" + QRegExp::escape("plugin.cfg") + ".+")) == 0) {
+            fail = true;
+            break;
+        }
+    }
+    if (fail) {QMessageBox::information(this, "Add Pluggin", "Please select plugin zip file correctly"); return;}
+    QFile FileConfg("plugin.cfg");
+    QFile PluginConfg("plugin/plugin");
+    struct t_plugin tPlugin;
+    for (int i = 0; i < plugin.length(); i++) {
+        work->DecompressFiles(plugin.at(i), QStringList() << "plugin.cfg", QDir::currentPath());
+        PluginName.insert(i, work->readPluginConfgName("plugin.cfg"));
+        PluginExec.insert(i, work->readPluginConfgExec("plugin.cfg"));
+
+        if (PluginConfg.exists()) {
+            work->readPlugin(&tPlugin);
+            fail = false;
+            for (int j = 0; j < tPlugin.jml_plugin; j++) {
+                if (tPlugin.PluginName.at(i) == PluginName.at(i)) {
+                    fail = true;
+                    break;
+                }
+            }
+            if (!fail) {
+                tPlugin.PluginName.insert(tPlugin.jml_plugin, PluginName.at(i));
+                tPlugin.PluginExec.insert(tPlugin.jml_plugin, PluginExec.at(i));
+
+                work->DecompressDir(plugin.at(i), "plugin/" + tPlugin.PluginName.at(tPlugin.jml_plugin));
+                Plugin[tPlugin.jml_plugin] = new QAction(tPlugin.PluginName.at(tPlugin.jml_plugin), this);
+                this->ui->menuPlugin->addAction(Plugin[tPlugin.jml_plugin]);
+                connect(Plugin[tPlugin.jml_plugin], SIGNAL(triggered()), SigMapPlugin, SLOT(map()));
+                SigMapPlugin->setMapping(Plugin[tPlugin.jml_plugin], tPlugin.jml_plugin);
+
+                tPlugin.jml_plugin++;
+                work->writePlugin(&tPlugin);
+            } else {
+                QMessageBox::warning(this, "Plugin Warning", "The Plugin is added before ..");
+            }
+        } else {
+            tPlugin.jml_plugin = 0;
+            tPlugin.PluginName.insert(tPlugin.jml_plugin, PluginName.at(i));
+            tPlugin.PluginExec.insert(tPlugin.jml_plugin, PluginExec.at(i));
+
+            work->DecompressDir(plugin.at(i), "plugin/" + tPlugin.PluginName.at(tPlugin.jml_plugin));
+            Plugin[tPlugin.jml_plugin] = new QAction(tPlugin.PluginName.at(tPlugin.jml_plugin), this);
+            this->ui->menuPlugin->addAction(Plugin[tPlugin.jml_plugin]);
+            connect(Plugin[tPlugin.jml_plugin], SIGNAL(triggered()), SigMapPlugin, SLOT(map()));
+            SigMapPlugin->setMapping(Plugin[tPlugin.jml_plugin], tPlugin.jml_plugin);
+
+            tPlugin.jml_plugin++;
+            work->writePlugin(&tPlugin);
+        }
+        FileConfg.remove();
+    }
+    connect(SigMapPlugin, SIGNAL(mapped(int)), this, SLOT(openPlugin(int)));
+}
+
+void MainWindow::openPlugin(int index)
+{
+    struct t_plugin tPlugin;
+    work->readPlugin(&tPlugin);
+
+    QString program = QDir::currentPath() + "/plugin/" +
+                      tPlugin.PluginName.at(index) + "/" +
+                      tPlugin.PluginExec.at(index);
+    QFile Plugin(program);
+    if (Plugin.exists()) {
+        QStringList arguments;
+        QProcess *myProcess = new QProcess(qApp);
+        myProcess->start(program, arguments);
+    } else {
+        QMessageBox::warning(this, "Plugin Warning", "Plugin not found !");
+    }
+}
+
+void MainWindow::readPlugin()
+{
+    QFile PluginConfg("plugin/plugin");
+    if (PluginConfg.exists()) {
+        struct t_plugin tPlugin;
+        work->readPlugin(&tPlugin);
+        for (int i = 0; i < tPlugin.jml_plugin; i++) {
+            Plugin[i] = new QAction(tPlugin.PluginName.at(i), this);
+            this->ui->menuPlugin->addAction(Plugin[i]);
+            connect(Plugin[i], SIGNAL(triggered()), SigMapPlugin, SLOT(map()));
+            SigMapPlugin->setMapping(Plugin[i], i);
+        }
+        connect(SigMapPlugin, SIGNAL(mapped(int)), this, SLOT(openPlugin(int)));
+    }
 }
 
 void MainWindow::handleError(QSerialPort::SerialPortError error)

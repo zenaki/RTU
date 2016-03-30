@@ -23,6 +23,8 @@
 #include <QPushButton>
 #include <QGridLayout>
 
+#include "JlCompress.h"
+
 class formModule;
 class serial;
 class QLightBoxWidget;
@@ -58,7 +60,7 @@ public:
     void Get_Input(struct t_module *tModule, QStringList data);
     void Get_Output(struct t_module *tModule, QStringList data);
     void Get_SIM(struct t_module *tModule, QStringList data);
-    void Get_Signal(struct t_module *tModule, QStringList data);
+//    void Get_Signal(struct t_module *tModule, QStringList data);
     void Get_Sumber(struct t_module *tModule, QStringList data);
     void Get_Data(struct t_module *tModule, QStringList data);
 
@@ -72,20 +74,33 @@ public:
 //    QString Request;
 
     bool Set_ENV(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, struct t_module *tModule, bool timeout = false);
-    bool Set_Input(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, struct t_module *tModule, bool timeout = false);
+    bool Set_Input(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, struct t_module *tModule, bool timeout = false, QString index = 0);
     bool Set_Output(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, struct t_module *tModule, bool timeout = false);
     bool Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, struct t_module *tModule, bool timeout = false);
     bool Set_Sumber(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, struct t_module *tModule, bool timeout = false);
     bool Set_Data(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, struct t_module *tModule, bool timeout = false);
     bool Reset_Board(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, bool timeout = false);
 
-    void write_FinishRead(bool FinishRead);
+    void write_FinishRead(bool FinishRead, int cekErr, QString strErr);
     bool read_FinishRead();
+    int read_flagERR();
+    QString read_strERR();
 
     void delay(int ms);
     bool waiting_set(QWidget *parent, QLightBoxWidget *lBox, QString desc, bool timeout = false);
 
-    void writeLogFile(QString log);
+    void writeLogFile(QString log, int flagERR, QString strERR, bool timeout);
+
+    void CompressDir(QString ZipFile, QString Directory);
+    void DecompressDir(QString ZipFile, QString Directory);
+    void CompressFiles(QString ZipFile, QStringList Files);
+    void DecompressFiles(QString ZipFile, QStringList Files, QString Directory);
+    QStringList ListContents(QString ZipFile);
+
+    void readPlugin(struct t_plugin *tPlugin);
+    QString readPluginConfgName(QString address);
+    QString readPluginConfgExec(QString address);
+    void writePlugin(struct t_plugin *tPlugin);
 
 //signals:
 //    void TimeOut();

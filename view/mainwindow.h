@@ -55,6 +55,8 @@ public:
 
     bool FinishRead;
 
+    QLabel *bottom_message;
+
 public slots:
     void on_actionConnect_triggered();
     void on_actionDisconnect_triggered();
@@ -77,6 +79,7 @@ private slots:
     void on_actionConfig_triggered();
 
     void on_actionAdd_Plugin_triggered();
+    void openPlugin(int index);
 
 private:
     /** Other Class **/
@@ -103,6 +106,10 @@ private:
 
     QString module_address_sv; //for save
     QString module_name_sv; //for save
+
+    QAction *Plugin[20];
+    QSignalMapper *SigMapPlugin;
+    void readPlugin();
 };
 
 #endif // MAINWINDOW_H

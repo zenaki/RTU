@@ -15,6 +15,27 @@ OBJECTS_DIR += compile
 UI_DIR += compile
 MOC_DIR += compile
 
+#########################################################################
+#Set Variables QuaZip and ZLib
+QUAZIPCODEDIR = "../quazip-0.5.1/quazip"
+ZLIBCODEDIR = "../Libs"
+
+#Include the compiled code
+unix {
+    LIBS += -L$${ZLIBCODEDIR} -lz
+}
+
+win32 {
+    LIBS += -L$${ZLIBCODEDIR} -lzdll
+}
+
+#Include files
+INCLUDEPATH += $${QUAZIPCODEDIR}
+HEADERS += $${QUAZIPCODEDIR}/*.h
+SOURCES += $${QUAZIPCODEDIR}/*.cpp
+SOURCES += $${QUAZIPCODEDIR}/*.c
+#########################################################################
+
 SOURCES += \
     main.cpp\
     view/mainwindow.cpp \
@@ -49,8 +70,7 @@ HEADERS += \
     view/form_addmodule.h \
     controller/worker.h \
     view/settingsdialog.h \
-    model/interface_manipulator/qlightboxwidget.h \
-    model/header_checkbox.h
+    model/interface_manipulator/qlightboxwidget.h
 
 FORMS += \
     view/mainwindow.ui \
