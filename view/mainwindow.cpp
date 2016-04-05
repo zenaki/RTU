@@ -50,6 +50,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
     SigMapPlugin = new QSignalMapper(this);
     this->readPlugin();
+
+    QFile usr("data/config/usr");
+    if (!usr.exists()) {
+        this->ui->actionCreate_User->setEnabled(true);
+        this->ui->actionEdit_User->setEnabled(false);
+    } else {
+        this->ui->actionCreate_User->setEnabled(false);
+        this->ui->actionEdit_User->setEnabled(true);
+    }
 }
 
 MainWindow::~MainWindow()
@@ -146,7 +155,13 @@ void MainWindow::on_actionNew_triggered()
                 strcpy(tModule.serial_number, GetNoSeri.toLatin1());
 
                 mod->write_module(&tModule);
+                QString pth;
+                pth.sprintf("data/module/m_%s.dbe",tModule.module_name);
+                cryp code; code.encryp(pth);
             } else {
+                tModule.InputName.clear();
+                tModule.OutputName.clear();
+
                 timeout = work->Request_ENV(this, busy, SerialPort, timeout);
                 if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
                 work->Get_ENV(&tModule, val_data);
@@ -163,9 +178,7 @@ void MainWindow::on_actionNew_triggered()
                 timeout = work->Request_Sumber(this, busy, SerialPort, timeout);
                 if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
                 work->Get_Sumber(&tModule, val_data);
-
-                tModule.InputName.clear();
-                tModule.OutputName.clear();
+                tModule.jml_alarm = 0;
 
                 GetNamaBoard.append("_new");
                 QString newModule = "m_" + GetNamaBoard + ".dbe";
@@ -173,8 +186,11 @@ void MainWindow::on_actionNew_triggered()
                 strcpy(tModule.serial_number, GetNoSeri.toLatin1());
                 QString Address = "data/module/" + newModule;
                 mod->write_module(&tModule);
+                QString pth;
+                pth.sprintf("data/module/m_%s.dbe",tModule.module_name);
+                cryp code; code.encryp(pth);
 
-                faddModule = new form_addModule(this, false, Address, 2);
+                faddModule = new form_addModule(this, false, Address, 3);
                 faddModule->setWindowTitle("Edit Module");
                 faddModule->setModal(true);
 
@@ -223,6 +239,9 @@ void MainWindow::on_actionNew_triggered()
             strcpy(tModule.serial_number, GetNoSeri.toLatin1());
 
             mod->write_module(&tModule);
+            QString pth;
+            pth.sprintf("data/module/m_%s.dbe",tModule.module_name);
+            cryp code; code.encryp(pth);
 
             QString title;
             title.sprintf("%s", tModule.module_name);
@@ -259,6 +278,7 @@ void MainWindow::on_actionSave_triggered()
         mod->read_module(&tModule, module_address_sv);
         QString newAddress = QFileDialog::getSaveFileName(this, tr("Save As Module"), module_address_sv, tr("(*.dbe)"));
         mod->save_as_module(&tModule, newAddress);
+        cryp code; code.encryp(newAddress);
         Message = "Module with name : " + module_name_sv + " was saved on \n\n";
         Message.append(newAddress);
         QMessageBox::information(this, "Saving Successfully ..", Message, 0, 0);
@@ -310,6 +330,9 @@ void MainWindow::on_actionLoad_triggered()
             if (reply == QMessageBox::Yes) {
                 mod->read_module(&tModule, fileName[i]);
                 mod->write_module(&tModule);
+                QString pth;
+                pth.sprintf("data/module/m_%s.dbe",tModule.module_name);
+                cryp code; code.encryp(pth);
                 return;
             } else {
                 mod->read_module(&tModule, fileName[i]);
@@ -462,6 +485,7 @@ void MainWindow::on_actionDisconnect_triggered()
 void MainWindow::readData()
 {
     QCoreApplication::processEvents();
+    cryp code;
     struct t_serial_settings tSerial;
     str_data.append(SerialPort->readAll());
     if (str_data.indexOf("<ENV") > 0 && str_data.indexOf("ENV>") > 0) {
@@ -479,10 +503,12 @@ void MainWindow::readData()
         GetNamaBoard = val_data[0];
         GetNoSeri = val_data[1];
         tSerial.str_data_env = str_data;
-        Serial->write_parsing_env(&tSerial);
+        Serial->write_parsing(&tSerial);
+        code.encryp("data/config/serial_parsing");
         str_data.clear();
         FinishRead = true;
         work->write_FinishRead(FinishRead, 0, "");
+        code.encryp("data/config/serial_parsing");
     } else if (str_data.indexOf("<I/O") > 0 && str_data.indexOf("I/O>") > 0) {
         int a = str_data.indexOf("<I/O");
         int b = str_data.indexOf("I/O>");
@@ -496,10 +522,12 @@ void MainWindow::readData()
                     .remove("hmi_sync")
                     .remove("\r").remove("\n").remove("(X)").split("*");
         tSerial.str_data_io = str_data;
-        Serial->write_parsing_io(&tSerial);
+        Serial->write_parsing(&tSerial);
+        code.encryp("data/config/serial_parsing");
         str_data.clear();
         FinishRead = true;
         work->write_FinishRead(FinishRead, 0, "");
+        code.encryp("data/config/serial_parsing");
     } else if (str_data.indexOf("<SIM") > 0 && str_data.indexOf("SIM>") > 0) {
         int a = str_data.indexOf("<SIM");
         int b = str_data.indexOf("SIM>");
@@ -513,10 +541,12 @@ void MainWindow::readData()
                     .remove("hmi_cek_cfg_sim")
                     .remove("\r").remove("\n").remove("(X)").split("*");
         tSerial.str_data_sim = str_data;
-        Serial->write_parsing_sim(&tSerial);
+        Serial->write_parsing(&tSerial);
+        code.encryp("data/config/serial_parsing");
         str_data.clear();
         FinishRead = true;
         work->write_FinishRead(FinishRead, 0, "");
+        code.encryp("data/config/serial_parsing");
     } else if (str_data.indexOf("<SRC") > 0 && str_data.indexOf("SRC>") > 0) {
         int a = str_data.indexOf("<SRC");
         int b = str_data.indexOf("SRC>");
@@ -530,10 +560,12 @@ void MainWindow::readData()
                     .remove("hmi_cek_sumber")
                     .remove("\r").remove("\n").remove("(X)").split("*");
         tSerial.str_data_src = str_data;
-        Serial->write_parsing_src(&tSerial);
+        Serial->write_parsing(&tSerial);
+        code.encryp("data/config/serial_parsing");
         str_data.clear();
         FinishRead = true;
         work->write_FinishRead(FinishRead, 0, "");
+        code.encryp("data/config/serial_parsing");
     } else if (str_data.indexOf("<DAT") > 0 && str_data.indexOf("DAT>") > 0) {
         int a = str_data.indexOf("<DAT");
         int b = str_data.indexOf("DAT>");
@@ -547,18 +579,22 @@ void MainWindow::readData()
                     .remove("hmi_cek_data")
                     .remove("\r").remove("\n").remove("(X)").split("*");
         tSerial.str_data_dat = str_data;
-        Serial->write_parsing_dat(&tSerial);
+        Serial->write_parsing(&tSerial);
+        code.encryp("data/config/serial_parsing");
         str_data.clear();
         FinishRead = true;
         work->write_FinishRead(FinishRead, 0, "");
+        code.encryp("data/config/serial_parsing");
     } else if (str_data.indexOf("<OK>") > 0) {
         str_data.clear();
         FinishRead = true;
         work->write_FinishRead(FinishRead, 0, "");
+        code.encryp("data/config/serial_parsing");
     } else if (str_data.indexOf("<ERR>") > 0) {
         str_data.clear();
         FinishRead = true;
         work->write_FinishRead(FinishRead, 1, "");
+        code.encryp("data/config/serial_parsing");
     }
 }
 
@@ -607,7 +643,7 @@ void MainWindow::on_actionRefresh_triggered()
 void MainWindow::on_actionAdd_Plugin_triggered()
 {
 //    QString plugin = QFileDialog::getExistingDirectory(this, tr("Select Folder"), QDir::homePath(), QFileDialog::ShowDirsOnly);
-    QStringList plugin = QFileDialog::getOpenFileNames(this, tr("Load Module"), tr("data/module/"), tr("(*.zip)"));
+    QStringList plugin = QFileDialog::getOpenFileNames(this, tr("Adding Plugin"), QDir::currentPath(), tr("(*.zip)"));
     if (plugin.isEmpty()) return;
     QStringList file; bool fail = false;
     QStringList PluginName; QStringList PluginExec;
@@ -649,6 +685,7 @@ void MainWindow::on_actionAdd_Plugin_triggered()
 
                 tPlugin.jml_plugin++;
                 work->writePlugin(&tPlugin);
+                cryp code; code.encryp("plugin/plugin");
             } else {
                 QMessageBox::warning(this, "Plugin Warning", "The Plugin is added before ..");
             }
@@ -665,6 +702,7 @@ void MainWindow::on_actionAdd_Plugin_triggered()
 
             tPlugin.jml_plugin++;
             work->writePlugin(&tPlugin);
+            cryp code; code.encryp("plugin/plugin");
         }
         FileConfg.remove();
     }
@@ -712,4 +750,25 @@ void MainWindow::handleError(QSerialPort::SerialPortError error)
         this->on_actionDisconnect_triggered();
         QMessageBox::critical(this, tr("Critical Error"), "Please check your connection ..!!!");
     }
+}
+
+void MainWindow::on_actionCreate_User_triggered()
+{
+    int exe;
+    form_login = new loginForm(this, "CREATE");
+    form_login->setModal(true);
+    exe = form_login->exec();
+    if(exe == 0) return;
+
+    this->ui->actionCreate_User->setEnabled(false);
+    this->ui->actionEdit_User->setEnabled(true);
+}
+
+void MainWindow::on_actionEdit_User_triggered()
+{
+    int exe;
+    form_login = new loginForm(this, "EDIT");
+    form_login->setModal(true);
+    exe = form_login->exec();
+    if(exe == 0) return;
 }

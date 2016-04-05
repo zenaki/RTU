@@ -17,6 +17,7 @@
 #include <view/mainwindow.h>
 #include <model/module.h>
 #include <model/interface_manipulator/qlightboxwidget.h>
+#include <view/loginform.h>
 
 namespace Ui {
 class MainWindow;
@@ -26,6 +27,7 @@ class worker;
 class serial;
 class module;
 class QLightBoxWidget;
+class loginForm;
 
 class MainWindow : public QMainWindow
 {
@@ -81,6 +83,10 @@ private slots:
     void on_actionAdd_Plugin_triggered();
     void openPlugin(int index);
 
+    void on_actionCreate_User_triggered();
+
+    void on_actionEdit_User_triggered();
+
 private:
     /** Other Class **/
     QString NoSeri;
@@ -110,6 +116,8 @@ private:
     QAction *Plugin[20];
     QSignalMapper *SigMapPlugin;
     void readPlugin();
+
+    loginForm *form_login;
 };
 
 #endif // MAINWINDOW_H

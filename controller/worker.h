@@ -25,6 +25,9 @@
 
 #include "JlCompress.h"
 
+#include "model/cryp.h"
+class cryp;
+
 class formModule;
 class serial;
 class QLightBoxWidget;

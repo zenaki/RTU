@@ -143,10 +143,10 @@ private:
     QLineEdit *range_h[16];
 
     /** Data Monitoring **/
-    QLineEdit *reg_data[16];
-    QLineEdit *name_data[16];
-    QLineEdit *value_data[16];
-    QLineEdit *unit_data[16];
+    QLabel *reg_data[20];
+    QLabel *name_data[20];
+    QLabel *value_data[20];
+    QLabel *unit_data[20];
 
     void data_monitoring();
 };

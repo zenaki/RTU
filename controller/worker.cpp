@@ -48,6 +48,9 @@ QString worker::loadModule(QStandardItemModel *tree, QTreeView *treeView, QStrin
         strcpy(tModule.module_name, NewName.toLatin1());
     }
     mod.write_module(&tModule);
+    QString pth;
+    pth.sprintf("data/module/m_%s.dbe",tModule.module_name);
+    cryp code; code.encryp(pth);
 
     QString modules;
     modules.sprintf("%s", tModule.module_name);
@@ -222,17 +225,17 @@ void worker::Get_ENV(struct t_module *tModule, QStringList data)
 {
     QString temp;
 
-    temp = data.at(0);
+    temp = data.at(0); temp.remove(" ");
     strcpy(tModule->module_name, temp.toUtf8().data());
-    temp = data.at(1);
+    temp = data.at(1); temp.remove(" ");
     strcpy(tModule->serial_number, temp.toUtf8().data());
-    temp = data.at(2);
+    temp = data.at(2); temp.remove(" ");
     strcpy(tModule->ip_address, temp.toUtf8().data());
-    temp = data.at(3);
+    temp = data.at(3); temp.remove(" ");
     strcpy(tModule->server_address, temp.toUtf8().data());
-    temp = data.at(4);
+    temp = data.at(4); temp.remove(" ");
     strcpy(tModule->file_address, temp.toUtf8().data());
-    temp = data.at(5);
+    temp = data.at(5); temp.remove(" ");
     tModule->flag_webclient = temp.toInt();
     if (temp == "0") {
         temp = "ACTIVE";
@@ -268,7 +271,7 @@ void worker::Get_Input(struct t_module *tModule, QStringList data)
     QStringList list;
     tModule->InputName.clear();
     for (int i = 0; i < tModule->Input.length(); i++) {
-        temp = tModule->data.at(i);
+        temp = tModule->data.at(i); temp.remove(" ");
         list = temp.split(';');
         tModule->InputName.insert(i, list.at(2));
     }
@@ -296,7 +299,9 @@ void worker::Get_SIM(struct t_module *tModule, QStringList data)
     QString temp;
 
     QString str_sim_1 = data.at(0);
+    str_sim_1.remove(" ");
     QString str_sim_2 = data.at(1);
+    str_sim_1.remove(" ");
 
     QStringList list_sim_1 = str_sim_1.split(";");
     QStringList list_sim_2 = str_sim_2.split(";");
@@ -482,11 +487,13 @@ void worker::Get_SIM(struct t_module *tModule, QStringList data)
 
 void worker::Get_Sumber(t_module *tModule, QStringList data)
 {
+    QString temp;
     tModule->sumber.clear();
     tModule->jml_sumber = 0;
     for (int i = 0; i < data.length(); i++) {
         if (data.at(i) != "") {
-            tModule->sumber.insert(tModule->jml_sumber, data.at(i));
+            temp = data.at(i); temp.remove(" ");
+            tModule->sumber.insert(tModule->jml_sumber, temp);
             tModule->jml_sumber++;
         }
     }
@@ -494,11 +501,13 @@ void worker::Get_Sumber(t_module *tModule, QStringList data)
 
 void worker::Get_Data(t_module *tModule, QStringList data)
 {
+    QString temp;
     tModule->data.clear();
     tModule->jml_data = 0;
     for (int i = 0; i < data.length(); i++) {
         if (data.at(i) != "") {
-            tModule->data.insert(tModule->jml_data, data.at(i));
+            temp = data.at(i); temp.remove(" ");
+            tModule->data.insert(tModule->jml_data, temp);
             tModule->jml_data++;
         }
     }
@@ -1011,10 +1020,14 @@ bool worker::read_FinishRead()
 {
     QString pth;
     pth = "data/config/serial_parsing";
+    cryp code;
+    code.decryp(pth);
     QSettings sett(pth, QSettings::IniFormat);
     sett.setIniCodec(CODEC);
 
     bool FinishRead = sett.value("FINISH_READ").toBool();
+
+    code.encryp(pth);
     return FinishRead;
 }
 
@@ -1022,10 +1035,14 @@ int worker::read_flagERR()
 {
     QString pth;
     pth = "data/config/serial_parsing";
+    cryp code;
+    code.decryp(pth);
     QSettings sett(pth, QSettings::IniFormat);
     sett.setIniCodec(CODEC);
 
     int flagERR = sett.value("ERROR_FLAG").toInt();
+
+    code.encryp(pth);
     return flagERR;
 }
 
@@ -1033,10 +1050,14 @@ QString worker::read_strERR()
 {
     QString pth;
     pth = "data/config/serial_parsing";
+    cryp code;
+    code.decryp(pth);
     QSettings sett(pth, QSettings::IniFormat);
     sett.setIniCodec(CODEC);
 
     QString strERR = sett.value("ERROR_STRING").toString();
+
+    code.encryp(pth);
     return strERR;
 }
 
@@ -1078,6 +1099,8 @@ void worker::writeLogFile(QString log, int flagERR, QString strERR, bool timeout
         outputFile.close();
     }
     this->write_FinishRead(false,2,"");
+    cryp code;
+    code.encryp("data/config/serial_parsing");
 }
 
 void worker::CompressDir(QString ZipFile, QString Directory)
@@ -1134,6 +1157,8 @@ void worker::readPlugin(struct t_plugin *tPlugin)
 {
     QString temp;
     QString pth = "plugin/plugin";
+    cryp code;
+    code.decryp(pth);
     QSettings sett(pth, QSettings::IniFormat);
     sett.setIniCodec(CODEC);
 
@@ -1149,11 +1174,15 @@ void worker::readPlugin(struct t_plugin *tPlugin)
         tPlugin->PluginExec.insert(i, temp);
     }
     sett.endGroup();
+
+    code.encryp(pth);
 }
 
 QString worker::readPluginConfgName(QString address)
 {
     QString temp;
+    cryp code;
+    code.decryp(address);
     QSettings sett(address, QSettings::IniFormat);
     sett.setIniCodec(CODEC);
 
@@ -1161,19 +1190,23 @@ QString worker::readPluginConfgName(QString address)
     temp = sett.value("PLUGIN_NAME").toString();
     sett.endGroup();
 
+    code.encryp(address);
     return temp;
 }
 
 QString worker::readPluginConfgExec(QString address)
 {
     QString temp;
+    cryp code;
+    code.decryp(address);
     QSettings sett(address, QSettings::IniFormat);
     sett.setIniCodec(CODEC);
 
     sett.beginGroup("PLUGIN");
-    temp = sett.value("EXEC").toString();
+    temp = sett.value("PLUGIN_EXEC").toString();
     sett.endGroup();
 
+    code.encryp(address);
     return temp;
 }
 

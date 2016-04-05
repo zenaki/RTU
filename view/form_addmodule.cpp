@@ -7,6 +7,22 @@ form_addModule::form_addModule(QWidget *parent, bool create, QString address, in
 {
     ui->setupUi(this);
 
+    this->ui->edit_module_name->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
+    this->ui->edit_sn->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
+    this->ui->edit_server_address->setInputMask("999.999.999.999");
+    this->ui->edit_file_address->setValidator(new QRegExpValidator(QRegExp("^\\S{1,20}$"),this));
+
+    this->ui->edit_devicename_1->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
+    this->ui->edit_devicename_2->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
+    this->ui->edit_number_1->setValidator(new QRegExpValidator(QRegExp("^\\d{1,15}$"),this));
+    this->ui->edit_number_2->setValidator(new QRegExpValidator(QRegExp("^\\d{1,15}$"),this));
+    this->ui->edit_apn_1->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
+    this->ui->edit_apn_2->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
+    this->ui->edit_user_1->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
+    this->ui->edit_user_2->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
+    this->ui->edit_passwd_1->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
+    this->ui->edit_passwd_2->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
+
     edit = !create;
     accept = 0;
 
@@ -187,12 +203,6 @@ void form_addModule::on_buttonBox_accepted()
 
     newFiles.sprintf("m_%s.dbe", tModule.module_name);
 
-    if (newFiles.indexOf(" ") > 0) {
-        accept = 0;
-        QMessageBox::warning(this, tr("Warning!"), tr("Tidak boleh menggunakan spasi di nama module!", 0,0));
-        return;
-    }
-
     /* cek apakah nama module sudah dipakai atau belum */
     for(int i = 0; i < files.count(); i++){
         if(newFiles == QString(files.at(i))) {
@@ -217,6 +227,10 @@ void form_addModule::on_buttonBox_accepted()
 //            CurrFile.close();
 
             mod.write_module(&tModule);
+            QString pth;
+            pth.sprintf("data/module/m_%s.dbe",tModule.module_name);
+            cryp code; code.encryp(pth);
+
 //            mod.update_module(&tModule, newFiles.prepend("data/module/"));
 //            mod.update_communication(&tModule, newFiles.prepend("data/module/"));
             accept = 1;
@@ -243,6 +257,10 @@ void form_addModule::on_buttonBox_accepted()
             }
 
             mod.write_module(&tModule);
+            QString pth;
+            pth.sprintf("data/module/m_%s.dbe",tModule.module_name);
+            cryp code; code.encryp(pth);
+
             accept = 1;
 
             close();

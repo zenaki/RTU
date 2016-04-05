@@ -75,34 +75,37 @@
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="actionNew"/>
+    <addaction name="actionLoad"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionRefresh"/>
    </widget>
    <widget class="QMenu" name="menuSetting">
     <property name="title">
-     <string>Setting</string>
+     <string>Communication</string>
     </property>
+    <addaction name="actionConnect"/>
+    <addaction name="actionDisconnect"/>
+    <addaction name="actionConfig"/>
    </widget>
-   <widget class="QMenu" name="menuModule">
+   <widget class="QMenu" name="menuPlugin">
     <property name="title">
-     <string>Module</string>
+     <string>Plugin</string>
     </property>
+    <addaction name="actionAdd_Plugin"/>
+    <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuUser_Access">
     <property name="title">
      <string>User Access</string>
     </property>
+    <addaction name="actionCreate_User"/>
+    <addaction name="actionEdit_User"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
      <string>Help</string>
     </property>
-    <widget class="QMenu" name="menuPlugin">
-     <property name="title">
-      <string>Plugin</string>
-     </property>
-     <addaction name="actionAdd_Plugin"/>
-     <addaction name="separator"/>
-    </widget>
-    <addaction name="menuPlugin"/>
    </widget>
    <widget class="QMenu" name="menuActive_Window">
     <property name="title">
@@ -111,7 +114,7 @@
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuSetting"/>
-   <addaction name="menuModule"/>
+   <addaction name="menuPlugin"/>
    <addaction name="menuUser_Access"/>
    <addaction name="menuActive_Window"/>
    <addaction name="menuHelp"/>
@@ -186,10 +189,10 @@
      <normaloff>:/new/prefix1/image/settings.png</normaloff>:/new/prefix1/image/settings.png</iconset>
    </property>
    <property name="text">
-    <string>Config</string>
+    <string>Configuration</string>
    </property>
    <property name="toolTip">
-    <string>Config Serial</string>
+    <string>Serial Configuration</string>
    </property>
   </action>
   <action name="actionSave">
@@ -198,7 +201,7 @@
      <normaloff>:/new/prefix1/image/editcopy.png</normaloff>:/new/prefix1/image/editcopy.png</iconset>
    </property>
    <property name="text">
-    <string>Save</string>
+    <string>Save as</string>
    </property>
    <property name="toolTip">
     <string>Save As  Module</string>
@@ -219,6 +222,16 @@
   <action name="actionAdd_Plugin">
    <property name="text">
     <string>Add Plugin</string>
+   </property>
+  </action>
+  <action name="actionCreate_User">
+   <property name="text">
+    <string>Create User</string>
+   </property>
+  </action>
+  <action name="actionEdit_User">
+   <property name="text">
+    <string>Edit User</string>
    </property>
   </action>
  </widget>

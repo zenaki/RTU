@@ -10,6 +10,9 @@
 #include <QtSerialPort/QSerialPort>
 #include <QtSerialPort/QSerialPortInfo>
 
+#include "model/cryp.h"
+class cryp;
+
 class SettingsDialog;
 
 class serial
@@ -26,12 +29,7 @@ public:
     void close_serial(QSerialPort *SerialPort);
     void write_data(QSerialPort *port, QString data);
 
-    void write_parsing_env(struct t_serial_settings *tSerial);
-    void write_parsing_io(struct t_serial_settings *tSerial);
-    void write_parsing_sim(struct t_serial_settings *tSerial);
-    void write_parsing_src(struct t_serial_settings *tSerial);
-    void write_parsing_dat(struct t_serial_settings *tSerial);
-
+    void write_parsing(struct t_serial_settings *tSerial);
     void read_parsing(struct t_serial_settings *tSerial);
 
 public slots:

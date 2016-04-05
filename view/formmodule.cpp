@@ -83,27 +83,29 @@ void formModule::setInterface_Input(QString address)
         connect(set_input[i],SIGNAL(clicked()),SigMapSet_input,SLOT(map()));
 
         name_input[i] = new QLineEdit(this);
+        name_input[i]->setValidator(new QRegExpValidator(QRegExp("^\\S{1,20}$"),this));
 
         type_input[i] = new QComboBox(this);
         if (i >= rowInputDigital) {
-            type_input[i]->addItem("Analog Monita",250);
-            type_input[i]->addItem("Analog Running Hours",230);
-        } else
-        {
-            type_input[i]->addItem("RPM",1);
-            type_input[i]->addItem("ON / OFF",2);
-//            type_input[i]->addItem("Push Button",3);
-            type_input[i]->addItem("Flow - X",6);
-            type_input[i]->addItem("RPM - RH",7);
-//            type_input[i]->addItem("Running Hours",8);
-            type_input[i]->addItem("ON / OFF - RH",9);
+            type_input[i]->addItem("Analog Monita");
+            type_input[i]->addItem("Analog Running Hours");
+        } else {
+            type_input[i]->addItem("RPM");
+            type_input[i]->addItem("ON / OFF");
+//            type_input[i]->addItem("Push Button");
+            type_input[i]->addItem("Flow - X");
+            type_input[i]->addItem("RPM - RH");
+//            type_input[i]->addItem("Running Hours");
+            type_input[i]->addItem("ON / OFF - RH");
         }
 
         calib_m[i] = new QLineEdit(this);
         calib_m[i]->setAlignment(Qt::AlignRight);
+        calib_m[i]->setValidator(new QDoubleValidator (0.000, 99.999, 0, this));
 
         calib_x[i] = new QLineEdit(this);
         calib_x[i]->setAlignment(Qt::AlignRight);
+        calib_x[i]->setValidator(new QDoubleValidator (0.000, 99.999, 0, this));
 
         reg_input[i] = new QComboBox(this);
         if (i < rowInputDigital) {
@@ -112,8 +114,7 @@ void formModule::setInterface_Input(QString address)
                 reg_input[i]->addItem(type);
                 type.clear();
             }
-        } else
-        {
+        } else {
             for (int j = 0; j < DATA_PERIOD; j++) {
                 type = QString::number(1000+j+11);
                 reg_input[i]->addItem(type);
@@ -122,8 +123,8 @@ void formModule::setInterface_Input(QString address)
         }
 
         state_input[i] = new QComboBox(this);
-        state_input[i]->addItem("NOT ACTIVE",0);
-        state_input[i]->addItem("ACTIVE",1);
+        state_input[i]->addItem("NOT ACTIVE");
+        state_input[i]->addItem("ACTIVE");
     }
     connect(SigMapSet_input,SIGNAL(mapped(int)),this,SLOT(set_kanal_clicked(int)));
 
@@ -149,13 +150,13 @@ void formModule::setInterface_Input(QString address)
 
         name_input[i]->setText(list[i*8]);
         int indx;
-        if (list[(i*8)+3].toInt() == Analog_Monita) {indx = 0;}
+        if (list[(i*8)+3].toInt() == Analog_Monita)        {indx = 0;}
         if (list[(i*8)+3].toInt() == Analog_Running_Hours) {indx = 1;}
-        if (list[(i*8)+3].toInt() == RPM) {indx = 0;}
-        if (list[(i*8)+3].toInt() == ON_OFF) {indx = 1;}
-        if (list[(i*8)+3].toInt() == FLOW_X) {indx = 2;}
-        if (list[(i*8)+3].toInt() == RPM_RH) {indx = 3;}
-        if (list[(i*8)+3].toInt() == ON_OFF_RH) {indx = 4;}
+        if (list[(i*8)+3].toInt() == RPM)                  {indx = 0;}
+        if (list[(i*8)+3].toInt() == ON_OFF)               {indx = 1;}
+        if (list[(i*8)+3].toInt() == FLOW_X)               {indx = 2;}
+        if (list[(i*8)+3].toInt() == RPM_RH)               {indx = 3;}
+        if (list[(i*8)+3].toInt() == ON_OFF_RH)            {indx = 4;}
         type_input[i]->setCurrentIndex(indx);
         calib_m[i]->setText(list[(i*8)+4]);
         calib_x[i]->setText(list[(i*8)+5]);
@@ -201,6 +202,7 @@ void formModule::setInterface_Output(QString address)
 
     for (int i = 0; i < rowOutput; i++){
         name_output[i] = new QLineEdit(this);
+        name_output[i]->setValidator(new QRegExpValidator(QRegExp("^\\S{1,20}$"),this));
 
         state_output[i] = new QComboBox(this);
         state_output[i]->addItem("NOT ACTIVE");
@@ -341,12 +343,15 @@ void formModule::setInterface_Sumber(QString address)
         connect(delete_source[i],SIGNAL(clicked()),SigMapDel_Source,SLOT(map()));
 
         name_source[i] = new QLineEdit(this);
+        name_source[i]->setValidator(new QRegExpValidator(QRegExp("^\\S{1,20}$"),this));
 
         ip_source[i] = new QLineEdit(this);
         ip_source[i]->setAlignment(Qt::AlignCenter);
+        ip_source[i]->setInputMask("999.999.999.999");
 
         port_source[i] = new QLineEdit(this);
         port_source[i]->setAlignment(Qt::AlignCenter);
+        port_source[i]->setInputMask("9999");
 
         state_source[i] = new QComboBox(this);
         state_source[i]->addItem("NOT ACTIVE",0);
@@ -361,17 +366,18 @@ void formModule::setInterface_Sumber(QString address)
 
         id_source[i] = new QLineEdit(this);
         id_source[i]->setAlignment(Qt::AlignCenter);
+        id_source[i]->setInputMask("9999");
 
         sensor_reg_source[i] = new QLineEdit(this);
         sensor_reg_source[i]->setAlignment(Qt::AlignCenter);
 
         OffsetBase_source[i] = new QComboBox(this);
-        OffsetBase_source[i]->addItem("0",0);
-        OffsetBase_source[i]->addItem("1",1);
+        OffsetBase_source[i]->addItem("0");
+        OffsetBase_source[i]->addItem("1");
 
         command_source[i] = new QComboBox(this);
-        command_source[i]->addItem("Read Holding Register",0);
-        command_source[i]->addItem("Write Holding Register",1);
+        command_source[i]->addItem("Read Holding Register");
+        command_source[i]->addItem("Write Holding Register");
 
         length_source[i] = new QLineEdit(this);
         length_source[i]->setAlignment(Qt::AlignCenter);
@@ -469,6 +475,7 @@ void formModule::setInterface_Alarm(QString address)
         connect(delete_alarm[i],SIGNAL(clicked()),SigMapDel_Alarm,SLOT(map()));
 
         name_alarm[i] = new QLineEdit(this);
+        name_alarm[i]->setValidator(new QRegExpValidator(QRegExp("^\\S{1,20}$"),this));
 
         state_alarm[i] = new QComboBox(this);
         state_alarm[i]->addItem("NOT ACTIVE",0);
@@ -476,27 +483,35 @@ void formModule::setInterface_Alarm(QString address)
 
         input_reg_alarm[i] = new QLineEdit(this);
         input_reg_alarm[i]->setAlignment(Qt::AlignCenter);
+        input_reg_alarm[i]->setInputMask("9999");
 
         output_reg_alarm[i] = new QLineEdit(this);
         output_reg_alarm[i]->setAlignment(Qt::AlignCenter);
+        output_reg_alarm[i]->setInputMask("9999");
 
         range_l[i] = new QLineEdit(this);
         range_l[i]->setAlignment(Qt::AlignCenter);
+        range_l[i]->setValidator(new QIntValidator(-100, 100, this));
 
         batas_ll[i] = new QLineEdit(this);
         batas_ll[i]->setAlignment(Qt::AlignCenter);
+        batas_ll[i]->setValidator(new QIntValidator(-100, 100, this));
 
         batas_l[i] = new QLineEdit(this);
         batas_l[i]->setAlignment(Qt::AlignCenter);
+        batas_l[i]->setValidator(new QIntValidator(-100, 100, this));
 
         batas_h[i] = new QLineEdit(this);
         batas_h[i]->setAlignment(Qt::AlignCenter);
+        batas_h[i]->setValidator(new QIntValidator(-100, 100, this));
 
         batas_hh[i] = new QLineEdit(this);
         batas_hh[i]->setAlignment(Qt::AlignCenter);
+        batas_hh[i]->setValidator(new QIntValidator(-100, 100, this));
 
         range_h[i] = new QLineEdit(this);
         range_h[i]->setAlignment(Qt::AlignCenter);
+        range_h[i]->setValidator(new QIntValidator(-100, 100, this));
     }
     connect(SigMapDel_Alarm,SIGNAL(mapped(int)),this,SLOT(del_alrm_clicked(int)));
 
@@ -562,16 +577,16 @@ void formModule::setInterface_Data(QString address)
     this->ui->tabel_data->setRowCount(rowData);
 
     for (int i = 0; i < rowData; i++){
-        reg_data[i] = new QLineEdit(this);
+        reg_data[i] = new QLabel(this);
         reg_data[i]->setAlignment(Qt::AlignCenter);
 
-        name_data[i] = new QLineEdit(this);
+        name_data[i] = new QLabel(this);
         name_data[i]->setAlignment(Qt::AlignCenter);
 
-        value_data[i] = new QLineEdit(this);
+        value_data[i] = new QLabel(this);
         value_data[i]->setAlignment(Qt::AlignCenter);
 
-        unit_data[i] = new QLineEdit(this);
+        unit_data[i] = new QLabel(this);
         unit_data[i]->setAlignment(Qt::AlignCenter);
     }
 
@@ -658,6 +673,8 @@ void formModule::data_monitoring()
                 }
 
                 mod.write_module(&tModule);
+                cryp code; code.encryp(Address_Module);
+
             } else {
                 timeout = false;
             }
@@ -812,6 +829,7 @@ void formModule::on_pbSetAll_clicked()
     }
 
     mod.write_module(&tModule);
+    cryp code; code.encryp(Address_Module);
 
     /** ON BOARD **/
     if (Serial_Com->isOpen()) {
@@ -899,6 +917,8 @@ void formModule::on_pbSetAll_clicked()
 //    }
 
     mod.write_module(&tModule);
+    code.encryp(Address_Module);
+
     this->setInterface(Address_Module);
 
     if (diff == 0 && !fail) {
@@ -933,6 +953,7 @@ void formModule::on_pbSet_clicked()
     bool timeout = false;
     QStringList list;
     bool fail = false;
+    cryp code;
 
     module mod;
     mod.read_module(&tModule, Address_Module);
@@ -1020,6 +1041,7 @@ void formModule::on_pbSet_clicked()
     }
 
     mod.write_module(&tModule);
+    code.encryp(Address_Module);
 
     /** ON BOARD **/
     if (Serial_Com->isOpen()) {
@@ -1128,6 +1150,8 @@ void formModule::on_pbSet_clicked()
     }
 
     mod.write_module(&tModule);
+    code.encryp(Address_Module);
+
     this->setInterface(Address_Module);
 
     if (diff == 0 && !fail) {
@@ -1170,6 +1194,7 @@ void formModule::on_pbGetAll_clicked()
     QStringList val_data;
     bool timeout = false;
     bool fail = false;
+    cryp code;
 
     this->EnableButton(false);
     if (!Serial_Com->isOpen()) {
@@ -1211,6 +1236,10 @@ void formModule::on_pbGetAll_clicked()
                 }
 
                 mod.write_module(&tModule);
+                QString pth;
+                pth.sprintf("data/module/m_%s.dbe",tModule.module_name);
+                code.encryp(pth);
+
                 this->setInterface(Address_Module);
                 if (!fail) {
                     QMessageBox::information(this, "Syncronization Board", "All Setting is Syncronized ..", 0, 0);
@@ -1301,6 +1330,10 @@ void formModule::on_pbGet_clicked()
                 }
 
                 mod.write_module(&tModule);
+                QString pth;
+                pth.sprintf("data/module/m_%s.dbe",tModule.module_name);
+                cryp code; code.encryp(pth);
+
                 this->setInterface(Address_Module);
 
                 Message.append(" Setting is Syncronized ..");
@@ -1348,16 +1381,19 @@ void formModule::on_pbEdit_clicked()
         this->writeLogFile();
         this->EnableButton(false);
 
+        QString Message;
         if (this->ui->tabWidget->currentIndex() == 2) {
             timeout = work->Set_SIM(this, busyForm, Serial_Com, &tModule, false);
             if (timeout) {fail = true;} else {fail = false;}// return;};
+            Message = "Setting SIM Configuration Saved ..";
         } else if (this->ui->tabWidget->currentIndex() == 3) {
             timeout = work->Set_ENV(this, busyForm, Serial_Com, &tModule, false);
             if (timeout) {fail = true;} else {fail = false;}// return;};
+            Message = "Setting Environtment Saved ..";
         }
 
         if (!fail) {
-            QMessageBox::information(this, "Syncronization Board !!", "Setting Environtment and SIM Configuration Saved ..", 0, 0);
+            QMessageBox::information(this, "Syncronization Board !!", Message, 0, 0);
         } else {
             QMessageBox::information(this, "Serial Communication", STR_TIMEOUT, 0, 0);
         }
@@ -1411,7 +1447,10 @@ void formModule::on_pbAddRow_clicked()
             tModule.jml_sumber++;
             tmp = QString::number(tModule.jml_sumber) + ";;;0;0;-";
             tModule.sumber.insert(tModule.jml_sumber-1, tmp);
+
             mod.write_module(&tModule);
+            cryp code; code.encryp(Address_Module);
+
             this->setInterface_Sumber(Address_Module);
         } else {
             QMessageBox::information(this, "Sources Configuration", "Max 6 Rows ..", 0, 0);
@@ -1420,7 +1459,10 @@ void formModule::on_pbAddRow_clicked()
         tModule.jml_alarm++;
         tmp = QString::number(tModule.jml_alarm) + ";;;;0;0;0;0;0;0;0";
         tModule.alarm.insert(tModule.jml_alarm-1, tmp);
+
         mod.write_module(&tModule);
+        cryp code; code.encryp(Address_Module);
+
         this->setInterface_Alarm(Address_Module);
     }
 }
@@ -1449,6 +1491,8 @@ void formModule::del_src_clicked(int index)
         }
     }
     mod.write_module(&tModule);
+    cryp code; code.encryp(Address_Module);
+
     for (int i = 0; i <= this->ui->tabel_sources->rowCount(); i++) {
         this->ui->tabel_sources->removeRow(i);
     }
@@ -1484,6 +1528,8 @@ void formModule::del_alrm_clicked(int index)
         }
     }
     mod.write_module(&tModule);
+    cryp code; code.encryp(Address_Module);
+
     for (int i = 0; i <= this->ui->tabel_alarm->rowCount(); i++) {
         this->ui->tabel_alarm->removeRow(i);
     }
@@ -1519,6 +1565,8 @@ void formModule::on_pbDeleteRows_clicked()
             }
         }
         mod.write_module(&tModule);
+        cryp code; code.encryp(Address_Module);
+
         for (int i = 0; i <= this->ui->tabel_sources->rowCount(); i++) {
             this->ui->tabel_sources->removeRow(i);
         }
@@ -1551,6 +1599,8 @@ void formModule::on_pbDeleteRows_clicked()
             }
         }
         mod.write_module(&tModule);
+        cryp code; code.encryp(Address_Module);
+
         for (int i = 0; i <= this->ui->tabel_alarm->rowCount(); i++) {
             this->ui->tabel_alarm->removeRow(i);
         }
@@ -1663,6 +1713,7 @@ void formModule::set_kanal_clicked(int index)
     }
 
 //    mod.write_module(&tModule);
+//    cryp code; code.encryp(Address_Module);
 //    this->setInterface_Input(Address_Module);
 
     if (diff == 0 && !fail) {

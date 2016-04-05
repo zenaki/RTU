@@ -6,6 +6,9 @@
 #include "view/settingsdialog.h"
 #include "ui_settingsdialog.h"
 
+#include "model/cryp.h"
+class cryp;
+
 class SettingsDialog;
 
 class setting
