@@ -44,7 +44,7 @@ SOURCES += \
     model/interface_manipulator/mtreeview.cpp \
     view/loginform.cpp \
     model/module.cpp \
-    model/config.cpp \
+    model/cryp.cpp \
     model/communication/serial.cpp \
     model/communication/gsm.cpp \
     model/communication/gprs.cpp \
@@ -62,7 +62,7 @@ HEADERS += \
     model/interface_manipulator/mtreeview.h \
     view/loginform.h \
     model/module.h \
-    model/config.h \
+    model/cryp.h \
     model/communication/serial.h \
     model/communication/gsm.h \
     model/communication/gprs.h \
