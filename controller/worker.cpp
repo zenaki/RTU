@@ -1007,7 +1007,7 @@ bool worker::waiting_set(QWidget *parent, QLightBoxWidget *lBox, QString desc, b
 void worker::write_FinishRead(bool FinishRead, int cekErr, QString strErr)
 {
     QString pth;
-    pth = "data/config/serial_parsing";
+    pth = PATH_SERIAL_PARSING;
     QSettings sett(pth, QSettings::IniFormat);
     sett.setIniCodec(CODEC);
 
@@ -1019,7 +1019,7 @@ void worker::write_FinishRead(bool FinishRead, int cekErr, QString strErr)
 bool worker::read_FinishRead()
 {
     QString pth;
-    pth = "data/config/serial_parsing";
+    pth = PATH_SERIAL_PARSING;
     cryp code;
     code.decryp(pth);
     QSettings sett(pth, QSettings::IniFormat);
@@ -1034,7 +1034,7 @@ bool worker::read_FinishRead()
 int worker::read_flagERR()
 {
     QString pth;
-    pth = "data/config/serial_parsing";
+    pth = PATH_SERIAL_PARSING;
     cryp code;
     code.decryp(pth);
     QSettings sett(pth, QSettings::IniFormat);
@@ -1049,7 +1049,7 @@ int worker::read_flagERR()
 QString worker::read_strERR()
 {
     QString pth;
-    pth = "data/config/serial_parsing";
+    pth = PATH_SERIAL_PARSING;
     cryp code;
     code.decryp(pth);
     QSettings sett(pth, QSettings::IniFormat);
@@ -1100,7 +1100,7 @@ void worker::writeLogFile(QString log, int flagERR, QString strERR, bool timeout
     }
     this->write_FinishRead(false,2,"");
     cryp code;
-    code.encryp("data/config/serial_parsing");
+    code.encryp(PATH_SERIAL_PARSING);
 }
 
 void worker::CompressDir(QString ZipFile, QString Directory)

@@ -167,6 +167,6 @@ void SettingsDialog::updateSettings(struct t_serial_settings *tSerial)
 
     Setting->write_setting(this, tSerial);
     cryp code;
-    code.encryp("data/config/serial_setting");
+    code.encryp(PATH_SERIAL_SETTING);
 
 }

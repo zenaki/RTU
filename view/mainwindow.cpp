@@ -51,7 +51,7 @@ MainWindow::MainWindow(QWidget *parent) :
     SigMapPlugin = new QSignalMapper(this);
     this->readPlugin();
 
-    QFile usr("data/config/usr");
+    QFile usr(PATH_USER_ACCESS);
     if (!usr.exists()) {
         this->ui->actionCreate_User->setEnabled(true);
         this->ui->actionEdit_User->setEnabled(false);
@@ -504,11 +504,11 @@ void MainWindow::readData()
         GetNoSeri = val_data[1];
         tSerial.str_data_env = str_data;
         Serial->write_parsing(&tSerial);
-        code.encryp("data/config/serial_parsing");
+        code.encryp(PATH_SERIAL_PARSING);
         str_data.clear();
         FinishRead = true;
         work->write_FinishRead(FinishRead, 0, "");
-        code.encryp("data/config/serial_parsing");
+        code.encryp(PATH_SERIAL_PARSING);
     } else if (str_data.indexOf("<I/O") > 0 && str_data.indexOf("I/O>") > 0) {
         int a = str_data.indexOf("<I/O");
         int b = str_data.indexOf("I/O>");
@@ -523,11 +523,11 @@ void MainWindow::readData()
                     .remove("\r").remove("\n").remove("(X)").split("*");
         tSerial.str_data_io = str_data;
         Serial->write_parsing(&tSerial);
-        code.encryp("data/config/serial_parsing");
+        code.encryp(PATH_SERIAL_PARSING);
         str_data.clear();
         FinishRead = true;
         work->write_FinishRead(FinishRead, 0, "");
-        code.encryp("data/config/serial_parsing");
+        code.encryp(PATH_SERIAL_PARSING);
     } else if (str_data.indexOf("<SIM") > 0 && str_data.indexOf("SIM>") > 0) {
         int a = str_data.indexOf("<SIM");
         int b = str_data.indexOf("SIM>");
@@ -542,11 +542,11 @@ void MainWindow::readData()
                     .remove("\r").remove("\n").remove("(X)").split("*");
         tSerial.str_data_sim = str_data;
         Serial->write_parsing(&tSerial);
-        code.encryp("data/config/serial_parsing");
+        code.encryp(PATH_SERIAL_PARSING);
         str_data.clear();
         FinishRead = true;
         work->write_FinishRead(FinishRead, 0, "");
-        code.encryp("data/config/serial_parsing");
+        code.encryp(PATH_SERIAL_PARSING);
     } else if (str_data.indexOf("<SRC") > 0 && str_data.indexOf("SRC>") > 0) {
         int a = str_data.indexOf("<SRC");
         int b = str_data.indexOf("SRC>");
@@ -561,11 +561,11 @@ void MainWindow::readData()
                     .remove("\r").remove("\n").remove("(X)").split("*");
         tSerial.str_data_src = str_data;
         Serial->write_parsing(&tSerial);
-        code.encryp("data/config/serial_parsing");
+        code.encryp(PATH_SERIAL_PARSING);
         str_data.clear();
         FinishRead = true;
         work->write_FinishRead(FinishRead, 0, "");
-        code.encryp("data/config/serial_parsing");
+        code.encryp(PATH_SERIAL_PARSING);
     } else if (str_data.indexOf("<DAT") > 0 && str_data.indexOf("DAT>") > 0) {
         int a = str_data.indexOf("<DAT");
         int b = str_data.indexOf("DAT>");
@@ -580,21 +580,21 @@ void MainWindow::readData()
                     .remove("\r").remove("\n").remove("(X)").split("*");
         tSerial.str_data_dat = str_data;
         Serial->write_parsing(&tSerial);
-        code.encryp("data/config/serial_parsing");
+        code.encryp(PATH_SERIAL_PARSING);
         str_data.clear();
         FinishRead = true;
         work->write_FinishRead(FinishRead, 0, "");
-        code.encryp("data/config/serial_parsing");
+        code.encryp(PATH_SERIAL_PARSING);
     } else if (str_data.indexOf("<OK>") > 0) {
         str_data.clear();
         FinishRead = true;
         work->write_FinishRead(FinishRead, 0, "");
-        code.encryp("data/config/serial_parsing");
+        code.encryp(PATH_SERIAL_PARSING);
     } else if (str_data.indexOf("<ERR>") > 0) {
         str_data.clear();
         FinishRead = true;
         work->write_FinishRead(FinishRead, 1, "");
-        code.encryp("data/config/serial_parsing");
+        code.encryp(PATH_SERIAL_PARSING);
     }
 }
 
@@ -758,7 +758,7 @@ void MainWindow::on_actionCreate_User_triggered()
     form_login = new loginForm(this, "CREATE");
     form_login->setModal(true);
     exe = form_login->exec();
-    if(exe == 0) return;
+    if(exe != 0) return;
 
     this->ui->actionCreate_User->setEnabled(false);
     this->ui->actionEdit_User->setEnabled(true);

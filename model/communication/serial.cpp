@@ -29,7 +29,7 @@ void serial::write_data(QSerialPort *port, QString data)
 void serial::write_parsing(struct t_serial_settings *tSerial)
 {
     QString pth;
-    pth = "data/config/serial_parsing";
+    pth = PATH_SERIAL_PARSING;
     QSettings sett(pth, QSettings::IniFormat);
     sett.setIniCodec(CODEC);
 
@@ -43,7 +43,7 @@ void serial::write_parsing(struct t_serial_settings *tSerial)
 void serial::read_parsing(struct t_serial_settings *tSerial)
 {
     QString pth;
-    pth = "data/config/serial_parsing";
+    pth = PATH_SERIAL_PARSING;
     cryp code;
     code.decryp(pth);
     QSettings sett(pth, QSettings::IniFormat);
