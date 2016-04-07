@@ -154,9 +154,8 @@ bool worker::Request_ENV(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Se
     QString Request = "hmi_cek_env\r\n";
     Serial_Com->write(Request.toUtf8().data());
 //    this->delay(parent, lBox, Request, jeda);
-    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    timeout = this->waiting_set(parent, lBox, Request, false);
     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
-    if (timeout) {return timeout;}
 
     return timeout;
 }
@@ -166,9 +165,8 @@ bool worker::Request_IO(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Ser
     QString Request = "hmi_sync\r\n";
     Serial_Com->write(Request.toUtf8().data());
 //    this->delay(parent, lBox, Request, jeda);
-    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    timeout = this->waiting_set(parent, lBox, Request, false);
     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
-    if (timeout) {return timeout;}
 
     return timeout;
 }
@@ -178,9 +176,8 @@ bool worker::Request_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Se
     QString Request = "hmi_cek_cfg_sim\r\n";
     Serial_Com->write(Request.toUtf8().data());
 //    this->delay(parent, lBox, Request, jeda);
-    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    timeout = this->waiting_set(parent, lBox, Request, false);
     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
-    if (timeout) {return timeout;}
 
     return timeout;
 }
@@ -190,9 +187,8 @@ bool worker::Request_Signal(QWidget *parent, QLightBoxWidget *lBox, QSerialPort 
     QString Request = "hmi_cek_signal\r\n";
     Serial_Com->write(Request.toUtf8().data());
 //    this->delay(parent, lBox, Request, jeda);
-    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    timeout = this->waiting_set(parent, lBox, Request, false);
     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
-    if (timeout) {return timeout;}
 
     return timeout;
 }
@@ -202,9 +198,8 @@ bool worker::Request_Sumber(QWidget *parent, QLightBoxWidget *lBox, QSerialPort 
     QString Request = "hmi_cek_sumber\r\n";
     Serial_Com->write(Request.toUtf8().data());
 //    this->delay(parent, lBox, Request, jeda);
-    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    timeout = this->waiting_set(parent, lBox, Request, false);
     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
-    if (timeout) {return timeout;}
 
     return timeout;
 }
@@ -214,9 +209,8 @@ bool worker::Request_Data(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *S
     QString Request = "hmi_cek_data\r\n";
     Serial_Com->write(Request.toUtf8().data());
 //    this->delay(parent, lBox, Request, jeda);
-    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+    timeout = this->waiting_set(parent, lBox, Request, false);
     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
-    if (timeout) {return timeout;}
 
     return timeout;
 }
@@ -289,6 +283,7 @@ void worker::Get_Output(struct t_module *tModule, QStringList data)
         }
     }
     tModule->jml_output = tModule->Output.length();
+    tModule->OutputName.clear();
     for (int i = 0; i < tModule->Output.length(); i++) {
         tModule->OutputName.insert(i, "");
     }
