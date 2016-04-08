@@ -56,6 +56,11 @@
 #define CODEC                "UTF-8"
 //#define DECODEC              "UTF-8"
 
+#define PATH_SERIAL_SETTING  "data/config/serial_setting.conf"
+#define PATH_SERIAL_PARSING  "data/config/serial_parsing.conf"
+#define PATH_PLUGIN_CONFIG   "plugin/plugin.conf"
+#define PATH_USER_ACCESS     "data/config/usr.conf"
+
 /** STRUCT **/
 
 struct data_port{

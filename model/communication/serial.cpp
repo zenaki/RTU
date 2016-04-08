@@ -80,6 +80,7 @@ void serial::read_parsing(struct t_serial_settings *tSerial)
 {
     QString pth;
     pth = "data/config/serial_parsing";
+    cryp code; code.decryp(pth);
     QSettings sett(pth, QSettings::IniFormat);
     sett.setIniCodec(CODEC);
     QByteArray decode;
@@ -89,4 +90,6 @@ void serial::read_parsing(struct t_serial_settings *tSerial)
     tSerial->str_data_sim = sett.value("STR_DATA_SIM").toString();
     tSerial->str_data_src = sett.value("STR_DATA_SRC").toString();
     tSerial->str_data_dat = sett.value("STR_DATA_DAT").toString();
+
+    code.encryp(pth);
 }

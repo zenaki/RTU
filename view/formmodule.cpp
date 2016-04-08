@@ -658,6 +658,8 @@ void formModule::data_monitoring()
                 }
 
                 mod.write_module(&tModule);
+                cryp code; code.encryp(Address_Module);
+
             } else {
                 timeout = false;
             }
@@ -812,6 +814,7 @@ void formModule::on_pbSetAll_clicked()
     }
 
     mod.write_module(&tModule);
+    cryp code; code.encryp(Address_Module);
 
     /** ON BOARD **/
     if (Serial_Com->isOpen()) {
@@ -899,6 +902,8 @@ void formModule::on_pbSetAll_clicked()
 //    }
 
     mod.write_module(&tModule);
+    code.encryp(Address_Module);
+
     this->setInterface(Address_Module);
 
     if (diff == 0 && !fail) {
@@ -1020,6 +1025,7 @@ void formModule::on_pbSet_clicked()
     }
 
     mod.write_module(&tModule);
+    cryp code; code.encryp(Address_Module);
 
     /** ON BOARD **/
     if (Serial_Com->isOpen()) {
@@ -1128,6 +1134,8 @@ void formModule::on_pbSet_clicked()
     }
 
     mod.write_module(&tModule);
+    code.encryp(Address_Module);
+
     this->setInterface(Address_Module);
 
     if (diff == 0 && !fail) {
@@ -1211,6 +1219,8 @@ void formModule::on_pbGetAll_clicked()
                 }
 
                 mod.write_module(&tModule);
+                cryp code; code.encryp(Address_Module);
+
                 this->setInterface(Address_Module);
                 if (!fail) {
                     QMessageBox::information(this, "Syncronization Board", "All Setting is Syncronized ..", 0, 0);
@@ -1301,6 +1311,8 @@ void formModule::on_pbGet_clicked()
                 }
 
                 mod.write_module(&tModule);
+                cryp code; code.encryp(Address_Module);
+
                 this->setInterface(Address_Module);
 
                 Message.append(" Setting is Syncronized ..");
@@ -1412,6 +1424,7 @@ void formModule::on_pbAddRow_clicked()
             tmp = QString::number(tModule.jml_sumber) + ";;;0;0;-";
             tModule.sumber.insert(tModule.jml_sumber-1, tmp);
             mod.write_module(&tModule);
+            cryp code; code.encryp(Address_Module);
             this->setInterface_Sumber(Address_Module);
         } else {
             QMessageBox::information(this, "Sources Configuration", "Max 6 Rows ..", 0, 0);
@@ -1421,6 +1434,7 @@ void formModule::on_pbAddRow_clicked()
         tmp = QString::number(tModule.jml_alarm) + ";;;;0;0;0;0;0;0;0";
         tModule.alarm.insert(tModule.jml_alarm-1, tmp);
         mod.write_module(&tModule);
+        cryp code; code.encryp(Address_Module);
         this->setInterface_Alarm(Address_Module);
     }
 }
@@ -1449,6 +1463,7 @@ void formModule::del_src_clicked(int index)
         }
     }
     mod.write_module(&tModule);
+    cryp code; code.encryp(Address_Module);
     for (int i = 0; i <= this->ui->tabel_sources->rowCount(); i++) {
         this->ui->tabel_sources->removeRow(i);
     }
@@ -1484,6 +1499,7 @@ void formModule::del_alrm_clicked(int index)
         }
     }
     mod.write_module(&tModule);
+    cryp code; code.encryp(Address_Module);
     for (int i = 0; i <= this->ui->tabel_alarm->rowCount(); i++) {
         this->ui->tabel_alarm->removeRow(i);
     }
@@ -1519,6 +1535,7 @@ void formModule::on_pbDeleteRows_clicked()
             }
         }
         mod.write_module(&tModule);
+        cryp code; code.encryp(Address_Module);
         for (int i = 0; i <= this->ui->tabel_sources->rowCount(); i++) {
             this->ui->tabel_sources->removeRow(i);
         }
@@ -1551,6 +1568,7 @@ void formModule::on_pbDeleteRows_clicked()
             }
         }
         mod.write_module(&tModule);
+        cryp code; code.encryp(Address_Module);
         for (int i = 0; i <= this->ui->tabel_alarm->rowCount(); i++) {
             this->ui->tabel_alarm->removeRow(i);
         }

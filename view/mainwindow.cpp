@@ -146,6 +146,7 @@ void MainWindow::on_actionNew_triggered()
                 strcpy(tModule.serial_number, GetNoSeri.toLatin1());
 
                 mod->write_module(&tModule);
+                cryp code; code.encryp(address);
             } else {
                 timeout = work->Request_ENV(this, busy, SerialPort, timeout);
                 if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
@@ -173,6 +174,7 @@ void MainWindow::on_actionNew_triggered()
                 strcpy(tModule.serial_number, GetNoSeri.toLatin1());
                 QString Address = "data/module/" + newModule;
                 mod->write_module(&tModule);
+                cryp code; code.encryp(Address);
 
                 faddModule = new form_addModule(this, false, Address, 2);
                 faddModule->setWindowTitle("Edit Module");
@@ -223,6 +225,8 @@ void MainWindow::on_actionNew_triggered()
             strcpy(tModule.serial_number, GetNoSeri.toLatin1());
 
             mod->write_module(&tModule);
+            QString pth; pth.sprintf("data/module/m_%s.dbe", tModule.module_name);
+            cryp code; code.encryp(pth);
 
             QString title;
             title.sprintf("%s", tModule.module_name);
@@ -310,6 +314,8 @@ void MainWindow::on_actionLoad_triggered()
             if (reply == QMessageBox::Yes) {
                 mod->read_module(&tModule, fileName[i]);
                 mod->write_module(&tModule);
+                QString pth; pth.sprintf("data/module/m_%s.dbe", tModule.module_name);
+                cryp code; code.encryp(pth);
                 return;
             } else {
                 mod->read_module(&tModule, fileName[i]);
@@ -480,9 +486,11 @@ void MainWindow::readData()
         GetNoSeri = val_data[1];
         tSerial.str_data_env = str_data;
         Serial->write_parsing_env(&tSerial);
+        cryp code; code.encryp(PATH_SERIAL_PARSING);
         str_data.clear();
         FinishRead = true;
         work->write_FinishRead(FinishRead, 0, "");
+        code.encryp(PATH_SERIAL_PARSING);
     } else if (str_data.indexOf("<I/O") > 0 && str_data.indexOf("I/O>") > 0) {
         int a = str_data.indexOf("<I/O");
         int b = str_data.indexOf("I/O>");
@@ -497,9 +505,11 @@ void MainWindow::readData()
                     .remove("\r").remove("\n").remove("(X)").split("*");
         tSerial.str_data_io = str_data;
         Serial->write_parsing_io(&tSerial);
+        cryp code; code.encryp(PATH_SERIAL_PARSING);
         str_data.clear();
         FinishRead = true;
         work->write_FinishRead(FinishRead, 0, "");
+        code.encryp(PATH_SERIAL_PARSING);
     } else if (str_data.indexOf("<SIM") > 0 && str_data.indexOf("SIM>") > 0) {
         int a = str_data.indexOf("<SIM");
         int b = str_data.indexOf("SIM>");
@@ -514,9 +524,11 @@ void MainWindow::readData()
                     .remove("\r").remove("\n").remove("(X)").split("*");
         tSerial.str_data_sim = str_data;
         Serial->write_parsing_sim(&tSerial);
+        cryp code; code.encryp(PATH_SERIAL_PARSING);
         str_data.clear();
         FinishRead = true;
         work->write_FinishRead(FinishRead, 0, "");
+        code.encryp(PATH_SERIAL_PARSING);
     } else if (str_data.indexOf("<SRC") > 0 && str_data.indexOf("SRC>") > 0) {
         int a = str_data.indexOf("<SRC");
         int b = str_data.indexOf("SRC>");
@@ -531,9 +543,11 @@ void MainWindow::readData()
                     .remove("\r").remove("\n").remove("(X)").split("*");
         tSerial.str_data_src = str_data;
         Serial->write_parsing_src(&tSerial);
+        cryp code; code.encryp(PATH_SERIAL_PARSING);
         str_data.clear();
         FinishRead = true;
         work->write_FinishRead(FinishRead, 0, "");
+        code.encryp(PATH_SERIAL_PARSING);
     } else if (str_data.indexOf("<DAT") > 0 && str_data.indexOf("DAT>") > 0) {
         int a = str_data.indexOf("<DAT");
         int b = str_data.indexOf("DAT>");
@@ -548,17 +562,21 @@ void MainWindow::readData()
                     .remove("\r").remove("\n").remove("(X)").split("*");
         tSerial.str_data_dat = str_data;
         Serial->write_parsing_dat(&tSerial);
+        cryp code; code.encryp(PATH_SERIAL_PARSING);
         str_data.clear();
         FinishRead = true;
         work->write_FinishRead(FinishRead, 0, "");
+        code.encryp(PATH_SERIAL_PARSING);
     } else if (str_data.indexOf("<OK>") > 0) {
         str_data.clear();
         FinishRead = true;
         work->write_FinishRead(FinishRead, 0, "");
+        cryp code; code.encryp(PATH_SERIAL_PARSING);
     } else if (str_data.indexOf("<ERR>") > 0) {
         str_data.clear();
         FinishRead = true;
         work->write_FinishRead(FinishRead, 1, "");
+        cryp code; code.encryp(PATH_SERIAL_PARSING);
     }
 }
 
@@ -649,6 +667,7 @@ void MainWindow::on_actionAdd_Plugin_triggered()
 
                 tPlugin.jml_plugin++;
                 work->writePlugin(&tPlugin);
+                cryp code; code.encryp(PATH_PLUGIN_CONFIG);
             } else {
                 QMessageBox::warning(this, "Plugin Warning", "The Plugin is added before ..");
             }
@@ -665,6 +684,7 @@ void MainWindow::on_actionAdd_Plugin_triggered()
 
             tPlugin.jml_plugin++;
             work->writePlugin(&tPlugin);
+            cryp code; code.encryp(PATH_PLUGIN_CONFIG);
         }
         FileConfg.remove();
     }

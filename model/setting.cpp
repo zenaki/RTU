@@ -56,6 +56,7 @@ void setting::read_setting(t_serial_settings *tSerial)
 {
     QString pth;
     pth = "data/config/serial_setting";
+    cryp code; code.decryp(pth);
     QSettings sett(pth, QSettings::IniFormat);
     sett.setIniCodec(CODEC);
     QString val;
@@ -90,6 +91,8 @@ void setting::read_setting(t_serial_settings *tSerial)
     else if (val == "2") { tSerial->flowControl = static_cast<QSerialPort::FlowControl>(QSerialPort::SoftwareControl); }
     tSerial->stringFlowControl = sett.value("SERIAL_CONFIGURATION/STR_FLOW_CONTROL").toString();
     sett.endGroup();
+
+    code.encryp(pth);
 }
 
 bool setting::checkSetting(){

@@ -217,6 +217,9 @@ void form_addModule::on_buttonBox_accepted()
 //            CurrFile.close();
 
             mod.write_module(&tModule);
+            QString pth; pth.sprintf("data/module/m_%s.dbe",tModule.module_name);
+            cryp code; code.encryp(pth);
+
 //            mod.update_module(&tModule, newFiles.prepend("data/module/"));
 //            mod.update_communication(&tModule, newFiles.prepend("data/module/"));
             accept = 1;
@@ -243,6 +246,9 @@ void form_addModule::on_buttonBox_accepted()
             }
 
             mod.write_module(&tModule);
+            QString pth; pth.sprintf("data/module/m_%s.dbe",tModule.module_name);
+            cryp code; code.encryp(pth);
+
             accept = 1;
 
             close();

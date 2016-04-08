@@ -1,6 +1,9 @@
 #ifndef SETTING_H
 #define SETTING_H
 
+#include "model/cryp.h"
+class cryp;
+
 #include "util/utama.h"
 
 #include "view/settingsdialog.h"

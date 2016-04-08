@@ -5,6 +5,9 @@
 #include <QRect>
 #include "model/module.h"
 
+#include "model/cryp.h"
+class cryp;
+
 namespace Ui {
 class form_addModule;
 }

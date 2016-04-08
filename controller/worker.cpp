@@ -48,6 +48,7 @@ QString worker::loadModule(QStandardItemModel *tree, QTreeView *treeView, QStrin
         strcpy(tModule.module_name, NewName.toLatin1());
     }
     mod.write_module(&tModule);
+    cryp code; code.encryp(address);
 
     QString modules;
     modules.sprintf("%s", tModule.module_name);
@@ -1011,10 +1012,13 @@ bool worker::read_FinishRead()
 {
     QString pth;
     pth = "data/config/serial_parsing";
+    cryp code; code.decryp(pth);
     QSettings sett(pth, QSettings::IniFormat);
     sett.setIniCodec(CODEC);
 
     bool FinishRead = sett.value("FINISH_READ").toBool();
+
+    code.encryp(pth);
     return FinishRead;
 }
 
@@ -1022,10 +1026,13 @@ int worker::read_flagERR()
 {
     QString pth;
     pth = "data/config/serial_parsing";
+    cryp code; code.decryp(pth);
     QSettings sett(pth, QSettings::IniFormat);
     sett.setIniCodec(CODEC);
 
     int flagERR = sett.value("ERROR_FLAG").toInt();
+
+    code.encryp(pth);
     return flagERR;
 }
 
@@ -1033,10 +1040,13 @@ QString worker::read_strERR()
 {
     QString pth;
     pth = "data/config/serial_parsing";
+    cryp code; code.decryp(pth);
     QSettings sett(pth, QSettings::IniFormat);
     sett.setIniCodec(CODEC);
 
     QString strERR = sett.value("ERROR_STRING").toString();
+
+    code.encryp(pth);
     return strERR;
 }
 
@@ -1078,6 +1088,7 @@ void worker::writeLogFile(QString log, int flagERR, QString strERR, bool timeout
         outputFile.close();
     }
     this->write_FinishRead(false,2,"");
+    cryp code; code.encryp(PATH_SERIAL_PARSING);
 }
 
 void worker::CompressDir(QString ZipFile, QString Directory)
@@ -1134,6 +1145,7 @@ void worker::readPlugin(struct t_plugin *tPlugin)
 {
     QString temp;
     QString pth = "plugin/plugin";
+    cryp code; code.decryp(pth);
     QSettings sett(pth, QSettings::IniFormat);
     sett.setIniCodec(CODEC);
 
@@ -1149,11 +1161,14 @@ void worker::readPlugin(struct t_plugin *tPlugin)
         tPlugin->PluginExec.insert(i, temp);
     }
     sett.endGroup();
+
+    code.encryp(pth);
 }
 
 QString worker::readPluginConfgName(QString address)
 {
     QString temp;
+    cryp code; code.decryp(address);
     QSettings sett(address, QSettings::IniFormat);
     sett.setIniCodec(CODEC);
 
@@ -1161,12 +1176,14 @@ QString worker::readPluginConfgName(QString address)
     temp = sett.value("PLUGIN_NAME").toString();
     sett.endGroup();
 
+    code.encryp(address);
     return temp;
 }
 
 QString worker::readPluginConfgExec(QString address)
 {
     QString temp;
+    cryp code; code.decryp(address);
     QSettings sett(address, QSettings::IniFormat);
     sett.setIniCodec(CODEC);
 
@@ -1174,13 +1191,14 @@ QString worker::readPluginConfgExec(QString address)
     temp = sett.value("EXEC").toString();
     sett.endGroup();
 
+    code.encryp(address);
     return temp;
 }
 
 void worker::writePlugin(struct t_plugin *tPlugin)
 {
     QString temp;
-    QString pth = "plugin/plugin";
+    QString pth = PATH_PLUGIN_CONFIG;
     QSettings sett(pth, QSettings::IniFormat);
     sett.setIniCodec(CODEC);
 
