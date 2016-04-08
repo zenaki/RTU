@@ -639,7 +639,7 @@ void MainWindow::on_actionAdd_Plugin_triggered()
     }
     if (fail) {QMessageBox::information(this, "Add Pluggin", "Please select plugin zip file correctly"); return;}
     QFile FileConfg("plugin.cfg");
-    QFile PluginConfg("plugin/plugin");
+    QFile PluginConfg(PATH_PLUGIN_CONFIG);
     struct t_plugin tPlugin;
     for (int i = 0; i < plugin.length(); i++) {
         work->DecompressFiles(plugin.at(i), QStringList() << "plugin.cfg", QDir::currentPath());
@@ -711,7 +711,7 @@ void MainWindow::openPlugin(int index)
 
 void MainWindow::readPlugin()
 {
-    QFile PluginConfg("plugin/plugin");
+    QFile PluginConfg(PATH_PLUGIN_CONFIG);
     if (PluginConfg.exists()) {
         struct t_plugin tPlugin;
         work->readPlugin(&tPlugin);

@@ -1144,7 +1144,7 @@ QStringList worker::ListContents(QString ZipFile)
 void worker::readPlugin(struct t_plugin *tPlugin)
 {
     QString temp;
-    QString pth = "plugin/plugin";
+    QString pth = PATH_PLUGIN_CONFIG;
     cryp code; code.decryp(pth);
     QSettings sett(pth, QSettings::IniFormat);
     sett.setIniCodec(CODEC);
@@ -1188,7 +1188,7 @@ QString worker::readPluginConfgExec(QString address)
     sett.setIniCodec(CODEC);
 
     sett.beginGroup("PLUGIN");
-    temp = sett.value("EXEC").toString();
+    temp = sett.value("PLUGIN_EXEC").toString();
     sett.endGroup();
 
     code.encryp(address);

@@ -75,16 +75,25 @@
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="actionNew"/>
+    <addaction name="actionLoad"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionRefresh"/>
    </widget>
-   <widget class="QMenu" name="menuSetting">
+   <widget class="QMenu" name="menuCommunication">
     <property name="title">
-     <string>Setting</string>
+     <string>Communication</string>
     </property>
+    <addaction name="actionConnect"/>
+    <addaction name="actionDisconnect"/>
+    <addaction name="actionConfig"/>
    </widget>
-   <widget class="QMenu" name="menuModule">
+   <widget class="QMenu" name="menuPlugin">
     <property name="title">
-     <string>Module</string>
+     <string>Plugin</string>
     </property>
+    <addaction name="actionAdd_Plugin"/>
+    <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuUser_Access">
     <property name="title">
@@ -95,14 +104,6 @@
     <property name="title">
      <string>Help</string>
     </property>
-    <widget class="QMenu" name="menuPlugin">
-     <property name="title">
-      <string>Plugin</string>
-     </property>
-     <addaction name="actionAdd_Plugin"/>
-     <addaction name="separator"/>
-    </widget>
-    <addaction name="menuPlugin"/>
    </widget>
    <widget class="QMenu" name="menuActive_Window">
     <property name="title">
@@ -110,8 +111,8 @@
     </property>
    </widget>
    <addaction name="menuFile"/>
-   <addaction name="menuSetting"/>
-   <addaction name="menuModule"/>
+   <addaction name="menuCommunication"/>
+   <addaction name="menuPlugin"/>
    <addaction name="menuUser_Access"/>
    <addaction name="menuActive_Window"/>
    <addaction name="menuHelp"/>
@@ -210,7 +211,7 @@
      <normaloff>:/new/prefix1/image/view-refresh.png</normaloff>:/new/prefix1/image/view-refresh.png</iconset>
    </property>
    <property name="text">
-    <string>Refresh</string>
+    <string>Refresh Tree</string>
    </property>
    <property name="toolTip">
     <string>Refresh Tree</string>
