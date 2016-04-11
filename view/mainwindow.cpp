@@ -50,6 +50,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
     SigMapPlugin = new QSignalMapper(this);
     this->readPlugin();
+
+    QFile usr(PATH_USER_ACCESS);
+    if (usr.exists()) {
+        this->ui->actionCreate_User->setEnabled(false);
+        this->ui->actionEdit_User->setEnabled(true);
+    } else {
+        this->ui->actionCreate_User->setEnabled(true);
+        this->ui->actionEdit_User->setEnabled(false);
+    }
 }
 
 MainWindow::~MainWindow()
@@ -732,4 +741,27 @@ void MainWindow::handleError(QSerialPort::SerialPortError error)
         this->on_actionDisconnect_triggered();
         QMessageBox::critical(this, tr("Critical Error"), "Please check your connection ..!!!");
     }
+}
+
+void MainWindow::on_actionCreate_User_triggered()
+{
+    int exe;
+    LoginForm = new loginForm(this, "CREATE");
+    LoginForm->setWindowTitle("Create User Access");
+    LoginForm->setModal(true);
+    exe = LoginForm->exec();
+    if(exe != 0) return;
+
+    this->ui->actionCreate_User->setEnabled(false);
+    this->ui->actionEdit_User->setEnabled(true);
+}
+
+void MainWindow::on_actionEdit_User_triggered()
+{
+    int exe;
+    LoginForm = new loginForm(this, "EDIT");
+    LoginForm->setWindowTitle("Edit User Access");
+    LoginForm->setModal(true);
+    exe = LoginForm->exec();
+    if(exe == 0) return;
 }

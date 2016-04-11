@@ -15,7 +15,7 @@ void cryp::encryp(QString address)
         QFile file_out(fileName);
         if (!file_out.open(QFile::WriteOnly | QFile::Text)) {return;}
         QTextStream out(&file_out);
-        out.setCodec("BOCU-1"); //out.setCodec("UTF-8"); //
+        out.setCodec(ENCRYP);
         out << data;
     }
 }
@@ -30,13 +30,13 @@ void cryp::decryp(QString address)
 
         QTextStream in(&data);
         in.setAutoDetectUnicode(false);
-        in.setCodec("BOCU-1"); //in.setCodec("UTF-8"); //
+        in.setCodec(ENCRYP);
         QString textFile = in.readAll();
 
         QFile file_out(fileName);
         if (!file_out.open(QFile::WriteOnly | QFile::Text)) {return;}
         QTextStream out(&file_out);
-        out.setCodec("UTF-8");
+        out.setCodec(DECRYP);
         out << textFile;
     }
 }

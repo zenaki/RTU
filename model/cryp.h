@@ -7,6 +7,9 @@
 #include <QAction>
 #include <QTextStream>
 
+#define ENCRYP "UTF-8"
+#define DECRYP "UTF-8"
+
 class cryp
 {
 public:

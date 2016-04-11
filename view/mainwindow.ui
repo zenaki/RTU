@@ -99,6 +99,8 @@
     <property name="title">
      <string>User Access</string>
     </property>
+    <addaction name="actionCreate_User"/>
+    <addaction name="actionEdit_User"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -220,6 +222,16 @@
   <action name="actionAdd_Plugin">
    <property name="text">
     <string>Add Plugin</string>
+   </property>
+  </action>
+  <action name="actionCreate_User">
+   <property name="text">
+    <string>Create User </string>
+   </property>
+  </action>
+  <action name="actionEdit_User">
+   <property name="text">
+    <string>Edit User</string>
    </property>
   </action>
  </widget>

@@ -562,16 +562,16 @@ void formModule::setInterface_Data(QString address)
     this->ui->tabel_data->setRowCount(rowData);
 
     for (int i = 0; i < rowData; i++){
-        reg_data[i] = new QLineEdit(this);
+        reg_data[i] = new QLabel(this);
         reg_data[i]->setAlignment(Qt::AlignCenter);
 
-        name_data[i] = new QLineEdit(this);
+        name_data[i] = new QLabel(this);
         name_data[i]->setAlignment(Qt::AlignCenter);
 
-        value_data[i] = new QLineEdit(this);
+        value_data[i] = new QLabel(this);
         value_data[i]->setAlignment(Qt::AlignCenter);
 
-        unit_data[i] = new QLineEdit(this);
+        unit_data[i] = new QLabel(this);
         unit_data[i]->setAlignment(Qt::AlignCenter);
     }
 

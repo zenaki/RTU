@@ -33,7 +33,8 @@ void setting::write_setting(SettingsDialog *s_d, struct t_serial_settings *tSeri
     tSerial->stringFlowControl = s_d->ui->flowControlBox->currentText();
 
     QString pth;
-    pth = "data/config/serial_setting";
+    pth = PATH_SERIAL_SETTING;
+    cryp code; code.decryp(PATH_SERIAL_SETTING);
     QSettings sett(pth, QSettings::IniFormat);
     sett.setIniCodec(CODEC);
 
@@ -50,12 +51,14 @@ void setting::write_setting(SettingsDialog *s_d, struct t_serial_settings *tSeri
     sett.setValue("FLOW_CONTROL", tSerial->flowControl);
     sett.setValue("STR_FLOW_CONTROL", tSerial->stringFlowControl);
     sett.endGroup();
+
+    code.encryp(PATH_SERIAL_SETTING);
 }
 
 void setting::read_setting(t_serial_settings *tSerial)
 {
     QString pth;
-    pth = "data/config/serial_setting";
+    pth = PATH_SERIAL_SETTING;
     cryp code; code.decryp(pth);
     QSettings sett(pth, QSettings::IniFormat);
     sett.setIniCodec(CODEC);
@@ -100,7 +103,7 @@ bool setting::checkSetting(){
     QDir path("data/config");
     QStringList files = path.entryList(QDir::Files);
 
-    QString currFiles = "serial_setting";
+    QString currFiles = "serial_setting.cfg";
 
     for(int i = 0; i < files.count(); i++){
         if(currFiles == QString(files.at(i))) cek = true;

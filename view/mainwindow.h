@@ -18,6 +18,10 @@
 #include <model/module.h>
 #include <model/interface_manipulator/qlightboxwidget.h>
 
+#include <view/loginform.h>
+#include <ui_loginform.h>
+class loginForm;
+
 namespace Ui {
 class MainWindow;
 }
@@ -81,6 +85,10 @@ private slots:
     void on_actionAdd_Plugin_triggered();
     void openPlugin(int index);
 
+    void on_actionCreate_User_triggered();
+
+    void on_actionEdit_User_triggered();
+
 private:
     /** Other Class **/
     QString NoSeri;
@@ -110,6 +118,8 @@ private:
     QAction *Plugin[20];
     QSignalMapper *SigMapPlugin;
     void readPlugin();
+
+    loginForm *LoginForm;
 };
 
 #endif // MAINWINDOW_H
