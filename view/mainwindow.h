@@ -75,6 +75,7 @@ private slots:
 
     void on_actionSave_triggered();
     void on_actionLoad_triggered();
+    void on_actionDelete_triggered();
 
     void on_treeView_clicked(const QModelIndex &index);
     void on_treeView_doubleClicked(const QModelIndex &index);

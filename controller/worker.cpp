@@ -348,7 +348,7 @@ void worker::Get_SIM(struct t_module *tModule, QStringList data)
     }
     temp = list_sim_1.at(8);
     if (temp == "GSM") {
-        temp = "SMS";
+//        temp = "SMS";
         strcpy(tModule->com_gsm_1, temp.toUtf8().data());
         tModule->flag_com_gsm_1 = 0;
     } else if (temp == "GPRS") {
@@ -438,7 +438,7 @@ void worker::Get_SIM(struct t_module *tModule, QStringList data)
         }
         temp = list_sim_2.at(8);
         if (temp == "GSM") {
-            temp = "SMS";
+//            temp = "SMS";
             strcpy(tModule->com_gsm_2, temp.toUtf8().data());
             tModule->flag_com_gsm_2 = 0;
         } else if (temp == "GPRS") {
@@ -1001,7 +1001,7 @@ void worker::write_FinishRead(bool FinishRead, int cekErr, QString strErr)
     QString pth;
     pth = PATH_SERIAL_PARSING;
     QSettings sett(pth, QSettings::IniFormat);
-    sett.setIniCodec(CODEC);
+//    sett.setIniCodec(CODEC);
 
     sett.setValue("FINISH_READ", FinishRead);
     sett.setValue("ERROR_FLAG", cekErr);
@@ -1014,7 +1014,7 @@ bool worker::read_FinishRead()
     pth = PATH_SERIAL_PARSING;
     cryp code; code.decryp(pth);
     QSettings sett(pth, QSettings::IniFormat);
-    sett.setIniCodec(CODEC);
+//    sett.setIniCodec(CODEC);
 
     bool FinishRead = sett.value("FINISH_READ").toBool();
 
@@ -1028,7 +1028,7 @@ int worker::read_flagERR()
     pth = PATH_SERIAL_PARSING;
     cryp code; code.decryp(pth);
     QSettings sett(pth, QSettings::IniFormat);
-    sett.setIniCodec(CODEC);
+//    sett.setIniCodec(CODEC);
 
     int flagERR = sett.value("ERROR_FLAG").toInt();
 
@@ -1042,7 +1042,7 @@ QString worker::read_strERR()
     pth = PATH_SERIAL_PARSING;
     cryp code; code.decryp(pth);
     QSettings sett(pth, QSettings::IniFormat);
-    sett.setIniCodec(CODEC);
+//    sett.setIniCodec(CODEC);
 
     QString strERR = sett.value("ERROR_STRING").toString();
 
@@ -1147,7 +1147,7 @@ void worker::readPlugin(struct t_plugin *tPlugin)
     QString pth = PATH_PLUGIN_CONFIG;
     cryp code; code.decryp(pth);
     QSettings sett(pth, QSettings::IniFormat);
-    sett.setIniCodec(CODEC);
+//    sett.setIniCodec(CODEC);
 
     sett.beginGroup("PLUGIN");
     tPlugin->jml_plugin = sett.value("JML_PLUGIN").toInt();
@@ -1170,7 +1170,7 @@ QString worker::readPluginConfgName(QString address)
     QString temp;
     cryp code; code.decryp(address);
     QSettings sett(address, QSettings::IniFormat);
-    sett.setIniCodec(CODEC);
+//    sett.setIniCodec(CODEC);
 
     sett.beginGroup("PLUGIN");
     temp = sett.value("PLUGIN_NAME").toString();
@@ -1185,7 +1185,7 @@ QString worker::readPluginConfgExec(QString address)
     QString temp;
     cryp code; code.decryp(address);
     QSettings sett(address, QSettings::IniFormat);
-    sett.setIniCodec(CODEC);
+//    sett.setIniCodec(CODEC);
 
     sett.beginGroup("PLUGIN");
     temp = sett.value("PLUGIN_EXEC").toString();
@@ -1200,7 +1200,7 @@ void worker::writePlugin(struct t_plugin *tPlugin)
     QString temp;
     QString pth = PATH_PLUGIN_CONFIG;
     QSettings sett(pth, QSettings::IniFormat);
-    sett.setIniCodec(CODEC);
+//    sett.setIniCodec(CODEC);
 
     sett.beginGroup("PLUGIN");
     sett.setValue("JML_PLUGIN", tPlugin->jml_plugin);

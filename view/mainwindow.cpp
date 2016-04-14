@@ -157,6 +157,9 @@ void MainWindow::on_actionNew_triggered()
                 mod->write_module(&tModule);
                 cryp code; code.encryp(address);
             } else {
+                tModule.InputName.clear();
+                tModule.OutputName.clear();
+
                 timeout = work->Request_ENV(this, busy, SerialPort, timeout);
                 if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
                 work->Get_ENV(&tModule, val_data);
@@ -174,8 +177,7 @@ void MainWindow::on_actionNew_triggered()
                 if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
                 work->Get_Sumber(&tModule, val_data);
 
-                tModule.InputName.clear();
-                tModule.OutputName.clear();
+                tModule.jml_alarm = 0;
 
                 GetNamaBoard.append("_new");
                 QString newModule = "m_" + GetNamaBoard + ".dbe";
@@ -185,8 +187,8 @@ void MainWindow::on_actionNew_triggered()
                 mod->write_module(&tModule);
                 cryp code; code.encryp(Address);
 
-                faddModule = new form_addModule(this, false, Address, 2);
-                faddModule->setWindowTitle("Edit Module");
+                faddModule = new form_addModule(this, false, Address, 1);
+                faddModule->setWindowTitle("New Module");
                 faddModule->setModal(true);
 
                 faddModule->exec();
@@ -200,13 +202,22 @@ void MainWindow::on_actionNew_triggered()
                 Address = faddModule->currentFile;
                 mod->read_module(&tModule, Address);
 
+                bool fail = false;
                 timeout = work->Set_ENV(this, busy, SerialPort, &tModule, timeout);
-                if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
+                if (timeout) {fail = true;}
                 timeout = work->Set_SIM(this, busy, SerialPort, &tModule, timeout);
-                if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
+                if (timeout) {fail = true;}
 
                 this->GetNamaBoard.sprintf("%s", tModule.module_name);
                 this->Refresh_Tree();
+
+                if (fail) {
+                    this->on_actionDisconnect_triggered();
+                    QMessageBox::information(this,
+                                             "Serial Communication",
+                                             "Please check your serial communication port ..", 0, 0);
+                    return;
+                }
             }
         } else {
             tModule.InputName.clear();
@@ -355,6 +366,24 @@ void MainWindow::on_actionLoad_triggered()
     }
 }
 
+void MainWindow::on_actionDelete_triggered()
+{
+    QString Message;
+    if (!module_name_sv.isEmpty()) {
+        QFile d_m(module_address_sv);
+        if (d_m.remove()) {
+            Message = "Module with name : " + module_name_sv + " was deleted";
+            QMessageBox::information(this, "Delete Successfully ..", Message, 0, 0);
+        } else {
+            Message = d_m.errorString();
+            QMessageBox::information(this, "Delete Error ..", Message, 0, 0);
+        }
+        this->Refresh_Tree();
+    } else {
+        QMessageBox::information(this, "Cannot Deleting ..", "Please Select Module Name Before Delete Module ..", 0, 0);
+    }
+}
+
 void MainWindow::on_treeView_clicked(const QModelIndex &index)
 {
     QString name = index.data(Qt::DisplayRole).toString();
@@ -453,6 +482,8 @@ void MainWindow::on_actionDisconnect_triggered()
 //    Serial.close_serial(SerialPort);
     if (SerialPort->isOpen()) {
         if (SerialPort->open(QIODevice::ReadWrite)) {
+            SerialPort->close();
+        } else {
             SerialPort->close();
         }
         bottom_message->setStyleSheet("QLabel { color : black; }");
@@ -633,7 +664,6 @@ void MainWindow::on_actionRefresh_triggered()
 
 void MainWindow::on_actionAdd_Plugin_triggered()
 {
-//    QString plugin = QFileDialog::getExistingDirectory(this, tr("Select Folder"), QDir::homePath(), QFileDialog::ShowDirsOnly);
     QStringList plugin = QFileDialog::getOpenFileNames(this, tr("Load Module"), tr("data/module/"), tr("(*.zip)"));
     if (plugin.isEmpty()) return;
     QStringList file; bool fail = false;

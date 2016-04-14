@@ -109,7 +109,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="tab_input">
       <attribute name="title">
@@ -1500,12 +1500,12 @@
          </column>
          <column>
           <property name="text">
-           <string>Input Reg</string>
+           <string>Input</string>
           </property>
          </column>
          <column>
           <property name="text">
-           <string>Output Reg</string>
+           <string>Output</string>
           </property>
          </column>
          <column>

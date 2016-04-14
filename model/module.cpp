@@ -11,7 +11,7 @@ void module::write_module(struct t_module *tmodule){
     QString pth;
     pth.sprintf("data/module/m_%s.dbe",tmodule->module_name);
     QSettings sett(pth, QSettings::IniFormat);
-    sett.setIniCodec(CODEC);
+//    sett.setIniCodec(CODEC);
 
     sett.beginGroup( "MODULE" );
     sett.setValue("ACTIVE", tmodule->flag_active);
@@ -129,7 +129,7 @@ void module::read_module(struct t_module *tmodule, QString addressModule){
     cryp code; code.decryp(pth);
     QString temp;
     QSettings sett(pth, QSettings::IniFormat);
-    sett.setIniCodec(CODEC);
+//    sett.setIniCodec(CODEC);
 
     tmodule->flag_active = sett.value("MODULE/ACTIVE").toInt();
     strcpy(tmodule->module_name, sett.value("MODULE/MODULE_NAME").toString().toLatin1());
@@ -218,7 +218,7 @@ void module::save_as_module(struct t_module *tmodule, QString address){
     QStringList temp1; QString temp2; int index;
     QString pth = address;
     QSettings sett(pth, QSettings::IniFormat);
-    sett.setIniCodec(CODEC);
+//    sett.setIniCodec(CODEC);
     QString temp;
 
     sett.beginGroup( "MODULE" );

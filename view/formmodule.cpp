@@ -77,12 +77,14 @@ void formModule::setInterface_Input(QString address)
     this->ui->tabel_input->setRowCount(rowInputDigital + rowInputAnalog);
 
     SigMapSet_input = new QSignalMapper(this);
+    SigMapReg_input = new QSignalMapper(this);
     for (int i = 0; i < rowInputDigital + rowInputAnalog; i++){
         set_input[i] = new QPushButton("Set", this);
         SigMapSet_input->setMapping(set_input[i], i);
         connect(set_input[i],SIGNAL(clicked()),SigMapSet_input,SLOT(map()));
 
         name_input[i] = new QLineEdit(this);
+        name_input[i]->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
 
         type_input[i] = new QComboBox(this);
         if (i >= rowInputDigital) {
@@ -101,19 +103,22 @@ void formModule::setInterface_Input(QString address)
 
         calib_m[i] = new QLineEdit(this);
         calib_m[i]->setAlignment(Qt::AlignRight);
+        calib_m[i]->setValidator(new QDoubleValidator(-9999.999,9999.999,1,this));
 
         calib_x[i] = new QLineEdit(this);
         calib_x[i]->setAlignment(Qt::AlignRight);
+        calib_x[i]->setValidator(new QDoubleValidator(-9999.999,9999.999,1,this));
 
         reg_input[i] = new QComboBox(this);
+        SigMapReg_input->setMapping(reg_input[i], i);
+        connect(reg_input[i],SIGNAL(currentIndexChanged(int)),SigMapReg_input,SLOT(map()));
         if (i < rowInputDigital) {
             for (int j = 0; j < DATA_PERIOD; j++) {
                 type = QString::number(1000+j+1);
                 reg_input[i]->addItem(type);
                 type.clear();
             }
-        } else
-        {
+        } else {
             for (int j = 0; j < DATA_PERIOD; j++) {
                 type = QString::number(1000+j+11);
                 reg_input[i]->addItem(type);
@@ -126,6 +131,7 @@ void formModule::setInterface_Input(QString address)
         state_input[i]->addItem("ACTIVE",1);
     }
     connect(SigMapSet_input,SIGNAL(mapped(int)),this,SLOT(set_kanal_clicked(int)));
+    connect(SigMapReg_input,SIGNAL(mapped(int)),this,SLOT(reg_kanal_changed()));
 
     QString str;
     QString tmp;
@@ -160,11 +166,8 @@ void formModule::setInterface_Input(QString address)
         calib_m[i]->setText(list[(i*8)+4]);
         calib_x[i]->setText(list[(i*8)+5]);
         tmp = list.at((i*8)+6);
-        if (i < rowInputDigital) {
-            reg_input[i]->setCurrentIndex(tmp.toInt() - 1001);
-        } else {
-            reg_input[i]->setCurrentIndex(tmp.toInt() - 1011);
-        }
+        if (i < rowInputDigital) {reg_input[i]->setCurrentIndex(tmp.toInt() - 1001);}
+        else {reg_input[i]->setCurrentIndex(tmp.toInt() - 1011);}
         state_input[i]->setCurrentIndex(list[(i*8)+7].toInt());
 
         this->ui->tabel_input->setCellWidget(i,0, set_input[i]);
@@ -178,6 +181,17 @@ void formModule::setInterface_Input(QString address)
     }
 
     this->ui->tabel_input->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
+    for (int i = 0; i < tModule.jml_input_digital; i++) {
+        for (int j = 0; j < tModule.jml_input_digital; j++) {
+            qobject_cast<QStandardItemModel *>(reg_input[i]->model())->item(reg_input[i]->findText(reg_input[j]->currentText()))->setEnabled(false);
+        }
+    }
+    for (int i = tModule.jml_input_digital; i < tModule.jml_input_digital + tModule.jml_input_analog; i++) {
+        for (int j = tModule.jml_input_digital; j < tModule.jml_input_digital + tModule.jml_input_analog; j++) {
+            qobject_cast<QStandardItemModel *>(reg_input[i]->model())->item(reg_input[i]->findText(reg_input[j]->currentText()))->setEnabled(false);
+        }
+    }
 }
 
 void formModule::setInterface_Output(QString address)
@@ -201,6 +215,7 @@ void formModule::setInterface_Output(QString address)
 
     for (int i = 0; i < rowOutput; i++){
         name_output[i] = new QLineEdit(this);
+        name_output[i]->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
 
         state_output[i] = new QComboBox(this);
         state_output[i]->addItem("NOT ACTIVE");
@@ -341,12 +356,15 @@ void formModule::setInterface_Sumber(QString address)
         connect(delete_source[i],SIGNAL(clicked()),SigMapDel_Source,SLOT(map()));
 
         name_source[i] = new QLineEdit(this);
+        name_source[i]->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
 
         ip_source[i] = new QLineEdit(this);
         ip_source[i]->setAlignment(Qt::AlignCenter);
+        ip_source[i]->setInputMask("999.999.999.999");
 
         port_source[i] = new QLineEdit(this);
         port_source[i]->setAlignment(Qt::AlignCenter);
+        port_source[i]->setValidator(new QRegExpValidator(QRegExp("^\\d{1,4}$"),this));
 
         state_source[i] = new QComboBox(this);
         state_source[i]->addItem("NOT ACTIVE",0);
@@ -443,6 +461,9 @@ void formModule::setInterface_Alarm(QString address)
 
     int rowAlarm = tModule.jml_alarm;
     QString type;
+    QString str;
+    QString tmp;
+    QStringList list;
 
     this->ui->tabel_alarm->verticalHeader()->setHidden(true);
     this->ui->tabel_alarm->setColumnCount(13);
@@ -450,7 +471,7 @@ void formModule::setInterface_Alarm(QString address)
     this->ui->tabel_alarm->setColumnWidth(1, 25);
 //    this->ui->tabel_alarm->setColumnWidth(2, 75);
     this->ui->tabel_alarm->setColumnWidth(3, 100);
-//    this->ui->tabel_alarm->setColumnWidth(4, 75);
+    this->ui->tabel_alarm->setColumnWidth(4, 175);
 //    this->ui->tabel_alarm->setColumnWidth(5, 75);
     this->ui->tabel_alarm->setColumnWidth(6, 100);
 //    this->ui->tabel_alarm->setColumnWidth(7, 50);
@@ -462,6 +483,7 @@ void formModule::setInterface_Alarm(QString address)
     this->ui->tabel_alarm->setRowCount(rowAlarm);
 
     SigMapDel_Alarm = new QSignalMapper(this);
+    SigMapInput_Alarm = new QSignalMapper(this);
     for (int i = 0; i < rowAlarm; i++){
         check_alarm[i] = new QCheckBox(this);
         delete_alarm[i] = new QPushButton("Del", this);
@@ -469,51 +491,70 @@ void formModule::setInterface_Alarm(QString address)
         connect(delete_alarm[i],SIGNAL(clicked()),SigMapDel_Alarm,SLOT(map()));
 
         name_alarm[i] = new QLineEdit(this);
+        name_alarm[i]->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
 
         state_alarm[i] = new QComboBox(this);
         state_alarm[i]->addItem("NOT ACTIVE",0);
         state_alarm[i]->addItem("ACTIVE",1);
 
-        input_reg_alarm[i] = new QLineEdit(this);
-        input_reg_alarm[i]->setAlignment(Qt::AlignCenter);
+        input_alarm[i] = new QComboBox(this);
+        input_alarm[i]->addItem("");
+        for (int j = 0; j < tModule.jml_input_digital + tModule.jml_input_analog; j++) {
+            if (j < tModule.jml_input_digital) {
+                str = tModule.data.at(j); list = str.split(';');
+                type = "Kanal " + QString::number(j+1) + " - Digital - REG: " + list[1];
+                input_alarm[i]->addItem(type);
+                type.clear();
+            } else {
+                str = tModule.data.at(j); list = str.split(';');
+                type = "Kanal " + QString::number(j+5) + " - Analog - REG: " + list[1];
+                input_alarm[i]->addItem(type);
+                type.clear();
+            }
+        }
 
-        output_reg_alarm[i] = new QLineEdit(this);
-        output_reg_alarm[i]->setAlignment(Qt::AlignCenter);
+        output_alarm[i] = new QComboBox(this);
+        for (int j = 0; j < tModule.jml_output; j++) {
+            type = "Relay " + QString::number(j+1);
+            output_alarm[i]->addItem(type);
+            type.clear();
+        }
 
         range_l[i] = new QLineEdit(this);
         range_l[i]->setAlignment(Qt::AlignCenter);
+        range_l[i]->setValidator(new QDoubleValidator(-9999.999,9999.999,1,this));
 
         batas_ll[i] = new QLineEdit(this);
         batas_ll[i]->setAlignment(Qt::AlignCenter);
+        batas_ll[i]->setValidator(new QDoubleValidator(-9999.999,9999.999,1,this));
 
         batas_l[i] = new QLineEdit(this);
         batas_l[i]->setAlignment(Qt::AlignCenter);
+        batas_l[i]->setValidator(new QDoubleValidator(-9999.999,9999.999,1,this));
 
         batas_h[i] = new QLineEdit(this);
         batas_h[i]->setAlignment(Qt::AlignCenter);
+        batas_h[i]->setValidator(new QDoubleValidator(-9999.999,9999.999,1,this));
 
         batas_hh[i] = new QLineEdit(this);
         batas_hh[i]->setAlignment(Qt::AlignCenter);
+        batas_hh[i]->setValidator(new QDoubleValidator(-9999.999,9999.999,1,this));
 
         range_h[i] = new QLineEdit(this);
         range_h[i]->setAlignment(Qt::AlignCenter);
+        range_h[i]->setValidator(new QDoubleValidator(-9999.999,9999.999,1,this));
     }
     connect(SigMapDel_Alarm,SIGNAL(mapped(int)),this,SLOT(del_alrm_clicked(int)));
 
-    QString str;
-    QString tmp;
-    QStringList list;
-
     for (int i = 0; i < rowAlarm; i++){
         type = "Alarm - ";
-        type.append(QString::number(i+1));
-
         if (i <= tModule.alarm.length()) {
             str = tModule.alarm.at(i);
             list = str.split(';');
+            type.append(list[0]);
             name_alarm[i]->setText(list[1]);
-            input_reg_alarm[i]->setText(list[2]);
-            output_reg_alarm[i]->setText(list[3]);
+            input_alarm[i]->setCurrentIndex(list[2].toInt());
+            output_alarm[i]->setCurrentIndex(list[3].toInt());
             state_alarm[i]->setCurrentIndex(list[4].toInt());
             range_l[i]->setText(list[5]);
             batas_ll[i]->setText(list[6]);
@@ -522,13 +563,15 @@ void formModule::setInterface_Alarm(QString address)
             batas_hh[i]->setText(list[9]);
             range_h[i]->setText(list[10]);
         }
+        SigMapInput_Alarm->setMapping(input_alarm[i], i);
+        connect(input_alarm[i],SIGNAL(currentIndexChanged(int)),SigMapInput_Alarm,SLOT(map()));
 
         this->ui->tabel_alarm->setCellWidget(i,0, check_alarm[i]);
         this->ui->tabel_alarm->setCellWidget(i,1, delete_alarm[i]);
         this->ui->tabel_alarm->setItem(i,2, new QTableWidgetItem(type));
         this->ui->tabel_alarm->setCellWidget(i,3, name_alarm[i]);
-        this->ui->tabel_alarm->setCellWidget(i,4, input_reg_alarm[i]);
-        this->ui->tabel_alarm->setCellWidget(i,5, output_reg_alarm[i]);
+        this->ui->tabel_alarm->setCellWidget(i,4, input_alarm[i]);
+        this->ui->tabel_alarm->setCellWidget(i,5, output_alarm[i]);
         this->ui->tabel_alarm->setCellWidget(i,6, state_alarm[i]);
         this->ui->tabel_alarm->setCellWidget(i,7, range_l[i]);
         this->ui->tabel_alarm->setCellWidget(i,8, batas_ll[i]);
@@ -537,8 +580,17 @@ void formModule::setInterface_Alarm(QString address)
         this->ui->tabel_alarm->setCellWidget(i,11, batas_hh[i]);
         this->ui->tabel_alarm->setCellWidget(i,12, range_h[i]);
     }
+    connect(SigMapInput_Alarm,SIGNAL(mapped(int)),this,SLOT(input_alrm_changed(int)));
 
     this->ui->tabel_alarm->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    this->ui->tabel_alarm->hideColumn(5);
+    this->ui->tabel_alarm->hideColumn(5);
+
+    for (int i = 0; i < tModule.jml_alarm; i++) {
+        for (int j = 0; j < tModule.jml_alarm; j++) {
+            qobject_cast<QStandardItemModel *>(input_alarm[i]->model())->item(input_alarm[i]->findText(input_alarm[j]->currentText()))->setEnabled(false);
+        }
+    }
 }
 
 void formModule::setInterface_Data(QString address)
@@ -718,6 +770,7 @@ void formModule::on_tabWidget_tabBarClicked(int index)
     } else if (index == 5) {
         this->ui->pbSet->setText("Set Alarm Settings");
         this->ui->pbGet->setText("Get Alarm Settings");
+        this->setInterface_Alarm("data/module/m_" + this->windowTitle() + ".dbe");
     } else if (index == 6) {
         this->ui->pbSet->setText("Set Data Settings");
         this->ui->pbGet->setText("Get Data Settings");
@@ -733,6 +786,7 @@ void formModule::on_pbSetAll_clicked()
     int indx;
     int diff = 0;
 //    int reset = 0;
+    QString str;
     QStringList list;
     bool timeout = false;
     bool fail = false;
@@ -811,6 +865,63 @@ void formModule::on_pbSetAll_clicked()
                   target_reg_source[i]->text();
 
         tModule.sumber[i] = data[i];
+    }
+
+    for (int i = 0; i < ui->tabel_alarm->rowCount(); i++) {
+        data[i] = QString::number(i+1) + ";" +
+                  name_alarm[i]->text() + ";" +
+                  QString::number(input_alarm[i]->currentIndex()) + ";" +
+                  QString::number(output_alarm[i]->currentIndex()) + ";" +
+                  QString::number(state_alarm[i]->currentIndex()) + ";" +
+                  range_l[i]->text() + ";" +
+                  batas_ll[i]->text() + ";" +
+                  batas_l[i]->text() + ";" +
+                  batas_h[i]->text() + ";" +
+                  batas_hh[i]->text() + ";" +
+                  range_h[i]->text();
+
+        tModule.alarm[i] = data[i];
+        for (int j = 0; j < tModule.jml_data; j++) {
+            str = tModule.data.at(j);
+            list = str.split(';');
+            if (input_alarm[i]->currentIndex() > 0 &&
+                    input_alarm[i]->currentIndex() < tModule.jml_input_digital) {
+                if (QString::number(input_alarm[i]->currentIndex()) == list.at(0)) {
+                    str = list.at(0) + ";" +
+                          list.at(1) + ";" +
+                          name_alarm[i]->text() + ";" +
+                          list.at(3) + ";" +
+                          list.at(4) + ";" +
+                          range_l[i]->text() + ";" +
+                          batas_ll[i]->text() + ";" +
+                          batas_l[i]->text() + ";" +
+                          batas_h[i]->text() + ";" +
+                          batas_hh[i]->text() + ";" +
+                          range_h[i]->text() + ";" +
+                          list.at(11); //QString::number(state_alarm[i]->currentIndex());
+
+                    tModule.data[j] = str;
+                }
+            } else if (input_alarm[i]->currentIndex() > tModule.jml_input_digital &&
+                       input_alarm[i]->currentIndex() < tModule.jml_input_digital + tModule.jml_input_analog) {
+                if (QString::number(input_alarm[i]->currentIndex()+4) == list.at(0)) {
+                    str = list.at(0) + ";" +
+                          list.at(1) + ";" +
+                          name_alarm[i]->text() + ";" +
+                          list.at(3) + ";" +
+                          list.at(4) + ";" +
+                          range_l[i]->text() + ";" +
+                          batas_ll[i]->text() + ";" +
+                          batas_l[i]->text() + ";" +
+                          batas_h[i]->text() + ";" +
+                          batas_hh[i]->text() + ";" +
+                          range_h[i]->text() + ";" +
+                          list.at(11); //QString::number(state_alarm[i]->currentIndex());
+
+                    tModule.data[j] = str;
+                }
+            }
+        }
     }
 
     mod.write_module(&tModule);
@@ -936,6 +1047,7 @@ void formModule::on_pbSet_clicked()
     int diff = 0;
     int reset = 0;
     bool timeout = false;
+    QString str;
     QStringList list;
     bool fail = false;
 
@@ -1020,7 +1132,60 @@ void formModule::on_pbSet_clicked()
     } else if (this->ui->tabWidget->currentIndex() == 5) {
         /** SET ALARM **/
         for (int i = 0; i < ui->tabel_alarm->rowCount(); i++) {
+            data[i] = QString::number(i+1) + ";" +
+                      name_alarm[i]->text() + ";" +
+                      QString::number(input_alarm[i]->currentIndex()) + ";" +
+                      QString::number(output_alarm[i]->currentIndex()) + ";" +
+                      QString::number(state_alarm[i]->currentIndex()) + ";" +
+                      range_l[i]->text() + ";" +
+                      batas_ll[i]->text() + ";" +
+                      batas_l[i]->text() + ";" +
+                      batas_h[i]->text() + ";" +
+                      batas_hh[i]->text() + ";" +
+                      range_h[i]->text();
 
+            tModule.alarm[i] = data[i];
+            for (int j = 0; j < tModule.jml_data; j++) {
+                str = tModule.data.at(j);
+                list = str.split(';');
+                if (input_alarm[i]->currentIndex() > 0 &&
+                        input_alarm[i]->currentIndex() <= tModule.jml_input_digital) {
+                    if (QString::number(input_alarm[i]->currentIndex()) == list.at(0)) {
+                        str = list.at(0) + ";" +
+                              list.at(1) + ";" +
+                              name_alarm[i]->text() + ";" +
+                              list.at(3) + ";" +
+                              list.at(4) + ";" +
+                              range_l[i]->text() + ";" +
+                              batas_ll[i]->text() + ";" +
+                              batas_l[i]->text() + ";" +
+                              batas_h[i]->text() + ";" +
+                              batas_hh[i]->text() + ";" +
+                              range_h[i]->text() + ";" +
+                              list.at(11); //QString::number(state_alarm[i]->currentIndex());
+
+                        tModule.data[j] = str;
+                    }
+                } else if (input_alarm[i]->currentIndex() > tModule.jml_input_digital &&
+                           input_alarm[i]->currentIndex() <= tModule.jml_input_digital + tModule.jml_input_analog) {
+                    if (QString::number(input_alarm[i]->currentIndex()+4) == list.at(0)) {
+                        str = list.at(0) + ";" +
+                              list.at(1) + ";" +
+                              name_alarm[i]->text() + ";" +
+                              list.at(3) + ";" +
+                              list.at(4) + ";" +
+                              range_l[i]->text() + ";" +
+                              batas_ll[i]->text() + ";" +
+                              batas_l[i]->text() + ";" +
+                              batas_h[i]->text() + ";" +
+                              batas_hh[i]->text() + ";" +
+                              range_h[i]->text() + ";" +
+                              list.at(11); //QString::number(state_alarm[i]->currentIndex());
+
+                        tModule.data[j] = str;
+                    }
+                }
+            }
         }
     }
 
@@ -1354,6 +1519,8 @@ void formModule::on_pbEdit_clicked()
                 Address_Module.mid(Address_Module.indexOf("m_")+2,
                                    Address_Module.indexOf(".dbe")).remove(".dbe"));
     struct t_module tModule;
+    struct t_serial_settings tSerial;
+    QStringList val_data;
 
     mod.read_module(&tModule, Address_Module);
     if (Serial_Com->isOpen()) {
@@ -1363,9 +1530,27 @@ void formModule::on_pbEdit_clicked()
         if (this->ui->tabWidget->currentIndex() == 2) {
             timeout = work->Set_SIM(this, busyForm, Serial_Com, &tModule, false);
             if (timeout) {fail = true;} else {fail = false;}// return;};
+
+            timeout = work->Request_SIM(this, busyForm, Serial_Com, false);
+            if (timeout) {fail = true;} else {
+                Serial->read_parsing(&tSerial);
+                val_data = tSerial.str_data_sim.split("*");
+                work->Get_SIM(&tModule, val_data);
+            }
+
+            this->setInterface_Communication(Address_Module);
         } else if (this->ui->tabWidget->currentIndex() == 3) {
             timeout = work->Set_ENV(this, busyForm, Serial_Com, &tModule, false);
             if (timeout) {fail = true;} else {fail = false;}// return;};
+
+            timeout = work->Request_ENV(this, busyForm, Serial_Com, false);
+            if (timeout) {fail = true;} else {
+                Serial->read_parsing(&tSerial);
+                val_data = tSerial.str_data_sim.split("*");
+                work->Get_ENV(&tModule, val_data);
+            }
+
+            this->setInterface_Environtment(Address_Module);
         }
 
         if (!fail) {
@@ -1431,7 +1616,7 @@ void formModule::on_pbAddRow_clicked()
         }
     } else if (this->ui->tabWidget->currentIndex() == 5) {
         tModule.jml_alarm++;
-        tmp = QString::number(tModule.jml_alarm) + ";;;;0;0;0;0;0;0;0";
+        tmp = QString::number(tModule.jml_alarm) + ";;0;0;0;0;0;0;0;0;0";
         tModule.alarm.insert(tModule.jml_alarm-1, tmp);
         mod.write_module(&tModule);
         cryp code; code.encryp(Address_Module);
@@ -1504,6 +1689,48 @@ void formModule::del_alrm_clicked(int index)
         this->ui->tabel_alarm->removeRow(i);
     }
     this->setInterface_Alarm(Address_Module);
+}
+
+void formModule::input_alrm_changed(int index)
+{
+    struct t_module tModule; module mod;
+    Address_Module = "data/module/m_" + this->windowTitle() + ".dbe";
+    QString tmp; QString str; QStringList list;
+    mod.read_module(&tModule, Address_Module);
+
+    for (int i = 0; i < tModule.jml_alarm; i++) {
+        for (int j = 0; j <= tModule.jml_input_digital + tModule.jml_input_analog; j++) {
+            qobject_cast<QStandardItemModel *>(input_alarm[i]->model())->item(j)->setEnabled(true);
+        }
+    }
+    for (int i = 0; i < tModule.jml_alarm; i++) {
+        for (int j = 0; j < tModule.jml_alarm; j++) {
+            tmp = input_alarm[j]->currentText();
+            qobject_cast<QStandardItemModel *>(input_alarm[i]->model())->item(input_alarm[i]->findText(tmp))->setEnabled(false);
+        }
+    }
+
+    if (input_alarm[index]->currentIndex() - 1 >= 0) {
+        str = tModule.data.at(input_alarm[index]->currentIndex() - 1);
+        list = str.split(';');
+        name_alarm[index]->setText(list[2]);
+        state_alarm[index]->setCurrentIndex(list[11].toInt());
+        range_l[index]->setText(list[5]);
+        batas_ll[index]->setText(list[6]);
+        batas_l[index]->setText(list[7]);
+        batas_h[index]->setText(list[8]);
+        batas_hh[index]->setText(list[9]);
+        range_h[index]->setText(list[10]);
+    } else {
+        name_alarm[index]->setText("");
+        state_alarm[index]->setCurrentIndex(0);
+        range_l[index]->setText("0");
+        batas_ll[index]->setText("0");
+        batas_l[index]->setText("0");
+        batas_h[index]->setText("0");
+        batas_hh[index]->setText("0");
+        range_h[index]->setText("0");
+    }
 }
 
 void formModule::on_pbDeleteRows_clicked()
@@ -1702,4 +1929,35 @@ void formModule::set_kanal_clicked(int index)
         QMessageBox::information(this, "Success!!", Message, 0, 0);
     }
     this->EnableButton(true);
+}
+
+void formModule::reg_kanal_changed()
+{
+    struct t_module tModule; module mod;
+    Address_Module = "data/module/m_" + this->windowTitle() + ".dbe";
+    QString tmp;
+    mod.read_module(&tModule, Address_Module);
+
+    for (int i = 0; i < tModule.jml_input_digital; i++) {
+        for (int j = 0; j < DATA_PERIOD; j++) {
+            qobject_cast<QStandardItemModel *>(reg_input[i]->model())->item(j)->setEnabled(true);
+        }
+    }
+    for (int i = tModule.jml_input_digital; i < tModule.jml_input_digital + tModule.jml_input_analog; i++) {
+        for (int j = 0; j < DATA_PERIOD; j++) {
+            qobject_cast<QStandardItemModel *>(reg_input[i]->model())->item(j)->setEnabled(true);
+        }
+    }
+    for (int i = 0; i < tModule.jml_input_digital; i++) {
+        for (int j = 0; j < tModule.jml_input_digital; j++) {
+            tmp = reg_input[j]->currentText();
+            qobject_cast<QStandardItemModel *>(reg_input[i]->model())->item(reg_input[i]->findText(tmp))->setEnabled(false);
+        }
+    }
+    for (int i = tModule.jml_input_digital; i < tModule.jml_input_digital + tModule.jml_input_analog; i++) {
+        for (int j = tModule.jml_input_digital; j < tModule.jml_input_digital + tModule.jml_input_analog; j++) {
+            tmp = reg_input[j]->currentText();
+            qobject_cast<QStandardItemModel *>(reg_input[i]->model())->item(reg_input[i]->findText(tmp))->setEnabled(false);
+        }
+    }
 }

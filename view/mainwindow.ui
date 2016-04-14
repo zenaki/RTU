@@ -78,6 +78,7 @@
     <addaction name="actionNew"/>
     <addaction name="actionLoad"/>
     <addaction name="actionSave"/>
+    <addaction name="actionDelete"/>
     <addaction name="actionRefresh"/>
    </widget>
    <widget class="QMenu" name="menuCommunication">
@@ -129,10 +130,11 @@
    <addaction name="actionNew"/>
    <addaction name="actionLoad"/>
    <addaction name="actionSave"/>
+   <addaction name="actionDelete"/>
+   <addaction name="actionRefresh"/>
    <addaction name="actionConnect"/>
    <addaction name="actionDisconnect"/>
    <addaction name="actionConfig"/>
-   <addaction name="actionRefresh"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionNew">
@@ -232,6 +234,18 @@
   <action name="actionEdit_User">
    <property name="text">
     <string>Edit User</string>
+   </property>
+  </action>
+  <action name="actionDelete">
+   <property name="icon">
+    <iconset resource="../image.qrc">
+     <normaloff>:/new/prefix1/image/trash.png</normaloff>:/new/prefix1/image/trash.png</iconset>
+   </property>
+   <property name="text">
+    <string>Delete</string>
+   </property>
+   <property name="toolTip">
+    <string>Delete Module</string>
    </property>
   </action>
  </widget>

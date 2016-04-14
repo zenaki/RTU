@@ -60,8 +60,10 @@ private slots:
 
     void on_pbAddRow_clicked();
     void set_kanal_clicked(int index);
+    void reg_kanal_changed();
     void del_src_clicked(int index);
     void del_alrm_clicked(int index);
+    void input_alrm_changed(int index);
 
     void on_pbDeleteRows_clicked();
 
@@ -70,7 +72,7 @@ private slots:
 private:
     worker *work;
     form_addModule *faddModule;
-    QString module_name;\
+    QString module_name;
 
     QString Address_Module;
     QString NoSeri;
@@ -102,6 +104,7 @@ private:
     QLineEdit *calib_m[16];
     QLineEdit *calib_x[16];
     QComboBox *reg_input[16];
+    QSignalMapper *SigMapReg_input;
 
     /** Output Tab **/
     QLineEdit *name_output[16];
@@ -133,8 +136,9 @@ private:
     QSignalMapper *SigMapDel_Alarm;
     QLineEdit *name_alarm[16];
     QComboBox *state_alarm[16];
-    QLineEdit *input_reg_alarm[16];
-    QLineEdit *output_reg_alarm[16];
+    QComboBox *input_alarm[16];
+    QSignalMapper *SigMapInput_Alarm;
+    QComboBox *output_alarm[16];
     QLineEdit *range_l[16];
     QLineEdit *batas_ll[16];
     QLineEdit *batas_l[16];

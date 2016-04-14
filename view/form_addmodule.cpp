@@ -81,10 +81,20 @@ form_addModule::form_addModule(QWidget *parent, bool create, QString address, in
         modules.sprintf("%s", tModule.passwd_gsm_2);
         this->ui->edit_passwd_2->setText(modules);
 
-        if (index == 2) {
+        if (index == 1) {
+            this->ui->edit_module_name->setEnabled(true);
+            this->ui->edit_sn->setEnabled(true);
+            this->ui->ck_flag_active_gsm_2->setHidden(true);
+
+            this->setFixedWidth(640);
+            this->setFixedHeight(445);
+            this->ui->gbCom->setGeometry(20,70,601,311);
+            this->ui->buttonBox->setGeometry(14,405,601,27);
+            this->ui->gbCom->setHidden(false);
+            this->ui->gbEnv->setHidden(true);
+        } else if (index == 2) {
             this->ui->edit_module_name->setEnabled(false);
             this->ui->edit_sn->setEnabled(false);
-
             this->ui->ck_flag_active_gsm_2->setHidden(false);
 
             this->setFixedWidth(640);
