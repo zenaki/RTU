@@ -150,8 +150,9 @@ bool worker::state_of_module(int num, QString newModule, QString *existModule){
 bool worker::Request_ENV(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, bool timeout)
 {
     QString Request = "hmi_cek_env\r\n";
-    Serial_Com->write(Request.toUtf8().data());
-//    this->delay(parent, lBox, Request, jeda);
+    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
     if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
     if (timeout) {return timeout;}
@@ -162,8 +163,9 @@ bool worker::Request_ENV(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Se
 bool worker::Request_IO(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, bool timeout)
 {
     QString Request = "hmi_sync\r\n";
-    Serial_Com->write(Request.toUtf8().data());
-//    this->delay(parent, lBox, Request, jeda);
+    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
     if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
     if (timeout) {return timeout;}
@@ -174,8 +176,9 @@ bool worker::Request_IO(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Ser
 bool worker::Request_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, bool timeout)
 {
     QString Request = "hmi_cek_cfg_sim\r\n";
-    Serial_Com->write(Request.toUtf8().data());
-//    this->delay(parent, lBox, Request, jeda);
+    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
     if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
     if (timeout) {return timeout;}
@@ -186,8 +189,9 @@ bool worker::Request_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Se
 bool worker::Request_Signal(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, bool timeout)
 {
     QString Request = "hmi_cek_signal\r\n";
-    Serial_Com->write(Request.toUtf8().data());
-//    this->delay(parent, lBox, Request, jeda);
+    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
     if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
     if (timeout) {return timeout;}
@@ -198,8 +202,9 @@ bool worker::Request_Signal(QWidget *parent, QLightBoxWidget *lBox, QSerialPort 
 bool worker::Request_Sumber(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, bool timeout)
 {
     QString Request = "hmi_cek_sumber\r\n";
-    Serial_Com->write(Request.toUtf8().data());
-//    this->delay(parent, lBox, Request, jeda);
+    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
     if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
     if (timeout) {return timeout;}
@@ -210,8 +215,9 @@ bool worker::Request_Sumber(QWidget *parent, QLightBoxWidget *lBox, QSerialPort 
 bool worker::Request_Data(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, bool timeout)
 {
     QString Request = "hmi_cek_data\r\n";
-    Serial_Com->write(Request.toUtf8().data());
-//    this->delay(parent, lBox, Request, jeda);
+    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
     if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
     if (timeout) {return timeout;}
@@ -510,37 +516,49 @@ bool worker::Set_ENV(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial
     QString Request;
 
     Request.sprintf("set_env nama %s\r\n", tModule->module_name);
-    Serial_Com->write(Request.toUtf8().data());
+    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
     if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
     if (timeout) {return timeout;}
 
     Request.sprintf("set_env SN %s\r\n", tModule->serial_number);
-    Serial_Com->write(Request.toUtf8().data());
+    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
     if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
     if (timeout) {return timeout;}
 
     Request.sprintf("set_env ipaddr %s\r\n", tModule->ip_address);
-    Serial_Com->write(Request.toUtf8().data());
+    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
     if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
     if (timeout) {return timeout;}
 
     Request.sprintf("set_env server %s\r\n", tModule->server_address);
-    Serial_Com->write(Request.toUtf8().data());
+    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
     if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
     if (timeout) {return timeout;}
 
     Request.sprintf("set_env file %s\r\n", tModule->file_address);
-    Serial_Com->write(Request.toUtf8().data());
+    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
     if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
     if (timeout) {return timeout;}
 
     Request.sprintf("set_env kirim %d\r\n", tModule->flag_webclient);
-    Serial_Com->write(Request.toUtf8().data());
+    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
     if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
     if (timeout) {return timeout;}
@@ -561,19 +579,25 @@ bool worker::Set_Input(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Seri
             val = temp.split(';');
 
             Request = "set_kanal " + val.at(1) + " status " + val.at(2) + "\r\n";
-            Serial_Com->write(Request.toUtf8().data());
+            serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//            Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//            Serial_Com->waitForBytesWritten(WAIT_WRITE);
             if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
             this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
             if (timeout) {return timeout;}
 
             Request = "set_kanal " + val.at(1) + " " + val.at(3) + " " + val.at(4) + "\r\n";
-            Serial_Com->write(Request.toUtf8().data());
+            serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//            Serial_Com->waitForBytesWritten(WAIT_WRITE);
+//            Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
             if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
             this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
             if (timeout) {return timeout;}
 
 //            Request = "set_data " + val.at(1) + " nama " +tModule->InputName.at(i) + "\r\n";
-//            Serial_Com->write(Request.toUtf8().data());
+//            serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//            Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//            Serial_Com->waitForBytesWritten(WAIT_WRITE);
 //            if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
 //            if (timeout) {return timeout;}
 //            this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
@@ -583,19 +607,25 @@ bool worker::Set_Input(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Seri
         val = temp.split(';');
 
         Request = "set_kanal " + val.at(1) + " status " + val.at(2) + "\r\n";
-        Serial_Com->write(Request.toUtf8().data());
+        serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//        Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//        Serial_Com->waitForBytesWritten(WAIT_WRITE);
         if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
         this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
         if (timeout) {return timeout;}
 
         Request = "set_kanal " + val.at(1) + " " + val.at(3) + " " + val.at(4) + "\r\n";
-        Serial_Com->write(Request.toUtf8().data());
+        serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//        Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//        Serial_Com->waitForBytesWritten(WAIT_WRITE);
         if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
         this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
         if (timeout) {return timeout;}
 
 //        Request = "set_data " + val.at(1) + " nama " +tModule->InputName.at(index.toInt()) + "\r\n";
-//        Serial_Com->write(Request.toUtf8().data());
+//        serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//        Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//        Serial_Com->waitForBytesWritten(WAIT_WRITE);
 //        if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
 //        if (timeout) {return timeout;}
 //        this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
@@ -614,7 +644,9 @@ bool worker::Set_Output(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Ser
         temp = tModule->Output.at(i);
         val = temp.split(';');
         Request = "set_relay " + val.at(1) + " " + val.at(2) + "\r\n";
-        Serial_Com->write(Request.toUtf8().data());
+        serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//        Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//        Serial_Com->waitForBytesWritten(WAIT_WRITE);
         if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
         this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
         if (timeout) {return timeout;}
@@ -635,7 +667,9 @@ bool worker::Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial
     } else {
         Request = "set_cfg_sim 1 nama " + temp + "\r\n";
     }
-    Serial_Com->write(Request.toUtf8().data());
+    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
     if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
     if (timeout) {return timeout;}
@@ -646,7 +680,9 @@ bool worker::Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial
     } else {
         Request = "set_cfg_sim 1 operator " + temp + "\r\n";
     }
-    Serial_Com->write(Request.toUtf8().data());
+    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
     if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
     if (timeout) {return timeout;}
@@ -657,7 +693,9 @@ bool worker::Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial
     } else {
         Request = "set_cfg_sim 1 nomor " + temp + "\r\n";
     }
-    Serial_Com->write(Request.toUtf8().data());
+    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
     if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
     if (timeout) {return timeout;}
@@ -668,7 +706,9 @@ bool worker::Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial
     } else {
         Request = "set_cfg_sim 1 status " + temp + "\r\n";
     }
-    Serial_Com->write(Request.toUtf8().data());
+    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
     if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
     if (timeout) {return timeout;}
@@ -679,7 +719,9 @@ bool worker::Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial
     } else {
         Request = "set_cfg_sim 1 apn " + temp + "\r\n";
     }
-    Serial_Com->write(Request.toUtf8().data());
+    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
     if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
     if (timeout) {return timeout;}
@@ -690,7 +732,9 @@ bool worker::Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial
     } else {
         Request = "set_cfg_sim 1 user " + temp + "\r\n";
     }
-    Serial_Com->write(Request.toUtf8().data());
+    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
     if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
     if (timeout) {return timeout;}
@@ -701,7 +745,9 @@ bool worker::Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial
     } else {
         Request = "set_cfg_sim 1 pass " + temp + "\r\n";
     }
-    Serial_Com->write(Request.toUtf8().data());
+    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
     if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
     if (timeout) {return timeout;}
@@ -712,7 +758,9 @@ bool worker::Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial
     } else {
         Request = "set_cfg_sim 1 mode " + temp + "\r\n";
     }
-    Serial_Com->write(Request.toUtf8().data());
+    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
     if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
     if (timeout) {return timeout;}
@@ -725,7 +773,9 @@ bool worker::Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial
     } else {
         Request = "set_cfg_sim 2 nama " + temp + "\r\n";
     }
-    Serial_Com->write(Request.toUtf8().data());
+    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
     if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
     if (timeout) {return timeout;}
@@ -736,7 +786,9 @@ bool worker::Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial
     } else {
         Request = "set_cfg_sim 2 operator " + temp + "\r\n";
     }
-    Serial_Com->write(Request.toUtf8().data());
+    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
     if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
     if (timeout) {return timeout;}
@@ -747,7 +799,9 @@ bool worker::Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial
     } else {
         Request = "set_cfg_sim 2 nomor " + temp + "\r\n";
     }
-    Serial_Com->write(Request.toUtf8().data());
+    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
     if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
     if (timeout) {return timeout;}
@@ -758,7 +812,9 @@ bool worker::Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial
     } else {
         Request = "set_cfg_sim 2 status " + temp + "\r\n";
     }
-    Serial_Com->write(Request.toUtf8().data());
+    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
     if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
     if (timeout) {return timeout;}
@@ -769,7 +825,9 @@ bool worker::Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial
     } else {
         Request = "set_cfg_sim 2 apn " + temp + "\r\n";
     }
-    Serial_Com->write(Request.toUtf8().data());
+    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
     if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
     if (timeout) {return timeout;}
@@ -780,7 +838,9 @@ bool worker::Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial
     } else {
         Request = "set_cfg_sim 2 user " + temp + "\r\n";
     }
-    Serial_Com->write(Request.toUtf8().data());
+    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
     if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
     if (timeout) {return timeout;}
@@ -791,7 +851,9 @@ bool worker::Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial
     } else {
         Request = "set_cfg_sim 2 pass " + temp + "\r\n";
     }
-    Serial_Com->write(Request.toUtf8().data());
+    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
     if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
     if (timeout) {return timeout;}
@@ -802,7 +864,9 @@ bool worker::Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial
     } else {
         Request = "set_cfg_sim 2 mode " + temp + "\r\n";
     }
-    Serial_Com->write(Request.toUtf8().data());
+    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
     if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
     if (timeout) {return timeout;}
@@ -823,13 +887,17 @@ bool worker::Set_Sumber(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Ser
         val = temp.split(";");
 
         Request = "set_sumber " + val.at(0) + " nama " + val.at(1) + "\r\n";
-        Serial_Com->write(Request.toUtf8().data());
+        serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//        Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//        Serial_Com->waitForBytesWritten(WAIT_WRITE);
         if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
         this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
         if (timeout) {return timeout;}
 
         Request = "set_sumber " + val.at(0) + " status " + val.at(4) + "\r\n";
-        Serial_Com->write(Request.toUtf8().data());
+        serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//        Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//        Serial_Com->waitForBytesWritten(WAIT_WRITE);
         if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
         this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
         if (timeout) {return timeout;}
@@ -843,10 +911,23 @@ bool worker::Set_Sumber(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Ser
                       val.at(9) + ";" +
                       val.at(10) + ";" +
                       val.at(11) + "\r\n";
-            Serial_Com->write(Request.toUtf8().data());
+            serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//            Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//            Serial_Com->waitForBytesWritten(WAIT_WRITE);
             if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
             this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
             if (timeout) {return timeout;}
+
+            if (val.at(4) == "1" && val.at(5) != "0") {
+                temp = val.at(10);
+                for (int j = 0; j < temp.toInt()/2; j++) {
+                    temp = val.at(11);
+                    Request = "set_data " + QString::number(temp.toInt()+1) +
+                              " status " + val.at(4);
+                    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+                }
+
+            }
         }
     }
     return timeout;
@@ -864,62 +945,82 @@ bool worker::Set_Data(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Seria
         temp = tModule->data.at(i);
         val = temp.split(";");
 
-        Request = "set_data" + val.at(0) + " id " + val.at(1) + "\r\n";
-        Serial_Com->write(Request.toUtf8().data());
+        Request = "set_data " + val.at(0) + " id " + val.at(1) + "\r\n";
+        serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//        Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//        Serial_Com->waitForBytesWritten(WAIT_WRITE);
         if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
         this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
         if (timeout) {return timeout;}
 
-        Request = "set_data" + val.at(0) + " nama " + val.at(2) + "\r\n";
-        Serial_Com->write(Request.toUtf8().data());
+        Request = "set_data " + val.at(0) + " nama " + val.at(2) + "\r\n";
+        serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//        Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//        Serial_Com->waitForBytesWritten(WAIT_WRITE);
         if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
         this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
         if (timeout) {return timeout;}
 
-        Request = "set_data" + val.at(0) + " satuan " + val.at(4) + "\r\n";
-        Serial_Com->write(Request.toUtf8().data());
+        Request = "set_data " + val.at(0) + " satuan " + val.at(4) + "\r\n";
+        serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//        Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//        Serial_Com->waitForBytesWritten(WAIT_WRITE);
         if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
         this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
         if (timeout) {return timeout;}
 
-        Request = "set_data" + val.at(0) + " rangeL " + val.at(5) + "\r\n";
-        Serial_Com->write(Request.toUtf8().data());
+        Request = "set_data " + val.at(0) + " rangeL " + val.at(5) + "\r\n";
+        serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//        Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//        Serial_Com->waitForBytesWritten(WAIT_WRITE);
         if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
         this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
         if (timeout) {return timeout;}
 
-        Request = "set_data" + val.at(0) + " batasLL " + val.at(6) + "\r\n";
-        Serial_Com->write(Request.toUtf8().data());
+        Request = "set_data " + val.at(0) + " batasLL " + val.at(6) + "\r\n";
+        serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//        Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//        Serial_Com->waitForBytesWritten(WAIT_WRITE);
         if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
         this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
         if (timeout) {return timeout;}
 
-        Request = "set_data" + val.at(0) + " batasL " + val.at(7) + "\r\n";
-        Serial_Com->write(Request.toUtf8().data());
+        Request = "set_data " + val.at(0) + " batasL " + val.at(7) + "\r\n";
+        serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//        Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//        Serial_Com->waitForBytesWritten(WAIT_WRITE);
         if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
         this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
         if (timeout) {return timeout;}
 
-        Request = "set_data" + val.at(0) + " batasH " + val.at(8) + "\r\n";
-        Serial_Com->write(Request.toUtf8().data());
+        Request = "set_data " + val.at(0) + " batasH " + val.at(8) + "\r\n";
+        serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//        Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//        Serial_Com->waitForBytesWritten(WAIT_WRITE);
         if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
         this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
         if (timeout) {return timeout;}
 
-        Request = "set_data" + val.at(0) + " batasHH " + val.at(9) + "\r\n";
-        Serial_Com->write(Request.toUtf8().data());
+        Request = "set_data " + val.at(0) + " batasHH " + val.at(9) + "\r\n";
+        serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//        Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//        Serial_Com->waitForBytesWritten(WAIT_WRITE);
         if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
         this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
         if (timeout) {return timeout;}
 
-        Request = "set_data" + val.at(0) + " rangeH " + val.at(10) + "\r\n";
-        Serial_Com->write(Request.toUtf8().data());
+        Request = "set_data " + val.at(0) + " rangeH " + val.at(10) + "\r\n";
+        serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//        Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//        Serial_Com->waitForBytesWritten(WAIT_WRITE);
         if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
         this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
         if (timeout) {return timeout;}
 
-        Request = "set_data" + val.at(0) + " status " + val.at(11) + "\r\n";
-        Serial_Com->write(Request.toUtf8().data());
+        Request = "set_data " + val.at(0) + " status " + val.at(11) + "\r\n";
+        serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//        Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//        Serial_Com->waitForBytesWritten(WAIT_WRITE);
         if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
         this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
         if (timeout) {return timeout;}
@@ -933,7 +1034,9 @@ bool worker::Reset_Board(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Se
     QString temp;
 
     Request = "reset\r\n";
-    Serial_Com->write(Request.toUtf8().data());
+    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
     if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
     if (timeout) {return timeout;}
@@ -978,7 +1081,7 @@ bool worker::waiting_set(QWidget *parent, QLightBoxWidget *lBox, QString desc, b
 
     lightBox->setLayout(lbLayout);
     lightBox->show();
-
+//*********************************************************************************************************//
     QTime dieTime = QTime::currentTime().addMSecs(TIMEOUT);
     while (!this->read_FinishRead()) {
         QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
@@ -991,9 +1094,51 @@ bool worker::waiting_set(QWidget *parent, QLightBoxWidget *lBox, QString desc, b
             break;
         }
     }
-    this->delay(DELAY_MS);
+//*********************************************************************************************************//
     lightBox->close();
     return timeout;
+}
+
+void worker::serial_write(QWidget *parent, QSerialPort *Serial_Com, QLightBoxWidget *lBox, QString data, int d_c)
+{
+    /** Set Light Box for Busy **/
+    QLightBoxWidget* lightBox = new QLightBoxWidget(parent, true);
+    lightBox = lBox;
+    lightBox->repaint();
+
+    QLabel* lbTitle = new QLabel("MONITA RTU");
+    lbTitle->setStyleSheet("font-size: 28px; font-weight: bold; color: white");
+    QLabel* lbProgress = new QLabel;
+    QMovie* progressMovie = new QMovie(":/new/prefix1/image/loader.gif");
+    lbProgress->setMovie(progressMovie);
+    progressMovie->start();
+    QString desc = "Processing ...";
+    desc.prepend("wait a second\n");
+    QLabel* lbDescription = new QLabel(desc.toUtf8().data());
+    lbDescription->setStyleSheet("color: white");
+
+    QGridLayout* lbLayout = new QGridLayout;
+    lbLayout->setRowStretch(0, 1);
+    lbLayout->setColumnStretch(0, 1);
+    lbLayout->addWidget(lbTitle, 1, 1);
+    lbLayout->addWidget(lbProgress, 1, 2, Qt::AlignRight);
+    lbLayout->setColumnStretch(3, 1);
+    lbLayout->addWidget(lbDescription, 2, 1, 1, 2);
+    lbLayout->setRowStretch(4, 1);
+
+    lightBox->setLayout(lbLayout);
+    lightBox->show();
+//*********************************************************************************************************//
+    QString temp;
+    data.remove("\r\n");
+    for (int i = 0; i < data.length(); i++) {
+        temp = QChar(data.at(i));
+        Serial_Com->write(temp.toUtf8().data());
+        delay(d_c);
+    }
+    Serial_Com->write("\r\n");
+//*********************************************************************************************************//
+    lightBox->close();
 }
 
 void worker::write_FinishRead(bool FinishRead, int cekErr, QString strErr)

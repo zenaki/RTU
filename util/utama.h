@@ -50,7 +50,7 @@
 #define DATA_PERIOD          10
 
 #define DELAY_MS             50
-#define TIMEOUT              10000
+#define TIMEOUT              5000 //ms
 #define STR_TIMEOUT          "Time Out !! \r\nPlease try again .."
 
 #define CODEC                "UTF-8"
@@ -60,6 +60,8 @@
 #define PATH_SERIAL_PARSING  "data/config/serial_parsing.cfg"
 #define PATH_PLUGIN_CONFIG   "plugin/plugin.cfg"
 #define PATH_USER_ACCESS     "data/config/usr.cfg"
+
+#define WAIT_WRITE           1 //ms
 
 /** STRUCT **/
 

@@ -7,7 +7,7 @@
 #include <QAction>
 #include <QTextStream>
 
-#define ENCRYP "BOCU-1" //"UTF-8" //
+#define ENCRYP "UTF-8" //"BOCU-1" //
 #define DECRYP "UTF-8"
 
 class cryp

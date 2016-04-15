@@ -608,15 +608,19 @@ void MainWindow::readData()
         work->write_FinishRead(FinishRead, 0, "");
         code.encryp(PATH_SERIAL_PARSING);
     } else if (str_data.indexOf("<OK>") > 0) {
-        str_data.clear();
         FinishRead = true;
         work->write_FinishRead(FinishRead, 0, "");
-        cryp code; code.encryp(PATH_SERIAL_PARSING);
-    } else if (str_data.indexOf("<ERR>") > 0) {
         str_data.clear();
-        FinishRead = true;
-        work->write_FinishRead(FinishRead, 1, "");
         cryp code; code.encryp(PATH_SERIAL_PARSING);
+    } else if (str_data.indexOf("<ERR:") > 0 && str_data.indexOf(":ERR>") > 0) {
+        int a = str_data.indexOf("<ERR:");
+        int b = str_data.indexOf(":ERR>");
+        str_data = str_data.mid(a+5, b-a);
+//        str_data.remove(':');
+        FinishRead = true;
+        work->write_FinishRead(FinishRead, 1, str_data);
+        cryp code; code.encryp(PATH_SERIAL_PARSING);
+        str_data.clear();
     }
 }
 

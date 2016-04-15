@@ -88,6 +88,7 @@ public:
 
     void delay(int ms);
     bool waiting_set(QWidget *parent, QLightBoxWidget *lBox, QString desc, bool timeout = false);
+    void serial_write(QWidget *parent, QSerialPort * Serial_Com, QLightBoxWidget *lBox, QString data, int d_c);
 
     void writeLogFile(QString log, int flagERR, QString strERR, bool timeout);
 

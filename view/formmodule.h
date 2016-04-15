@@ -62,6 +62,8 @@ private slots:
     void set_kanal_clicked(int index);
     void reg_kanal_changed();
     void del_src_clicked(int index);
+    void length_src_changed();
+    void tReg_src_changed();
     void del_alrm_clicked(int index);
     void input_alrm_changed(int index);
 
@@ -78,7 +80,7 @@ private:
     QString NoSeri;
     module mod;
     QSerialPort *Serial_Com;
-    QLabel *type[16];
+//    QLabel *type[16];
 
     MainWindow *Main;
     serial *Serial;
@@ -103,7 +105,7 @@ private:
     QComboBox *state_input[16];
     QLineEdit *calib_m[16];
     QLineEdit *calib_x[16];
-    QComboBox *reg_input[16];
+    QComboBox *reg_input[60];
     QSignalMapper *SigMapReg_input;
 
     /** Output Tab **/
@@ -125,19 +127,21 @@ private:
     QLineEdit *sensor_reg_source[16];
     QComboBox *OffsetBase_source[16];
     QComboBox *command_source[16];
-    QLineEdit *length_source[16];
-    QLineEdit *target_reg_source[16];
+    QComboBox *length_source[16];
+    QSignalMapper *SigMap_length_source;
+    QComboBox *target_reg_source[16];
+    QSignalMapper *SigMap_tReg_source;
 
     bool checkFormula(QString data);
 
     /** Alarm Threshold Tab **/
     QCheckBox *check_alarm[16];
     QPushButton *delete_alarm[16];
-    QSignalMapper *SigMapDel_Alarm;
+    QSignalMapper *SigMapDel_alarm;
     QLineEdit *name_alarm[16];
     QComboBox *state_alarm[16];
     QComboBox *input_alarm[16];
-    QSignalMapper *SigMapInput_Alarm;
+    QSignalMapper *SigMapInput_alarm;
     QComboBox *output_alarm[16];
     QLineEdit *range_l[16];
     QLineEdit *batas_ll[16];
@@ -147,10 +151,10 @@ private:
     QLineEdit *range_h[16];
 
     /** Data Monitoring **/
-    QLabel *reg_data[16];
-    QLabel *name_data[16];
-    QLabel *value_data[16];
-    QLabel *unit_data[16];
+    QLabel *reg_data[60];
+    QLabel *name_data[60];
+    QLabel *value_data[60];
+    QLabel *unit_data[60];
 
     void data_monitoring();
 };
