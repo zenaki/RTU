@@ -149,7 +149,8 @@ bool worker::state_of_module(int num, QString newModule, QString *existModule){
 
 bool worker::Request_ENV(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, bool timeout)
 {
-    QString Request = "hmi_cek_env\r\n";
+//    QString Request = "hmi_cek_env\r\n";
+    QString Request = "0000\r\n";
     serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
 //    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
 //    Serial_Com->waitForBytesWritten(WAIT_WRITE);
@@ -162,7 +163,8 @@ bool worker::Request_ENV(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Se
 
 bool worker::Request_IO(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, bool timeout)
 {
-    QString Request = "hmi_sync\r\n";
+//    QString Request = "hmi_sync\r\n";
+    QString Request = "0002\r\n";
     serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
 //    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
 //    Serial_Com->waitForBytesWritten(WAIT_WRITE);
@@ -175,7 +177,8 @@ bool worker::Request_IO(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Ser
 
 bool worker::Request_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, bool timeout)
 {
-    QString Request = "hmi_cek_cfg_sim\r\n";
+//    QString Request = "hmi_cek_cfg_sim\r\n";
+    QString Request = "0001\r\n";
     serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
 //    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
 //    Serial_Com->waitForBytesWritten(WAIT_WRITE);
@@ -201,7 +204,8 @@ bool worker::Request_Signal(QWidget *parent, QLightBoxWidget *lBox, QSerialPort 
 
 bool worker::Request_Sumber(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, bool timeout)
 {
-    QString Request = "hmi_cek_sumber\r\n";
+//    QString Request = "hmi_cek_sumber\r\n";
+    QString Request = "0004\r\n";
     serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
 //    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
 //    Serial_Com->waitForBytesWritten(WAIT_WRITE);
@@ -214,7 +218,8 @@ bool worker::Request_Sumber(QWidget *parent, QLightBoxWidget *lBox, QSerialPort 
 
 bool worker::Request_Data(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, bool timeout)
 {
-    QString Request = "hmi_cek_data\r\n";
+//    QString Request = "hmi_cek_data\r\n";
+    QString Request = "0005\r\n";
     serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
 //    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
 //    Serial_Com->waitForBytesWritten(WAIT_WRITE);
@@ -248,6 +253,8 @@ void worker::Get_ENV(struct t_module *tModule, QStringList data)
         temp = "NOT ACTIVE";
         strcpy(tModule->status_webclient, temp.toUtf8().data());
     }
+    temp = data.at(7);
+    tModule->interval = temp.toInt();
 }
 
 void worker::Get_Input(struct t_module *tModule, QStringList data)
@@ -272,12 +279,19 @@ void worker::Get_Input(struct t_module *tModule, QStringList data)
             tModule->jml_input_analog++;
         }
     }
-    QStringList list;
+    QStringList list; QStringList list2;
     tModule->InputName.clear();
     for (int i = 0; i < tModule->Input.length(); i++) {
-        temp = tModule->data.at(i);
+        temp = tModule->Input.at(i);
         list = temp.split(';');
-        tModule->InputName.insert(i, list.at(2));
+        for (int j = 0; j < tModule->data.length(); j++) {
+            temp = tModule->data.at(j);
+            list2 = temp.split(';');
+            if (list.at(1) == list2.at(0)) {
+                tModule->InputName.insert(i, list2.at(2));
+                break;
+            }
+        }
     }
 }
 
@@ -293,6 +307,7 @@ void worker::Get_Output(struct t_module *tModule, QStringList data)
         }
     }
     tModule->jml_output = tModule->Output.length();
+    tModule->OutputName.clear();
     for (int i = 0; i < tModule->Output.length(); i++) {
         tModule->OutputName.insert(i, "");
     }
@@ -515,53 +530,71 @@ bool worker::Set_ENV(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial
 {
     QString Request;
 
-    Request.sprintf("set_env nama %s\r\n", tModule->module_name);
+    Request.sprintf("0100 %s %s %s %s %d %d\r\n"
+                    , tModule->module_name
+                    , tModule->serial_number
+                    , tModule->server_address
+                    , tModule->file_address
+                    , tModule->flag_webclient
+                    , tModule->interval);
     serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
     if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
     if (timeout) {return timeout;}
 
-    Request.sprintf("set_env SN %s\r\n", tModule->serial_number);
-    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
-    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
-    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
-    if (timeout) {return timeout;}
+////    Request.sprintf("set_env nama %s\r\n", tModule->module_name);
+//    Request.sprintf("0100 %s\r\n", tModule->module_name);
+//    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+////    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+////    Serial_Com->waitForBytesWritten(WAIT_WRITE);
+//    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+//    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
+//    if (timeout) {return timeout;}
 
-    Request.sprintf("set_env ipaddr %s\r\n", tModule->ip_address);
-    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
-    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
-    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
-    if (timeout) {return timeout;}
+////    Request.sprintf("set_env SN %s\r\n", tModule->serial_number);
+//    Request.sprintf("0100 SN %s\r\n", tModule->serial_number);
+//    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+////    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+////    Serial_Com->waitForBytesWritten(WAIT_WRITE);
+//    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+//    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
+//    if (timeout) {return timeout;}
 
-    Request.sprintf("set_env server %s\r\n", tModule->server_address);
-    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
-    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
-    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
-    if (timeout) {return timeout;}
+////    Request.sprintf("set_env ipaddr %s\r\n", tModule->ip_address);
+//    Request.sprintf("0100 ipaddr %s\r\n", tModule->ip_address);
+//    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+////    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+////    Serial_Com->waitForBytesWritten(WAIT_WRITE);
+//    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+//    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
+//    if (timeout) {return timeout;}
 
-    Request.sprintf("set_env file %s\r\n", tModule->file_address);
-    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
-    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
-    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
-    if (timeout) {return timeout;}
+////    Request.sprintf("set_env server %s\r\n", tModule->server_address);
+//    Request.sprintf("0100 server %s\r\n", tModule->server_address);
+//    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+////    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+////    Serial_Com->waitForBytesWritten(WAIT_WRITE);
+//    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+//    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
+//    if (timeout) {return timeout;}
 
-    Request.sprintf("set_env kirim %d\r\n", tModule->flag_webclient);
-    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
-    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
-    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
-    if (timeout) {return timeout;}
+////    Request.sprintf("set_env file %s\r\n", tModule->file_address);
+//    Request.sprintf("0100 file %s\r\n", tModule->file_address);
+//    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+////    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+////    Serial_Com->waitForBytesWritten(WAIT_WRITE);
+//    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+//    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
+//    if (timeout) {return timeout;}
+
+////    Request.sprintf("set_env kirim %d\r\n", tModule->flag_webclient);
+//    Request.sprintf("0100 kirim %d\r\n", tModule->flag_webclient);
+//    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+////    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+////    Serial_Com->waitForBytesWritten(WAIT_WRITE);
+//    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+//    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
+//    if (timeout) {return timeout;}
 
     return timeout;
 }
@@ -578,29 +611,37 @@ bool worker::Set_Input(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Seri
             temp = tModule->Input.at(i);
             val = temp.split(';');
 
-            Request = "set_kanal " + val.at(1) + " status " + val.at(2) + "\r\n";
+            Request = "0102 " + val.at(1) + " " + val.at(2) + " " + val.at(3) + " " + val.at(4) + "\r\n";
             serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//            Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
 //            Serial_Com->waitForBytesWritten(WAIT_WRITE);
+//            Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
             if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
             this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
             if (timeout) {return timeout;}
 
-            Request = "set_kanal " + val.at(1) + " " + val.at(3) + " " + val.at(4) + "\r\n";
-            serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//            Serial_Com->waitForBytesWritten(WAIT_WRITE);
-//            Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-            if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
-            this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
-            if (timeout) {return timeout;}
+//            Request = "set_kanal " + val.at(1) + " status " + val.at(2) + "\r\n";
+//            serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+////            Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+////            Serial_Com->waitForBytesWritten(WAIT_WRITE);
+//            if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+//            this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
+//            if (timeout) {return timeout;}
+
+//            Request = "set_kanal " + val.at(1) + " " + val.at(3) + " " + val.at(4) + "\r\n";
+//            serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+////            Serial_Com->waitForBytesWritten(WAIT_WRITE);
+////            Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//            if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+//            this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
+//            if (timeout) {return timeout;}
 
 //            Request = "set_data " + val.at(1) + " nama " +tModule->InputName.at(i) + "\r\n";
 //            serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//            Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-//            Serial_Com->waitForBytesWritten(WAIT_WRITE);
+////            Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+////            Serial_Com->waitForBytesWritten(WAIT_WRITE);
 //            if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
-//            if (timeout) {return timeout;}
 //            this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
+//            if (timeout) {return timeout;}
         }
     } else {
         temp = tModule->Input.at(index.toInt());
@@ -624,29 +665,43 @@ bool worker::Set_Input(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Seri
 
 //        Request = "set_data " + val.at(1) + " nama " +tModule->InputName.at(index.toInt()) + "\r\n";
 //        serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//        Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-//        Serial_Com->waitForBytesWritten(WAIT_WRITE);
+////            Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+////            Serial_Com->waitForBytesWritten(WAIT_WRITE);
 //        if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
-//        if (timeout) {return timeout;}
 //        this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
+//        if (timeout) {return timeout;}
     }
     return timeout;
 }
 
-bool worker::Set_Output(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, struct t_module *tModule, bool timeout)
+bool worker::Set_Output(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, struct t_module *tModule, bool timeout, QString index)
 {
     QString Request;
     QString temp;
     QStringList val;
 
-    /** SET OUTPUT RELAY **/
-    for (int i = 0; i < tModule->Output.length(); i++) {
-        temp = tModule->Output.at(i);
+    if (index.isEmpty()) {
+        /** SET OUTPUT RELAY **/
+        for (int i = 0; i < tModule->Output.length(); i++) {
+            temp = tModule->Output.at(i);
+            val = temp.split(';');
+//            Request = "set_relay " + val.at(1) + " " + val.at(2) + "\r\n";
+            Request = "0103 " + val.at(1) + " " + val.at(2) + "\r\n";
+            serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//            Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//            Serial_Com->waitForBytesWritten(WAIT_WRITE);
+            if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+            this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
+            if (timeout) {return timeout;}
+        }
+    } else {
+        temp = tModule->Output.at(index.toInt());
         val = temp.split(';');
-        Request = "set_relay " + val.at(1) + " " + val.at(2) + "\r\n";
+//        Request = "set_relay " + val.at(1) + " " + val.at(2) + "\r\n";
+        Request = "0103 " + val.at(1) + " " + val.at(2) + "\r\n";
         serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//        Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-//        Serial_Com->waitForBytesWritten(WAIT_WRITE);
+//            Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//            Serial_Com->waitForBytesWritten(WAIT_WRITE);
         if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
         this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
         if (timeout) {return timeout;}
@@ -661,264 +716,407 @@ bool worker::Set_SIM(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial
     QString temp;
 
     /** SET SIM 1 **/
-    temp.sprintf("%s", tModule->device_name_gsm_1);
-    if (temp.isEmpty()) {
-        Request = "set_cfg_sim 1 nama -\r\n";
-    } else {
-        Request = "set_cfg_sim 1 nama " + temp + "\r\n";
-    }
+    Request.sprintf("0101 1 %s %s %s %d %s %s %s %s"
+                    , tModule->device_name_gsm_1
+                    , tModule->name_gsm_1
+                    , tModule->number_gsm_1
+                    , tModule->flag_status_active_gsm_1
+                    , tModule->apn_gsm_1
+                    , tModule->user_gsm_1
+                    , tModule->passwd_gsm_1
+                    , tModule->com_gsm_1);
     serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
     if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
     if (timeout) {return timeout;}
 
-    temp.sprintf("%s", tModule->name_gsm_1);
-    if (temp.isEmpty()) {
-        Request = "set_cfg_sim 1 operator -\r\n";
-    } else {
-        Request = "set_cfg_sim 1 operator " + temp + "\r\n";
-    }
-    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
-    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
-    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
-    if (timeout) {return timeout;}
+//    temp.sprintf("%s", tModule->device_name_gsm_1);
+//    if (temp.isEmpty()) {
+////        Request = "set_cfg_sim 1 nama -\r\n";
+//        Request = "0101 1 nama -\r\n";
+//    } else {
+////        Request = "set_cfg_sim 1 nama " + temp + "\r\n";
+//        Request = "0101 1 nama " + temp + "\r\n";
+//    }
+//    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+////    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+////    Serial_Com->waitForBytesWritten(WAIT_WRITE);
+//    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+//    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
+//    if (timeout) {return timeout;}
 
-    temp.sprintf("%s", tModule->number_gsm_1);
-    if (temp.isEmpty()) {
-        Request = "set_cfg_sim 1 nomor -\r\n";
-    } else {
-        Request = "set_cfg_sim 1 nomor " + temp + "\r\n";
-    }
-    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
-    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
-    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
-    if (timeout) {return timeout;}
+//    temp.sprintf("%s", tModule->name_gsm_1);
+//    if (temp.isEmpty()) {
+////        Request = "set_cfg_sim 1 operator -\r\n";
+//        Request = "0101 1 operator -\r\n";
+//    } else {
+////        Request = "set_cfg_sim 1 operator " + temp + "\r\n";
+//        Request = "0101 1 operator " + temp + "\r\n";
+//    }
+//    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+////    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+////    Serial_Com->waitForBytesWritten(WAIT_WRITE);
+//    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+//    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
+//    if (timeout) {return timeout;}
 
-    temp.sprintf("%d", tModule->flag_status_active_gsm_1);
-    if (temp.isEmpty()) {
-        Request = "set_cfg_sim 1 status 0\r\n";
-    } else {
-        Request = "set_cfg_sim 1 status " + temp + "\r\n";
-    }
-    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
-    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
-    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
-    if (timeout) {return timeout;}
+//    temp.sprintf("%s", tModule->number_gsm_1);
+//    if (temp.isEmpty()) {
+////        Request = "set_cfg_sim 1 nomor -\r\n";
+//        Request = "0101 1 nomor -\r\n";
+//    } else {
+////        Request = "set_cfg_sim 1 nomor " + temp + "\r\n";
+//        Request = "0101 1 nomor " + temp + "\r\n";
+//    }
+//    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+////    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+////    Serial_Com->waitForBytesWritten(WAIT_WRITE);
+//    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+//    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
+//    if (timeout) {return timeout;}
 
-    temp.sprintf("%s", tModule->apn_gsm_1);
-    if (temp.isEmpty()) {
-        Request = "set_cfg_sim 1 apn -\r\n";
-    } else {
-        Request = "set_cfg_sim 1 apn " + temp + "\r\n";
-    }
-    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
-    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
-    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
-    if (timeout) {return timeout;}
+//    temp.sprintf("%d", tModule->flag_status_active_gsm_1);
+//    if (temp.isEmpty()) {
+////        Request = "set_cfg_sim 1 status 0\r\n";
+//        Request = "0101 1 status 0\r\n";
+//    } else {
+////        Request = "set_cfg_sim 1 status " + temp + "\r\n";
+//        Request = "0101 1 status " + temp + "\r\n";
+//    }
+//    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+////    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+////    Serial_Com->waitForBytesWritten(WAIT_WRITE);
+//    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+//    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
+//    if (timeout) {return timeout;}
 
-    temp.sprintf("%s", tModule->user_gsm_1);
-    if (temp.isEmpty()) {
-        Request = "set_cfg_sim 1 user -\r\n";
-    } else {
-        Request = "set_cfg_sim 1 user " + temp + "\r\n";
-    }
-    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
-    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
-    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
-    if (timeout) {return timeout;}
+//    temp.sprintf("%s", tModule->apn_gsm_1);
+//    if (temp.isEmpty()) {
+////        Request = "set_cfg_sim 1 apn -\r\n";
+//        Request = "0101 1 apn -\r\n";
+//    } else {
+//        Request = "set_cfg_sim 1 apn " + temp + "\r\n";
+//        Request = "0101 1 apn " + temp + "\r\n";
+//    }
+//    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+////    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+////    Serial_Com->waitForBytesWritten(WAIT_WRITE);
+//    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+//    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
+//    if (timeout) {return timeout;}
 
-    temp.sprintf("%s", tModule->passwd_gsm_1);
-    if (temp.isEmpty()) {
-        Request = "set_cfg_sim 1 pass -\r\n";
-    } else {
-        Request = "set_cfg_sim 1 pass " + temp + "\r\n";
-    }
-    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
-    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
-    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
-    if (timeout) {return timeout;}
+//    temp.sprintf("%s", tModule->user_gsm_1);
+//    if (temp.isEmpty()) {
+////        Request = "set_cfg_sim 1 user -\r\n";
+//        Request = "0101 1 user -\r\n";
+//    } else {
+////        Request = "set_cfg_sim 1 user " + temp + "\r\n";
+//        Request = "0101 1 user " + temp + "\r\n";
+//    }
+//    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+////    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+////    Serial_Com->waitForBytesWritten(WAIT_WRITE);
+//    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+//    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
+//    if (timeout) {return timeout;}
 
-    temp.sprintf("%s", tModule->com_gsm_1);
-    if (temp.isEmpty()) {
-        Request = "set_cfg_sim 1 mode -\r\n";
-    } else {
-        Request = "set_cfg_sim 1 mode " + temp + "\r\n";
-    }
-    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
-    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
-    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
-    if (timeout) {return timeout;}
+//    temp.sprintf("%s", tModule->passwd_gsm_1);
+//    if (temp.isEmpty()) {
+////        Request = "set_cfg_sim 1 pass -\r\n";
+//        Request = "0101 1 pass -\r\n";
+//    } else {
+////        Request = "set_cfg_sim 1 pass " + temp + "\r\n";
+//        Request = "0101 1 pass " + temp + "\r\n";
+//    }
+//    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+////    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+////    Serial_Com->waitForBytesWritten(WAIT_WRITE);
+//    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+//    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
+//    if (timeout) {return timeout;}
+
+//    temp.sprintf("%s", tModule->com_gsm_1);
+//    if (temp.isEmpty()) {
+////        Request = "set_cfg_sim 1 mode -\r\n";
+//        Request = "0101 1 mode -\r\n";
+//    } else {
+////        Request = "set_cfg_sim 1 mode " + temp + "\r\n";
+//        Request = "0101 1 mode " + temp + "\r\n";
+//    }
+//    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+////    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+////    Serial_Com->waitForBytesWritten(WAIT_WRITE);
+//    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+//    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
+//    if (timeout) {return timeout;}
 
 
     /** SET SIM 2 **/
-    temp.sprintf("%s", tModule->device_name_gsm_2);
-    if (temp.isEmpty()) {
-        Request = "set_cfg_sim 2 nama -\r\n";
-    } else {
-        Request = "set_cfg_sim 2 nama " + temp + "\r\n";
-    }
+    Request.sprintf("0101 2 %s %s %s %d %s %s %s %s"
+                    , tModule->device_name_gsm_2
+                    , tModule->name_gsm_2
+                    , tModule->number_gsm_2
+                    , tModule->flag_status_active_gsm_2
+                    , tModule->apn_gsm_2
+                    , tModule->user_gsm_2
+                    , tModule->passwd_gsm_2
+                    , tModule->com_gsm_2);
     serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
     if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
     if (timeout) {return timeout;}
 
-    temp.sprintf("%s", tModule->name_gsm_2);
-    if (temp.isEmpty()) {
-        Request = "set_cfg_sim 2 operator -\r\n";
-    } else {
-        Request = "set_cfg_sim 2 operator " + temp + "\r\n";
-    }
-    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
-    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
-    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
-    if (timeout) {return timeout;}
+//    temp.sprintf("%s", tModule->device_name_gsm_2);
+//    if (temp.isEmpty()) {
+////        Request = "set_cfg_sim 2 nama -\r\n";
+//        Request = "0101 2 nama -\r\n";
+//    } else {
+////        Request = "set_cfg_sim 2 nama " + temp + "\r\n";
+//        Request = "0101 2 nama " + temp + "\r\n";
+//    }
+//    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+////    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+////    Serial_Com->waitForBytesWritten(WAIT_WRITE);
+//    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+//    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
+//    if (timeout) {return timeout;}
 
-    temp.sprintf("%s", tModule->number_gsm_2);
-    if (temp.isEmpty()) {
-        Request = "set_cfg_sim 2 nomor -\r\n";
-    } else {
-        Request = "set_cfg_sim 2 nomor " + temp + "\r\n";
-    }
-    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
-    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
-    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
-    if (timeout) {return timeout;}
+//    temp.sprintf("%s", tModule->name_gsm_2);
+//    if (temp.isEmpty()) {
+////        Request = "set_cfg_sim 2 operator -\r\n";
+//        Request = "0101 2 operator -\r\n";
+//    } else {
+////        Request = "set_cfg_sim 2 operator " + temp + "\r\n";
+//        Request = "0101 2 operator " + temp + "\r\n";
+//    }
+//    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+////    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+////    Serial_Com->waitForBytesWritten(WAIT_WRITE);
+//    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+//    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
+//    if (timeout) {return timeout;}
 
-    temp.sprintf("%d", tModule->flag_status_active_gsm_2);
-    if (temp.isEmpty()) {
-        Request = "set_cfg_sim 2 status 0\r\n";
-    } else {
-        Request = "set_cfg_sim 2 status " + temp + "\r\n";
-    }
-    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
-    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
-    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
-    if (timeout) {return timeout;}
+//    temp.sprintf("%s", tModule->number_gsm_2);
+//    if (temp.isEmpty()) {
+////        Request = "set_cfg_sim 2 nomor -\r\n";
+//        Request = "0101 2 nomor -\r\n";
+//    } else {
+////        Request = "set_cfg_sim 2 nomor " + temp + "\r\n";
+//        Request = "0101 2 nomor " + temp + "\r\n";
+//    }
+//    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+////    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+////    Serial_Com->waitForBytesWritten(WAIT_WRITE);
+//    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+//    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
+//    if (timeout) {return timeout;}
 
-    temp.sprintf("%s", tModule->apn_gsm_2);
-    if (temp.isEmpty()) {
-        Request = "set_cfg_sim 2 apn -\r\n";
-    } else {
-        Request = "set_cfg_sim 2 apn " + temp + "\r\n";
-    }
-    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
-    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
-    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
-    if (timeout) {return timeout;}
+//    temp.sprintf("%d", tModule->flag_status_active_gsm_2);
+//    if (temp.isEmpty()) {
+////        Request = "set_cfg_sim 2 status 0\r\n";
+//        Request = "0101 2 status 0\r\n";
+//    } else {
+////        Request = "set_cfg_sim 2 status " + temp + "\r\n";
+//        Request = "0101 2 status " + temp + "\r\n";
+//    }
+//    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+////    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+////    Serial_Com->waitForBytesWritten(WAIT_WRITE);
+//    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+//    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
+//    if (timeout) {return timeout;}
 
-    temp.sprintf("%s", tModule->user_gsm_2);
-    if (temp.isEmpty()) {
-        Request = "set_cfg_sim 2 user -\r\n";
-    } else {
-        Request = "set_cfg_sim 2 user " + temp + "\r\n";
-    }
-    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
-    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
-    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
-    if (timeout) {return timeout;}
+//    temp.sprintf("%s", tModule->apn_gsm_2);
+//    if (temp.isEmpty()) {
+////        Request = "set_cfg_sim 2 apn -\r\n";
+//        Request = "0101 2 apn -\r\n";
+//    } else {
+////        Request = "set_cfg_sim 2 apn " + temp + "\r\n";
+//        Request = "0101 2 apn " + temp + "\r\n";
+//    }
+//    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+////    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+////    Serial_Com->waitForBytesWritten(WAIT_WRITE);
+//    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+//    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
+//    if (timeout) {return timeout;}
 
-    temp.sprintf("%s", tModule->passwd_gsm_2);
-    if (temp.isEmpty()) {
-        Request = "set_cfg_sim 2 pass -\r\n";
-    } else {
-        Request = "set_cfg_sim 2 pass " + temp + "\r\n";
-    }
-    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
-    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
-    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
-    if (timeout) {return timeout;}
+//    temp.sprintf("%s", tModule->user_gsm_2);
+//    if (temp.isEmpty()) {
+////        Request = "set_cfg_sim 2 user -\r\n";
+//        Request = "0101 2 user -\r\n";
+//    } else {
+////        Request = "set_cfg_sim 2 user " + temp + "\r\n";
+//        Request = "0101 2 user " + temp + "\r\n";
+//    }
+//    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+////    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+////    Serial_Com->waitForBytesWritten(WAIT_WRITE);
+//    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+//    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
+//    if (timeout) {return timeout;}
 
-    temp.sprintf("%s", tModule->com_gsm_2);
-    if (temp.isEmpty()) {
-        Request = "set_cfg_sim 2 mode -\r\n";
-    } else {
-        Request = "set_cfg_sim 2 mode " + temp + "\r\n";
-    }
-    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-//    Serial_Com->waitForBytesWritten(WAIT_WRITE);
-    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
-    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
-    if (timeout) {return timeout;}
+//    temp.sprintf("%s", tModule->passwd_gsm_2);
+//    if (temp.isEmpty()) {
+////        Request = "set_cfg_sim 2 pass -\r\n";
+//        Request = "0101 2 pass -\r\n";
+//    } else {
+////        Request = "set_cfg_sim 2 pass " + temp + "\r\n";
+//        Request = "0101 2 pass " + temp + "\r\n";
+//    }
+//    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+////    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+////    Serial_Com->waitForBytesWritten(WAIT_WRITE);
+//    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+//    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
+//    if (timeout) {return timeout;}
+
+//    temp.sprintf("%s", tModule->com_gsm_2);
+//    if (temp.isEmpty()) {
+////        Request = "set_cfg_sim 2 mode -\r\n";
+//        Request = "0101 2 mode -\r\n";
+//    } else {
+////        Request = "set_cfg_sim 2 mode " + temp + "\r\n";
+//        Request = "0101 2 mode " + temp + "\r\n";
+//    }
+//    serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+////    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+////    Serial_Com->waitForBytesWritten(WAIT_WRITE);
+//    if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+//    this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
+//    if (timeout) {return timeout;}
 
     return timeout;
 }
 
-bool worker::Set_Sumber(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, t_module *tModule, bool timeout)
+bool worker::Set_Sumber(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, t_module *tModule, bool timeout, QString index)
 {
     QString Request;
-    QString temp;
-    QStringList val;
-    int index;
+    QString temp; QString str;
+    QStringList val; QStringList list;
 
-    index = tModule->sumber.length();
-    for (int i = 0; i < index; i++) {
-        temp = tModule->sumber.at(i);
-        val = temp.split(";");
+    if (index.isEmpty()) {
+        for (int i = 0; i < tModule->sumber.length(); i++) {
+            temp = tModule->sumber.at(i);
+            val = temp.split(";");
 
-        Request = "set_sumber " + val.at(0) + " nama " + val.at(1) + "\r\n";
-        serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//        Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-//        Serial_Com->waitForBytesWritten(WAIT_WRITE);
-        if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
-        this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
-        if (timeout) {return timeout;}
-
-        Request = "set_sumber " + val.at(0) + " status " + val.at(4) + "\r\n";
-        serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//        Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-//        Serial_Com->waitForBytesWritten(WAIT_WRITE);
-        if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
-        this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
-        if (timeout) {return timeout;}
-
-        if (val.length() > 6) {
-            Request = "set_sumber " + val.at(0) + " formula " +
-                      val.at(5) + ";" +
-                      val.at(6) + ";" +
-                      val.at(7) + ";" +
-                      val.at(8) + ";" +
-                      val.at(9) + ";" +
-                      val.at(10) + ";" +
-                      val.at(11) + "\r\n";
+            Request = "0104 " + val.at(0) + " " + val.at(1) + " " +
+                      val.at(2) + " " + val.at(3) + " " + val.at(4) + " " +
+                      val.at(5) + ";" + val.at(6) + ";" + val.at(7) + ";" +
+                      val.at(8) + ";" + val.at(9) + ";" +
+                      val.at(10) + ";" + val.at(11) + "\r\n";
             serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//            Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-//            Serial_Com->waitForBytesWritten(WAIT_WRITE);
             if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
             this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
             if (timeout) {return timeout;}
 
-            if (val.at(4) == "1" && val.at(5) != "0") {
+////            Request = "set_sumber " + val.at(0) + " nama " + val.at(1) + "\r\n";
+//            Request = "0104 " + val.at(0) + " nama " + val.at(1) + "\r\n";
+//            serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+////            Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+////            Serial_Com->waitForBytesWritten(WAIT_WRITE);
+//            if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+//            this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
+//            if (timeout) {return timeout;}
+
+////            Request = "set_sumber " + val.at(0) + " status " + val.at(4) + "\r\n";
+//            Request = "0104 " + val.at(0) + " status " + val.at(4) + "\r\n";
+//            serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+////            Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+////            Serial_Com->waitForBytesWritten(WAIT_WRITE);
+//            if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+//            this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
+//            if (timeout) {return timeout;}
+
+//            if (val.length() > 6) {
+//                Request = "set_sumber " + val.at(0) + " formula " +
+//                          val.at(5) + ";" +
+//                          val.at(6) + ";" +
+//                          val.at(7) + ";" +
+//                          val.at(8) + ";" +
+//                          val.at(9) + ";" +
+//                          val.at(10) + ";" +
+//                          val.at(11) + "\r\n";
+//                serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+////                Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+////                Serial_Com->waitForBytesWritten(WAIT_WRITE);
+//                if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+//                this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
+//                if (timeout) {return timeout;}
+
+                if (val.at(5) != "0" && val.at(11) != "") {
+                    temp = val.at(11);
+                    for (int k = 0; k < tModule->data.length(); k++) {
+                        str = tModule->data.at(k);
+                        list = str.split(';');
+                        if (temp == list.at(1)) {
+                            str = list.at(0);
+                            break;
+                        }
+                    }
+                    temp = val.at(10);
+                    for (int j = 0; j < temp.toInt()/2; j++) {
+                        Request = "set_data " + QString::number(str.toInt()+j) +
+                                  " status " + val.at(4);
+                        serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+                        if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+                        this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
+                        if (timeout) {return timeout;}
+                    }
+                }
+//            }
+        }
+    } else {
+        temp = tModule->sumber.at(index.toInt());
+        val = temp.split(";");
+
+        Request = "0104 " + val.at(0) + " " + val.at(1) + " " +
+                  val.at(2) + " " + val.at(3) + " " + val.at(4) + " " +
+                  val.at(5) + ";" + val.at(6) + ";" + val.at(7) + ";" +
+                  val.at(8) + ";" + val.at(9) + ";" +
+                  val.at(10) + ";" + val.at(11) + "r\n";
+        serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+        if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+        this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
+        if (timeout) {return timeout;}
+
+//        Request = "set_sumber " + val.at(0) + " nama " + val.at(1) + "\r\n";
+        Request = "0104 " + val.at(0) + " nama " + val.at(1) + "\r\n";
+        serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//            Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//            Serial_Com->waitForBytesWritten(WAIT_WRITE);
+        if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+        this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
+        if (timeout) {return timeout;}
+
+//        Request = "set_sumber " + val.at(0) + " status " + val.at(4) + "\r\n";
+        Request = "0104 " + val.at(0) + " status " + val.at(4) + "\r\n";
+        serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+//            Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+//            Serial_Com->waitForBytesWritten(WAIT_WRITE);
+        if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+        this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
+        if (timeout) {return timeout;}
+
+//        if (val.length() > 6) {
+////            Request = "set_sumber " + val.at(0) + " formula " +
+////                      val.at(5) + ";" + val.at(6) + ";" +
+////                      val.at(7) + ";" + val.at(8) + ";" +
+////                      val.at(9) + ";" + val.at(10) + ";" +
+////                      val.at(11) + "\r\n";
+//            Request = "0104 " + val.at(0) + " formula " +
+//                      val.at(5) + ";" + val.at(6) + ";" +
+//                      val.at(7) + ";" + val.at(8) + ";" +
+//                      val.at(9) + ";" + val.at(10) + ";" +
+//                      val.at(11) + "\r\n";
+//            serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+////                Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
+////                Serial_Com->waitForBytesWritten(WAIT_WRITE);
+//            if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+//            this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
+//            if (timeout) {return timeout;}
+
+            if (val.at(5) != "0" && val.at(11) != "") {
                 temp = val.at(10);
                 for (int j = 0; j < temp.toInt()/2; j++) {
                     temp = val.at(11);
@@ -926,101 +1124,49 @@ bool worker::Set_Sumber(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Ser
                               " status " + val.at(4);
                     serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
                 }
-
             }
-        }
+//        }
     }
     return timeout;
 }
 
-bool worker::Set_Data(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, t_module *tModule, bool timeout)
+bool worker::Set_Data(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, t_module *tModule, bool timeout, QString index)
 {
     QString Request;
     QString temp;
     QStringList val;
-    int index;
 
-    index = tModule->data.length();
-    for (int i = 0; i < index; i++) {
-        temp = tModule->data.at(i);
+    if (index.isEmpty()) {
+        for (int i = 0; i < tModule->data.length(); i++) {
+            temp = tModule->data.at(i);
+            val = temp.split(";");
+
+//            Request = "hmi_set_data " + val.at(0) + " " + val.at(1) + " " +
+//                      val.at(2) + " " + val.at(4) + " " + val.at(5) + " " +
+//                      val.at(6) + " " + val.at(7) + " " + val.at(8) + " " +
+//                      val.at(9) + " " + val.at(10) + " " + val.at(11) + "\r\n";
+            Request = "0105 " + val.at(0) + " " + val.at(1) + " " +
+                      val.at(2) + " " + val.at(4) + " " + val.at(5) + " " +
+                      val.at(6) + " " + val.at(7) + " " + val.at(8) + " " +
+                      val.at(9) + " " + val.at(10) + " " + val.at(11) + "\r\n";
+            serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
+            if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
+            this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
+            if (timeout) {return timeout;}
+        }
+    } else {
+        temp = tModule->data.at(index.toInt());
         val = temp.split(";");
 
-        Request = "set_data " + val.at(0) + " id " + val.at(1) + "\r\n";
+//        Request = "hmi_set_data " + val.at(0) + " " + val.at(1) + " " +
+//                  val.at(2) + " " + val.at(4) + " " + val.at(5) + " " +
+//                  val.at(6) + " " + val.at(7) + " " + val.at(8) + " " +
+//                  val.at(9) + " " + val.at(10) + " " + val.at(11) + "\r\n";
+        Request = "0105 " + val.at(0) + " " + val.at(1) + " " +
+                  val.at(2) + " " + val.at(4) + " " + val.at(5) + " " +
+                  val.at(6) + " " + val.at(7) + " " + val.at(8) + " " +
+                  val.at(9) + " " + val.at(10) + " " + val.at(11) + "\r\n";
         serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//        Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-//        Serial_Com->waitForBytesWritten(WAIT_WRITE);
-        if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
-        this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
-        if (timeout) {return timeout;}
-
-        Request = "set_data " + val.at(0) + " nama " + val.at(2) + "\r\n";
-        serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//        Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-//        Serial_Com->waitForBytesWritten(WAIT_WRITE);
-        if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
-        this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
-        if (timeout) {return timeout;}
-
-        Request = "set_data " + val.at(0) + " satuan " + val.at(4) + "\r\n";
-        serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//        Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-//        Serial_Com->waitForBytesWritten(WAIT_WRITE);
-        if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
-        this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
-        if (timeout) {return timeout;}
-
-        Request = "set_data " + val.at(0) + " rangeL " + val.at(5) + "\r\n";
-        serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//        Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-//        Serial_Com->waitForBytesWritten(WAIT_WRITE);
-        if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
-        this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
-        if (timeout) {return timeout;}
-
-        Request = "set_data " + val.at(0) + " batasLL " + val.at(6) + "\r\n";
-        serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//        Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-//        Serial_Com->waitForBytesWritten(WAIT_WRITE);
-        if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
-        this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
-        if (timeout) {return timeout;}
-
-        Request = "set_data " + val.at(0) + " batasL " + val.at(7) + "\r\n";
-        serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//        Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-//        Serial_Com->waitForBytesWritten(WAIT_WRITE);
-        if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
-        this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
-        if (timeout) {return timeout;}
-
-        Request = "set_data " + val.at(0) + " batasH " + val.at(8) + "\r\n";
-        serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//        Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-//        Serial_Com->waitForBytesWritten(WAIT_WRITE);
-        if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
-        this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
-        if (timeout) {return timeout;}
-
-        Request = "set_data " + val.at(0) + " batasHH " + val.at(9) + "\r\n";
-        serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//        Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-//        Serial_Com->waitForBytesWritten(WAIT_WRITE);
-        if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
-        this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
-        if (timeout) {return timeout;}
-
-        Request = "set_data " + val.at(0) + " rangeH " + val.at(10) + "\r\n";
-        serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//        Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-//        Serial_Com->waitForBytesWritten(WAIT_WRITE);
-        if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
-        this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
-        if (timeout) {return timeout;}
-
-        Request = "set_data " + val.at(0) + " status " + val.at(11) + "\r\n";
-        serial_write(parent, Serial_Com, lBox, Request, WAIT_WRITE);
-//        Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));
-//        Serial_Com->waitForBytesWritten(WAIT_WRITE);
         if (!timeout) {timeout = this->waiting_set(parent, lBox, Request, timeout);}
         this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
         if (timeout) {return timeout;}
@@ -1146,7 +1292,6 @@ void worker::write_FinishRead(bool FinishRead, int cekErr, QString strErr)
     QString pth;
     pth = PATH_SERIAL_PARSING;
     QSettings sett(pth, QSettings::IniFormat);
-//    sett.setIniCodec(CODEC);
 
     sett.setValue("FINISH_READ", FinishRead);
     sett.setValue("ERROR_FLAG", cekErr);
@@ -1159,7 +1304,6 @@ bool worker::read_FinishRead()
     pth = PATH_SERIAL_PARSING;
     cryp code; code.decryp(pth);
     QSettings sett(pth, QSettings::IniFormat);
-//    sett.setIniCodec(CODEC);
 
     bool FinishRead = sett.value("FINISH_READ").toBool();
 
@@ -1173,7 +1317,6 @@ int worker::read_flagERR()
     pth = PATH_SERIAL_PARSING;
     cryp code; code.decryp(pth);
     QSettings sett(pth, QSettings::IniFormat);
-//    sett.setIniCodec(CODEC);
 
     int flagERR = sett.value("ERROR_FLAG").toInt();
 
@@ -1187,7 +1330,6 @@ QString worker::read_strERR()
     pth = PATH_SERIAL_PARSING;
     cryp code; code.decryp(pth);
     QSettings sett(pth, QSettings::IniFormat);
-//    sett.setIniCodec(CODEC);
 
     QString strERR = sett.value("ERROR_STRING").toString();
 
@@ -1207,8 +1349,8 @@ void worker::writeLogFile(QString log, int flagERR, QString strERR, bool timeout
         qDebug() << "- Error, unable to open" << outputFilename << "for output";
     } else {
         log.remove("\r").remove("\n");
-        if (log.length() < 50) {
-            for (int i = log.length(); i < 50; i++) {
+        if (log.length() < 100) {
+            for (int i = log.length(); i < 100; i++) {
                 log.append(" ");
             }
         }
@@ -1292,7 +1434,6 @@ void worker::readPlugin(struct t_plugin *tPlugin)
     QString pth = PATH_PLUGIN_CONFIG;
     cryp code; code.decryp(pth);
     QSettings sett(pth, QSettings::IniFormat);
-//    sett.setIniCodec(CODEC);
 
     sett.beginGroup("PLUGIN");
     tPlugin->jml_plugin = sett.value("JML_PLUGIN").toInt();
@@ -1315,7 +1456,6 @@ QString worker::readPluginConfgName(QString address)
     QString temp;
     cryp code; code.decryp(address);
     QSettings sett(address, QSettings::IniFormat);
-//    sett.setIniCodec(CODEC);
 
     sett.beginGroup("PLUGIN");
     temp = sett.value("PLUGIN_NAME").toString();
@@ -1330,7 +1470,6 @@ QString worker::readPluginConfgExec(QString address)
     QString temp;
     cryp code; code.decryp(address);
     QSettings sett(address, QSettings::IniFormat);
-//    sett.setIniCodec(CODEC);
 
     sett.beginGroup("PLUGIN");
     temp = sett.value("PLUGIN_EXEC").toString();
@@ -1345,7 +1484,6 @@ void worker::writePlugin(struct t_plugin *tPlugin)
     QString temp;
     QString pth = PATH_PLUGIN_CONFIG;
     QSettings sett(pth, QSettings::IniFormat);
-//    sett.setIniCodec(CODEC);
 
     sett.beginGroup("PLUGIN");
     sett.setValue("JML_PLUGIN", tPlugin->jml_plugin);

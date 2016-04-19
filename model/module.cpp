@@ -11,7 +11,6 @@ void module::write_module(struct t_module *tmodule){
     QString pth;
     pth.sprintf("data/module/m_%s.dbe",tmodule->module_name);
     QSettings sett(pth, QSettings::IniFormat);
-//    sett.setIniCodec(CODEC);
 
     sett.beginGroup( "MODULE" );
     sett.setValue("ACTIVE", tmodule->flag_active);
@@ -23,6 +22,7 @@ void module::write_module(struct t_module *tmodule){
     sett.setValue("FILE_ADDRESS", tmodule->file_address);
     sett.setValue("FLAG_WEBCLIENT", tmodule->flag_webclient);
     sett.setValue("WEBCLIENT", tmodule->status_webclient);
+    sett.setValue("INTERVAL", tmodule->interval);
     sett.endGroup();
 
     sett.beginGroup( "INPUT" );
@@ -129,7 +129,6 @@ void module::read_module(struct t_module *tmodule, QString addressModule){
     cryp code; code.decryp(pth);
     QString temp;
     QSettings sett(pth, QSettings::IniFormat);
-//    sett.setIniCodec(CODEC);
 
     tmodule->flag_active = sett.value("MODULE/ACTIVE").toInt();
     strcpy(tmodule->module_name, sett.value("MODULE/MODULE_NAME").toString().toLatin1());
@@ -139,11 +138,13 @@ void module::read_module(struct t_module *tmodule, QString addressModule){
     strcpy(tmodule->file_address, sett.value("MODULE/FILE_ADDRESS").toString().toLatin1());
     tmodule->flag_webclient = sett.value("MODULE/FLAG_WEBCLIENT").toInt();
     strcpy(tmodule->status_webclient, sett.value("MODULE/WEBCLIENT").toString().toLatin1());
+    tmodule->interval = sett.value("MODULE/INTERVAL").toInt();
 
     tmodule->flag_dual_gsm = sett.value("MODULE/FLAG_DUAL_GSM").toInt();
 
     tmodule->jml_input_digital = sett.value("INPUT/JML_INPUT_DIGITAL").toInt();
     tmodule->jml_input_analog = sett.value("INPUT/JML_INPUT_ANALOG").toInt();
+    tmodule->Input.clear(); tmodule->InputName.clear();
     int j = 0;
     for (int i = 1; i <= tmodule->jml_input_digital + tmodule->jml_input_analog; i++) {
         if (i <= tmodule->jml_input_digital) {
@@ -162,6 +163,7 @@ void module::read_module(struct t_module *tmodule, QString addressModule){
     }
 
     tmodule->jml_output = sett.value("OUTPUT/JML_OUTPUT").toInt();
+    tmodule->Output.clear(); tmodule->OutputName.clear();
     for (int i = 1; i <= tmodule->jml_output; i++) {
         temp.sprintf("OUTPUT/RELAY_%d", i);
         tmodule->Output.insert(i-1,sett.value(temp).toString());
@@ -194,18 +196,21 @@ void module::read_module(struct t_module *tmodule, QString addressModule){
     strcpy(tmodule->passwd_gsm_2, sett.value("GSM_2/PASSWD_GSM_2").toString().toLatin1());
 
     tmodule->jml_sumber = sett.value("SOURCES/JML_SUMBER").toInt();
+    tmodule->sumber.clear();
     for (int i = 1; i <= tmodule->jml_sumber; i++) {
         temp.sprintf("SOURCES/SUMBER_%d", i);
         tmodule->sumber.insert(i-1,sett.value(temp).toString());
     }
 
     tmodule->jml_alarm = sett.value("ALARM/JML_ALARM").toInt();
+    tmodule->alarm.clear();
     for (int i = 1; i <= tmodule->jml_alarm; i++) {
         temp.sprintf("ALARM/ALARM_%d", i);
         tmodule->alarm.insert(i-1,sett.value(temp).toString());
     }
 
     tmodule->jml_data = sett.value("DATA/JML_DATA").toInt();
+    tmodule->data.clear();
     for (int i = 1; i <= tmodule->jml_data; i++) {
         temp.sprintf("DATA/DATA_%d", i);
         tmodule->data.insert(i-1,sett.value(temp).toString());
@@ -218,7 +223,6 @@ void module::save_as_module(struct t_module *tmodule, QString address){
     QStringList temp1; QString temp2; int index;
     QString pth = address;
     QSettings sett(pth, QSettings::IniFormat);
-//    sett.setIniCodec(CODEC);
     QString temp;
 
     sett.beginGroup( "MODULE" );

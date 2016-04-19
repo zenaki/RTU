@@ -48,7 +48,6 @@ int loginForm::loginSuccess(){
 void loginForm::writeUserAccess(QString user, QString pass)
 {
     QSettings sett(PATH_USER_ACCESS, QSettings::IniFormat);
-//    sett.setIniCodec(CODEC);
     sett.setValue("USER", user.toUtf8());
     sett.setValue("PASSWORD", pass.toUtf8());
 }
@@ -57,7 +56,6 @@ QString loginForm::readUser()
 {
     cryp code; code.decryp(PATH_USER_ACCESS);
     QSettings sett(PATH_USER_ACCESS, QSettings::IniFormat);
-//    sett.setIniCodec(CODEC);
     QString user = sett.value("USER").toString();
     code.encryp(PATH_USER_ACCESS);
     return user;
@@ -67,7 +65,6 @@ QString loginForm::readPass()
 {
     cryp code; code.decryp(PATH_USER_ACCESS);
     QSettings sett(PATH_USER_ACCESS, QSettings::IniFormat);
-//    sett.setIniCodec(CODEC);
     QString pass = sett.value("PASSWORD").toString();
     code.encryp(PATH_USER_ACCESS);
     return pass;

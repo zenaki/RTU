@@ -53,15 +53,12 @@
 #define TIMEOUT              5000 //ms
 #define STR_TIMEOUT          "Time Out !! \r\nPlease try again .."
 
-#define CODEC                "UTF-8"
-//#define DECODEC              "UTF-8"
-
 #define PATH_SERIAL_SETTING  "data/config/serial_setting.cfg"
 #define PATH_SERIAL_PARSING  "data/config/serial_parsing.cfg"
 #define PATH_PLUGIN_CONFIG   "plugin/plugin.cfg"
 #define PATH_USER_ACCESS     "data/config/usr.cfg"
 
-#define WAIT_WRITE           1 //ms
+#define WAIT_WRITE           3 //ms
 
 /** STRUCT **/
 
@@ -88,6 +85,7 @@ struct t_module{
     char file_address[32];
     int  flag_webclient;
     char status_webclient[32];
+    int  interval;
 
     int  flag_dual_gsm;
     int  last_signal;

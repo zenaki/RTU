@@ -133,6 +133,10 @@ void MainWindow::on_actionNew_triggered()
             reply = QMessageBox::question(this, "Attention !!", command,
                                           QMessageBox::Yes|QMessageBox::No);
             if (reply == QMessageBox::Yes) {
+                QString address = "data/module/" + newFiles;
+                mod->read_module(&tModule, address);
+                strcpy(tModule.serial_number, GetNoSeri.toLatin1());
+
                 timeout = work->Request_ENV(this, busy, SerialPort, timeout);
                 if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
                 work->Get_ENV(&tModule, val_data);
@@ -149,10 +153,6 @@ void MainWindow::on_actionNew_triggered()
                 timeout = work->Request_Sumber(this, busy, SerialPort, timeout);
                 if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
                 work->Get_Sumber(&tModule, val_data);
-
-                QString address = "data/module/" + newFiles;
-                mod->read_module(&tModule, address);
-                strcpy(tModule.serial_number, GetNoSeri.toLatin1());
 
                 mod->write_module(&tModule);
                 cryp code; code.encryp(address);
@@ -520,6 +520,7 @@ void MainWindow::readData()
                     .remove("<ENVani$")
                     .remove("ENV>")
                     .remove("Rinjani$")
+                    .remove("0000")
                     .remove("hmi_cek_env")
                     .remove("\r").remove("\n").split(";");
         GetNamaBoard = val_data[0];
@@ -541,6 +542,7 @@ void MainWindow::readData()
                     .remove("<I/Oani$")
                     .remove("I/O>")
                     .remove("Rinjani$")
+                    .remove("0002")
                     .remove("hmi_sync")
                     .remove("\r").remove("\n").remove("(X)").split("*");
         tSerial.str_data_io = str_data;
@@ -560,6 +562,7 @@ void MainWindow::readData()
                     .remove("<SIMani$")
                     .remove("SIM>")
                     .remove("Rinjani$")
+                    .remove("0001")
                     .remove("hmi_cek_cfg_sim")
                     .remove("\r").remove("\n").remove("(X)").split("*");
         tSerial.str_data_sim = str_data;
@@ -579,6 +582,7 @@ void MainWindow::readData()
                     .remove("<SRCani$")
                     .remove("SRC>")
                     .remove("Rinjani$")
+                    .remove("0004")
                     .remove("hmi_cek_sumber")
                     .remove("\r").remove("\n").remove("(X)").split("*");
         tSerial.str_data_src = str_data;
@@ -598,6 +602,7 @@ void MainWindow::readData()
                     .remove("<DATani$")
                     .remove("DAT>")
                     .remove("Rinjani$")
+                    .remove("0005")
                     .remove("hmi_cek_data")
                     .remove("\r").remove("\n").remove("(X)").split("*");
         tSerial.str_data_dat = str_data;
@@ -615,7 +620,7 @@ void MainWindow::readData()
     } else if (str_data.indexOf("<ERR:") > 0 && str_data.indexOf(":ERR>") > 0) {
         int a = str_data.indexOf("<ERR:");
         int b = str_data.indexOf(":ERR>");
-        str_data = str_data.mid(a+5, b-a);
+        str_data = str_data.mid(a+5, b-a-5);
 //        str_data.remove(':');
         FinishRead = true;
         work->write_FinishRead(FinishRead, 1, str_data);

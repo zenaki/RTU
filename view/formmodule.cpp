@@ -32,8 +32,9 @@ formModule::formModule(QWidget *parent, QString address, QSerialPort *SerialPort
     this->ui->pbDeleteRows->setHidden(true);
     this->ui->pbRefresh->setHidden(true);
 
-    this->ui->pbSet->setText("Set Input Settings");
-    this->ui->pbGet->setText("Get Input Settings");
+    this->ui->pbSet->setText("Set All Input Settings");
+    this->ui->pbSetChk->setText("Set Checked Input Settings");
+    this->ui->pbGet->setText("Get All Input Settings");
 }
 
 formModule::~formModule()
@@ -49,7 +50,8 @@ void formModule::setInterface(QString address)
     this->setInterface_Environtment(address);
     this->setInterface_Sumber(address);
     this->setInterface_Alarm(address);
-    this->setInterface_Data(address);
+    this->setInterface_Data_Settings(address);
+    this->setInterface_Data_Monitoring(address);
 }
 
 void formModule::setInterface_Input(QString address)
@@ -81,12 +83,9 @@ void formModule::setInterface_Input(QString address)
     this->ui->tabel_input->setColumnWidth(7, 100);
     this->ui->tabel_input->setRowCount(rowInputDigital + rowInputAnalog);
 
-    SigMapSet_input = new QSignalMapper(this);
     SigMapReg_input = new QSignalMapper(this);
     for (int i = 0; i < rowInputDigital + rowInputAnalog; i++){
-        set_input[i] = new QPushButton("Set", this);
-        SigMapSet_input->setMapping(set_input[i], i);
-        connect(set_input[i],SIGNAL(clicked()),SigMapSet_input,SLOT(map()));
+        check_input[i] = new QCheckBox(this);
 
         name_input[i] = new QLineEdit(this);
         name_input[i]->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
@@ -117,16 +116,22 @@ void formModule::setInterface_Input(QString address)
         reg_input[i] = new QComboBox(this);
         SigMapReg_input->setMapping(reg_input[i], i);
         connect(reg_input[i],SIGNAL(currentIndexChanged(int)),SigMapReg_input,SLOT(map()));
-        for (int j = 0; j < tModule.data.length(); j++) {
-            tmp = tModule.data.at(j); list = tmp.split(';');
-            reg_input[i]->addItem(list.at(0));
+        if (i < rowInputDigital) {
+            for (int j = 0; j < DATA_PERIOD; j++) {
+                tmp = tModule.data.at(j); list = tmp.split(';');
+                reg_input[i]->addItem(list.at(1));
+            }
+        } else {
+            for (int j = DATA_PERIOD; j < DATA_PERIOD*2; j++) {
+                tmp = tModule.data.at(j); list = tmp.split(';');
+                reg_input[i]->addItem(list.at(1));
+            }
         }
 
         state_input[i] = new QComboBox(this);
         state_input[i]->addItem("NOT ACTIVE",0);
         state_input[i]->addItem("ACTIVE",1);
     }
-    connect(SigMapSet_input,SIGNAL(mapped(int)),this,SLOT(set_kanal_clicked(int)));
     connect(SigMapReg_input,SIGNAL(mapped(int)),this,SLOT(reg_kanal_changed()));
 
     tModule.data.clear();
@@ -167,12 +172,11 @@ void formModule::setInterface_Input(QString address)
         type_input[i]->setCurrentIndex(indx);
         calib_m[i]->setText(list[(i*8)+4]);
         calib_x[i]->setText(list[(i*8)+5]);
-        tmp = list.at((i*8)+6);
-        if (i < rowInputDigital) {reg_input[i]->setCurrentIndex(tmp.toInt() - 1001);}
-        else {reg_input[i]->setCurrentIndex(tmp.toInt() - 1011);}
+        if (i < rowInputDigital) {reg_input[i]->setCurrentText(list.at((i*8)+6));}
+        else {reg_input[i]->setCurrentText(list.at((i*8)+6));}
         state_input[i]->setCurrentIndex(list[(i*8)+7].toInt());
 
-        this->ui->tabel_input->setCellWidget(i,0, set_input[i]);
+        this->ui->tabel_input->setCellWidget(i,0, check_input[i]);
         this->ui->tabel_input->setItem(i,1, new QTableWidgetItem(type));
         this->ui->tabel_input->setCellWidget(i,2, name_input[i]);
         this->ui->tabel_input->setCellWidget(i,3, type_input[i]);
@@ -193,6 +197,8 @@ void formModule::setInterface_Input(QString address)
     }
     for (int i = tModule.jml_input_digital; i < tModule.jml_input_digital + tModule.jml_input_analog; i++) {
         for (int j = tModule.jml_input_digital; j < tModule.jml_input_digital + tModule.jml_input_analog; j++) {
+            tmp = reg_input[j]->currentText();
+            type = QString::number(reg_input[i]->findText(reg_input[j]->currentText()));
             qobject_cast<QStandardItemModel *>(reg_input[i]->model())
                     ->item(reg_input[i]->findText(reg_input[j]->currentText()))
                     ->setEnabled(false);
@@ -212,14 +218,17 @@ void formModule::setInterface_Output(QString address)
     QString type;
 
     this->ui->tabel_output->verticalHeader()->setHidden(true);
-    this->ui->tabel_output->setColumnCount(4);
-    //    this->ui->tabel_output->setColumnWidth(0, 50);
-        this->ui->tabel_output->setColumnWidth(1, 100);
+    this->ui->tabel_output->setColumnCount(5);
+        this->ui->tabel_output->setColumnWidth(0, 25);
+    //    this->ui->tabel_output->setColumnWidth(1, 50);
         this->ui->tabel_output->setColumnWidth(2, 100);
-    //    this->ui->tabel_output->setColumnWidth(3, 100);
+        this->ui->tabel_output->setColumnWidth(3, 100);
+    //    this->ui->tabel_output->setColumnWidth(4, 100);
     this->ui->tabel_output->setRowCount(rowOutput);
 
     for (int i = 0; i < rowOutput; i++){
+        check_output[i] = new QCheckBox(this);
+
         name_output[i] = new QLineEdit(this);
         name_output[i]->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
 
@@ -249,10 +258,11 @@ void formModule::setInterface_Output(QString address)
 
         type = " - Relay";
         type.prepend(QString::number(i+1));
-        this->ui->tabel_output->setItem(i,0, new QTableWidgetItem(type));
-        this->ui->tabel_output->setCellWidget(i,1, name_output[i]);
-        this->ui->tabel_output->setCellWidget(i,2, state_output[i]);
-        this->ui->tabel_output->setCellWidget(i,3, control[i]);
+        this->ui->tabel_output->setCellWidget(i,0, check_output[i]);
+        this->ui->tabel_output->setItem(i,1, new QTableWidgetItem(type));
+        this->ui->tabel_output->setCellWidget(i,2, name_output[i]);
+        this->ui->tabel_output->setCellWidget(i,3, state_output[i]);
+        this->ui->tabel_output->setCellWidget(i,4, control[i]);
     }
 
     this->ui->tabel_output->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -323,6 +333,7 @@ void formModule::setInterface_Environtment(QString address)
     this->ui->file_address->setText(modules);
     modules.sprintf("%s", tModule.status_webclient);
     this->ui->web_client->setText(modules);
+    this->ui->interval->setText(QString::number(tModule.interval));
 }
 
 void formModule::setInterface_Sumber(QString address)
@@ -658,7 +669,122 @@ void formModule::setInterface_Alarm(QString address)
     }
 }
 
-void formModule::setInterface_Data(QString address)
+void formModule::setInterface_Data_Settings(QString address)
+{
+    struct t_module tModule;
+    module mod;
+    Address_Module = address;
+    mod.read_module(&tModule, Address_Module);
+    QString modules;
+
+    QString str;
+    QString tmp;
+    QStringList list;
+
+    int rowData = tModule.jml_data;
+    QString type;
+
+    this->ui->tabel_data_s->verticalHeader()->setHidden(true);
+    this->ui->tabel_data_s->setColumnCount(13);
+    this->ui->tabel_data_s->setColumnWidth(0, 25);
+    this->ui->tabel_data_s->setColumnWidth(1, 25);
+    this->ui->tabel_data_s->setColumnWidth(2, 75);
+    this->ui->tabel_data_s->setColumnWidth(3, 75);
+    this->ui->tabel_data_s->setColumnWidth(4, 75);
+    this->ui->tabel_data_s->setColumnWidth(5, 75);
+    this->ui->tabel_data_s->setColumnWidth(6, 75);
+    this->ui->tabel_data_s->setColumnWidth(7, 75);
+    this->ui->tabel_data_s->setColumnWidth(8, 75);
+    this->ui->tabel_data_s->setColumnWidth(9, 75);
+    this->ui->tabel_data_s->setColumnWidth(10, 75);
+    this->ui->tabel_data_s->setColumnWidth(11, 75);
+    this->ui->tabel_data_s->setColumnWidth(12, 100);
+    this->ui->tabel_data_s->setRowCount(rowData);
+
+    for (int i = 0; i < rowData; i++){
+        check_data_s[i] = new QCheckBox(this);
+
+        id_data_s[i] = new QLineEdit(this);
+        id_data_s[i]->setAlignment(Qt::AlignHCenter);
+        id_data_s[i]->setValidator(new QIntValidator(0,999,this));
+
+        name_data_s[i] = new QLineEdit(this);
+        name_data_s[i]->setAlignment(Qt::AlignHCenter);
+        name_data_s[i]->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
+
+        value_data_s[i] = new QLineEdit(this);
+        value_data_s[i]->setAlignment(Qt::AlignHCenter);
+        value_data_s[i]->setEnabled(false);
+
+        unit_data_s[i] = new QLineEdit(this);
+        unit_data_s[i]->setAlignment(Qt::AlignHCenter);
+        unit_data_s[i]->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
+
+        range_l_data_s[i] = new QLineEdit(this);
+        range_l_data_s[i]->setAlignment(Qt::AlignHCenter);
+        range_l_data_s[i]->setValidator(new QDoubleValidator(-9999.999,9999.999,1,this));
+
+        border_ll_data_s[i] = new QLineEdit(this);
+        border_ll_data_s[i]->setAlignment(Qt::AlignHCenter);
+        border_ll_data_s[i]->setValidator(new QDoubleValidator(-9999.999,9999.999,1,this));
+
+        border_l_data_s[i] = new QLineEdit(this);
+        border_l_data_s[i]->setAlignment(Qt::AlignHCenter);
+        border_l_data_s[i]->setValidator(new QDoubleValidator(-9999.999,9999.999,1,this));
+
+        border_h_data_s[i] = new QLineEdit(this);
+        border_h_data_s[i]->setAlignment(Qt::AlignHCenter);
+        border_h_data_s[i]->setValidator(new QDoubleValidator(-9999.999,9999.999,1,this));
+
+        border_hh_data_s[i] = new QLineEdit(this);
+        border_hh_data_s[i]->setAlignment(Qt::AlignHCenter);
+        border_hh_data_s[i]->setValidator(new QDoubleValidator(-9999.999,9999.999,1,this));
+
+        range_h_data_s[i] = new QLineEdit(this);
+        range_h_data_s[i]->setAlignment(Qt::AlignHCenter);
+        range_h_data_s[i]->setValidator(new QDoubleValidator(-9999.999,9999.999,1,this));
+
+        state_data_s[i] = new QComboBox(this);
+        state_data_s[i]->addItem("NOT ACTIVE");
+        state_data_s[i]->addItem("ACTIVE");
+    }
+
+    for (int i = 0; i < rowData; i++){
+        str = tModule.data.at(i);
+        list = str.split(';');
+        type = list[0];
+
+        id_data_s[i]->setText(list[1]);
+        name_data_s[i]->setText(list[2]);
+        value_data_s[i]->setText(list[3]);
+        unit_data_s[i]->setText(list[4]);
+        range_l_data_s[i]->setText(list[5]);
+        border_ll_data_s[i]->setText(list[6]);
+        border_l_data_s[i]->setText(list[7]);
+        border_h_data_s[i]->setText(list[8]);
+        border_hh_data_s[i]->setText(list[9]);
+        range_h_data_s[i]->setText(list[10]);
+        state_data_s[i]->setCurrentIndex(list[11].toInt());
+
+        this->ui->tabel_data_s->setCellWidget(i,0, check_data_s[i]);
+        this->ui->tabel_data_s->setItem(i,1, new QTableWidgetItem(type));
+        this->ui->tabel_data_s->setCellWidget(i,2, id_data_s[i]);
+        this->ui->tabel_data_s->setCellWidget(i,3, name_data_s[i]);
+        this->ui->tabel_data_s->setCellWidget(i,4, value_data_s[i]);
+        this->ui->tabel_data_s->setCellWidget(i,5, unit_data_s[i]);
+        this->ui->tabel_data_s->setCellWidget(i,6, range_l_data_s[i]);
+        this->ui->tabel_data_s->setCellWidget(i,7, border_ll_data_s[i]);
+        this->ui->tabel_data_s->setCellWidget(i,8, border_l_data_s[i]);
+        this->ui->tabel_data_s->setCellWidget(i,9, border_h_data_s[i]);
+        this->ui->tabel_data_s->setCellWidget(i,10, border_hh_data_s[i]);
+        this->ui->tabel_data_s->setCellWidget(i,11, range_h_data_s[i]);
+        this->ui->tabel_data_s->setCellWidget(i,12, state_data_s[i]);
+    }
+
+    this->ui->tabel_data_s->setEditTriggers(QAbstractItemView::NoEditTriggers);
+}
+
+void formModule::setInterface_Data_Monitoring(QString address)
 {
     struct t_module tModule;
     module mod;
@@ -683,14 +809,14 @@ void formModule::setInterface_Data(QString address)
     int rowData = tModule.jml_data;
     QString type;
 
-    this->ui->tabel_data->verticalHeader()->setHidden(true);
-    this->ui->tabel_data->setColumnCount(5);
-    this->ui->tabel_data->setColumnWidth(0, 25);
-//    this->ui->tabel_data->setColumnWidth(1, 75);
-    this->ui->tabel_data->setColumnWidth(2, 100);
-    this->ui->tabel_data->setColumnWidth(3, 100);
-    this->ui->tabel_data->setColumnWidth(4, 50);
-    this->ui->tabel_data->setRowCount(rowData);
+    this->ui->tabel_data_m->verticalHeader()->setHidden(true);
+    this->ui->tabel_data_m->setColumnCount(5);
+    this->ui->tabel_data_m->setColumnWidth(0, 25);
+//    this->ui->tabel_data_m->setColumnWidth(1, 75);
+    this->ui->tabel_data_m->setColumnWidth(2, 100);
+    this->ui->tabel_data_m->setColumnWidth(3, 100);
+    this->ui->tabel_data_m->setColumnWidth(4, 50);
+    this->ui->tabel_data_m->setRowCount(rowData);
 
     for (int i = 0; i < rowData; i++){
         reg_data[i] = new QLabel(this);
@@ -715,14 +841,14 @@ void formModule::setInterface_Data(QString address)
         value_data[i]->setText(list[3]);
         unit_data[i]->setText(list[4]);
 
-        this->ui->tabel_data->setItem(i,0, new QTableWidgetItem(type));
-        this->ui->tabel_data->setCellWidget(i,1, reg_data[i]);
-        this->ui->tabel_data->setCellWidget(i,2, name_data[i]);
-        this->ui->tabel_data->setCellWidget(i,3, value_data[i]);
-        this->ui->tabel_data->setCellWidget(i,4, unit_data[i]);
+        this->ui->tabel_data_m->setItem(i,0, new QTableWidgetItem(type));
+        this->ui->tabel_data_m->setCellWidget(i,1, reg_data[i]);
+        this->ui->tabel_data_m->setCellWidget(i,2, name_data[i]);
+        this->ui->tabel_data_m->setCellWidget(i,3, value_data[i]);
+        this->ui->tabel_data_m->setCellWidget(i,4, unit_data[i]);
     }
 
-    this->ui->tabel_data->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    this->ui->tabel_data_m->setEditTriggers(QAbstractItemView::NoEditTriggers);
 }
 
 bool formModule::checkFormula(QString data)
@@ -784,11 +910,11 @@ void formModule::data_monitoring()
                     value_data[i]->setText(list[3]);
                     unit_data[i]->setText(list[4]);
 
-                    this->ui->tabel_data->setItem(i,0, new QTableWidgetItem(str));
-                    this->ui->tabel_data->setCellWidget(i,1, reg_data[i]);
-                    this->ui->tabel_data->setCellWidget(i,2, name_data[i]);
-                    this->ui->tabel_data->setCellWidget(i,3, value_data[i]);
-                    this->ui->tabel_data->setCellWidget(i,4, unit_data[i]);
+                    this->ui->tabel_data_m->setItem(i,0, new QTableWidgetItem(str));
+                    this->ui->tabel_data_m->setCellWidget(i,1, reg_data[i]);
+                    this->ui->tabel_data_m->setCellWidget(i,2, name_data[i]);
+                    this->ui->tabel_data_m->setCellWidget(i,3, value_data[i]);
+                    this->ui->tabel_data_m->setCellWidget(i,4, unit_data[i]);
                 }
 
                 mod.write_module(&tModule);
@@ -805,6 +931,7 @@ void formModule::on_tabWidget_tabBarClicked(int index)
 {
     if (index == 2 || index == 3) {
         this->ui->pbSet->setHidden(true);
+        this->ui->pbSetChk->setHidden(true);
         this->ui->pbGet->setHidden(true);
         this->ui->pbEdit->setHidden(false);
         this->ui->pbAddRow->setHidden(true);
@@ -812,6 +939,7 @@ void formModule::on_tabWidget_tabBarClicked(int index)
         this->ui->pbRefresh->setHidden(true);
     } else {
         this->ui->pbSet->setHidden(false);
+        this->ui->pbSetChk->setHidden(false);
         this->ui->pbGet->setHidden(false);
         this->ui->pbEdit->setHidden(true);
         this->ui->pbRefresh->setHidden(true);
@@ -823,8 +951,9 @@ void formModule::on_tabWidget_tabBarClicked(int index)
             this->ui->pbDeleteRows->setHidden(true);
         }
     }
-    if (index == 6) {
+    if (index == 7) {
         this->ui->pbSet->setHidden(true);
+        this->ui->pbSetChk->setHidden(true);
         this->ui->pbSetAll->setHidden(true);
         this->ui->pbGet->setHidden(true);
         this->ui->pbGetAll->setHidden(true);
@@ -837,24 +966,29 @@ void formModule::on_tabWidget_tabBarClicked(int index)
     this->ui->tabWidget->setCurrentIndex(index);
 
     if (index == 0) {
-        this->ui->pbSet->setText("Set Input Settings");
-        this->ui->pbGet->setText("Get Input Settings");
+        this->ui->pbSet->setText("Set All Input Settings");
+        this->ui->pbSetChk->setText("Set Checked Input Settings");
+        this->ui->pbGet->setText("Get All Input Settings");
     } else if (index == 1) {
-        this->ui->pbSet->setText("Set Output Settings");
-        this->ui->pbGet->setText("Get Output Settings");
+        this->ui->pbSet->setText("Set All Output Settings");
+        this->ui->pbSetChk->setText("Set Checked Output Settings");
+        this->ui->pbGet->setText("Get All Output Settings");
     } else if (index == 2) {
         this->ui->pbEdit->setText("Edit Communication");
     } else if (index == 3) {
         this->ui->pbEdit->setText("Edit Environtment");
     } else if (index == 4) {
         this->ui->pbSet->setText("Set Sources Settings");
+        this->ui->pbSetChk->setText("Set Checked Sources Settings");
         this->ui->pbGet->setText("Get Sources Settings");
     } else if (index == 5) {
         this->ui->pbSet->setText("Set Alarm Settings");
+        this->ui->pbSetChk->setText("Set Checked Alarm Settings");
         this->ui->pbGet->setText("Get Alarm Settings");
         this->setInterface_Alarm("data/module/m_" + this->windowTitle() + ".dbe");
     } else if (index == 6) {
         this->ui->pbSet->setText("Set Data Settings");
+        this->ui->pbSetChk->setText("Set Checked Data Settings");
         this->ui->pbGet->setText("Get Data Settings");
     }
 }
@@ -862,7 +996,7 @@ void formModule::on_tabWidget_tabBarClicked(int index)
 void formModule::on_pbSetAll_clicked()
 {
     struct t_module tModule;
-    QString data[12];
+    QString data[60];
     QString Message;
     QString Request;
     int indx;
@@ -877,6 +1011,7 @@ void formModule::on_pbSetAll_clicked()
     mod.read_module(&tModule, Address_Module);
 
     /** ON MODULE FILE **/
+    /** SET KANAL **/
     for (int i = 0; i < ui->tabel_input->rowCount(); i++)
     {
 //        tModule.d_port[i].status_input = state_input[i]->currentIndex();
@@ -910,6 +1045,7 @@ void formModule::on_pbSetAll_clicked()
 
         data[i] = tModule.data.at(i);
         list = data[i].split(';');
+        list[1] = reg_input[i]->currentText();
         list[2] = name_input[i]->text();
         data[i].clear();
         data[i] = list[0];
@@ -919,6 +1055,7 @@ void formModule::on_pbSetAll_clicked()
         tModule.data[i] = data[i];
     }
 
+    /** SET RELAY **/
     for (int i = 0; i < ui->tabel_output->rowCount(); i++)
     {
         tModule.d_port[i].status_output = state_output[i]->currentIndex();
@@ -932,6 +1069,7 @@ void formModule::on_pbSetAll_clicked()
         tModule.OutputName[i] = name_output[i]->text();
     }
 
+    /** SET SUMBER **/
     for (int i = 0; i < ui->tabel_sources->rowCount(); i++) {
         data[i] = QString::number(i+1) + ";" +
                   name_source[i]->text() + ";" +
@@ -949,6 +1087,7 @@ void formModule::on_pbSetAll_clicked()
         tModule.sumber[i] = data[i];
     }
 
+    /** SET ALARM **/
     for (int i = 0; i < ui->tabel_alarm->rowCount(); i++) {
         data[i] = QString::number(i+1) + ";" +
                   name_alarm[i]->text() + ";" +
@@ -1004,6 +1143,24 @@ void formModule::on_pbSetAll_clicked()
                 }
             }
         }
+    }
+
+    /** SET DATA **/
+    for (int i = 0; i < ui->tabel_data_s->rowCount(); i++) {
+        data[i] = QString::number(i+1) + ";" +
+                  id_data_s[i]->text() + ";" +
+                  name_data_s[i]->text() + ";" +
+                  value_data_s[i]->text() + ";" +
+                  unit_data_s[i]->text() + ";" +
+                  range_l_data_s[i]->text() + ";" +
+                  border_ll_data_s[i]->text() + ";" +
+                  border_l_data_s[i]->text() + ";" +
+                  border_h_data_s[i]->text() + ";" +
+                  border_hh_data_s[i]->text() + ";" +
+                  range_h_data_s[i]->text() + ";" +
+                  QString::number(state_data_s[i]->currentIndex());
+
+        tModule.data[i] = data[i];
     }
 
     mod.write_module(&tModule);
@@ -1121,7 +1278,7 @@ void formModule::on_pbSetAll_clicked()
 void formModule::on_pbSet_clicked()
 {
     struct t_module tModule;
-    QString data[12];
+    QString data[60];
     QString Message;
     QString Request;
     int indx;
@@ -1170,6 +1327,7 @@ void formModule::on_pbSet_clicked()
 
             data[i] = tModule.data.at(i);
             list = data[i].split(';');
+            list[1] = reg_input[i]->currentText();
             list[2] = name_input[i]->text();
             data[i].clear();
             data[i] = list[0];
@@ -1268,6 +1426,24 @@ void formModule::on_pbSet_clicked()
                 }
             }
         }
+    } else if (this->ui->tabWidget->currentIndex() == 6) {
+        /** SET DATA **/
+        for (int i = 0; i < ui->tabel_data_s->rowCount(); i++) {
+            data[i] = QString::number(i+1) + ";" +
+                      id_data_s[i]->text() + ";" +
+                      name_data_s[i]->text() + ";" +
+                      value_data_s[i]->text() + ";" +
+                      unit_data_s[i]->text() + ";" +
+                      range_l_data_s[i]->text() + ";" +
+                      border_ll_data_s[i]->text() + ";" +
+                      border_l_data_s[i]->text() + ";" +
+                      border_h_data_s[i]->text() + ";" +
+                      border_hh_data_s[i]->text() + ";" +
+                      range_h_data_s[i]->text() + ";" +
+                      QString::number(state_data_s[i]->currentIndex());
+
+            tModule.data[i] = data[i];
+        }
     }
 
     mod.write_module(&tModule);
@@ -1289,8 +1465,15 @@ void formModule::on_pbSet_clicked()
                 if (this->ui->tabWidget->currentIndex() == 0) {
                     timeout = work->Set_Input(this, busyForm, Serial_Com, &tModule, false);
                     if (timeout) {fail = true;} else {fail = false;}
-//                    timeout = work->Set_Data(this, busyForm, Serial_Com, &tModule, false);
-//                    if (timeout) {fail = true;} else {fail = false;}
+                    for (int i = 0; i < ui->tabel_input->rowCount(); i++) {
+                        if (i < tModule.jml_input_digital) {
+                            timeout = work->Set_Data(this, busyForm, Serial_Com, &tModule, false, QString::number(i));
+                            if (timeout) {fail = true;} else {fail = false;}
+                        } else {
+                            timeout = work->Set_Data(this, busyForm, Serial_Com, &tModule, false, QString::number(i+tModule.jml_input_digital-2));
+                            if (timeout) {fail = true;} else {fail = false;}
+                        }
+                    }
                 } else if (this->ui->tabWidget->currentIndex() == 1) {
                     timeout = work->Set_Output(this, busyForm, Serial_Com, &tModule, false);
                     if (timeout) {fail = true;} else {fail = false;}
@@ -1306,6 +1489,9 @@ void formModule::on_pbSet_clicked()
                 } else if (this->ui->tabWidget->currentIndex() == 5) {
 //                    timeout = work->Set_Data(this, busyForm, Serial_Com, &tModule, false);
 //                    if (timeout) {fail = true;} else {fail = false;}
+                } else if (this->ui->tabWidget->currentIndex() == 6) {
+                    timeout = work->Set_Data(this, busyForm, Serial_Com, &tModule, false);
+                    if (timeout) {fail = true;} else {fail = false;}
                 }
 //                work->Reset_Board(busyForm, "Reset Board ...", Serial_Com);
                 if (this->ui->tabWidget->currentIndex() <= 1) {
@@ -1349,12 +1535,20 @@ void formModule::on_pbSet_clicked()
                         Message = "Sources ";
                     }
                 } else if (this->ui->tabWidget->currentIndex() == 5) {
+                    timeout = false; //work->Request_Data(this, busyForm, Serial_Com, false);
+                    if (timeout) {fail = true;} else {
+//                        Serial->read_parsing(&tSerial);
+//                        val_data = tSerial.str_data_dat.split("*");
+//                        work->Get_Data(&tModule, val_data);
+                        Message = "Alarm ";
+                    }
+                } else if (this->ui->tabWidget->currentIndex() == 6) {
                     timeout = work->Request_Data(this, busyForm, Serial_Com, false);
                     if (timeout) {fail = true;} else {
                         Serial->read_parsing(&tSerial);
                         val_data = tSerial.str_data_dat.split("*");
                         work->Get_Data(&tModule, val_data);
-                        Message = "Alarm ";
+                        Message = "Data ";
                     }
                 }
 
@@ -1397,6 +1591,8 @@ void formModule::on_pbSet_clicked()
             Message.prepend("Sources ");
         } else if (this->ui->tabWidget->currentIndex() == 5) {
             Message.prepend("Alarm ");
+        } else if (this->ui->tabWidget->currentIndex() == 6) {
+            Message.prepend("Data ");
         }
         Message.prepend("Setting ").append(" Saved");
         QMessageBox::information(this, "Success!!", Message, 0, 0);
@@ -1406,6 +1602,362 @@ void formModule::on_pbSet_clicked()
         QMessageBox::information(this, "Success!!", Message, 0, 0);
     } else if (diff == 2 && !fail) {
         Message.prepend("Setting ").append(" Saved");
+        Message.append("\nBoard is not have Serial Number ..");
+        QMessageBox::information(this, "Success!!", Message, 0, 0);
+    }
+
+    if (fail) {
+        QMessageBox::information(this, "Serial Communication", STR_TIMEOUT, 0, 0);
+    }
+
+    this->EnableButton(true);
+}
+
+void formModule::on_pbSetChk_clicked()
+{
+    struct t_module tModule;
+    QString data[60];
+    QString Message;
+    QString Request;
+    int indx;
+    int diff = 0;
+    int reset = 0;
+    bool timeout = false;
+    QString str;
+    QStringList list;
+    bool fail = false;
+
+    module mod;
+    mod.read_module(&tModule, Address_Module);
+
+    /** ON MODULE FILE **/
+    if (this->ui->tabWidget->currentIndex() == 0) {
+        /** SET INPUT **/
+        for (int i = 0; i < ui->tabel_input->rowCount(); i++) {
+            if (check_input[i]->isChecked()) {
+                tModule.d_port[i].calib_m = calib_m[i]->text().toFloat();
+                tModule.d_port[i].calib_x = calib_x[i]->text().toFloat();
+
+                if (i >= 6) {
+                    if (type_input[i]->currentIndex() == 0) {indx = 250;}
+                    if (type_input[i]->currentIndex() == 1) {indx = 230;}
+                    tModule.d_port[i].type_input = indx;
+
+                    data[i].sprintf("A;%d;%d;%.3f;%.3f", i-6+11
+                                    , indx
+                                    , tModule.d_port[i].calib_m
+                                    , tModule.d_port[i].calib_x);
+                } else {
+                    if (type_input[i]->currentIndex() == 0) {indx = 1;}
+                    if (type_input[i]->currentIndex() == 1) {indx = 2;}
+                    if (type_input[i]->currentIndex() == 2) {indx = 6;}
+                    if (type_input[i]->currentIndex() == 3) {indx = 7;}
+                    if (type_input[i]->currentIndex() == 4) {indx = 9;}
+                    tModule.d_port[i].type_input = indx;
+
+                    data[i].sprintf("D;%d;%d;%.3f;%.3f", i+1
+                                    , indx
+                                    , tModule.d_port[i].calib_m
+                                    , tModule.d_port[i].calib_x);
+                }
+                tModule.Input[i] = data[i];
+                tModule.InputName[i] = name_input[i]->text();
+
+                data[i] = tModule.data.at(i);
+                list = data[i].split(';');
+                list[1] = reg_input[i]->currentText();
+                list[2] = name_input[i]->text();
+                data[i].clear();
+                data[i] = list[0];
+                for (int j = 1; j < 12; j++) {
+                    data[i].append(";").append(list[j]);
+                }
+                tModule.data[i] = data[i];
+            }
+        }
+    } else if (this->ui->tabWidget->currentIndex() == 1) {
+        /** SET OUTPUT **/
+        for (int i = 0; i < ui->tabel_output->rowCount(); i++) {
+            if (check_output[i]->isChecked()) {
+                tModule.d_port[i].status_output = state_output[i]->currentIndex();
+                tModule.d_port[i].control = control[i]->currentIndex();
+
+                data[i].sprintf("R;%d;%d;%d", i+1
+                             , tModule.d_port[i].status_output
+                             , tModule.d_port[i].control);
+
+                tModule.Output[i] = data[i];
+                tModule.OutputName[i] = name_output[i]->text();
+            }
+        }
+    } else if (this->ui->tabWidget->currentIndex() == 4) {
+        /** SET SUMBER **/
+        for (int i = 0; i < ui->tabel_sources->rowCount(); i++) {
+            if (check_source[i]->isChecked()) {
+                data[i] = QString::number(i+1) + ";" +
+                          name_source[i]->text() + ";" +
+                          ip_source[i]->text() + ";" +
+                          port_source[i]->text() + ";" +
+                          QString::number(state_source[i]->currentIndex()) + ";" +
+                          QString::number(type_source[i]->currentIndex()) + ";" +
+                          id_source[i]->text() + ";" +
+                          sensor_reg_source[i]->text() + ";" +
+                          QString::number(OffsetBase_source[i]->currentIndex()) + ";" +
+                          QString::number(command_source[i]->currentIndex()) + ";" +
+                          length_source[i]->currentText() + ";" +
+                          target_reg_source[i]->currentText();
+
+                tModule.sumber[i] = data[i];
+            }
+        }
+    } else if (this->ui->tabWidget->currentIndex() == 5) {
+        /** SET ALARM **/
+        for (int i = 0; i < ui->tabel_alarm->rowCount(); i++) {
+            if (check_alarm[i]->isChecked()) {
+                data[i] = QString::number(i+1) + ";" +
+                          name_alarm[i]->text() + ";" +
+                          QString::number(input_alarm[i]->currentIndex()) + ";" +
+                          QString::number(output_alarm[i]->currentIndex()) + ";" +
+                          QString::number(state_alarm[i]->currentIndex()) + ";" +
+                          range_l[i]->text() + ";" +
+                          batas_ll[i]->text() + ";" +
+                          batas_l[i]->text() + ";" +
+                          batas_h[i]->text() + ";" +
+                          batas_hh[i]->text() + ";" +
+                          range_h[i]->text();
+
+                tModule.alarm[i] = data[i];
+                for (int j = 0; j < tModule.jml_data; j++) {
+                    str = tModule.data.at(j);
+                    list = str.split(';');
+                    if (input_alarm[i]->currentIndex() > 0 &&
+                        input_alarm[i]->currentIndex() <= tModule.jml_input_digital) {
+                       if (QString::number(input_alarm[i]->currentIndex()) == list.at(0)) {
+                            str = list.at(0) + ";" +
+                                  list.at(1) + ";" +
+                                  name_alarm[i]->text() + ";" +
+                                  list.at(3) + ";" +
+                                  list.at(4) + ";" +
+                                  range_l[i]->text() + ";" +
+                                  batas_ll[i]->text() + ";" +
+                                  batas_l[i]->text() + ";" +
+                                  batas_h[i]->text() + ";" +
+                                  batas_hh[i]->text() + ";" +
+                                  range_h[i]->text() + ";" +
+                                  list.at(11); //QString::number(state_alarm[i]->currentIndex());
+
+                            tModule.data[j] = str;
+                        }
+                    } else if (input_alarm[i]->currentIndex() > tModule.jml_input_digital &&
+                               input_alarm[i]->currentIndex() <= tModule.jml_input_digital + tModule.jml_input_analog) {
+                        if (QString::number(input_alarm[i]->currentIndex()+4) == list.at(0)) {
+                            str = list.at(0) + ";" +
+                                  list.at(1) + ";" +
+                                  name_alarm[i]->text() + ";" +
+                                  list.at(3) + ";" +
+                                  list.at(4) + ";" +
+                                  range_l[i]->text() + ";" +
+                                  batas_ll[i]->text() + ";" +
+                                  batas_l[i]->text() + ";" +
+                                  batas_h[i]->text() + ";" +
+                                  batas_hh[i]->text() + ";" +
+                                  range_h[i]->text() + ";" +
+                                  list.at(11); //QString::number(state_alarm[i]->currentIndex());
+
+                            tModule.data[j] = str;
+                        }
+                    }
+                }
+            }
+        }
+    } else if (this->ui->tabWidget->currentIndex() == 6) {
+        /** SET DATA **/
+        for (int i = 0; i < ui->tabel_data_s->rowCount(); i++) {
+            if (check_data_s[i]->isChecked()) {
+                data[i] = QString::number(i+1) + ";" +
+                          id_data_s[i]->text() + ";" +
+                          name_data_s[i]->text() + ";" +
+                          value_data_s[i]->text() + ";" +
+                          unit_data_s[i]->text() + ";" +
+                          range_l_data_s[i]->text() + ";" +
+                          border_ll_data_s[i]->text() + ";" +
+                          border_l_data_s[i]->text() + ";" +
+                          border_h_data_s[i]->text() + ";" +
+                          border_hh_data_s[i]->text() + ";" +
+                          range_h_data_s[i]->text() + ";" +
+                          QString::number(state_data_s[i]->currentIndex());
+
+                tModule.data[i] = data[i];
+            }
+        }
+    }
+
+    mod.write_module(&tModule);
+    cryp code; code.encryp(Address_Module);
+
+    /** ON BOARD **/
+    if (Serial_Com->isOpen()) {
+        this->writeLogFile();
+        this->EnableButton(false);
+
+        struct t_serial_settings tSerial;
+        QStringList val_data;
+
+        timeout = work->Request_ENV(this, busyForm, Serial_Com, false);
+        if (timeout) {fail = true;} else {
+            Serial->read_parsing(&tSerial);
+            val_data = tSerial.str_data_env.split(";");
+            if (NoSeri == val_data.at(1)) {
+                if (this->ui->tabWidget->currentIndex() == 0) {
+                    for (int i = 0; i < ui->tabel_input->rowCount(); i++) {
+                        if (check_input[i]->isChecked()) {
+                            timeout = work->Set_Input(this, busyForm, Serial_Com, &tModule, false, QString::number(i));
+                            if (timeout) {fail = true;} else {fail = false;}
+
+                            str = tModule.Input.at(i);
+                            list = str.split(';');
+                            timeout = work->Set_Data(this, busyForm, Serial_Com, &tModule, false, list.at(1));
+                            if (timeout) {fail = true;} else {fail = false;}
+                        }
+                    }
+                } else if (this->ui->tabWidget->currentIndex() == 1) {
+                    for (int i = 0; i < ui->tabel_output->rowCount(); i++) {
+                        if (check_output[i]->isChecked()) {
+                            timeout = work->Set_Output(this, busyForm, Serial_Com, &tModule, false, QString::number(i));
+                            if (timeout) {fail = true;} else {fail = false;}
+                        }
+                    }
+                } else if (this->ui->tabWidget->currentIndex() == 4) {
+                    for (int i = 0; i < ui->tabel_sources->rowCount(); i++) {
+                        if (check_source[i]->isChecked()) {
+                            timeout = work->Set_Sumber(this, busyForm, Serial_Com, &tModule, false, QString::number(i));
+                            if (timeout) {fail = true;} else {fail = false;}
+                        }
+                    }
+                } else if (this->ui->tabWidget->currentIndex() == 5) {
+                    for (int i = 0; i < ui->tabel_alarm->rowCount(); i++) {
+                        if (check_alarm[i]->isChecked()) {
+//                            timeout = work->Set_Data(this, busyForm, Serial_Com, &tModule, false, QString::number(i));
+//                            if (timeout) {fail = true;} else {fail = false;}
+                        }
+                    }
+                } else if (this->ui->tabWidget->currentIndex() == 6) {
+                    for (int i = 0; i < ui->tabel_data_s->rowCount(); i++) {
+                        if (check_data_s[i]->isChecked()) {
+                            timeout = work->Set_Data(this, busyForm, Serial_Com, &tModule, false, QString::number(i));
+                            if (timeout) {fail = true;} else {fail = false;}
+                        }
+                    }
+                }
+//                work->Reset_Board(busyForm, "Reset Board ...", Serial_Com);
+//                if (this->ui->tabWidget->currentIndex() <= 1) {
+//                    timeout = work->Request_Data(this, busyForm, Serial_Com, false);
+//                    if (timeout) {fail = true;} else {
+//                        Serial->read_parsing(&tSerial);
+//                        val_data = tSerial.str_data_dat.split("*");
+//                        work->Get_Data(&tModule, val_data);
+//                    }
+
+//                    timeout = work->Request_IO(this, busyForm, Serial_Com, false);
+//                    if (timeout) {fail = true;} else {
+//                        Serial->read_parsing(&tSerial);
+//                        val_data = tSerial.str_data_io.split("*");
+//                        work->Get_Input(&tModule, val_data);
+//                        work->Get_Output(&tModule, val_data);
+//                        Message = "I/O ";
+//                    }
+//                } else if (this->ui->tabWidget->currentIndex() == 2) {
+//                    timeout = work->Request_SIM(this, busyForm, Serial_Com, false);
+//                    if (timeout) {fail = true;} else {
+//                        Serial->read_parsing(&tSerial);
+//                        val_data = tSerial.str_data_sim.split("*");
+//                        work->Get_SIM(&tModule, val_data);
+//                        Message = "SIM Configuration ";
+//                    }
+//                } else if (this->ui->tabWidget->currentIndex() == 3) {
+//                    timeout = work->Request_ENV(this, busyForm, Serial_Com, false);
+//                    if (timeout) {fail = true;} else {
+//                        Serial->read_parsing(&tSerial);
+//                        val_data = tSerial.str_data_sim.split("*");
+//                        work->Get_ENV(&tModule, val_data);
+//                        Message = "Environtment ";
+//                    }
+//                } else if (this->ui->tabWidget->currentIndex() == 4) {
+//                    timeout = work->Request_Sumber(this, busyForm, Serial_Com, false);
+//                    if (timeout) {fail = true;} else {
+//                        Serial->read_parsing(&tSerial);
+//                        val_data = tSerial.str_data_src.split("*");
+//                        work->Get_Sumber(&tModule, val_data);
+//                        Message = "Sources ";
+//                    }
+//                } else if (this->ui->tabWidget->currentIndex() == 5) {
+//                    timeout = false; //work->Request_Data(this, busyForm, Serial_Com, false);
+//                    if (timeout) {fail = true;} else {
+////                        Serial->read_parsing(&tSerial);
+////                        val_data = tSerial.str_data_dat.split("*");
+////                        work->Get_Data(&tModule, val_data);
+//                        Message = "Alarm ";
+//                    }
+//                } else if (this->ui->tabWidget->currentIndex() == 6) {
+//                    timeout = work->Request_Data(this, busyForm, Serial_Com, false);
+//                    if (timeout) {fail = true;} else {
+//                        Serial->read_parsing(&tSerial);
+//                        val_data = tSerial.str_data_dat.split("*");
+//                        work->Get_Data(&tModule, val_data);
+//                        Message = "Data ";
+//                    }
+//                }
+
+                Message = "On-Board";
+
+            } else {
+                Message = "On-Local";
+                if (val_data.at(1) != "") {
+                    diff = 1;
+                } else {
+                    diff = 2;
+                }
+            }
+        }
+    } else {
+        Message = "On-Local";
+    }
+
+    if (reset == 1) {
+//        Request = "reset\r\n";
+//        Serial->write_data(Serial_Com, Request);
+//        work->delay(jeda*5);
+    }
+
+    mod.write_module(&tModule);
+    code.encryp(Address_Module);
+
+//    this->setInterface(Address_Module);
+
+    if (diff == 0 && !fail) {
+        if (this->ui->tabWidget->currentIndex() == 0) {
+            Message.prepend("Input Channel ");
+        } else if (this->ui->tabWidget->currentIndex() == 1) {
+            Message.prepend("Output Channel ");
+        } else if (this->ui->tabWidget->currentIndex() == 2) {
+            Message.prepend("SIM Configuration ");
+        } else if (this->ui->tabWidget->currentIndex() == 3) {
+            Message.prepend("Environtment ");
+        } else if (this->ui->tabWidget->currentIndex() == 4) {
+            Message.prepend("Sources ");
+        } else if (this->ui->tabWidget->currentIndex() == 5) {
+            Message.prepend("Alarm ");
+        } else if (this->ui->tabWidget->currentIndex() == 6) {
+            Message.prepend("Data ");
+        }
+        Message.prepend("Setting (with checked) ").append(" Saved");
+        QMessageBox::information(this, "Success!!", Message, 0, 0);
+    } else if (diff == 1 && !fail) {
+        Message.prepend("Setting (with checked) ").append(" Saved");
+        Message.append("\n\n Different Serial Number !!!");
+        QMessageBox::information(this, "Success!!", Message, 0, 0);
+    } else if (diff == 2 && !fail) {
+        Message.prepend("Setting (with checked) ").append(" Saved");
         Message.append("\nBoard is not have Serial Number ..");
         QMessageBox::information(this, "Success!!", Message, 0, 0);
     }
@@ -1547,12 +2099,20 @@ void formModule::on_pbGet_clicked()
                         Message = "Sources ";
                     }
                 } else if (this->ui->tabWidget->currentIndex() == 5) {
+                    timeout = false; //work->Request_Data(this, busyForm, Serial_Com, false);
+                    if (timeout) {fail = true;} else {
+//                        Serial->read_parsing(&tSerial);
+//                        val_data = tSerial.str_data_dat.split("*");
+//                        work->Get_Data(&tModule, val_data);
+                        Message = "Alarm ";
+                    }
+                } else if (this->ui->tabWidget->currentIndex() == 6) {
                     timeout = work->Request_Data(this, busyForm, Serial_Com, false);
                     if (timeout) {fail = true;} else {
                         Serial->read_parsing(&tSerial);
                         val_data = tSerial.str_data_dat.split("*");
                         work->Get_Data(&tModule, val_data);
-                        Message = "Alarm ";
+                        Message = "Data ";
                     }
                 }
 
@@ -1580,15 +2140,17 @@ void formModule::on_pbGet_clicked()
 
 void formModule::on_pbEdit_clicked()
 {
-    bool timeout = false; bool fail = false;
+    bool timeout = false; bool fail = false; QString message;
     if (this->ui->tabWidget->currentIndex() == 2) {
         faddModule = new form_addModule(this, false, Address_Module, this->ui->tabWidget->currentIndex());
         faddModule->setWindowTitle("Edit Communications");
         faddModule->setModal(true);
+        message = "SIM Configuration On-Local";
     } else if (this->ui->tabWidget->currentIndex() == 3) {
         faddModule = new form_addModule(this, false, Address_Module, this->ui->tabWidget->currentIndex());
         faddModule->setWindowTitle("Edit Environtments");
         faddModule->setModal(true);
+        message = "Environtment On-Local";
     }
     faddModule->exec();
 
@@ -1620,6 +2182,7 @@ void formModule::on_pbEdit_clicked()
             }
 
             this->setInterface_Communication(Address_Module);
+            message = "SIM Configuration On-Board";
         } else if (this->ui->tabWidget->currentIndex() == 3) {
             timeout = work->Set_ENV(this, busyForm, Serial_Com, &tModule, false);
             if (timeout) {fail = true;} else {fail = false;}// return;};
@@ -1632,15 +2195,20 @@ void formModule::on_pbEdit_clicked()
             }
 
             this->setInterface_Environtment(Address_Module);
+            message = "Environtment On-Board";
         }
 
         if (!fail) {
-            QMessageBox::information(this, "Syncronization Board !!", "Setting Environtment and SIM Configuration Saved ..", 0, 0);
+            message.prepend("Setting ").append(" Success ..");
+            QMessageBox::information(this, "Syncronization Board !!", message, 0, 0);
         } else {
             QMessageBox::information(this, "Serial Communication", STR_TIMEOUT, 0, 0);
         }
 
         this->EnableButton(true);
+    } else {
+        message.prepend("Setting ").append(" Success ..");
+        QMessageBox::information(this, "Syncronization Board !!", message, 0, 0);
     }
 
     NoSeri = tModule.serial_number;
@@ -1652,6 +2220,7 @@ void formModule::EnableButton(bool enab)
     this->ui->pbSetAll->setEnabled(enab);
     this->ui->pbGet->setEnabled(enab);
     this->ui->pbSet->setEnabled(enab);
+    this->ui->pbSetChk->setEnabled(enab);
     this->ui->pbEdit->setEnabled(enab);
 }
 
@@ -1670,7 +2239,15 @@ void formModule::writeLogFile() {
         QTextStream outStream(&outputFile);
 
         /* Write the line to the file */
-        outStream << "--------------------------------------------------------------------------------------------------------\r\n";
+        outStream << "----------" << "----------" <<
+                     "----------" << "----------" <<
+                     "----------" << "----------" <<
+                     "----------" << "----------" <<
+                     "----------" << "----------" <<
+                     "----------" << "----------" <<
+                     "----------" << "----------" <<
+                     "----------" << "----------" <<
+                     "\r\n";
 
         /* Close the file */
         outputFile.close();
@@ -1975,127 +2552,6 @@ void formModule::on_pbRefresh_clicked()
     this->ui->pbRefresh->setEnabled(false);
     this->data_monitoring();
     this->ui->pbRefresh->setEnabled(true);
-}
-
-void formModule::set_kanal_clicked(int index)
-{
-    struct t_module tModule; module mod;
-    Address_Module = "data/module/m_" + this->windowTitle() + ".dbe";
-    QString tmp; QStringList list1; QStringList list2;
-    int indx; int diff; bool timeout = false; bool fail = false;
-    QString data;
-    QStringList list;
-    QString Message;
-
-    mod.read_module(&tModule, Address_Module);
-
-    tModule.d_port[index].calib_m = calib_m[index]->text().toFloat();
-    tModule.d_port[index].calib_x = calib_x[index]->text().toFloat();
-
-    if (index >= 6) {
-        if (type_input[index]->currentIndex() == 0) {indx = 250;}
-        if (type_input[index]->currentIndex() == 1) {indx = 230;}
-        tModule.d_port[index].type_input = indx;
-
-        data.sprintf("A;%d;%d;%.3f;%.3f", index-6+11
-                        , indx
-                        , tModule.d_port[index].calib_m
-                        , tModule.d_port[index].calib_x);
-    } else {
-        if (type_input[index]->currentIndex() == 0) {indx = 1;}
-        if (type_input[index]->currentIndex() == 1) {indx = 2;}
-        if (type_input[index]->currentIndex() == 2) {indx = 6;}
-        if (type_input[index]->currentIndex() == 3) {indx = 7;}
-        if (type_input[index]->currentIndex() == 4) {indx = 9;}
-        tModule.d_port[index].type_input = indx;
-
-        data.sprintf("D;%d;%d;%.3f;%.3f", index+1
-                        , indx
-                        , tModule.d_port[index].calib_m
-                        , tModule.d_port[index].calib_x);
-    }
-    tModule.Input[index] = data;
-    tModule.InputName[index] = name_input[index]->text();
-
-    data = tModule.data.at(index);
-    list = data.split(';');
-    list[2] = name_input[index]->text();
-    data.clear();
-    data = list[0];
-    for (int j = 1; j < 12; j++) {
-        data.append(";").append(list[j]);
-    }
-    tModule.data[index] = data;
-
-    if (Serial_Com->isOpen()) {
-        this->writeLogFile();
-        this->EnableButton(false);
-
-        struct t_serial_settings tSerial;
-        QStringList val_data;
-
-        timeout = work->Request_ENV(this, busyForm, Serial_Com, false);
-        if (timeout) {fail = true;}// return;};
-
-        Serial->read_parsing(&tSerial);
-        val_data = tSerial.str_data_env.split(";");
-        if (NoSeri == val_data.at(1)) {
-            if (!fail) {
-                timeout = work->Set_Input(this, busyForm, Serial_Com, &tModule, timeout, QString::number(index));
-                if (timeout) {fail = true;}// return;};
-//                timeout = work->Set_Data(this, busyForm, Serial_Com, &tModule, false);
-//                if (timeout) {fail = true;}// return;};
-            }
-
-            timeout = work->Request_Data(this, busyForm, Serial_Com, false);
-            if (timeout) {fail = true;}// return;};
-            Serial->read_parsing(&tSerial);
-            val_data = tSerial.str_data_dat.split("*");
-            work->Get_Data(&tModule, val_data);
-
-            timeout = work->Request_IO(this, busyForm, Serial_Com, false);
-            if (timeout) {fail = true;}// return;};
-            Serial->read_parsing(&tSerial);
-            val_data = tSerial.str_data_io.split("*");
-            work->Get_Input(&tModule, val_data);
-//            work->Get_Output(&tModule, val_data);
-
-            Message = "On-Board";
-            diff = 0;
-        } else {
-            Message = "On-Local";
-            if (val_data.at(1) != "") {
-                diff = 1;
-            } else {
-                diff = 2;
-            }
-        }
-    } else {
-        Message = "On-Local";
-    }
-
-//    mod.write_module(&tModule);
-//    this->setInterface_Input(Address_Module);
-
-    if (diff == 0 && !fail) {
-        if (index >= 6) {
-            Message.prepend(" " + QString::number(index-6+11) + " ");
-        } else {
-            Message.prepend(" " + QString::number(index+1) + " ");
-        }
-        Message.prepend("Input Channel ");
-        Message.prepend("Setting ").append(" Saved");
-        QMessageBox::information(this, "Success!!", Message, 0, 0);
-    } else if (diff == 1 && !fail) {
-        Message.prepend("Setting ").append(" Saved");
-        Message.append("\n\n Different Serial Number !!!");
-        QMessageBox::information(this, "Success!!", Message, 0, 0);
-    } else if (diff == 2 && !fail) {
-        Message.prepend("Setting ").append(" Saved");
-        Message.append("\nBoard is not have Serial Number ..");
-        QMessageBox::information(this, "Success!!", Message, 0, 0);
-    }
-    this->EnableButton(true);
 }
 
 void formModule::reg_kanal_changed()

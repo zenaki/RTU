@@ -52,6 +52,7 @@ form_addModule::form_addModule(QWidget *parent, bool create, QString address, in
         modules.sprintf("%s", tModule.file_address);
         this->ui->edit_file_address->setText(modules);
         this->ui->cb_webclient->setCurrentIndex(tModule.flag_webclient);
+        this->ui->spin_interval->setValue(tModule.interval);
 
         this->ui->cb_operator_1->setCurrentIndex(tModule.flag_gsm_1);
         modules.sprintf("%s", tModule.device_name_gsm_1);
@@ -82,16 +83,26 @@ form_addModule::form_addModule(QWidget *parent, bool create, QString address, in
         this->ui->edit_passwd_2->setText(modules);
 
         if (index == 1) {
+//            this->ui->edit_module_name->setEnabled(true);
+//            this->ui->edit_sn->setEnabled(true);
+//            this->ui->ck_flag_active_gsm_2->setHidden(true);
+
+//            this->setFixedWidth(640);
+//            this->setFixedHeight(445);
+//            this->ui->gbCom->setGeometry(20,70,601,311);
+//            this->ui->buttonBox->setGeometry(14,405,601,27);
+//            this->ui->gbCom->setHidden(false);
+//            this->ui->gbEnv->setHidden(true);
+
             this->ui->edit_module_name->setEnabled(true);
             this->ui->edit_sn->setEnabled(true);
-            this->ui->ck_flag_active_gsm_2->setHidden(true);
+            this->ui->ck_flag_active_gsm_2->setHidden(false);
 
             this->setFixedWidth(640);
-            this->setFixedHeight(445);
-            this->ui->gbCom->setGeometry(20,70,601,311);
-            this->ui->buttonBox->setGeometry(14,405,601,27);
+            this->setFixedHeight(610);
+
             this->ui->gbCom->setHidden(false);
-            this->ui->gbEnv->setHidden(true);
+            this->ui->gbEnv->setHidden(false);
         } else if (index == 2) {
             this->ui->edit_module_name->setEnabled(false);
             this->ui->edit_sn->setEnabled(false);
@@ -109,10 +120,10 @@ form_addModule::form_addModule(QWidget *parent, bool create, QString address, in
             this->ui->ck_flag_active_gsm_2->setHidden(true);
             this->ui->gbCom->setHidden(true);
 
-            this->ui->gbEnv->setGeometry(20,70,341,181);
-            this->ui->buttonBox->setGeometry(14,265,341,27);
+            this->ui->gbEnv->setGeometry(20,70,341,211);
+            this->ui->buttonBox->setGeometry(14,285,341,27);
             this->setFixedWidth(380);
-            this->setFixedHeight(300);
+            this->setFixedHeight(330);
 
             this->ui->gbEnv->setHidden(false);
         }
@@ -122,7 +133,7 @@ form_addModule::form_addModule(QWidget *parent, bool create, QString address, in
         this->ui->ck_flag_active_gsm_2->setHidden(false);
 
         this->setFixedWidth(640);
-        this->setFixedHeight(595);
+        this->setFixedHeight(610);
 
         this->ui->gbCom->setHidden(false);
         this->ui->gbEnv->setHidden(false);
@@ -152,6 +163,7 @@ void form_addModule::on_buttonBox_accepted()
     strcpy(tModule.file_address, this->ui->edit_file_address->text().toLatin1());
     tModule.flag_webclient = this->ui->cb_webclient->currentIndex();
     strcpy(tModule.status_webclient, this->ui->cb_webclient->currentText().toLatin1());
+    tModule.interval = this->ui->spin_interval->value();
 
     if(this->ui->ck_flag_active_gsm_2->isChecked()) tModule.flag_dual_gsm = 1;
     else tModule.flag_dual_gsm = 0;
@@ -171,9 +183,9 @@ void form_addModule::on_buttonBox_accepted()
     strcpy(tModule.number_gsm_1, this->ui->edit_number_1->text().toLatin1());
     if (tModule.flag_com_gsm_1 == 0)
     {
-        strcpy(tModule.user_gsm_1, "");
-        strcpy(tModule.apn_gsm_1, "");
-        strcpy(tModule.passwd_gsm_1, "");
+        strcpy(tModule.user_gsm_1, "-");
+        strcpy(tModule.apn_gsm_1, "-");
+        strcpy(tModule.passwd_gsm_1, "-");
     } else if (tModule.flag_com_gsm_1 == 1)
     {
         strcpy(tModule.user_gsm_1, this->ui->edit_user_1->text().toLatin1());
@@ -182,28 +194,40 @@ void form_addModule::on_buttonBox_accepted()
     }
 
     /** GSM_2 **/
-    tModule.flag_gsm_2 = this->ui->cb_operator_2->currentIndex();
-    strcpy(tModule.name_gsm_2, this->ui->cb_operator_2->currentText().toLatin1());
+    if (tModule.flag_dual_gsm == 1) {
+        tModule.flag_gsm_2 = this->ui->cb_operator_2->currentIndex();
+        strcpy(tModule.name_gsm_2, this->ui->cb_operator_2->currentText().toLatin1());
 
-    strcpy(tModule.device_name_gsm_2, this->ui->edit_devicename_2->text().toLatin1());
+        strcpy(tModule.device_name_gsm_2, this->ui->edit_devicename_2->text().toLatin1());
 
-    tModule.flag_status_active_gsm_2 = this->ui->cb_status_2->currentIndex();
-    strcpy(tModule.status_gsm_2, this->ui->cb_status_2->currentText().toLatin1());
+        tModule.flag_status_active_gsm_2 = this->ui->cb_status_2->currentIndex();
+        strcpy(tModule.status_gsm_2, this->ui->cb_status_2->currentText().toLatin1());
 
-    tModule.flag_com_gsm_2 = this->ui->cb_com_2->currentIndex();
-    strcpy(tModule.com_gsm_2, this->ui->cb_com_2->currentText().toLatin1());
+        tModule.flag_com_gsm_2 = this->ui->cb_com_2->currentIndex();
+        strcpy(tModule.com_gsm_2, this->ui->cb_com_2->currentText().toLatin1());
 
-    strcpy(tModule.number_gsm_2, this->ui->edit_number_2->text().toLatin1());
-    if (tModule.flag_com_gsm_2 == 0)
-    {
-        strcpy(tModule.user_gsm_2, "");
-        strcpy(tModule.apn_gsm_2, "");
-        strcpy(tModule.passwd_gsm_2, "");
-    } else if (tModule.flag_com_gsm_2 == 1)
-    {
-        strcpy(tModule.user_gsm_2, this->ui->edit_user_2->text().toLatin1());
-        strcpy(tModule.apn_gsm_2, this->ui->edit_apn_2->text().toLatin1());
-        strcpy(tModule.passwd_gsm_2, this->ui->edit_passwd_2->text().toLatin1());
+        strcpy(tModule.number_gsm_2, this->ui->edit_number_2->text().toLatin1());
+        if (tModule.flag_com_gsm_2 == 0) {
+            strcpy(tModule.user_gsm_2, "-");
+            strcpy(tModule.apn_gsm_2, "-");
+            strcpy(tModule.passwd_gsm_2, "-");
+        } else if (tModule.flag_com_gsm_2 == 1) {
+            strcpy(tModule.user_gsm_2, this->ui->edit_user_2->text().toLatin1());
+            strcpy(tModule.apn_gsm_2, this->ui->edit_apn_2->text().toLatin1());
+            strcpy(tModule.passwd_gsm_2, this->ui->edit_passwd_2->text().toLatin1());
+        }
+    } else {
+        tModule.flag_gsm_2 = 0;
+        strcpy(tModule.name_gsm_2,"-");
+        strcpy(tModule.device_name_gsm_2,"-");
+        tModule.flag_status_active_gsm_2 = 0;
+        strcpy(tModule.status_gsm_2,"NOT ACTIVE");
+        tModule.flag_com_gsm_2 = 0;
+        strcpy(tModule.com_gsm_2,"GSM");
+        strcpy(tModule.number_gsm_2,"-");
+        strcpy(tModule.user_gsm_2, "-");
+        strcpy(tModule.apn_gsm_2, "-");
+        strcpy(tModule.passwd_gsm_2, "-");
     }
 
     /** ----------------------------- WRITE ---------------------------- **/

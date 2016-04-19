@@ -36,7 +36,6 @@ void setting::write_setting(SettingsDialog *s_d, struct t_serial_settings *tSeri
     pth = PATH_SERIAL_SETTING;
     cryp code; code.decryp(PATH_SERIAL_SETTING);
     QSettings sett(pth, QSettings::IniFormat);
-//    sett.setIniCodec(CODEC);
 
     sett.beginGroup( "SERIAL_CONFIGURATION" );
     sett.setValue("NAME", tSerial->name);
@@ -61,7 +60,6 @@ void setting::read_setting(t_serial_settings *tSerial)
     pth = PATH_SERIAL_SETTING;
     cryp code; code.decryp(pth);
     QSettings sett(pth, QSettings::IniFormat);
-//    sett.setIniCodec(CODEC);
     QString val;
 
     tSerial->name = sett.value("SERIAL_CONFIGURATION/NAME").toString().toUtf8();
