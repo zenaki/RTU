@@ -3,7 +3,7 @@
 
 #include <QtGui>
 
-formModule::formModule(QWidget *parent, QString address, QSerialPort *SerialPort, QLightBoxWidget *LightBox) :
+formModule::formModule(QWidget *parent, QString address, QSerialPort *SerialPort) :
     QDialog(parent),
     ui(new Ui::formModule)
 {
@@ -22,9 +22,7 @@ formModule::formModule(QWidget *parent, QString address, QSerialPort *SerialPort
     Main = new MainWindow(this);
     Serial = new serial();
     Setting = new setting();
-
-    busyForm = new QLightBoxWidget(this);
-    busyForm = LightBox;
+    busyForm = new QLightBoxWidget(parent);
 
     this->setInterface(address);
     this->ui->pbEdit->setHidden(true);
@@ -35,6 +33,8 @@ formModule::formModule(QWidget *parent, QString address, QSerialPort *SerialPort
     this->ui->pbSet->setText("Set All Input Settings");
     this->ui->pbSetChk->setText("Set Checked Input Settings");
     this->ui->pbGet->setText("Get All Input Settings");
+
+    this->ui->tab_alarm->setHidden(true);
 }
 
 formModule::~formModule()
@@ -218,12 +218,13 @@ void formModule::setInterface_Output(QString address)
     QString type;
 
     this->ui->tabel_output->verticalHeader()->setHidden(true);
-    this->ui->tabel_output->setColumnCount(5);
+    this->ui->tabel_output->setColumnCount(6);
         this->ui->tabel_output->setColumnWidth(0, 25);
     //    this->ui->tabel_output->setColumnWidth(1, 50);
         this->ui->tabel_output->setColumnWidth(2, 100);
         this->ui->tabel_output->setColumnWidth(3, 100);
     //    this->ui->tabel_output->setColumnWidth(4, 100);
+    //    this->ui->tabel_output->setColumnWidth(5, 75);
     this->ui->tabel_output->setRowCount(rowOutput);
 
     for (int i = 0; i < rowOutput; i++){
@@ -240,6 +241,9 @@ void formModule::setInterface_Output(QString address)
         control[i]->addItem("LOGIC");
         control[i]->addItem("LATCH");
         control[i]->addItem("SCHEDULER");
+
+        reg_output[i] = new QLineEdit(this);
+        reg_output[i]->setAlignment(Qt::AlignCenter);
     }
 
     QString str;
@@ -252,17 +256,19 @@ void formModule::setInterface_Output(QString address)
     list = str.split(';');
 
     for(int i = 0; i < rowOutput; i++){
-        name_output[i]->setText(list[i*5]);
-        state_output[i]->setCurrentIndex(list[(i*5)+3].toInt());
-        control[i]->setCurrentIndex(list[(i*5)+4].toInt());
+        name_output[i]->setText(list[i*6]);
+        state_output[i]->setCurrentIndex(list[(i*6)+3].toInt());
+        control[i]->setCurrentIndex(list[(i*6)+4].toInt());
+        reg_output[i]->setText(list[(i*6)+5]);
 
         type = " - Relay";
-        type.prepend(QString::number(i+1));
+        type.prepend(list[(i*6)+2]);
         this->ui->tabel_output->setCellWidget(i,0, check_output[i]);
         this->ui->tabel_output->setItem(i,1, new QTableWidgetItem(type));
         this->ui->tabel_output->setCellWidget(i,2, name_output[i]);
         this->ui->tabel_output->setCellWidget(i,3, state_output[i]);
         this->ui->tabel_output->setCellWidget(i,4, control[i]);
+        this->ui->tabel_output->setCellWidget(i,5, reg_output[i]);
     }
 
     this->ui->tabel_output->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -1060,10 +1066,12 @@ void formModule::on_pbSetAll_clicked()
     {
         tModule.d_port[i].status_output = state_output[i]->currentIndex();
         tModule.d_port[i].control = control[i]->currentIndex();
+        tModule.d_port[i].reg_output = reg_output[i]->text().toInt();
 
-        data[i].sprintf("R;%d;%d;%d", i+1
+        data[i].sprintf("R;%d;%d;%d;%d", i+1
                      , tModule.d_port[i].status_output
-                     , tModule.d_port[i].control) ;
+                     , tModule.d_port[i].control
+                     , tModule.d_port[i].reg_output);
 
         tModule.Output[i] = data[i];
         tModule.OutputName[i] = name_output[i]->text();
@@ -1342,10 +1350,12 @@ void formModule::on_pbSet_clicked()
         {
             tModule.d_port[i].status_output = state_output[i]->currentIndex();
             tModule.d_port[i].control = control[i]->currentIndex();
+            tModule.d_port[i].reg_output = reg_output[i]->text().toInt();
 
-            data[i].sprintf("R;%d;%d;%d", i+1
+            data[i].sprintf("R;%d;%d;%d;%d", i+1
                          , tModule.d_port[i].status_output
-                         , tModule.d_port[i].control);
+                         , tModule.d_port[i].control
+                         , tModule.d_port[i].reg_output);
 
             tModule.Output[i] = data[i];
             tModule.OutputName[i] = name_output[i]->text();
@@ -1465,15 +1475,15 @@ void formModule::on_pbSet_clicked()
                 if (this->ui->tabWidget->currentIndex() == 0) {
                     timeout = work->Set_Input(this, busyForm, Serial_Com, &tModule, false);
                     if (timeout) {fail = true;} else {fail = false;}
-                    for (int i = 0; i < ui->tabel_input->rowCount(); i++) {
-                        if (i < tModule.jml_input_digital) {
-                            timeout = work->Set_Data(this, busyForm, Serial_Com, &tModule, false, QString::number(i));
-                            if (timeout) {fail = true;} else {fail = false;}
-                        } else {
-                            timeout = work->Set_Data(this, busyForm, Serial_Com, &tModule, false, QString::number(i+tModule.jml_input_digital-2));
-                            if (timeout) {fail = true;} else {fail = false;}
-                        }
-                    }
+//                    for (int i = 0; i < ui->tabel_input->rowCount(); i++) {
+//                        if (i < tModule.jml_input_digital) {
+//                            timeout = work->Set_Data(this, busyForm, Serial_Com, &tModule, false, QString::number(i));
+//                            if (timeout) {fail = true;} else {fail = false;}
+//                        } else {
+//                            timeout = work->Set_Data(this, busyForm, Serial_Com, &tModule, false, QString::number(i+tModule.jml_input_digital-2));
+//                            if (timeout) {fail = true;} else {fail = false;}
+//                        }
+//                    }
                 } else if (this->ui->tabWidget->currentIndex() == 1) {
                     timeout = work->Set_Output(this, busyForm, Serial_Com, &tModule, false);
                     if (timeout) {fail = true;} else {fail = false;}
@@ -1681,10 +1691,12 @@ void formModule::on_pbSetChk_clicked()
             if (check_output[i]->isChecked()) {
                 tModule.d_port[i].status_output = state_output[i]->currentIndex();
                 tModule.d_port[i].control = control[i]->currentIndex();
+                tModule.d_port[i].reg_output = reg_output[i]->text().toInt();
 
-                data[i].sprintf("R;%d;%d;%d", i+1
+                data[i].sprintf("R;%d;%d;%d;%d", i+1
                              , tModule.d_port[i].status_output
-                             , tModule.d_port[i].control);
+                             , tModule.d_port[i].control
+                             , tModule.d_port[i].reg_output);
 
                 tModule.Output[i] = data[i];
                 tModule.OutputName[i] = name_output[i]->text();

@@ -7,11 +7,12 @@
 
 #include <model/interface_manipulator/mtreeview.h>
 #include <model/module.h>
+#include <view/mainwindow.h>
 #include <view/formmodule.h>
 #include <ui_formmodule.h>
 #include "model/communication/serial.h"
 
-//#include <QObject>
+#include <QObject>
 #include <QtSerialPort/QSerialPort>
 #include <QTime>
 
@@ -25,6 +26,7 @@
 
 #include "JlCompress.h"
 
+class MainWindow;
 class formModule;
 class serial;
 class QLightBoxWidget;
@@ -44,7 +46,7 @@ public:
     QString checkModule(QString address);
     QString check_statusModule(QString address);
 
-    void showModule(QWidget *parent, QMdiArea *mdiArea, QString module, QSerialPort *SerialPort, QLightBoxWidget *LightBox);
+    void showModule(QWidget *parent, QMdiArea *mdiArea, QString module, QSerialPort *SerialPort);
 
     bool checkIfmodule(QString name);
     bool state_of_module(int num, QString newModule, QString *existModule);
@@ -69,9 +71,11 @@ public:
 //    QLabel *lbProgress;
 //    QMovie *progressMovie;
 //    QLabel *lbDescription;
+//    QPushButton *btnCancel;
 //    QGridLayout *lbLayout;
 
 //    QString Request;
+    bool cancelSetting;
 
     bool Set_ENV(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, struct t_module *tModule, bool timeout = false);
     bool Set_Input(QWidget *parent, QLightBoxWidget *lBox, QSerialPort *Serial_Com, struct t_module *tModule, bool timeout = false, QString index = 0);
@@ -87,8 +91,8 @@ public:
     QString read_strERR();
 
     void delay(int ms);
+    void serial_write(QWidget *parent, QSerialPort * Serial_Com, QLightBoxWidget *lBox, QString desc, QString data, int d_c);
     bool waiting_set(QWidget *parent, QLightBoxWidget *lBox, QString desc, bool timeout = false);
-    void serial_write(QWidget *parent, QSerialPort * Serial_Com, QLightBoxWidget *lBox, QString data, int d_c);
 
     void writeLogFile(QString log, int flagERR, QString strERR, bool timeout);
 
@@ -103,6 +107,8 @@ public:
     QString readPluginConfgExec(QString address);
     void writePlugin(struct t_plugin *tPlugin);
 
+private slots:
+    void CancelSetting();
 //signals:
 //    void TimeOut();
 };

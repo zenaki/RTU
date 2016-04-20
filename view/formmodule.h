@@ -41,7 +41,7 @@ class formModule : public QDialog
 public:
     Ui::formModule *ui;
 
-    explicit formModule(QWidget *parent = 0, QString address = 0, QSerialPort *SerialPort = 0, QLightBoxWidget *LightBox = 0);
+    explicit formModule(QWidget *parent = 0, QString address = 0, QSerialPort *SerialPort = 0);
     ~formModule();
 
     QLightBoxWidget *busyForm;
@@ -114,6 +114,7 @@ private:
     QLineEdit       *type_output[16];
     QComboBox       *state_output[16];
     QComboBox       *control[16];
+    QLineEdit       *reg_output[16];
 
     /** Sources Tab **/
     QCheckBox       *check_source[16];

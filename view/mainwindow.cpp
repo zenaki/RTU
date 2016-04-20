@@ -417,7 +417,7 @@ void MainWindow::on_treeView_doubleClicked(const QModelIndex &index)
         return;
 
     if(work->checkIfmodule(name))
-        work->showModule(this, this->ui->mdiArea, name, SerialPort, busy);
+        work->showModule(this, this->ui->mdiArea, name, SerialPort);
     else
         return;
 }
@@ -617,11 +617,23 @@ void MainWindow::readData()
         work->write_FinishRead(FinishRead, 0, "");
         str_data.clear();
         cryp code; code.encryp(PATH_SERIAL_PARSING);
+    } else if (str_data.indexOf("<OK:") > 0 && str_data.indexOf(":OK>") > 0) {
+        int a = str_data.indexOf("<OK:");
+        int b = str_data.indexOf(":OK>");
+        str_data = str_data.mid(a+4, b-a-4);
+        FinishRead = true;
+        work->write_FinishRead(FinishRead, 0, str_data);
+        str_data.clear();
+        cryp code; code.encryp(PATH_SERIAL_PARSING);
+    } else if (str_data.indexOf("<ERR>") > 0) {
+        FinishRead = true;
+        work->write_FinishRead(FinishRead, 1, "ERROR");
+        cryp code; code.encryp(PATH_SERIAL_PARSING);
+        str_data.clear();
     } else if (str_data.indexOf("<ERR:") > 0 && str_data.indexOf(":ERR>") > 0) {
         int a = str_data.indexOf("<ERR:");
         int b = str_data.indexOf(":ERR>");
         str_data = str_data.mid(a+5, b-a-5);
-//        str_data.remove(':');
         FinishRead = true;
         work->write_FinishRead(FinishRead, 1, str_data);
         cryp code; code.encryp(PATH_SERIAL_PARSING);

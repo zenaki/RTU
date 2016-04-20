@@ -58,7 +58,7 @@
 #define PATH_PLUGIN_CONFIG   "plugin/plugin.cfg"
 #define PATH_USER_ACCESS     "data/config/usr.cfg"
 
-#define WAIT_WRITE           3 //ms
+#define WAIT_WRITE           2 //ms
 
 /** STRUCT **/
 
@@ -73,6 +73,7 @@ struct data_port{
     char type_output[32];
     int status_output;
     int control;
+    int reg_output;
 };
 
 struct t_module{
