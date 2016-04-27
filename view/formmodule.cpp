@@ -22,7 +22,7 @@ formModule::formModule(QWidget *parent, QString address, QSerialPort *SerialPort
     Main = new MainWindow(this);
     Serial = new serial();
     Setting = new setting();
-    busyForm = new QLightBoxWidget(parent);
+//    busyForm = new QLightBoxWidget(parent);
 
     this->setInterface(address);
     this->ui->pbEdit->setHidden(true);
@@ -63,16 +63,10 @@ void formModule::setInterface_Input(QString address)
     module mod;
     Address_Module = address;
     mod.read_module(&tModule, Address_Module);
-    QString modules;
-
-    QString str;
-    QString tmp;
-    QStringList list;
     QStringList data = tModule.data;
 
     int rowInputDigital = tModule.jml_input_digital;
     int rowInputAnalog = tModule.jml_input_analog;
-    QString type;
 
     this->ui->tabel_input->verticalHeader()->setHidden(true);
     this->ui->tabel_input->setColumnCount(8);
@@ -164,7 +158,6 @@ void formModule::setInterface_Input(QString address)
         type.prepend(QString::number(i+1));
 
         name_input[i]->setText(list[i*8]);
-        int indx;
         if (list[(i*8)+3].toInt() == Analog_Monita) {indx = 0;}
         if (list[(i*8)+3].toInt() == Analog_Running_Hours) {indx = 1;}
         if (list[(i*8)+3].toInt() == RPM) {indx = 0;}
@@ -893,12 +886,12 @@ void formModule::data_monitoring()
             for (int i = 0; i < Request.length(); i++) {
                 tmp = QChar(Request.at(i));
                 Serial_Com->write(tmp.toUtf8().data());
-                work->delay(WAIT_WRITE);
+                progress_dialog->delay(WAIT_WRITE);
             }
             Serial_Com->write("\r\n");
 
             QTime dieTime = QTime::currentTime().addMSecs(TIMEOUT);
-            while (!work->read_FinishRead()) {
+            while (!progress_dialog->read_FinishRead()) {
                 QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
                 if (QTime::currentTime() >= dieTime && !timeout) {
                     timeout = true;
@@ -909,7 +902,7 @@ void formModule::data_monitoring()
             if (!timeout) {
                 Serial->read_parsing(&tSerial);
                 val_data = tSerial.str_data_dat.split("*");
-                work->Get_Data(&tModule, val_data);
+                progress_dialog->Get_Data(&tModule, val_data);
 
                 QStringList data = tModule.data;
                 tModule.data.clear(); tModule.jml_data = 0;
@@ -1018,15 +1011,11 @@ void formModule::on_pbSetAll_clicked()
 {
     struct t_module tModule;
     QString data[60];
-    QString Message;
-    QString Request;
-    int indx;
-    int diff = 0;
-//    int reset = 0;
-    QString str;
-    QStringList list;
-    bool timeout = false;
-    bool fail = false;
+    indx = 0;
+    diff = 0;
+    timeout = false;
+    fail = false;
+    cancel = false;
 
     module mod;
     mod.read_module(&tModule, Address_Module);
@@ -1197,65 +1186,18 @@ void formModule::on_pbSetAll_clicked()
         struct t_serial_settings tSerial;
         QStringList val_data;
 
-        timeout = work->Request_ENV(this, busyForm, Serial_Com, false);
+        timeout = work->Request_ENV(Serial_Com, false);
         if (timeout) {fail = true;} else {
             Serial->read_parsing(&tSerial);
             val_data = tSerial.str_data_env.split(";");
             if (NoSeri == val_data.at(1)) {
-//                if (!fail) {
-//                    timeout = work->Set_Input(this, busyForm, Serial_Com, &tModule, false);
-//                    if (timeout) {fail = true;} else {fail = false;}
-//                }
-//                if (!fail) {
-//                    timeout = work->Set_Output(this, busyForm, Serial_Com, &tModule, false);
-//                    if (timeout) {fail = true;} else {fail = false;}
-//                }
-//                if (!fail) {
-//                    timeout = work->Set_SIM(this, busyForm, Serial_Com, &tModule, false);
-//                    if (timeout) {fail = true;} else {fail = false;}
-//                }
-//                if (!fail) {
-//                    timeout = work->Set_Sumber(this, busyForm, Serial_Com, &tModule, false);
-//                    if (timeout) {fail = true;} else {fail = false;}
-//                }
-//                if (!fail) {
-//                    timeout = work->Set_Data(this, busyForm, Serial_Com, &tModule, false);
-//                    if (timeout) {fail = true;} else {fail = false;}
-//                }
-
-//                timeout = work->Request_Data(this, busyForm, Serial_Com, false);
-//                if (timeout) {fail = true;} else {
-//                    Serial->read_parsing(&tSerial);
-//                    val_data = tSerial.str_data_dat.split("*");
-//                    work->Get_Data(&tModule, val_data);
-//                }
-
-//                timeout = work->Request_IO(this, busyForm, Serial_Com, false);
-//                if (timeout) {fail = true;} else {
-//                    Serial->read_parsing(&tSerial);
-//                    val_data = tSerial.str_data_io.split("*");
-//                    work->Get_Input(&tModule, val_data);
-//                    work->Get_Output(&tModule, val_data);
-//                }
-
-//                timeout = work->Request_SIM(this, busyForm, Serial_Com, false);
-//                if (timeout) {fail = true;} else {
-//                    Serial->read_parsing(&tSerial);
-//                    val_data = tSerial.str_data_sim.split("*");
-//                    work->Get_SIM(&tModule, val_data);
-//                }
-
-//                timeout = work->Request_Sumber(this, busyForm, Serial_Com, false);
-//                if (timeout) {fail = true;} else {
-//                    Serial->read_parsing(&tSerial);
-//                    val_data = tSerial.str_data_src.split("*");
-//                    work->Get_Sumber(&tModule, val_data);
-//                }
-
-                progress_dialog->show();
-                progress_dialog->setWindowTitle("Set All Configuration to board ..");
-                progress_dialog->Processing(Serial_Com, Address_Module, "0102;0103;0101;0104;0105;0005;0002;0001;0004");
-                progress_dialog->close();
+                if (!fail) {
+                    progress_dialog->show();
+                    progress_dialog->setWindowTitle("Set All Configuration to board ..");
+                    progress_dialog->Processing(Serial_Com, Address_Module, "0102;0103;0101;0104;0105;0005;0002;0001;0004");
+                    cancel = progress_dialog->cancel;
+                    progress_dialog->close();
+                }
 
                 Message = "On-Board";
 
@@ -1284,16 +1226,21 @@ void formModule::on_pbSetAll_clicked()
     this->setInterface(Address_Module);
 
     if (diff == 0 && !fail) {
-        Message.prepend("Setting ").append(" Saved");
-        QMessageBox::information(this, "Success!!", Message, 0, 0);
+        if (cancel) {
+            Message.prepend("Setting ").append(" Canceled");
+            QMessageBox::information(this, "Cancel!!", Message, 0, 0);
+        } else {
+            Message.prepend("Setting ").append(" Saved");
+            QMessageBox::information(this, "Success!!", Message, 0, 0);
+        }
     } else if (diff == 1 && !fail) {
-        Message.prepend("Setting ").append(" Saved");
+        Message.prepend("Setting ").append(" Error !!");
         Message.append("\n\n Different Serial Number !!!");
-        QMessageBox::information(this, "Success!!", Message, 0, 0);
+        QMessageBox::information(this, "Error!!", Message, 0, 0);
     } else if (diff == 2 && !fail) {
-        Message.prepend("Setting ").append(" Saved");
-        Message.append("\nBoard is not have Serial Number ..");
-        QMessageBox::information(this, "Success!!", Message, 0, 0);
+        Message.prepend("Setting ").append(" Error !!");
+        Message.append("\nBoard Serial Number is not exist ..");
+        QMessageBox::information(this, "Error!!", Message, 0, 0);
     }
 
     if (fail) {
@@ -1307,15 +1254,11 @@ void formModule::on_pbSet_clicked()
 {
     struct t_module tModule;
     QString data[60];
-    QString Message;
-    QString Request;
-    int indx;
-    int diff = 0;
-    int reset = 0;
-    bool timeout = false;
-    QString str;
-    QStringList list;
-    bool fail = false;
+    indx = 0;
+    diff = 0;
+    reset = 0;
+    timeout = false;
+    fail = false;
 
     module mod;
     mod.read_module(&tModule, Address_Module);
@@ -1487,7 +1430,7 @@ void formModule::on_pbSet_clicked()
         struct t_serial_settings tSerial;
         QString Request; QStringList val_data;
 
-        timeout = work->Request_ENV(this, busyForm, Serial_Com, false);
+        timeout = work->Request_ENV(Serial_Com, false);
         if (timeout) {fail = true;} else {
             Serial->read_parsing(&tSerial);
             val_data = tSerial.str_data_env.split(";");
@@ -1664,15 +1607,11 @@ void formModule::on_pbSetChk_clicked()
 {
     struct t_module tModule;
     QString data[60];
-    QString Message;
-    QString Request;
-    int indx;
-    int diff = 0;
-    int reset = 0;
-    bool timeout = false;
-    QString str;
-    QStringList list;
-    bool fail = false;
+    indx = 0;
+    diff = 0;
+    reset = 0;
+    timeout = false;
+    fail = false;
 
     module mod;
     mod.read_module(&tModule, Address_Module);
@@ -1852,7 +1791,7 @@ void formModule::on_pbSetChk_clicked()
         struct t_serial_settings tSerial;
         QStringList val_data;
 
-        timeout = work->Request_ENV(this, busyForm, Serial_Com, false);
+        timeout = work->Request_ENV(Serial_Com, false);
         if (timeout) {fail = true;} else {
             Serial->read_parsing(&tSerial);
             val_data = tSerial.str_data_env.split(";");
@@ -2042,7 +1981,7 @@ void formModule::on_pbGetAll_clicked()
         this->EnableButton(true);
     } else {
         this->writeLogFile();
-        timeout = work->Request_ENV(this, busyForm, Serial_Com, false);
+        timeout = work->Request_ENV(Serial_Com, false);
         if (timeout) {fail = true;} else {
             Serial->read_parsing(&tSerial);
             val_data = tSerial.str_data_env.split(";");
@@ -2116,7 +2055,7 @@ void formModule::on_pbGet_clicked()
         this->EnableButton(true);
     } else {
         this->writeLogFile();
-        timeout = work->Request_ENV(this, busyForm, Serial_Com, false);
+        timeout = work->Request_ENV(Serial_Com, false);
         if (timeout) {fail = true;} else {
             Serial->read_parsing(&tSerial);
             val_data = tSerial.str_data_env.split(";");
@@ -2215,7 +2154,7 @@ void formModule::on_pbGet_clicked()
 
 void formModule::on_pbEdit_clicked()
 {
-    bool timeout = false; bool fail = false; QString message;
+    bool fail = false; QString message;
     if (this->ui->tabWidget->currentIndex() == 2) {
         faddModule = new form_addModule(this, false, Address_Module, this->ui->tabWidget->currentIndex());
         faddModule->setWindowTitle("Edit Communications");

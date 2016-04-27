@@ -88,6 +88,11 @@ public:
 
     void writeLogFile(QString log, int flagERR, QString strERR, bool timeout);
 
+private slots:
+    void on_pbDetail_clicked();
+
+    void on_pbCancel_clicked();
+
 private:
     Ui::ProgressDialog *ui;
 };

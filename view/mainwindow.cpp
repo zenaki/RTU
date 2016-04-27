@@ -46,7 +46,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->ui->actionDisconnect->setEnabled(false);
     this->ui->actionConfig->setEnabled(true);
 
-    busy = new QLightBoxWidget(this);
+//    busy = new QLightBoxWidget(this);
 
     SigMapPlugin = new QSignalMapper(this);
     this->readPlugin();
@@ -106,7 +106,7 @@ void MainWindow::on_actionNew_triggered()
 {
     if (SerialPort->isOpen()) {
         bool timeout = false;
-        timeout = work->Request_ENV(this, busy, SerialPort, timeout);
+        timeout = work->Request_ENV(SerialPort, timeout);
         if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
 
         struct t_module tModule;
@@ -554,7 +554,7 @@ void MainWindow::readData()
         cryp code; code.encryp(PATH_SERIAL_PARSING);
         str_data.clear();
         FinishRead = true;
-        work->write_FinishRead(FinishRead, 0, "");
+        progress_dialog->write_FinishRead(FinishRead, 0, "");
         code.encryp(PATH_SERIAL_PARSING);
     } else if (str_data.indexOf("<I/O") > 0 && str_data.indexOf("I/O>") > 0) {
         int a = str_data.indexOf("<I/O");
@@ -574,7 +574,7 @@ void MainWindow::readData()
         cryp code; code.encryp(PATH_SERIAL_PARSING);
         str_data.clear();
         FinishRead = true;
-        work->write_FinishRead(FinishRead, 0, "");
+        progress_dialog->write_FinishRead(FinishRead, 0, "");
         code.encryp(PATH_SERIAL_PARSING);
     } else if (str_data.indexOf("<SIM") > 0 && str_data.indexOf("SIM>") > 0) {
         int a = str_data.indexOf("<SIM");
@@ -594,7 +594,7 @@ void MainWindow::readData()
         cryp code; code.encryp(PATH_SERIAL_PARSING);
         str_data.clear();
         FinishRead = true;
-        work->write_FinishRead(FinishRead, 0, "");
+        progress_dialog->write_FinishRead(FinishRead, 0, "");
         code.encryp(PATH_SERIAL_PARSING);
     } else if (str_data.indexOf("<SRC") > 0 && str_data.indexOf("SRC>") > 0) {
         int a = str_data.indexOf("<SRC");
@@ -614,7 +614,7 @@ void MainWindow::readData()
         cryp code; code.encryp(PATH_SERIAL_PARSING);
         str_data.clear();
         FinishRead = true;
-        work->write_FinishRead(FinishRead, 0, "");
+        progress_dialog->write_FinishRead(FinishRead, 0, "");
         code.encryp(PATH_SERIAL_PARSING);
     } else if (str_data.indexOf("<DAT") > 0 && str_data.indexOf("DAT>") > 0) {
         int a = str_data.indexOf("<DAT");
@@ -634,11 +634,11 @@ void MainWindow::readData()
         cryp code; code.encryp(PATH_SERIAL_PARSING);
         str_data.clear();
         FinishRead = true;
-        work->write_FinishRead(FinishRead, 0, "");
+        progress_dialog->write_FinishRead(FinishRead, 0, "");
         code.encryp(PATH_SERIAL_PARSING);
     } else if (str_data.indexOf("<OK>") > 0) {
         FinishRead = true;
-        work->write_FinishRead(FinishRead, 0, "");
+        progress_dialog->write_FinishRead(FinishRead, 0, "");
         str_data.clear();
         cryp code; code.encryp(PATH_SERIAL_PARSING);
     } else if (str_data.indexOf("<OK:") > 0 && str_data.indexOf(":OK>") > 0) {
@@ -646,12 +646,12 @@ void MainWindow::readData()
         int b = str_data.indexOf(":OK>");
         str_data = str_data.mid(a+4, b-a-4);
         FinishRead = true;
-        work->write_FinishRead(FinishRead, 0, str_data);
+        progress_dialog->write_FinishRead(FinishRead, 0, str_data);
         str_data.clear();
         cryp code; code.encryp(PATH_SERIAL_PARSING);
     } else if (str_data.indexOf("<ERR>") > 0) {
         FinishRead = true;
-        work->write_FinishRead(FinishRead, 1, "ERROR");
+        progress_dialog->write_FinishRead(FinishRead, 1, "ERROR");
         cryp code; code.encryp(PATH_SERIAL_PARSING);
         str_data.clear();
     } else if (str_data.indexOf("<ERR:") > 0 && str_data.indexOf(":ERR>") > 0) {
@@ -659,7 +659,7 @@ void MainWindow::readData()
         int b = str_data.indexOf(":ERR>");
         str_data = str_data.mid(a+5, b-a-5);
         FinishRead = true;
-        work->write_FinishRead(FinishRead, 1, str_data);
+        progress_dialog->write_FinishRead(FinishRead, 1, str_data);
         cryp code; code.encryp(PATH_SERIAL_PARSING);
         str_data.clear();
     }

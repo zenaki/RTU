@@ -31,30 +31,10 @@ win32 {
 
 #Include files
 INCLUDEPATH += $${QUAZIPCODEDIR}
-HEADERS += $${QUAZIPCODEDIR}/*.h \
-    view/progressdialog.h
-SOURCES += $${QUAZIPCODEDIR}/*.cpp \
-    view/progressdialog.cpp
+HEADERS += $${QUAZIPCODEDIR}/*.h
+SOURCES += $${QUAZIPCODEDIR}/*.cpp
 SOURCES += $${QUAZIPCODEDIR}/*.c
 #########################################################################
-
-SOURCES += \
-    main.cpp\
-    view/mainwindow.cpp \
-    view/formmodule.cpp \
-    util/debug.cpp \
-    model/interface_manipulator/mtreeview.cpp \
-    view/loginform.cpp \
-    model/module.cpp \
-    model/cryp.cpp \
-    model/communication/serial.cpp \
-    model/communication/gsm.cpp \
-    model/communication/gprs.cpp \
-    model/setting.cpp \
-    view/form_addmodule.cpp \
-    controller/worker.cpp \
-    view/settingsdialog.cpp \
-    model/interface_manipulator/qlightboxwidget.cpp
 
 HEADERS += \
     util/debug.h \
@@ -72,7 +52,27 @@ HEADERS += \
     view/form_addmodule.h \
     controller/worker.h \
     view/settingsdialog.h \
-    model/interface_manipulator/qlightboxwidget.h
+    view/progressdialog.h
+#    model/interface_manipulator/qlightboxwidget.h
+
+SOURCES += \
+    main.cpp\
+    view/mainwindow.cpp \
+    view/formmodule.cpp \
+    util/debug.cpp \
+    model/interface_manipulator/mtreeview.cpp \
+    view/loginform.cpp \
+    model/module.cpp \
+    model/cryp.cpp \
+    model/communication/serial.cpp \
+    model/communication/gsm.cpp \
+    model/communication/gprs.cpp \
+    model/setting.cpp \
+    view/form_addmodule.cpp \
+    controller/worker.cpp \
+    view/settingsdialog.cpp \
+    view/progressdialog.cpp
+#    model/interface_manipulator/qlightboxwidget.cpp
 
 FORMS += \
     view/mainwindow.ui \

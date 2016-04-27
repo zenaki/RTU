@@ -17,7 +17,7 @@
 #include <view/settingsdialog.h>
 #include <view/mainwindow.h>
 #include <model/module.h>
-#include <model/interface_manipulator/qlightboxwidget.h>
+//#include <model/interface_manipulator/qlightboxwidget.h>
 #include <view/progressdialog.h>
 
 #include <view/loginform.h>
@@ -31,7 +31,7 @@ class MainWindow;
 class worker;
 class serial;
 class module;
-class QLightBoxWidget;
+//class QLightBoxWidget;
 class ProgressDialog;
 
 class MainWindow : public QMainWindow
@@ -58,7 +58,7 @@ public:
     QString str_data;
     QStringList val_data;
 
-    QLightBoxWidget *busy;
+//    QLightBoxWidget *busy;
 
     bool FinishRead;
 

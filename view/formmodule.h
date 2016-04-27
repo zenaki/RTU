@@ -21,7 +21,7 @@
 #include <ui_form_addmodule.h>
 #include <view/mainwindow.h>
 #include <ui_mainwindow.h>
-#include <model/interface_manipulator/qlightboxwidget.h>
+//#include <model/interface_manipulator/qlightboxwidget.h>
 #include <view/progressdialog.h>
 
 namespace Ui {
@@ -32,7 +32,7 @@ class worker;
 class MainWindow;
 class serial;
 class setting;
-class QLightBoxWidget;
+//class QLightBoxWidget;
 class wait_process;
 class ProgressDialog;
 
@@ -46,7 +46,7 @@ public:
     explicit formModule(QWidget *parent = 0, QString address = 0, QSerialPort *SerialPort = 0);
     ~formModule();
 
-    QLightBoxWidget *busyForm;
+//    QLightBoxWidget *busyForm;
     wait_process    *wait;
 private slots:
     void on_pbSetAll_clicked();
@@ -88,6 +88,19 @@ private:
     MainWindow      *Main;
     serial          *Serial;
     setting         *Setting;
+
+    QString Message;
+    QString Request;
+    int indx = 0;
+    int diff = 0;
+    int reset = 0;
+    bool timeout = false;
+    QString type;
+    QString tmp;
+    QString str;
+    QStringList list;
+    bool fail = false;
+    bool cancel = false;
 
     /** Function **/
     void setInterface(QString address);

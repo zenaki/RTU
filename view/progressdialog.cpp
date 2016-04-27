@@ -10,6 +10,7 @@ ProgressDialog::ProgressDialog(QWidget *parent) :
 
 ProgressDialog::~ProgressDialog()
 {
+    cancel = true;
     delete ui;
 }
 
@@ -128,7 +129,6 @@ void ProgressDialog::Request_ENV(bool stat)
     if (stat) {
         Request = "0000\r\n";
         Desc = "Request Environment ..";
-        ui->Description->append(Desc);
         serial_write(Desc, Request, WAIT_WRITE);
         ui->progressBar->setValue(progressVal++);
     } else {progressVal++;}
@@ -139,7 +139,6 @@ void ProgressDialog::Request_SIM(bool stat)
     if (stat) {
         Request = "0001\r\n";
         Desc = "Request SIM Configuration ..";
-        ui->Description->append(Desc);
         serial_write(Desc, Request, WAIT_WRITE);
         ui->progressBar->setValue(progressVal++);
     } else {progressVal++;}
@@ -150,7 +149,6 @@ void ProgressDialog::Request_IO(bool stat)
     if (stat) {
         Request = "0002\r\n";
         Desc = "Request I/O ..";
-        ui->Description->append(Desc);
         serial_write(Desc, Request, WAIT_WRITE);
         ui->progressBar->setValue(progressVal++);
     } else {progressVal++;}
@@ -161,7 +159,6 @@ void ProgressDialog::Request_Signal(bool stat)
     if (stat) {
         Request = "0003\r\n";
         Desc = "Request Signal ..";
-        ui->Description->append(Desc);
         serial_write(Desc, Request, WAIT_WRITE);
         ui->progressBar->setValue(progressVal++);
     } else {progressVal++;}
@@ -172,7 +169,6 @@ void ProgressDialog::Request_Sumber(bool stat)
     if (stat) {
         Request = "0004\r\n";
         Desc = "Request Sources ..";
-        ui->Description->append(Desc);
         serial_write(Desc, Request, WAIT_WRITE);
         ui->progressBar->setValue(progressVal++);
     } else {progressVal++;}
@@ -183,7 +179,6 @@ void ProgressDialog::Request_Data(bool stat)
     if (stat) {
         Request = "0005\r\n";
         Desc = "Request Data ..";
-        ui->Description->append(Desc);
         serial_write(Desc, Request, WAIT_WRITE);
         ui->progressBar->setValue(progressVal++);
     } else {progressVal++;}
@@ -481,7 +476,6 @@ void ProgressDialog::Set_ENV(bool stat, t_module *tModule)
                     , tModule->interval);
     Desc.sprintf("Set Environtment \"%s \" ..", tModule->module_name);
     if (stat) {
-        ui->Description->append(Desc);
         serial_write(Desc, Request, WAIT_WRITE);
         ui->progressBar->setValue(progressVal++);
     } else {progressVal++;}
@@ -501,7 +495,6 @@ void ProgressDialog::Set_SIM(bool stat, t_module *tModule)
                     , tModule->com_gsm_1);
     Desc.sprintf("Set SIM 1 Configuration (\"%s\") ..", tModule->device_name_gsm_1);
     if (stat) {
-        ui->Description->append(Desc);
         serial_write(Desc, Request, WAIT_WRITE);
         ui->progressBar->setValue(progressVal++);
     } else {progressVal++;}
@@ -518,7 +511,6 @@ void ProgressDialog::Set_SIM(bool stat, t_module *tModule)
                     , tModule->com_gsm_2);
     Desc.sprintf("Set SIM 2 Configuration (\"%s\") ..", tModule->device_name_gsm_2);
     if (stat) {
-        ui->Description->append(Desc);
         serial_write(Desc, Request, WAIT_WRITE);
         ui->progressBar->setValue(progressVal++);
     } else {progressVal++;}
@@ -535,10 +527,10 @@ void ProgressDialog::Set_Input(bool stat, t_module *tModule, QString index)
             Request = "0102 " + list1.at(1) + " " + list1.at(2) + " " + list1.at(3) + " " + list1.at(4) + "\r\n";
             Desc = "Set Input Channel " + list1.at(1) + " ..";
             if (stat) {
-                ui->Description->append(Desc);
                 serial_write(Desc, Request, WAIT_WRITE);
                 ui->progressBar->setValue(progressVal++);
             } else {progressVal++;}
+            if (cancel) break;
         }
     } else {
         temp = tModule->Input.at(index.toInt());
@@ -547,7 +539,6 @@ void ProgressDialog::Set_Input(bool stat, t_module *tModule, QString index)
         Request = "0102 " + list1.at(1) + " " + list1.at(2) + " " + list1.at(3) + " " + list1.at(4) + "\r\n";
         Desc = "Set Input Channel " + list1.at(1) + " ..";
         if (stat) {
-            ui->Description->append(Desc);
             serial_write(Desc, Request, WAIT_WRITE);
             ui->progressBar->setValue(progressVal++);
         } else {progressVal++;}
@@ -564,10 +555,10 @@ void ProgressDialog::Set_Output(bool stat, t_module *tModule, QString index)
             Request = "0103 " + list1.at(1) + " " + list1.at(2) + " " + list1.at(4) + "\r\n";
             Desc = "Set Output Channel " + list1.at(1) + " ..";
             if (stat) {
-                ui->Description->append(Desc);
                 serial_write(Desc, Request, WAIT_WRITE);
                 ui->progressBar->setValue(progressVal++);
             } else {progressVal++;}
+            if (cancel) break;
         }
     } else {
         temp = tModule->Output.at(index.toInt());
@@ -575,7 +566,6 @@ void ProgressDialog::Set_Output(bool stat, t_module *tModule, QString index)
         Request = "0103 " + list1.at(1) + " " + list1.at(2) + " " + list1.at(4) + "\r\n";
         Desc = "Set Output Channel " + list1.at(1) + " ..";
         if (stat) {
-            ui->Description->append(Desc);
             serial_write(Desc, Request, WAIT_WRITE);
             ui->progressBar->setValue(progressVal++);
         } else {progressVal++;}
@@ -596,7 +586,6 @@ void ProgressDialog::Set_Sumber(bool stat, t_module *tModule, QString index)
                       list1.at(10) + ";" + list1.at(11) + "\r\n";
             Desc = "Set Sources " + list1.at(0) + " : \"" + list1.at(1) + "\" ..";
             if (stat) {
-                ui->Description->append(Desc);
                 serial_write(Desc, Request, WAIT_WRITE);
                 ui->progressBar->setValue(progressVal++);
             } else {progressVal++;}
@@ -621,12 +610,12 @@ void ProgressDialog::Set_Sumber(bool stat, t_module *tModule, QString index)
                         Desc = "Set Data " + QString::number(str.toInt()+j) + " with status : NOT ACTIVE ..";
                     }
                     if (stat) {
-                        ui->Description->append(Desc);
                         serial_write(Desc, Request, WAIT_WRITE);
                         ui->progressBar->setValue(progressVal++);
                     } else {progressVal++;}
                 }
             }
+            if (cancel) break;
         }
     } else {
         temp = tModule->sumber.at(index.toInt());
@@ -639,7 +628,6 @@ void ProgressDialog::Set_Sumber(bool stat, t_module *tModule, QString index)
                   list1.at(10) + ";" + list1.at(11) + "r\n";
         Desc = "Set Sources " + list1.at(0) + " : \"" + list1.at(1) + "\" ..";
         if (stat) {
-            ui->Description->append(Desc);
             serial_write(Desc, Request, WAIT_WRITE);
             ui->progressBar->setValue(progressVal++);
         } else {progressVal++;}
@@ -664,7 +652,6 @@ void ProgressDialog::Set_Sumber(bool stat, t_module *tModule, QString index)
                     Desc = "Set Data " + QString::number(str.toInt()+j) + " with status : NOT ACTIVE ..";
                 }
                 if (stat) {
-                    ui->Description->append(Desc);
                     serial_write(Desc, Request, WAIT_WRITE);
                     ui->progressBar->setValue(progressVal++);
                 } else {progressVal++;}
@@ -686,10 +673,10 @@ void ProgressDialog::Set_Data(bool stat, t_module *tModule, QString index)
                       list1.at(9) + " " + list1.at(10) + " " + list1.at(11) + "\r\n";
             Desc = "Set Data " + list1.at(0) + " ..";
             if (stat) {
-                ui->Description->append(Desc);
                 serial_write(Desc, Request, WAIT_WRITE);
                 ui->progressBar->setValue(progressVal++);
             } else {progressVal++;}
+            if (cancel) break;
         }
     } else {
         temp = tModule->data.at(index.toInt());
@@ -701,7 +688,6 @@ void ProgressDialog::Set_Data(bool stat, t_module *tModule, QString index)
                   list1.at(9) + " " + list1.at(10) + " " + list1.at(11) + "\r\n";
         Desc = "Set Data " + list1.at(0)  + " ..";
         if (stat) {
-            ui->Description->append(Desc);
             serial_write(Desc, Request, WAIT_WRITE);
             ui->progressBar->setValue(progressVal++);
         } else {progressVal++;}
@@ -713,7 +699,6 @@ void ProgressDialog::Reset_Board(bool stat)
     Request = "reset\r\n";
     Desc = "Reset Board ..";
     if (stat) {
-        ui->Description->append(Desc);
         serial_write(Desc, Request, WAIT_WRITE);
         ui->progressBar->setValue(progressVal++);
     } else {progressVal++;}
@@ -775,6 +760,7 @@ void ProgressDialog::delay(int ms)
 
 void ProgressDialog::serial_write(QString desc, QString data, int delay_char)
 {
+    ui->Description->append(desc);
     QString tmp;
     data.remove("\r\n");
     for (int i = 0; i < data.length(); i++) {
@@ -851,4 +837,18 @@ void ProgressDialog::writeLogFile(QString log, int flagERR, QString strERR, bool
         /* Close the file */
         outputFile.close();
     }
+}
+
+void ProgressDialog::on_pbDetail_clicked()
+{
+    if (ui->Description->isHidden()) {
+        ui->Description->setHidden(false);
+    } else {
+        ui->Description->setHidden(true);
+    }
+}
+
+void ProgressDialog::on_pbCancel_clicked()
+{
+    cancel = true;
 }
