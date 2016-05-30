@@ -1,0 +1,55 @@
+#ifndef SERIAL_H
+#define SERIAL_H
+
+#include "util/utama.h"
+#include "view/settingsdialog.h"
+
+#include <QMessageBox>
+#include <QObject>
+#include <QTimer>
+#include <QDebug>
+#include <QtSerialPort/QSerialPort>
+#include <QtSerialPort/QSerialPortInfo>
+
+class SettingsDialog;
+
+class serial
+{
+public:
+    serial();
+
+//    int serial_set;
+//    int serial_connect;
+//    QString str_data;
+//    QStringList val_data;
+
+    void open_serial(QSerialPort *SerialPort, struct t_serial_settings *tSerial);
+    void close_serial(QSerialPort *SerialPort);
+    void write_data(QSerialPort *port, QByteArray data);
+
+    void write_parsing_env(struct t_serial_settings *tSerial);
+    void write_parsing_io(struct t_serial_settings *tSerial);
+    void write_parsing_sim(struct t_serial_settings *tSerial);
+    void write_parsing_src(struct t_serial_settings *tSerial);
+    void write_parsing_dat(struct t_serial_settings *tSerial);
+
+    void read_parsing(struct t_serial_settings *tSerial);
+
+public slots:
+    void read_data(QString str_data, QStringList val_data);
+//    void handleError(QSerialPort::SerialPortError error);
+
+//private slots:
+//    void handleBytesWritten(qint64 bytes);
+//    void handleTimeout();
+//    void handleError(QSerialPort::SerialPortError error);
+
+private:
+    QByteArray      m_writeData;
+    QTextStream     m_standardOutput;
+    qint64          m_bytesWritten;
+    QTimer          m_timer;
+
+};
+
+#endif // SERIAL_H
