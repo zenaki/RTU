@@ -235,8 +235,8 @@ void formModule::setInterface_Output(QString address)
         state_output[i]->addItem("ACTIVE");
 
         control[i] = new QComboBox(this);
-        control[i]->addItem("LOGIC");
         control[i]->addItem("LATCH");
+        control[i]->addItem("LOGIC");
         control[i]->addItem("SCHEDULER");
 
         reg_output[i] = new QLineEdit(this);
@@ -258,6 +258,7 @@ void formModule::setInterface_Output(QString address)
         state_output[i]->setCurrentIndex(list[(i*6)+3].toInt());
         control[i]->setCurrentIndex(list[(i*6)+4].toInt());
         reg_output[i]->setText(list[(i*6)+5]);
+//        reg_output[i]->setText(QString::number(i+1) + QString::number(i+1) + QString::number(i+1));
 
         type = " - Relay";
         type.prepend(list[(i*6)+2]);

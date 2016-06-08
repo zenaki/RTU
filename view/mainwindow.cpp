@@ -506,7 +506,6 @@ void MainWindow::readData()
                     .remove("<I/Oani$")
                     .remove("I/O>")
                     .remove("Rinjani$")
-                    .remove("0002")
                     .remove("hmi_sync")
                     .remove("\r").remove("\n").remove("(X)").split("*");
         tSerial.str_data_io = str_data;
@@ -638,8 +637,8 @@ void MainWindow::Refresh_Tree()
         }
     }
 
-    mTree.add_firstItem(modelTree, ui->treeView, "Text");
-    //mTree.add_firstItem(modelTree, ui->treeView, "Configuration");
+//    mTree.add_firstItem(modelTree, ui->treeView, "Text");
+//    mTree.add_firstItem(modelTree, ui->treeView, "Configuration");
 }
 
 void MainWindow::on_actionRefresh_triggered()
