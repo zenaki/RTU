@@ -198,10 +198,10 @@ void ProgressDialog::Get_ENV(struct t_module *tModule, QStringList data)
     strcpy(tModule->file_address, temp.toUtf8().data());
     temp = data.at(5);
     tModule->flag_webclient = temp.toInt();
-    if (temp == "0") {
+    if (temp == "1") {
         temp = "ACTIVE";
         strcpy(tModule->status_webclient, temp.toUtf8().data());
-    } else if (temp == "1") {
+    } else if (temp == "0") {
         temp = "NOT ACTIVE";
         strcpy(tModule->status_webclient, temp.toUtf8().data());
     }
@@ -842,8 +842,10 @@ void ProgressDialog::writeLogFile(QString log, int flagERR, QString strERR, bool
 void ProgressDialog::on_pbDetail_clicked()
 {
     if (ui->Description->isHidden()) {
+        ui->pbDetail->setText("Hide Detail");
         ui->Description->setHidden(false);
     } else {
+        ui->pbDetail->setText("Show Detail");
         ui->Description->setHidden(true);
     }
 }
