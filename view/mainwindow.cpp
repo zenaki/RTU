@@ -219,7 +219,7 @@ void MainWindow::on_actionNew_triggered()
         if (faddModule->accept == 0) return;
 
         QString title;
-        title.sprintf("%s", faddModule->ui->edit_module_name->text().toUtf8().data());
+        title.sprintf("%s [%s]", faddModule->ui->edit_module_name->text().toUtf8().data(), faddModule->ui->edit_sn->text().toUtf8().data());
 
         module_name[module_count] = work->newModule(modelTree, this->ui->treeView, title);
         module_count++;
@@ -352,7 +352,8 @@ void MainWindow::on_actionDelete_triggered()
 void MainWindow::on_treeView_clicked(const QModelIndex &index)
 {
     QString name = index.data(Qt::DisplayRole).toString();
-
+    QStringList list = name.split(" ");
+    name = list.at(0);
     if(work->checkIfmodule(name)) {
         module_name_sv = name;
         module_name_sv.prepend("m_").append(".dbe");
@@ -367,6 +368,8 @@ void MainWindow::on_treeView_clicked(const QModelIndex &index)
 void MainWindow::on_treeView_doubleClicked(const QModelIndex &index)
 {
     QString name = index.data(Qt::DisplayRole).toString();
+    QStringList list = name.split(" ");
+    name = list.at(0);
     QList<QMdiSubWindow *> windows = ui->mdiArea->subWindowList();
     bool cek = false;
     for (int i = 0; i < windows.size(); i++){
@@ -676,4 +679,9 @@ void MainWindow::on_actionEdit_User_triggered()
     LoginForm->setModal(true);
     exe = LoginForm->exec();
     if(exe == 0) return;
+}
+
+void MainWindow::on_actionExit_triggered()
+{
+    QApplication::quit();
 }

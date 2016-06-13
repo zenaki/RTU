@@ -60,9 +60,11 @@ public:
     QString Desc;
     QString str;
     QString temp;
+    QString temp2;
     QString pth;
     QStringList list1;
     QStringList list2;
+    QStringList list3;
 
     bool    timeout;
     int     flagERR;

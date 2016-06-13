@@ -215,20 +215,19 @@ void formModule::setInterface_Output(QString address)
     QString type;
 
     this->ui->tabel_output->verticalHeader()->setHidden(true);
-    this->ui->tabel_output->setColumnCount(6);
+    this->ui->tabel_output->setColumnCount(5);
         this->ui->tabel_output->setColumnWidth(0, 25);
-    //    this->ui->tabel_output->setColumnWidth(1, 50);
-        this->ui->tabel_output->setColumnWidth(2, 100);
-        this->ui->tabel_output->setColumnWidth(3, 125);
-    //    this->ui->tabel_output->setColumnWidth(4, 100);
-    //    this->ui->tabel_output->setColumnWidth(5, 75);
+        this->ui->tabel_output->setColumnWidth(1, 100);
+        this->ui->tabel_output->setColumnWidth(2, 125);
+    //    this->ui->tabel_output->setColumnWidth(3, 100);
+    //    this->ui->tabel_output->setColumnWidth(4, 75);
     this->ui->tabel_output->setRowCount(rowOutput);
 
     for (int i = 0; i < rowOutput; i++){
         check_output[i] = new QCheckBox(this);
 
-        name_output[i] = new QLineEdit(this);
-        name_output[i]->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
+//        name_output[i] = new QLineEdit(this);
+//        name_output[i]->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
 
         state_output[i] = new QComboBox(this);
         state_output[i]->addItem("NOT ACTIVE");
@@ -241,7 +240,7 @@ void formModule::setInterface_Output(QString address)
 
         reg_output[i] = new QLineEdit(this);
         reg_output[i]->setAlignment(Qt::AlignCenter);
-        reg_output[i]->setValidator(new QIntValidator(0,999,this));
+        reg_output[i]->setValidator(new QRegExpValidator(QRegExp("^\\d{1,5}$"),this));
     }
 
     QString str;
@@ -254,7 +253,7 @@ void formModule::setInterface_Output(QString address)
     list = str.split(';');
 
     for(int i = 0; i < rowOutput; i++){
-        name_output[i]->setText(list[i*6]);
+//        name_output[i]->setText(list[i*6]);
         state_output[i]->setCurrentIndex(list[(i*6)+3].toInt());
         control[i]->setCurrentIndex(list[(i*6)+4].toInt());
         reg_output[i]->setText(list[(i*6)+5]);
@@ -264,10 +263,10 @@ void formModule::setInterface_Output(QString address)
         type.prepend(list[(i*6)+2]);
         this->ui->tabel_output->setCellWidget(i,0, check_output[i]);
         this->ui->tabel_output->setItem(i,1, new QTableWidgetItem(type));
-        this->ui->tabel_output->setCellWidget(i,2, name_output[i]);
-        this->ui->tabel_output->setCellWidget(i,3, state_output[i]);
-        this->ui->tabel_output->setCellWidget(i,4, control[i]);
-        this->ui->tabel_output->setCellWidget(i,5, reg_output[i]);
+//        this->ui->tabel_output->setCellWidget(i,2, name_output[i]);
+        this->ui->tabel_output->setCellWidget(i,2, state_output[i]);
+        this->ui->tabel_output->setCellWidget(i,3, control[i]);
+        this->ui->tabel_output->setCellWidget(i,4, reg_output[i]);
     }
 
     this->ui->tabel_output->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -338,7 +337,33 @@ void formModule::setInterface_Environtment(QString address)
     this->ui->file_address->setText(modules);
     modules.sprintf("%s", tModule.status_webclient);
     this->ui->web_client->setText(modules);
-    this->ui->interval->setText(QString::number(tModule.interval));
+    int s = 0; int m = 0; int h = 0; int d = 0;
+    if (tModule.interval <= 60) {
+        this->ui->interval->setText(QString::number(tModule.interval) + " s");
+    } else {
+        s = tModule.interval;
+        m = s / 60;
+        for (int i = 0; i < m; i++) {
+            s = s - 60;
+        }
+        if (m > 60) {
+            h = m / 60;
+            for (int i = 0; i < h; i++) {
+                m = m - 60;
+            }
+            if (h > 24) {
+                d = h / 24;
+                for (int i = 0; i < d; i++) {
+                    h = h - 24;
+                }
+                this->ui->interval->setText(QString::number(d) + " d " + QString::number(h) + " h " + QString::number(m) + " m " + QString::number(s) + " s");
+            } else {
+                this->ui->interval->setText(QString::number(h) + " h " + QString::number(m) + " m " + QString::number(s) + " s");
+            }
+        } else {
+            this->ui->interval->setText(QString::number(m) + " m " + QString::number(s) + " s");
+        }
+    }
 }
 
 void formModule::setInterface_Sumber(QString address)
@@ -1438,104 +1463,33 @@ void formModule::on_pbSet_clicked()
             val_data = tSerial.str_data_env.split(";");
             if (NoSeri == val_data.at(1)) {
                 if (this->ui->tabWidget->currentIndex() == 0) {
-//                    timeout = work->Set_Input(this, busyForm, Serial_Com, &tModule, false);
-//                    if (timeout) {fail = true;} else {fail = false;}
-////                    for (int i = 0; i < ui->tabel_input->rowCount(); i++) {
-////                        if (i < tModule.jml_input_digital) {
-////                            timeout = work->Set_Data(this, busyForm, Serial_Com, &tModule, false, QString::number(i));
-////                            if (timeout) {fail = true;} else {fail = false;}
-////                        } else {
-////                            timeout = work->Set_Data(this, busyForm, Serial_Com, &tModule, false, QString::number(i+tModule.jml_input_digital-2));
-////                            if (timeout) {fail = true;} else {fail = false;}
-////                        }
-////                    }
                     Request = "0102";
                 } else if (this->ui->tabWidget->currentIndex() == 1) {
-//                    timeout = work->Set_Output(this, busyForm, Serial_Com, &tModule, false);
-//                    if (timeout) {fail = true;} else {fail = false;}
                     Request = "0103";
                 } else if (this->ui->tabWidget->currentIndex() == 2) {
-//                    timeout = work->Set_SIM(this, busyForm, Serial_Com, &tModule, false);
-//                    if (timeout) {fail = true;} else {fail = false;}
                     Request = "0101";
                 } else if (this->ui->tabWidget->currentIndex() == 3) {
-//                    timeout = work->Set_ENV(this, busyForm, Serial_Com, &tModule, false);
-//                    if (timeout) {fail = true;} else {fail = false;}
                     Request = "0100";
                 } else if (this->ui->tabWidget->currentIndex() == 4) {
-//                    timeout = work->Set_Sumber(this, busyForm, Serial_Com, &tModule, false);
-//                    if (timeout) {fail = true;} else {fail = false;}
                     Request = "0104";
                 } else if (this->ui->tabWidget->currentIndex() == 5) {
-//                    timeout = work->Set_Data(this, busyForm, Serial_Com, &tModule, false);
-//                    if (timeout) {fail = true;} else {fail = false;}
+
                 } else if (this->ui->tabWidget->currentIndex() == 6) {
-//                    timeout = work->Set_Data(this, busyForm, Serial_Com, &tModule, false);
-//                    if (timeout) {fail = true;} else {fail = false;}
                     Request = "0105";
                 }
 //                work->Reset_Board(busyForm, "Reset Board ...", Serial_Com);
                 if (this->ui->tabWidget->currentIndex() <= 1) {
-//                    timeout = work->Request_Data(this, busyForm, Serial_Com, false);
-//                    if (timeout) {fail = true;} else {
-//                        Serial->read_parsing(&tSerial);
-//                        val_data = tSerial.str_data_dat.split("*");
-//                        work->Get_Data(&tModule, val_data);
-//                    }
                     Request = Request + ";0005";
-
-//                    timeout = work->Request_IO(this, busyForm, Serial_Com, false);
-//                    if (timeout) {fail = true;} else {
-//                        Serial->read_parsing(&tSerial);
-//                        val_data = tSerial.str_data_io.split("*");
-//                        work->Get_Input(&tModule, val_data);
-//                        work->Get_Output(&tModule, val_data);
-//                        Message = "I/O ";
-//                    }
                     Request = Request + ";0002";
                 } else if (this->ui->tabWidget->currentIndex() == 2) {
-//                    timeout = work->Request_SIM(this, busyForm, Serial_Com, false);
-//                    if (timeout) {fail = true;} else {
-//                        Serial->read_parsing(&tSerial);
-//                        val_data = tSerial.str_data_sim.split("*");
-//                        work->Get_SIM(&tModule, val_data);
-//                        Message = "SIM Configuration ";
-//                    }
                     Request = Request + ";0001";
                 } else if (this->ui->tabWidget->currentIndex() == 3) {
-//                    timeout = work->Request_ENV(this, busyForm, Serial_Com, false);
-//                    if (timeout) {fail = true;} else {
-//                        Serial->read_parsing(&tSerial);
-//                        val_data = tSerial.str_data_env.split("*");
-//                        work->Get_ENV(&tModule, val_data);
-//                        Message = "Environtment ";
-//                    }
                     Request = Request + ";0000";
                 } else if (this->ui->tabWidget->currentIndex() == 4) {
-//                    timeout = work->Request_Sumber(this, busyForm, Serial_Com, false);
-//                    if (timeout) {fail = true;} else {
-//                        Serial->read_parsing(&tSerial);
-//                        val_data = tSerial.str_data_src.split("*");
-//                        work->Get_Sumber(&tModule, val_data);
-//                        Message = "Sources ";
-//                    }
                     Request = Request + ";0004";
                 } else if (this->ui->tabWidget->currentIndex() == 5) {
-//                    timeout = false; //work->Request_Data(this, busyForm, Serial_Com, false);
-//                    if (timeout) {fail = true;} else {
-////                        Serial->read_parsing(&tSerial);
-////                        val_data = tSerial.str_data_dat.split("*");
-////                        work->Get_Data(&tModule, val_data);
-//                        Message = "Alarm ";
-//                    }
+
                 } else if (this->ui->tabWidget->currentIndex() == 6) {
-//                    timeout = work->Request_Data(this, busyForm, Serial_Com, false);
-//                    if (timeout) {fail = true;} else {
-//                        Serial->read_parsing(&tSerial);
-//                        val_data = tSerial.str_data_dat.split("*");
-//                        work->Get_Data(&tModule, val_data);
-//                        Message = "Data ";
-//                    }
                     Request = Request + ";0005";
                 }
 
@@ -1614,6 +1568,8 @@ void formModule::on_pbSetChk_clicked()
     reset = 0;
     timeout = false;
     fail = false;
+    int checked = 0;
+    Request.clear();
 
     module mod;
     mod.read_module(&tModule, Address_Module);
@@ -1623,6 +1579,7 @@ void formModule::on_pbSetChk_clicked()
         /** SET INPUT **/
         for (int i = 0; i < ui->tabel_input->rowCount(); i++) {
             if (check_input[i]->isChecked()) {
+                checked++;
                 tModule.d_port[i].calib_m = calib_m[i]->text().toFloat();
                 tModule.d_port[i].calib_x = calib_x[i]->text().toFloat();
 
@@ -1667,6 +1624,7 @@ void formModule::on_pbSetChk_clicked()
         /** SET OUTPUT **/
         for (int i = 0; i < ui->tabel_output->rowCount(); i++) {
             if (check_output[i]->isChecked()) {
+                checked++;
                 tModule.d_port[i].status_output = state_output[i]->currentIndex();
                 tModule.d_port[i].control = control[i]->currentIndex();
                 tModule.d_port[i].reg_output = reg_output[i]->text().toInt();
@@ -1684,6 +1642,7 @@ void formModule::on_pbSetChk_clicked()
         /** SET SUMBER **/
         for (int i = 0; i < ui->tabel_sources->rowCount(); i++) {
             if (check_source[i]->isChecked()) {
+                checked++;
                 data[i] = QString::number(i+1) + ";" +
                           name_source[i]->text() + ";" +
                           ip_source[i]->text() + ";" +
@@ -1704,6 +1663,7 @@ void formModule::on_pbSetChk_clicked()
         /** SET ALARM **/
         for (int i = 0; i < ui->tabel_alarm->rowCount(); i++) {
             if (check_alarm[i]->isChecked()) {
+                checked++;
                 data[i] = QString::number(i+1) + ";" +
                           name_alarm[i]->text() + ";" +
                           QString::number(input_alarm[i]->currentIndex()) + ";" +
@@ -1764,6 +1724,7 @@ void formModule::on_pbSetChk_clicked()
         /** SET DATA **/
         for (int i = 0; i < ui->tabel_data_s->rowCount(); i++) {
             if (check_data_s[i]->isChecked()) {
+                checked++;
                 data[i] = QString::number(i+1) + ";" +
                           id_data_s[i]->text() + ";" +
                           name_data_s[i]->text() + ";" +
@@ -1798,26 +1759,25 @@ void formModule::on_pbSetChk_clicked()
             Serial->read_parsing(&tSerial);
             val_data = tSerial.str_data_env.split(";");
             if (NoSeri == val_data.at(1)) {
-                progress_dialog->show();
                 if (this->ui->tabWidget->currentIndex() == 0) {
                     for (int i = 0; i < ui->tabel_input->rowCount(); i++) {
                         if (check_input[i]->isChecked()) {
-//                            timeout = work->Set_Input(this, busyForm, Serial_Com, &tModule, false, QString::number(i));
-//                            if (timeout) {fail = true;} else {fail = false;}
-
+                            checked++;
                             str = tModule.Input.at(i); list = str.split(';');
-//                            timeout = work->Set_Data(this, busyForm, Serial_Com, &tModule, false, list.at(1));
-//                            if (timeout) {fail = true;} else {fail = false;}
-
+                            if (!progress_dialog->isActiveWindow()) progress_dialog->show();
                             progress_dialog->setWindowTitle("Set Input to board");
-                            progress_dialog->Processing(Serial_Com, Address_Module, "0102;0105", QString::number(i) + ";" + list.at(1));
+                            if (i < 6) {
+                                progress_dialog->Processing(Serial_Com, Address_Module, "0102;0105", QString::number(i) + ";" + QString::number(i));
+                            } else {
+                                progress_dialog->Processing(Serial_Com, Address_Module, "0102;0105", QString::number(i) + ";" + QString::number(i+4));
+                            }
                         }
                     }
                 } else if (this->ui->tabWidget->currentIndex() == 1) {
                     for (int i = 0; i < ui->tabel_output->rowCount(); i++) {
                         if (check_output[i]->isChecked()) {
-//                            timeout = work->Set_Output(this, busyForm, Serial_Com, &tModule, false, QString::number(i));
-//                            if (timeout) {fail = true;} else {fail = false;}
+                            checked++;
+                            if (!progress_dialog->isActiveWindow()) progress_dialog->show();
                             progress_dialog->setWindowTitle("Set Output to board");
                             progress_dialog->Processing(Serial_Com, Address_Module, "0103", QString::number(i));
                         }
@@ -1825,8 +1785,8 @@ void formModule::on_pbSetChk_clicked()
                 } else if (this->ui->tabWidget->currentIndex() == 4) {
                     for (int i = 0; i < ui->tabel_sources->rowCount(); i++) {
                         if (check_source[i]->isChecked()) {
-//                            timeout = work->Set_Sumber(this, busyForm, Serial_Com, &tModule, false, QString::number(i));
-//                            if (timeout) {fail = true;} else {fail = false;}
+                            checked++;
+                            if (!progress_dialog->isActiveWindow()) progress_dialog->show();
                             progress_dialog->setWindowTitle("Set Sources to board");
                             progress_dialog->Processing(Serial_Com, Address_Module, "0104", QString::number(i));
                         }
@@ -1834,6 +1794,7 @@ void formModule::on_pbSetChk_clicked()
                 } else if (this->ui->tabWidget->currentIndex() == 5) {
 //                    for (int i = 0; i < ui->tabel_alarm->rowCount(); i++) {
 //                        if (check_alarm[i]->isChecked()) {
+//                              checked++;
 ////                            timeout = work->Set_Data(this, busyForm, Serial_Com, &tModule, false, QString::number(i));
 ////                            if (timeout) {fail = true;} else {fail = false;}
 //                        }
@@ -1841,73 +1802,33 @@ void formModule::on_pbSetChk_clicked()
                 } else if (this->ui->tabWidget->currentIndex() == 6) {
                     for (int i = 0; i < ui->tabel_data_s->rowCount(); i++) {
                         if (check_data_s[i]->isChecked()) {
-//                            timeout = work->Set_Data(this, busyForm, Serial_Com, &tModule, false, QString::number(i));
-//                            if (timeout) {fail = true;} else {fail = false;}
+                            checked++;
+                            if (!progress_dialog->isActiveWindow()) progress_dialog->show();
                             progress_dialog->setWindowTitle("Set Data to board");
                             progress_dialog->Processing(Serial_Com, Address_Module, "0105", QString::number(i));
                         }
                     }
                 }
-                progress_dialog->close();
-//                work->Reset_Board(busyForm, "Reset Board ...", Serial_Com);
-//                if (this->ui->tabWidget->currentIndex() <= 1) {
-//                    timeout = work->Request_Data(this, busyForm, Serial_Com, false);
-//                    if (timeout) {fail = true;} else {
-//                        Serial->read_parsing(&tSerial);
-//                        val_data = tSerial.str_data_dat.split("*");
-//                        work->Get_Data(&tModule, val_data);
-//                    }
 
-//                    timeout = work->Request_IO(this, busyForm, Serial_Com, false);
-//                    if (timeout) {fail = true;} else {
-//                        Serial->read_parsing(&tSerial);
-//                        val_data = tSerial.str_data_io.split("*");
-//                        work->Get_Input(&tModule, val_data);
-//                        work->Get_Output(&tModule, val_data);
-//                        Message = "I/O ";
-//                    }
-//                } else if (this->ui->tabWidget->currentIndex() == 2) {
-//                    timeout = work->Request_SIM(this, busyForm, Serial_Com, false);
-//                    if (timeout) {fail = true;} else {
-//                        Serial->read_parsing(&tSerial);
-//                        val_data = tSerial.str_data_sim.split("*");
-//                        work->Get_SIM(&tModule, val_data);
-//                        Message = "SIM Configuration ";
-//                    }
-//                } else if (this->ui->tabWidget->currentIndex() == 3) {
-//                    timeout = work->Request_ENV(this, busyForm, Serial_Com, false);
-//                    if (timeout) {fail = true;} else {
-//                        Serial->read_parsing(&tSerial);
-//                        val_data = tSerial.str_data_sim.split("*");
-//                        work->Get_ENV(&tModule, val_data);
-//                        Message = "Environtment ";
-//                    }
-//                } else if (this->ui->tabWidget->currentIndex() == 4) {
-//                    timeout = work->Request_Sumber(this, busyForm, Serial_Com, false);
-//                    if (timeout) {fail = true;} else {
-//                        Serial->read_parsing(&tSerial);
-//                        val_data = tSerial.str_data_src.split("*");
-//                        work->Get_Sumber(&tModule, val_data);
-//                        Message = "Sources ";
-//                    }
-//                } else if (this->ui->tabWidget->currentIndex() == 5) {
-//                    timeout = false; //work->Request_Data(this, busyForm, Serial_Com, false);
-//                    if (timeout) {fail = true;} else {
-////                        Serial->read_parsing(&tSerial);
-////                        val_data = tSerial.str_data_dat.split("*");
-////                        work->Get_Data(&tModule, val_data);
-//                        Message = "Alarm ";
-//                    }
-//                } else if (this->ui->tabWidget->currentIndex() == 6) {
-//                    timeout = work->Request_Data(this, busyForm, Serial_Com, false);
-//                    if (timeout) {fail = true;} else {
-//                        Serial->read_parsing(&tSerial);
-//                        val_data = tSerial.str_data_dat.split("*");
-//                        work->Get_Data(&tModule, val_data);
-//                        Message = "Data ";
-//                    }
-//                }
+                if (checked != 0) {
+                    if (this->ui->tabWidget->currentIndex() <= 1) {
+                        Request = "0005;0002";
+                    } else if (this->ui->tabWidget->currentIndex() == 2) {
+                        Request = "0001";
+                    } else if (this->ui->tabWidget->currentIndex() == 3) {
+                        Request = "0000";
+                    } else if (this->ui->tabWidget->currentIndex() == 4) {
+                        Request = "0004";
+                    } else if (this->ui->tabWidget->currentIndex() == 5) {
 
+                    } else if (this->ui->tabWidget->currentIndex() == 6) {
+                        Request = "0005";
+                    }
+
+                    progress_dialog->setWindowTitle("Set Data to board");
+                    progress_dialog->Processing(Serial_Com, Address_Module, Request);
+                    progress_dialog->close();
+                }
                 Message = "On-Board";
 
             } else {
@@ -1932,38 +1853,40 @@ void formModule::on_pbSetChk_clicked()
     mod.write_module(&tModule);
     code.encryp(Address_Module);
 
-//    this->setInterface(Address_Module);
-
-    if (diff == 0 && !fail) {
-        if (this->ui->tabWidget->currentIndex() == 0) {
-            Message.prepend("Input Channel ");
-        } else if (this->ui->tabWidget->currentIndex() == 1) {
-            Message.prepend("Output Channel ");
-        } else if (this->ui->tabWidget->currentIndex() == 2) {
-            Message.prepend("SIM Configuration ");
-        } else if (this->ui->tabWidget->currentIndex() == 3) {
-            Message.prepend("Environtment ");
-        } else if (this->ui->tabWidget->currentIndex() == 4) {
-            Message.prepend("Sources ");
-        } else if (this->ui->tabWidget->currentIndex() == 5) {
-            Message.prepend("Alarm ");
-        } else if (this->ui->tabWidget->currentIndex() == 6) {
-            Message.prepend("Data ");
+    this->setInterface(Address_Module);
+    if (checked != 0) {
+        if (diff == 0 && !fail) {
+            if (this->ui->tabWidget->currentIndex() == 0) {
+                Message.prepend("Input Channel ");
+            } else if (this->ui->tabWidget->currentIndex() == 1) {
+                Message.prepend("Output Channel ");
+            } else if (this->ui->tabWidget->currentIndex() == 2) {
+                Message.prepend("SIM Configuration ");
+            } else if (this->ui->tabWidget->currentIndex() == 3) {
+                Message.prepend("Environtment ");
+            } else if (this->ui->tabWidget->currentIndex() == 4) {
+                Message.prepend("Sources ");
+            } else if (this->ui->tabWidget->currentIndex() == 5) {
+                Message.prepend("Alarm ");
+            } else if (this->ui->tabWidget->currentIndex() == 6) {
+                Message.prepend("Data ");
+            }
+            Message.prepend("Setting (with checked) ").append(" Saved");
+            QMessageBox::information(this, "Success!!", Message, 0, 0);
+        } else if (diff == 1 && !fail) {
+            Message.prepend("Setting (with checked) ").append(" Saved");
+            Message.append("\n\n Different Serial Number !!!");
+            QMessageBox::information(this, "Success!!", Message, 0, 0);
+        } else if (diff == 2 && !fail) {
+            Message.prepend("Setting (with checked) ").append(" Saved");
+            Message.append("\nBoard is not have Serial Number ..");
+            QMessageBox::information(this, "Success!!", Message, 0, 0);
         }
-        Message.prepend("Setting (with checked) ").append(" Saved");
-        QMessageBox::information(this, "Success!!", Message, 0, 0);
-    } else if (diff == 1 && !fail) {
-        Message.prepend("Setting (with checked) ").append(" Saved");
-        Message.append("\n\n Different Serial Number !!!");
-        QMessageBox::information(this, "Success!!", Message, 0, 0);
-    } else if (diff == 2 && !fail) {
-        Message.prepend("Setting (with checked) ").append(" Saved");
-        Message.append("\nBoard is not have Serial Number ..");
-        QMessageBox::information(this, "Success!!", Message, 0, 0);
-    }
-
-    if (fail) {
-        QMessageBox::information(this, "Serial Communication", STR_TIMEOUT, 0, 0);
+        if (fail) {
+            QMessageBox::information(this, "Serial Communication", STR_TIMEOUT, 0, 0);
+        }
+    } else {
+        QMessageBox::critical(this, "Settings Critical", "Please Check List Before Setting ..", 0, 0);
     }
 
     this->EnableButton(true);
@@ -1990,39 +1913,11 @@ void formModule::on_pbGetAll_clicked()
             if (NoSeri == val_data.at(1)) {
                 module mod;
                 mod.read_module(&tModule, Address_Module);
-//                timeout = work->Request_Data(this, busyForm, Serial_Com, false);
-//                if (timeout) {fail = true;} else {
-//                    Serial->read_parsing(&tSerial);
-//                    val_data = tSerial.str_data_dat.split("*");
-//                    work->Get_Data(&tModule, val_data);
-//                }
-//                timeout = work->Request_IO(this, busyForm, Serial_Com, false);
-//                if (timeout) {fail = true;} else {
-//                    Serial->read_parsing(&tSerial);
-//                    val_data = tSerial.str_data_io.split("*");
-//                    work->Get_Input(&tModule, val_data);
-//                    work->Get_Output(&tModule, val_data);
-//                }
-//                timeout = work->Request_SIM(this, busyForm, Serial_Com, false);
-//                if (timeout) {fail = true;} else {
-//                    Serial->read_parsing(&tSerial);
-//                    val_data = tSerial.str_data_sim.split("*");
-//                    work->Get_SIM(&tModule, val_data);
-//                }
-//                timeout = work->Request_Sumber(this, busyForm, Serial_Com, false);
-//                if (timeout) {fail = true;} else {
-//                    Serial->read_parsing(&tSerial);
-//                    val_data = tSerial.str_data_src.split("*");
-//                    work->Get_Sumber(&tModule, val_data);
-//                }
 
                 progress_dialog->show();
                 progress_dialog->setWindowTitle("Get All Configuration from board");
                 progress_dialog->Processing(Serial_Com, Address_Module, "0005;0002;0001;0004");
                 progress_dialog->close();
-
-//                mod.write_module(&tModule);
-//                cryp code; code.encryp(Address_Module);
 
                 this->setInterface(Address_Module);
                 if (!fail) {

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>979</width>
-    <height>600</height>
+    <width>820</width>
+    <height>385</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,8 +18,8 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>0</width>
-    <height>0</height>
+    <width>800</width>
+    <height>385</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -38,20 +38,6 @@
   <layout class="QGridLayout" name="gridLayout_10">
    <item row="1" column="0">
     <layout class="QGridLayout" name="gridLayout">
-     <item row="0" column="0">
-      <widget class="QPushButton" name="pbSet">
-       <property name="text">
-        <string>Set Setting</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="2">
-      <widget class="QPushButton" name="pbGet">
-       <property name="text">
-        <string>Get Setting</string>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="8">
       <widget class="QPushButton" name="pbEdit">
        <property name="enabled">
@@ -62,17 +48,10 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="3">
-      <widget class="QPushButton" name="pbAddRow">
+     <item row="0" column="0">
+      <widget class="QPushButton" name="pbSet">
        <property name="text">
-        <string>Add Row</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="4">
-      <widget class="QPushButton" name="pbDeleteRows">
-       <property name="text">
-        <string>Delete Rows</string>
+        <string>Set Setting</string>
        </property>
       </widget>
      </item>
@@ -89,17 +68,10 @@
        </property>
       </spacer>
      </item>
-     <item row="0" column="10">
-      <widget class="QPushButton" name="pbGetAll">
+     <item row="0" column="2">
+      <widget class="QPushButton" name="pbGet">
        <property name="text">
-        <string>Get All Setting</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="9">
-      <widget class="QPushButton" name="pbSetAll">
-       <property name="text">
-        <string>Set All Setting</string>
+        <string>Get Setting</string>
        </property>
       </widget>
      </item>
@@ -117,6 +89,34 @@
        </property>
       </widget>
      </item>
+     <item row="0" column="9">
+      <widget class="QPushButton" name="pbSetAll">
+       <property name="text">
+        <string>Set All Setting</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="4">
+      <widget class="QPushButton" name="pbDeleteRows">
+       <property name="text">
+        <string>Delete Rows</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QPushButton" name="pbAddRow">
+       <property name="text">
+        <string>Add Row</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="10">
+      <widget class="QPushButton" name="pbGetAll">
+       <property name="text">
+        <string>Get All Setting</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item row="0" column="0">
@@ -128,7 +128,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_input">
       <attribute name="title">
@@ -211,11 +211,6 @@
          </column>
          <column>
           <property name="text">
-           <string>Control</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
            <string>Type</string>
           </property>
          </column>
@@ -232,13 +227,13 @@
       <attribute name="title">
        <string>Communication</string>
       </attribute>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
-         <x>42</x>
-         <y>39</y>
-         <width>731</width>
-         <height>307</height>
+         <x>20</x>
+         <y>20</y>
+         <width>711</width>
+         <height>284</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout">
@@ -1024,13 +1019,13 @@
       <attribute name="title">
        <string>Environtment</string>
       </attribute>
-      <widget class="QWidget" name="layoutWidget">
+      <widget class="QWidget" name="layoutWidget_1">
        <property name="geometry">
         <rect>
-         <x>40</x>
-         <y>30</y>
-         <width>531</width>
-         <height>303</height>
+         <x>20</x>
+         <y>20</y>
+         <width>711</width>
+         <height>281</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -1653,32 +1648,32 @@
          </column>
          <column>
           <property name="text">
+           <string>MAX_Range-L</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Range-LL</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
            <string>Range-L</string>
           </property>
          </column>
          <column>
           <property name="text">
-           <string>Border-LL</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Border-L</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Border-H</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Border-HH</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
            <string>Range-H</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Range-HH</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>MAX_Range-H</string>
           </property>
          </column>
          <column>

@@ -14,7 +14,7 @@ QString worker::newModule(QStandardItemModel *tree, QTreeView *treeView, QString
     mod.read_module(&tModule, address);
 
     QString modules;
-    modules.sprintf("%s", tModule.module_name);
+    modules.sprintf("%s [%s]", tModule.module_name, tModule.serial_number);
 //    modules.sprintf("m_%s.dbe", tModule.module_name);
     mTree.appendItem(tree, treeView, modules);
 
@@ -51,7 +51,7 @@ QString worker::loadModule(QStandardItemModel *tree, QTreeView *treeView, QStrin
     cryp code; code.encryp(address);
 
     QString modules;
-    modules.sprintf("%s", tModule.module_name);
+    modules.sprintf("%s [%s]", tModule.module_name, tModule.serial_number);
 //    modules.sprintf("m_%s.dbe", tModule.module_name);
     mTree.appendItem(tree, treeView, modules);
 

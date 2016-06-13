@@ -97,6 +97,7 @@ private:
     bool timeout;
     QString type;
     QString tmp;
+    QString tmp2;
     QString str;
     QStringList list;
     bool fail;

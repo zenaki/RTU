@@ -90,6 +90,8 @@ private slots:
 
     void on_actionEdit_User_triggered();
 
+    void on_actionExit_triggered();
+
 private:
     /** Other Class **/
     QString NoSeri;

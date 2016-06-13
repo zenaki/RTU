@@ -42,6 +42,12 @@ private slots:
 
     void enabledButton();
 
+    void on_spin_interval_h_valueChanged(int arg1);
+
+    void on_spin_interval_m_valueChanged(int arg1);
+
+    void on_spin_interval_d_valueChanged(int arg1);
+
 private:
     bool active_button;
     module mod;

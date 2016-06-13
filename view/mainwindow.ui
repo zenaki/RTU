@@ -89,6 +89,7 @@
     <addaction name="actionSave"/>
     <addaction name="actionDelete"/>
     <addaction name="actionRefresh"/>
+    <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuCommunication">
     <property name="title">
@@ -242,6 +243,11 @@
    </property>
    <property name="toolTip">
     <string>Delete Module</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
    </property>
   </action>
  </widget>

@@ -7,8 +7,8 @@ form_addModule::form_addModule(QWidget *parent, bool create, QString address, in
 {
     ui->setupUi(this);
 
-    this->ui->edit_module_name->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
-    this->ui->edit_sn->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
+    this->ui->edit_module_name->setValidator(new QRegExpValidator(QRegExp("^\\S{1,50}$"),this));
+    this->ui->edit_sn->setValidator(new QRegExpValidator(QRegExp("^\\S{1,20}$"),this));
     this->ui->edit_server_address->setInputMask("999.999.999.999");
     this->ui->edit_file_address->setValidator(new QRegExpValidator(QRegExp("^\\S{1,20}$"),this));
 
@@ -52,7 +52,32 @@ form_addModule::form_addModule(QWidget *parent, bool create, QString address, in
         modules.sprintf("%s", tModule.file_address);
         this->ui->edit_file_address->setText(modules);
         this->ui->cb_webclient->setCurrentIndex(tModule.flag_webclient);
-        this->ui->spin_interval->setValue(tModule.interval);
+        int s = 0; int m = 0; int h = 0; int d = 0;
+        if (tModule.interval <= 60) {
+            this->ui->spin_interval_s->setValue(tModule.interval);
+        } else {
+            s = tModule.interval;
+            m = s / 60;
+            for (int i = 0; i < m; i++) {
+                s = s - 60;
+            }
+            if (m > 60) {
+                h = m / 60;
+                for (int i = 0; i < h; i++) {
+                    m = m - 60;
+                }
+                if (h > 24) {
+                    d = h / 24;
+                    for (int i = 0; i < d; i++) {
+                        h = h - 24;
+                    }
+                }
+            }
+            this->ui->spin_interval_s->setValue(s);
+            this->ui->spin_interval_m->setValue(m);
+            this->ui->spin_interval_h->setValue(h);
+            this->ui->spin_interval_d->setValue(d);
+        }
 
         this->ui->cb_operator_1->setCurrentIndex(tModule.flag_gsm_1);
         modules.sprintf("%s", tModule.device_name_gsm_1);
@@ -112,9 +137,9 @@ form_addModule::form_addModule(QWidget *parent, bool create, QString address, in
             this->ui->ck_flag_active_gsm_2->setHidden(true);
             this->ui->gbCom->setHidden(true);
 
-            this->ui->gbEnv->setGeometry(20,70,341,231);
-            this->ui->buttonBox->setGeometry(14,295,341,27);
-            this->setFixedWidth(380);
+            this->ui->gbEnv->setGeometry(20,70,370,231);
+            this->ui->buttonBox->setGeometry(14,295,370,27);
+            this->setFixedWidth(409);
             this->setFixedHeight(330);
 
             this->ui->gbEnv->setHidden(false);
@@ -168,7 +193,7 @@ void form_addModule::on_buttonBox_accepted()
     strcpy(tModule.file_address, this->ui->edit_file_address->text().toLatin1());
     tModule.flag_webclient = this->ui->cb_webclient->currentIndex();
     strcpy(tModule.status_webclient, this->ui->cb_webclient->currentText().toLatin1());
-    tModule.interval = this->ui->spin_interval->value();
+    tModule.interval = this->ui->spin_interval_s->value() + (this->ui->spin_interval_m->value() * 60) + ((this->ui->spin_interval_h->value() * 60) * 60) + (((this->ui->spin_interval_d->value() * 24) * 60) * 60);
 
     if(this->ui->ck_flag_active_gsm_2->isChecked()) tModule.flag_dual_gsm = 1;
     else tModule.flag_dual_gsm = 0;
@@ -418,5 +443,65 @@ void form_addModule::enabledButton()
         }
     } else {
         active_button = false;
+    }
+}
+
+void form_addModule::on_spin_interval_h_valueChanged(int arg1)
+{
+    if (arg1 > 0) {
+        ui->spin_interval_s->setRange(0, 60);
+    } else {
+        if (ui->spin_interval_d->value() > 0) {
+            ui->spin_interval_s->setRange(0, 60);
+        } else {
+            if (ui->spin_interval_m->value() > 0) {
+                ui->spin_interval_s->setRange(0, 60);
+            } else {
+                if (ui->spin_interval_s->value() < 7) {
+                    ui->spin_interval_s->setValue(7);
+                }
+                ui->spin_interval_s->setRange(7, 60);
+            }
+        }
+    }
+}
+
+void form_addModule::on_spin_interval_m_valueChanged(int arg1)
+{
+    if (arg1 > 0) {
+        ui->spin_interval_s->setRange(0, 60);
+    } else {
+        if (ui->spin_interval_d->value() > 0) {
+            ui->spin_interval_s->setRange(0, 60);
+        } else {
+            if (ui->spin_interval_h->value() > 0) {
+                ui->spin_interval_s->setRange(0, 60);
+            } else {
+                if (ui->spin_interval_s->value() < 7) {
+                    ui->spin_interval_s->setValue(7);
+                }
+                ui->spin_interval_s->setRange(7, 60);
+            }
+        }
+    }
+}
+
+void form_addModule::on_spin_interval_d_valueChanged(int arg1)
+{
+    if (arg1 > 0) {
+        ui->spin_interval_s->setRange(0, 60);
+    } else {
+        if (ui->spin_interval_h->value() > 0) {
+            ui->spin_interval_s->setRange(0, 60);
+        } else {
+            if (ui->spin_interval_m->value() > 0) {
+                ui->spin_interval_s->setRange(0, 60);
+            } else {
+                if (ui->spin_interval_s->value() < 7) {
+                    ui->spin_interval_s->setValue(7);
+                }
+                ui->spin_interval_s->setRange(7, 60);
+            }
+        }
     }
 }
