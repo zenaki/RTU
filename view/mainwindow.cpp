@@ -335,15 +335,27 @@ void MainWindow::on_actionDelete_triggered()
 {
     QString Message;
     if (!module_name_sv.isEmpty()) {
-        QFile d_m(module_address_sv);
-        if (d_m.remove()) {
-            Message = "Module with name : " + module_name_sv + " was deleted";
-            QMessageBox::information(this, "Delete Successfully ..", Message, 0, 0);
-        } else {
-            Message = d_m.errorString();
-            QMessageBox::information(this, "Delete Error ..", Message, 0, 0);
+        Message = "Module : " + module_name_sv.remove("m_").remove(".dbe") + "\n\nAre you sure you want to delete this module";
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(this, "Attention !!", Message,
+                                      QMessageBox::Yes|QMessageBox::No);
+        if (reply == QMessageBox::Yes) {
+            QList<QMdiSubWindow *> windows = ui->mdiArea->subWindowList();
+            for (int i = 0; i < windows.size(); i++) {
+                if (module_name_sv.remove("m_").remove(".dbe") == windows.at(i)->windowTitle()) {
+                    windows.at(i)->close();
+                }
+            }
+            QFile d_m(module_address_sv);
+            if (d_m.remove()) {
+                Message = "Module with name : " + module_name_sv + " was deleted";
+                QMessageBox::information(this, "Delete Successfully ..", Message, 0, 0);
+            } else {
+                Message = d_m.errorString();
+                QMessageBox::information(this, "Delete Error ..", Message, 0, 0);
+            }
+            this->Refresh_Tree();
         }
-        this->Refresh_Tree();
     } else {
         QMessageBox::information(this, "Cannot Deleting ..", "Please Select Module Name Before Delete Module ..", 0, 0);
     }
