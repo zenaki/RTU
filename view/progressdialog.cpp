@@ -625,7 +625,7 @@ void ProgressDialog::Set_Sumber(bool stat, t_module *tModule, QString index)
                   list1.at(2) + " " + list1.at(3) + " " + list1.at(4) + " " +
                   list1.at(5) + ";" + list1.at(6) + ";" + list1.at(7) + ";" +
                   list1.at(8) + ";" + list1.at(9) + ";" +
-                  list1.at(10) + ";" + list1.at(11) + "r\n";
+                  list1.at(10) + ";" + list1.at(11) + "\r\n";
         Desc = "Set Sources " + list1.at(0) + " : \"" + list1.at(1) + "\" ..";
         if (stat) {
             serial_write(Desc, Request, WAIT_WRITE);

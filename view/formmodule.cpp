@@ -1224,6 +1224,7 @@ void formModule::on_pbSetAll_clicked()
                     progress_dialog->Processing(Serial_Com, Address_Module, "0102;0103;0101;0104;0105;0005;0002;0001;0004");
                     cancel = progress_dialog->cancel;
                     progress_dialog->close();
+                    mod.read_module(&tModule, Address_Module);
                 }
 
                 Message = "On-Board";
@@ -1479,14 +1480,13 @@ void formModule::on_pbSet_clicked()
                 }
 //                work->Reset_Board(busyForm, "Reset Board ...", Serial_Com);
                 if (this->ui->tabWidget->currentIndex() <= 1) {
-                    Request = Request + ";0005";
-                    Request = Request + ";0002";
+                    Request = Request + ";0005;0002";
                 } else if (this->ui->tabWidget->currentIndex() == 2) {
                     Request = Request + ";0001";
                 } else if (this->ui->tabWidget->currentIndex() == 3) {
                     Request = Request + ";0000";
                 } else if (this->ui->tabWidget->currentIndex() == 4) {
-                    Request = Request + ";0004";
+                    Request = Request + ";0004;0005";
                 } else if (this->ui->tabWidget->currentIndex() == 5) {
 
                 } else if (this->ui->tabWidget->currentIndex() == 6) {
@@ -1497,6 +1497,7 @@ void formModule::on_pbSet_clicked()
                 progress_dialog->setWindowTitle("Set " + Message + "to board");
                 progress_dialog->Processing(Serial_Com, Address_Module, Request);
                 progress_dialog->close();
+                mod.read_module(&tModule, Address_Module);
 
                 Message = "On-Board";
 
@@ -1818,7 +1819,7 @@ void formModule::on_pbSetChk_clicked()
                     } else if (this->ui->tabWidget->currentIndex() == 3) {
                         Request = "0000";
                     } else if (this->ui->tabWidget->currentIndex() == 4) {
-                        Request = "0004";
+                        Request = "0005;0004";
                     } else if (this->ui->tabWidget->currentIndex() == 5) {
 
                     } else if (this->ui->tabWidget->currentIndex() == 6) {
@@ -1828,6 +1829,7 @@ void formModule::on_pbSetChk_clicked()
                     progress_dialog->setWindowTitle("Set Data to board");
                     progress_dialog->Processing(Serial_Com, Address_Module, Request);
                     progress_dialog->close();
+                    mod.read_module(&tModule, Address_Module);
                 }
                 Message = "On-Board";
 
@@ -1918,6 +1920,7 @@ void formModule::on_pbGetAll_clicked()
                 progress_dialog->setWindowTitle("Get All Configuration from board");
                 progress_dialog->Processing(Serial_Com, Address_Module, "0005;0002;0001;0004");
                 progress_dialog->close();
+                mod.read_module(&tModule, Address_Module);
 
                 this->setInterface(Address_Module);
                 if (!fail) {
@@ -2026,6 +2029,7 @@ void formModule::on_pbGet_clicked()
                 progress_dialog->setWindowTitle("Get " + Message + "from board");
                 progress_dialog->Processing(Serial_Com, Address_Module, Request);
                 progress_dialog->close();
+                mod.read_module(&tModule, Address_Module);
 
 //                mod.write_module(&tModule);
 //                cryp code; code.encryp(Address_Module);
@@ -2096,6 +2100,7 @@ void formModule::on_pbEdit_clicked()
             progress_dialog->setWindowTitle("Set SIM Configuration to board ..");
             progress_dialog->Processing(Serial_Com, Address_Module, "0101;0001");
             progress_dialog->close();
+            mod.read_module(&tModule, Address_Module);
 
             this->setInterface_Communication(Address_Module);
             message = "SIM Configuration On-Board";
@@ -2114,6 +2119,7 @@ void formModule::on_pbEdit_clicked()
             progress_dialog->setWindowTitle("Set Environtment to board ..");
             progress_dialog->Processing(Serial_Com, Address_Module, "0100;0000");
             progress_dialog->close();
+            mod.read_module(&tModule, Address_Module);
 
             this->setInterface_Environtment(Address_Module);
             message = "Environtment On-Board";
