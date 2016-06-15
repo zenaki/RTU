@@ -206,7 +206,7 @@ void ProgressDialog::Get_ENV(struct t_module *tModule, QStringList data)
         strcpy(tModule->status_webclient, temp.toUtf8().data());
     }
     temp = data.at(7);
-    tModule->interval = temp.toInt();
+    tModule->interval = temp.toInt()+3;
 }
 
 void ProgressDialog::Get_SIM(struct t_module *tModule, QStringList data)
