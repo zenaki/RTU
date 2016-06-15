@@ -473,7 +473,7 @@ void ProgressDialog::Set_ENV(bool stat, t_module *tModule)
                     , tModule->server_address
                     , tModule->file_address
                     , tModule->flag_webclient
-                    , tModule->interval);
+                    , tModule->interval-3);
     Desc.sprintf("Set Environtment \"%s \" ..", tModule->module_name);
     if (stat) {
         serial_write(Desc, Request, WAIT_WRITE);

@@ -120,8 +120,8 @@ private:
     QLineEdit       *name_input[16];
     QComboBox       *type_input[16];
     QComboBox       *state_input[16];
-    QLineEdit       *calib_m[16];
-    QLineEdit       *calib_x[16];
+    QSpinBox        *calib_m[16];
+    QSpinBox        *calib_x[16];
     QComboBox       *reg_input[60];
     QSignalMapper   *SigMapReg_input;
 
@@ -131,7 +131,7 @@ private:
     QLineEdit       *type_output[16];
     QComboBox       *state_output[16];
     QComboBox       *control[16];
-    QLineEdit       *reg_output[16];
+    QSpinBox        *reg_output[16];
 
     /** Sources Tab **/
     QCheckBox       *check_source[16];
@@ -139,12 +139,12 @@ private:
     QSignalMapper   *SigMapDel_Source;
     QLineEdit       *name_source[16];
     QLineEdit       *ip_source[16];
-    QLineEdit       *port_source[16];
+    QSpinBox        *port_source[16];
     QComboBox       *state_source[16];
     QComboBox       *type_source[16];
-    QLineEdit       *id_source[16];
-    QLineEdit       *sensor_reg_source[16];
-    QComboBox       *OffsetBase_source[16];
+    QSpinBox        *id_source[16];
+    QSpinBox        *sensor_reg_source[16];
+//    QComboBox       *OffsetBase_source[16];
     QComboBox       *command_source[16];
     QComboBox       *length_source[16];
     QSignalMapper   *SigMap_length_source;
@@ -171,16 +171,16 @@ private:
 
     /** Data Settings **/
     QCheckBox       *check_data_s[60];
-    QLineEdit       *id_data_s[60];
+    QSpinBox        *id_data_s[60];
     QLineEdit       *name_data_s[60];
-    QLineEdit       *value_data_s[60];
+    QSpinBox        *value_data_s[60];
     QLineEdit       *unit_data_s[60];
-    QLineEdit       *range_l_data_s[60];
-    QLineEdit       *border_ll_data_s[60];
-    QLineEdit       *border_l_data_s[60];
-    QLineEdit       *border_h_data_s[60];
-    QLineEdit       *border_hh_data_s[60];
-    QLineEdit       *range_h_data_s[60];
+    QSpinBox        *range_l_data_s[60];
+    QSpinBox        *border_ll_data_s[60];
+    QSpinBox        *border_l_data_s[60];
+    QSpinBox        *border_h_data_s[60];
+    QSpinBox        *border_hh_data_s[60];
+    QSpinBox        *range_h_data_s[60];
     QComboBox       *state_data_s[60];
 
     /** Data Monitoring **/

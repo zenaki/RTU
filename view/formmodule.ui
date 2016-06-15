@@ -128,7 +128,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_input">
       <attribute name="title">
@@ -1017,7 +1017,7 @@
      </widget>
      <widget class="QWidget" name="tab_environtment">
       <attribute name="title">
-       <string>Environtment</string>
+       <string>Environment</string>
       </attribute>
       <widget class="QWidget" name="layoutWidget_1">
        <property name="geometry">
@@ -1025,7 +1025,7 @@
          <x>20</x>
          <y>20</y>
          <width>711</width>
-         <height>281</height>
+         <height>251</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -1037,7 +1037,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Environtment</string>
+           <string>Environment</string>
           </property>
          </widget>
         </item>
@@ -1174,13 +1174,13 @@
            </font>
           </property>
           <property name="text">
-           <string>Addresses</string>
+           <string>Address</string>
           </property>
          </widget>
         </item>
         <item>
          <layout class="QGridLayout" name="gridLayout_12">
-          <item row="2" column="0">
+          <item row="1" column="0">
            <widget class="QLabel" name="label_42">
             <property name="minimumSize">
              <size>
@@ -1199,7 +1199,7 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
+          <item row="1" column="1">
            <widget class="QLabel" name="label_46">
             <property name="minimumSize">
              <size>
@@ -1221,7 +1221,7 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="2">
+          <item row="1" column="2">
            <widget class="QLabel" name="file_address">
             <property name="minimumSize">
              <size>
@@ -1234,61 +1234,7 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_39">
-            <property name="minimumSize">
-             <size>
-              <width>130</width>
-              <height>17</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>130</width>
-              <height>17</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>IP Address</string>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="1">
-           <widget class="QLabel" name="label_43">
-            <property name="minimumSize">
-             <size>
-              <width>5</width>
-              <height>17</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>5</width>
-              <height>17</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>:</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <widget class="QLabel" name="ip_address">
-            <property name="minimumSize">
-             <size>
-              <width>141</width>
-              <height>27</height>
-             </size>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
            <widget class="QLabel" name="label_45">
             <property name="minimumSize">
              <size>
@@ -1310,7 +1256,7 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
+          <item row="0" column="0">
            <widget class="QLabel" name="label_41">
             <property name="minimumSize">
              <size>
@@ -1329,7 +1275,7 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="2">
+          <item row="0" column="2">
            <widget class="QLabel" name="server_address">
             <property name="minimumSize">
              <size>
@@ -1342,7 +1288,7 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
+          <item row="2" column="0">
            <widget class="QLabel" name="label_49">
             <property name="minimumSize">
              <size>
@@ -1361,7 +1307,7 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
+          <item row="2" column="1">
            <widget class="QLabel" name="label_50">
             <property name="minimumSize">
              <size>
@@ -1383,7 +1329,7 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="2">
+          <item row="2" column="2">
            <widget class="QLabel" name="web_client">
             <property name="minimumSize">
              <size>
@@ -1396,14 +1342,21 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="0">
+          <item row="3" column="0">
            <widget class="QLabel" name="label_40">
             <property name="text">
              <string>Interval</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="1">
+          <item row="3" column="2">
+           <widget class="QLabel" name="interval">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
            <widget class="QLabel" name="label_51">
             <property name="minimumSize">
              <size>
@@ -1422,13 +1375,6 @@
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="2">
-           <widget class="QLabel" name="interval">
-            <property name="text">
-             <string/>
             </property>
            </widget>
           </item>
@@ -1498,32 +1444,27 @@
          </column>
          <column>
           <property name="text">
-           <string>ID</string>
+           <string>ID Slave</string>
           </property>
          </column>
          <column>
           <property name="text">
-           <string>Sensor Register</string>
+           <string>Function</string>
           </property>
          </column>
          <column>
           <property name="text">
-           <string>Offset / Base</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Command</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Length</string>
+           <string>Source Register</string>
           </property>
          </column>
          <column>
           <property name="text">
            <string>Target Register</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Length</string>
           </property>
          </column>
         </widget>
@@ -1648,32 +1589,32 @@
          </column>
          <column>
           <property name="text">
-           <string>MAX_Range-L</string>
+           <string>MIN</string>
           </property>
          </column>
          <column>
           <property name="text">
-           <string>Range-LL</string>
+           <string>LL</string>
           </property>
          </column>
          <column>
           <property name="text">
-           <string>Range-L</string>
+           <string>L</string>
           </property>
          </column>
          <column>
           <property name="text">
-           <string>Range-H</string>
+           <string>H</string>
           </property>
          </column>
          <column>
           <property name="text">
-           <string>Range-HH</string>
+           <string>HH</string>
           </property>
          </column>
          <column>
           <property name="text">
-           <string>MAX_Range-H</string>
+           <string>MAX</string>
           </property>
          </column>
          <column>

@@ -103,13 +103,13 @@ void formModule::setInterface_Input(QString address)
             type_input[i]->addItem("ON / OFF - RH",9);
         }
 
-        calib_m[i] = new QLineEdit(this);
+        calib_m[i] = new QSpinBox(this);
         calib_m[i]->setAlignment(Qt::AlignRight);
-        calib_m[i]->setValidator(new QDoubleValidator(-9999.999,9999.999,1,this));
+        calib_m[i]->setRange(-99999,99999);
 
-        calib_x[i] = new QLineEdit(this);
+        calib_x[i] = new QSpinBox(this);
         calib_x[i]->setAlignment(Qt::AlignRight);
-        calib_x[i]->setValidator(new QDoubleValidator(-9999.999,9999.999,1,this));
+        calib_x[i]->setRange(-99999,99999);
 
         reg_input[i] = new QComboBox(this);
         SigMapReg_input->setMapping(reg_input[i], i);
@@ -167,8 +167,8 @@ void formModule::setInterface_Input(QString address)
         if (list[(i*8)+3].toInt() == RPM_RH) {indx = 3;}
         if (list[(i*8)+3].toInt() == ON_OFF_RH) {indx = 4;}
         type_input[i]->setCurrentIndex(indx);
-        calib_m[i]->setText(list[(i*8)+4]);
-        calib_x[i]->setText(list[(i*8)+5]);
+        calib_m[i]->setValue(list[(i*8)+4].toInt());
+        calib_x[i]->setValue(list[(i*8)+5].toInt());
         if (i < rowInputDigital) {reg_input[i]->setCurrentText(list.at((i*8)+6));}
         else {reg_input[i]->setCurrentText(list.at((i*8)+6));}
         state_input[i]->setCurrentIndex(list[(i*8)+7].toInt());
@@ -238,9 +238,9 @@ void formModule::setInterface_Output(QString address)
         control[i]->addItem("LOGIC");
         control[i]->addItem("SCHEDULER");
 
-        reg_output[i] = new QLineEdit(this);
+        reg_output[i] = new QSpinBox(this);
         reg_output[i]->setAlignment(Qt::AlignCenter);
-        reg_output[i]->setValidator(new QRegExpValidator(QRegExp("^\\d{1,5}$"),this));
+        reg_output[i]->setRange(0,99999);
     }
 
     QString str;
@@ -256,7 +256,7 @@ void formModule::setInterface_Output(QString address)
 //        name_output[i]->setText(list[i*6]);
         state_output[i]->setCurrentIndex(list[(i*6)+3].toInt());
         control[i]->setCurrentIndex(list[(i*6)+4].toInt());
-        reg_output[i]->setText(list[(i*6)+5]);
+        reg_output[i]->setValue(list[(i*6)+5].toInt());
 //        reg_output[i]->setText(QString::number(i+1) + QString::number(i+1) + QString::number(i+1));
 
         type = " - Relay";
@@ -329,8 +329,8 @@ void formModule::setInterface_Environtment(QString address)
     modules.sprintf("%s", tModule.serial_number);
     this->ui->serial_number->setText(modules);
 
-    modules.sprintf("%s", tModule.ip_address);
-    this->ui->ip_address->setText(modules);
+//    modules.sprintf("%s", tModule.ip_address);
+//    this->ui->ip_address->setText(modules);
     modules.sprintf("%s", tModule.server_address);
     this->ui->server_address->setText(modules);
     modules.sprintf("%s", tModule.file_address);
@@ -382,7 +382,7 @@ void formModule::setInterface_Sumber(QString address)
     QString type;
 
     this->ui->tabel_sources->verticalHeader()->setHidden(true);
-    this->ui->tabel_sources->setColumnCount(14);
+    this->ui->tabel_sources->setColumnCount(13);
     this->ui->tabel_sources->setColumnWidth(0, 25);
     this->ui->tabel_sources->setColumnWidth(1, 25);
 //    this->ui->tabel_sources->setColumnWidth(2, 75);
@@ -392,11 +392,10 @@ void formModule::setInterface_Sumber(QString address)
     this->ui->tabel_sources->setColumnWidth(6, 125);
 //    this->ui->tabel_sources->setColumnWidth(7, 75);
     this->ui->tabel_sources->setColumnWidth(8, 50);
-    this->ui->tabel_sources->setColumnWidth(9, 125);
+    this->ui->tabel_sources->setColumnWidth(9, 150);
     this->ui->tabel_sources->setColumnWidth(10, 125);
-    this->ui->tabel_sources->setColumnWidth(11, 150);
+    this->ui->tabel_sources->setColumnWidth(11, 125);
 //    this->ui->tabel_sources->setColumnWidth(12, 75);
-    this->ui->tabel_sources->setColumnWidth(13, 125);
     this->ui->tabel_sources->setRowCount(rowSource);
 
     SigMapDel_Source = new QSignalMapper(this);
@@ -413,11 +412,11 @@ void formModule::setInterface_Sumber(QString address)
 
         ip_source[i] = new QLineEdit(this);
         ip_source[i]->setAlignment(Qt::AlignCenter);
-        ip_source[i]->setInputMask("999.999.999.999");
+        ip_source[i]->setInputMask("000.000.000.000");
 
-        port_source[i] = new QLineEdit(this);
+        port_source[i] = new QSpinBox(this);
         port_source[i]->setAlignment(Qt::AlignCenter);
-        port_source[i]->setValidator(new QRegExpValidator(QRegExp("^\\d{1,4}$"),this));
+        port_source[i]->setRange(0,99999);
 
         state_source[i] = new QComboBox(this);
         state_source[i]->addItem("NOT ACTIVE",0);
@@ -431,17 +430,17 @@ void formModule::setInterface_Sumber(QString address)
         type_source[i]->addItem("GWR",4);
         type_source[i]->addItem("PM5560",5);
 
-        id_source[i] = new QLineEdit(this);
+        id_source[i] = new QSpinBox(this);
         id_source[i]->setAlignment(Qt::AlignCenter);
-        id_source[i]->setValidator(new QRegExpValidator(QRegExp("^\\d{1,1}$"),this));
+        id_source[i]->setRange(0,999);
 
-        sensor_reg_source[i] = new QLineEdit(this);
+        sensor_reg_source[i] = new QSpinBox(this);
         sensor_reg_source[i]->setAlignment(Qt::AlignCenter);
-        sensor_reg_source[i]->setValidator(new QRegExpValidator(QRegExp("^\\d{1,4}$"),this));
+        sensor_reg_source[i]->setRange(0,99999);
 
-        OffsetBase_source[i] = new QComboBox(this);
-        OffsetBase_source[i]->addItem("Offset",0);
-        OffsetBase_source[i]->addItem("Base",1);
+//        OffsetBase_source[i] = new QComboBox(this);
+//        OffsetBase_source[i]->addItem("Offset",0);
+//        OffsetBase_source[i]->addItem("Base",1);
 
         command_source[i] = new QComboBox(this);
         command_source[i]->addItem("Read Holding Register",0);
@@ -471,12 +470,12 @@ void formModule::setInterface_Sumber(QString address)
                 list = str.split(';');
                 name_source[i]->setText(list[1]);
                 ip_source[i]->setText(list[2]);
-                port_source[i]->setText(list[3]);
+                port_source[i]->setValue(list[3].toInt());
                 state_source[i]->setCurrentIndex(list[4].toInt());
                 type_source[i]->setCurrentIndex(list[5].toInt());
-                id_source[i]->setText(list[6]);
-                sensor_reg_source[i]->setText(list[7]);
-                OffsetBase_source[i]->setCurrentIndex(list[8].toInt());
+                id_source[i]->setValue(list[6].toInt());
+                sensor_reg_source[i]->setValue(list[7].toInt());
+//                OffsetBase_source[i]->setCurrentIndex(list[8].toInt());
                 command_source[i]->setCurrentIndex(list[9].toInt());
                 length_source[i]->setCurrentText(list[10]);
                 if (list[11] != "") {
@@ -489,7 +488,7 @@ void formModule::setInterface_Sumber(QString address)
                 list = str.split(';');
                 name_source[i]->setText(list[1]);
                 ip_source[i]->setText(list[2]);
-                port_source[i]->setText(list[3]);
+                port_source[i]->setValue(list[3].toInt());
                 state_source[i]->setCurrentIndex(list[4].toInt());
             }
         }
@@ -507,11 +506,10 @@ void formModule::setInterface_Sumber(QString address)
         this->ui->tabel_sources->setCellWidget(i,6, state_source[i]);
         this->ui->tabel_sources->setCellWidget(i,7, type_source[i]);
         this->ui->tabel_sources->setCellWidget(i,8, id_source[i]);
-        this->ui->tabel_sources->setCellWidget(i,9, sensor_reg_source[i]);
-        this->ui->tabel_sources->setCellWidget(i,10, OffsetBase_source[i]);
-        this->ui->tabel_sources->setCellWidget(i,11, command_source[i]);
+        this->ui->tabel_sources->setCellWidget(i,9, command_source[i]);
+        this->ui->tabel_sources->setCellWidget(i,10, sensor_reg_source[i]);
+        this->ui->tabel_sources->setCellWidget(i,11, target_reg_source[i]);
         this->ui->tabel_sources->setCellWidget(i,12, length_source[i]);
-        this->ui->tabel_sources->setCellWidget(i,13, target_reg_source[i]);
     }
     connect(SigMap_length_source,SIGNAL(mapped(int)),this,SLOT(length_src_changed()));
     connect(SigMap_tReg_source,SIGNAL(mapped(int)),this,SLOT(tReg_src_changed()));
@@ -734,15 +732,15 @@ void formModule::setInterface_Data_Settings(QString address)
     for (int i = 0; i < rowData; i++){
         check_data_s[i] = new QCheckBox(this);
 
-        id_data_s[i] = new QLineEdit(this);
+        id_data_s[i] = new QSpinBox(this);
         id_data_s[i]->setAlignment(Qt::AlignHCenter);
-        id_data_s[i]->setValidator(new QIntValidator(0,999,this));
+        id_data_s[i]->setRange(0,9999);
 
         name_data_s[i] = new QLineEdit(this);
         name_data_s[i]->setAlignment(Qt::AlignHCenter);
         name_data_s[i]->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
 
-        value_data_s[i] = new QLineEdit(this);
+        value_data_s[i] = new QSpinBox(this);
         value_data_s[i]->setAlignment(Qt::AlignHCenter);
         value_data_s[i]->setEnabled(false);
 
@@ -750,29 +748,29 @@ void formModule::setInterface_Data_Settings(QString address)
         unit_data_s[i]->setAlignment(Qt::AlignHCenter);
         unit_data_s[i]->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
 
-        range_l_data_s[i] = new QLineEdit(this);
+        range_l_data_s[i] = new QSpinBox(this);
         range_l_data_s[i]->setAlignment(Qt::AlignHCenter);
-        range_l_data_s[i]->setValidator(new QDoubleValidator(-9999.999,9999.999,1,this));
+        range_l_data_s[i]->setRange(-999999,999999);
 
-        border_ll_data_s[i] = new QLineEdit(this);
+        border_ll_data_s[i] = new QSpinBox(this);
         border_ll_data_s[i]->setAlignment(Qt::AlignHCenter);
-        border_ll_data_s[i]->setValidator(new QDoubleValidator(-9999.999,9999.999,1,this));
+        border_ll_data_s[i]->setRange(-999999,999999);
 
-        border_l_data_s[i] = new QLineEdit(this);
+        border_l_data_s[i] = new QSpinBox(this);
         border_l_data_s[i]->setAlignment(Qt::AlignHCenter);
-        border_l_data_s[i]->setValidator(new QDoubleValidator(-9999.999,9999.999,1,this));
+        border_l_data_s[i]->setRange(-999999,999999);
 
-        border_h_data_s[i] = new QLineEdit(this);
+        border_h_data_s[i] = new QSpinBox(this);
         border_h_data_s[i]->setAlignment(Qt::AlignHCenter);
-        border_h_data_s[i]->setValidator(new QDoubleValidator(-9999.999,9999.999,1,this));
+        border_h_data_s[i]->setRange(-999999,999999);
 
-        border_hh_data_s[i] = new QLineEdit(this);
+        border_hh_data_s[i] = new QSpinBox(this);
         border_hh_data_s[i]->setAlignment(Qt::AlignHCenter);
-        border_hh_data_s[i]->setValidator(new QDoubleValidator(-9999.999,9999.999,1,this));
+        border_hh_data_s[i]->setRange(-999999,999999);
 
-        range_h_data_s[i] = new QLineEdit(this);
+        range_h_data_s[i] = new QSpinBox(this);
         range_h_data_s[i]->setAlignment(Qt::AlignHCenter);
-        range_h_data_s[i]->setValidator(new QDoubleValidator(-9999.999,9999.999,1,this));
+        range_h_data_s[i]->setRange(-999999,999999);
 
         state_data_s[i] = new QComboBox(this);
         state_data_s[i]->addItem("NOT ACTIVE");
@@ -784,16 +782,16 @@ void formModule::setInterface_Data_Settings(QString address)
         list = str.split(';');
         type = list[0];
 
-        id_data_s[i]->setText(list[1]);
+        id_data_s[i]->setValue(list[1].toInt());
         name_data_s[i]->setText(list[2]);
-        value_data_s[i]->setText(list[3]);
+        value_data_s[i]->setValue(list[3].toInt());
         unit_data_s[i]->setText(list[4]);
-        range_l_data_s[i]->setText(list[5]);
-        border_ll_data_s[i]->setText(list[6]);
-        border_l_data_s[i]->setText(list[7]);
-        border_h_data_s[i]->setText(list[8]);
-        border_hh_data_s[i]->setText(list[9]);
-        range_h_data_s[i]->setText(list[10]);
+        range_l_data_s[i]->setValue(list[5].toInt());
+        border_ll_data_s[i]->setValue(list[6].toInt());
+        border_l_data_s[i]->setValue(list[7].toInt());
+        border_h_data_s[i]->setValue(list[8].toInt());
+        border_hh_data_s[i]->setValue(list[9].toInt());
+        range_h_data_s[i]->setValue(list[10].toInt());
         state_data_s[i]->setCurrentIndex(list[11].toInt());
 
         this->ui->tabel_data_s->setCellWidget(i,0, check_data_s[i]);
@@ -1105,7 +1103,7 @@ void formModule::on_pbSetAll_clicked()
                      , tModule.d_port[i].reg_output);
 
         tModule.Output[i] = data[i];
-        tModule.OutputName[i] = name_output[i]->text();
+//        tModule.OutputName[i] = name_output[i]->text();
     }
 
     /** SET SUMBER **/
@@ -1118,7 +1116,8 @@ void formModule::on_pbSetAll_clicked()
                   QString::number(type_source[i]->currentIndex()) + ";" +
                   id_source[i]->text() + ";" +
                   sensor_reg_source[i]->text() + ";" +
-                  QString::number(OffsetBase_source[i]->currentIndex()) + ";" +
+//                  QString::number(OffsetBase_source[i]->currentIndex()) + ";" +
+                  "0;" +
                   QString::number(command_source[i]->currentIndex()) + ";" +
                   length_source[i]->currentText() + ";" +
                   target_reg_source[i]->currentText();
@@ -1349,7 +1348,7 @@ void formModule::on_pbSet_clicked()
                          , tModule.d_port[i].reg_output);
 
             tModule.Output[i] = data[i];
-            tModule.OutputName[i] = name_output[i]->text();
+//            tModule.OutputName[i] = name_output[i]->text();
         }
     } else if (this->ui->tabWidget->currentIndex() == 4) {
         /** SET SUMBER **/
@@ -1362,7 +1361,8 @@ void formModule::on_pbSet_clicked()
                       QString::number(type_source[i]->currentIndex()) + ";" +
                       id_source[i]->text() + ";" +
                       sensor_reg_source[i]->text() + ";" +
-                      QString::number(OffsetBase_source[i]->currentIndex()) + ";" +
+//                      QString::number(OffsetBase_source[i]->currentIndex()) + ";" +
+                      "0;" +
                       QString::number(command_source[i]->currentIndex()) + ";" +
                       length_source[i]->currentText() + ";" +
                       target_reg_source[i]->currentText();
@@ -1636,7 +1636,7 @@ void formModule::on_pbSetChk_clicked()
                              , tModule.d_port[i].reg_output);
 
                 tModule.Output[i] = data[i];
-                tModule.OutputName[i] = name_output[i]->text();
+//                tModule.OutputName[i] = name_output[i]->text();
             }
         }
     } else if (this->ui->tabWidget->currentIndex() == 4) {
@@ -1652,7 +1652,8 @@ void formModule::on_pbSetChk_clicked()
                           QString::number(type_source[i]->currentIndex()) + ";" +
                           id_source[i]->text() + ";" +
                           sensor_reg_source[i]->text() + ";" +
-                          QString::number(OffsetBase_source[i]->currentIndex()) + ";" +
+//                          QString::number(OffsetBase_source[i]->currentIndex()) + ";" +
+                          "0;" +
                           QString::number(command_source[i]->currentIndex()) + ";" +
                           length_source[i]->currentText() + ";" +
                           target_reg_source[i]->currentText();
@@ -1793,13 +1794,7 @@ void formModule::on_pbSetChk_clicked()
                         }
                     }
                 } else if (this->ui->tabWidget->currentIndex() == 5) {
-//                    for (int i = 0; i < ui->tabel_alarm->rowCount(); i++) {
-//                        if (check_alarm[i]->isChecked()) {
-//                              checked++;
-////                            timeout = work->Set_Data(this, busyForm, Serial_Com, &tModule, false, QString::number(i));
-////                            if (timeout) {fail = true;} else {fail = false;}
-//                        }
-//                    }
+
                 } else if (this->ui->tabWidget->currentIndex() == 6) {
                     for (int i = 0; i < ui->tabel_data_s->rowCount(); i++) {
                         if (check_data_s[i]->isChecked()) {
@@ -1812,21 +1807,27 @@ void formModule::on_pbSetChk_clicked()
                 }
 
                 if (checked != 0) {
+//                    progress_dialog->close();
                     if (this->ui->tabWidget->currentIndex() <= 1) {
+                        Message = "I/O ";
                         Request = "0005;0002";
                     } else if (this->ui->tabWidget->currentIndex() == 2) {
+                        Message = "SIM Configuration ";
                         Request = "0001";
                     } else if (this->ui->tabWidget->currentIndex() == 3) {
+                        Message = "Environtment ";
                         Request = "0000";
                     } else if (this->ui->tabWidget->currentIndex() == 4) {
+                        Message = "Sources ";
                         Request = "0005;0004";
                     } else if (this->ui->tabWidget->currentIndex() == 5) {
-
+                        Message = "Alarm ";
                     } else if (this->ui->tabWidget->currentIndex() == 6) {
+                        Message = "Data ";
                         Request = "0005";
                     }
-
-                    progress_dialog->setWindowTitle("Set Data to board");
+//                    progress_dialog->show();
+                    progress_dialog->setWindowTitle("Get " + Message + "from board");
                     progress_dialog->Processing(Serial_Com, Address_Module, Request);
                     progress_dialog->close();
                     mod.read_module(&tModule, Address_Module);
@@ -1964,63 +1965,21 @@ void formModule::on_pbGet_clicked()
                 mod.read_module(&tModule, Address_Module);
 
                 if (this->ui->tabWidget->currentIndex() <= 1) {
-//                    timeout = work->Request_Data(this, busyForm, Serial_Com, false);
-//                    if (timeout) {fail = true;} else {
-//                        Serial->read_parsing(&tSerial);
-//                        val_data = tSerial.str_data_dat.split("*");
-//                        work->Get_Data(&tModule, val_data);
-//                    }
-//                    timeout = work->Request_IO(this, busyForm, Serial_Com, false);
-//                    if (timeout) {fail = true;} else {
-//                        Serial->read_parsing(&tSerial);
-//                        val_data = tSerial.str_data_io.split("*");
-//                        work->Get_Input(&tModule, val_data);
-//                        work->Get_Output(&tModule, val_data);
-//                    }
                     Message = "I/O ";
                     Request = "0005;0002";
                 } else if (this->ui->tabWidget->currentIndex() == 2) {
-//                    timeout = work->Request_SIM(this, busyForm, Serial_Com, false);
-//                    if (timeout) {fail = true;} else {
-//                        Serial->read_parsing(&tSerial);
-//                        val_data = tSerial.str_data_sim.split("*");
-//                        work->Get_SIM(&tModule, val_data);
-//                    }
                     Message = "SIM Configuration ";
                     Request = "0001";
                 } else if (this->ui->tabWidget->currentIndex() == 3) {
-//                    timeout = work->Request_ENV(this, busyForm, Serial_Com, false);
-//                    if (timeout) {fail = true;} else {
-//                        Serial->read_parsing(&tSerial);
-//                        val_data = tSerial.str_data_sim.split("*");
-//                        work->Get_ENV(&tModule, val_data);
-//                    }
                     Message = "Environtment ";
                     Request = "0000";
                 } else if (this->ui->tabWidget->currentIndex() == 4) {
-//                    timeout = work->Request_Sumber(this, busyForm, Serial_Com, false);
-//                    if (timeout) {fail = true;} else {
-//                        Serial->read_parsing(&tSerial);
-//                        val_data = tSerial.str_data_src.split("*");
-//                        work->Get_Sumber(&tModule, val_data);
-//                    }
                     Message = "Sources ";
                     Request = "0004";
                 } else if (this->ui->tabWidget->currentIndex() == 5) {
-//                    timeout = false; //work->Request_Data(this, busyForm, Serial_Com, false);
-//                    if (timeout) {fail = true;} else {
-////                        Serial->read_parsing(&tSerial);
-////                        val_data = tSerial.str_data_dat.split("*");
-////                        work->Get_Data(&tModule, val_data);
-//                    }
+
                     Message = "Alarm ";
                 } else if (this->ui->tabWidget->currentIndex() == 6) {
-//                    timeout = work->Request_Data(this, busyForm, Serial_Com, false);
-//                    if (timeout) {fail = true;} else {
-//                        Serial->read_parsing(&tSerial);
-//                        val_data = tSerial.str_data_dat.split("*");
-//                        work->Get_Data(&tModule, val_data);
-//                    }
                     Message = "Data ";
                     Request = "0005";
                 }
@@ -2030,9 +1989,6 @@ void formModule::on_pbGet_clicked()
                 progress_dialog->Processing(Serial_Com, Address_Module, Request);
                 progress_dialog->close();
                 mod.read_module(&tModule, Address_Module);
-
-//                mod.write_module(&tModule);
-//                cryp code; code.encryp(Address_Module);
 
                 this->setInterface(Address_Module);
 

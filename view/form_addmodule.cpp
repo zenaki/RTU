@@ -9,7 +9,7 @@ form_addModule::form_addModule(QWidget *parent, bool create, QString address, in
 
     this->ui->edit_module_name->setValidator(new QRegExpValidator(QRegExp("^\\S{1,50}$"),this));
     this->ui->edit_sn->setValidator(new QRegExpValidator(QRegExp("^\\S{1,20}$"),this));
-    this->ui->edit_server_address->setInputMask("999.999.999.999");
+    this->ui->edit_server_address->setInputMask("000.000.000.000");
     this->ui->edit_file_address->setValidator(new QRegExpValidator(QRegExp("^\\S{1,20}$"),this));
 
     this->ui->edit_devicename_1->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
@@ -45,8 +45,8 @@ form_addModule::form_addModule(QWidget *parent, bool create, QString address, in
         if (tModule.flag_dual_gsm == 1) {
             this->ui->ck_flag_active_gsm_2->setChecked(true);
         }
-        modules.sprintf("%s", tModule.ip_address);
-        this->ui->edit_ip_address->setText(modules);
+//        modules.sprintf("%s", tModule.ip_address);
+//        this->ui->edit_ip_address->setText(modules);
         modules.sprintf("%s", tModule.server_address);
         this->ui->edit_server_address->setText(modules);
         modules.sprintf("%s", tModule.file_address);
@@ -188,7 +188,7 @@ void form_addModule::on_buttonBox_accepted()
     strcpy(tModule.module_name, this->ui->edit_module_name->text().toLatin1());
     strcpy(tModule.serial_number, this->ui->edit_sn->text().toLatin1());
 
-    strcpy(tModule.ip_address, this->ui->edit_ip_address->text().toLatin1());
+//    strcpy(tModule.ip_address, this->ui->edit_ip_address->text().toLatin1());
     strcpy(tModule.server_address, this->ui->edit_server_address->text().toLatin1());
     strcpy(tModule.file_address, this->ui->edit_file_address->text().toLatin1());
     tModule.flag_webclient = this->ui->cb_webclient->currentIndex();
@@ -477,8 +477,8 @@ void form_addModule::on_spin_interval_m_valueChanged(int arg1)
             if (ui->spin_interval_h->value() > 0) {
                 ui->spin_interval_s->setRange(0, 60);
             } else {
-                if (ui->spin_interval_s->value() < 7) {
-                    ui->spin_interval_s->setValue(7);
+                if (ui->spin_interval_s->value() < 6) {
+                    ui->spin_interval_s->setValue(6);
                 }
                 ui->spin_interval_s->setRange(7, 60);
             }
@@ -497,8 +497,8 @@ void form_addModule::on_spin_interval_d_valueChanged(int arg1)
             if (ui->spin_interval_m->value() > 0) {
                 ui->spin_interval_s->setRange(0, 60);
             } else {
-                if (ui->spin_interval_s->value() < 7) {
-                    ui->spin_interval_s->setValue(7);
+                if (ui->spin_interval_s->value() < 6) {
+                    ui->spin_interval_s->setValue(6);
                 }
                 ui->spin_interval_s->setRange(7, 60);
             }
