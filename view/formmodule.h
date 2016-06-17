@@ -120,8 +120,8 @@ private:
     QLineEdit       *name_input[16];
     QComboBox       *type_input[16];
     QComboBox       *state_input[16];
-    QSpinBox        *calib_m[16];
-    QSpinBox        *calib_x[16];
+    QDoubleSpinBox  *calib_m[16];
+    QDoubleSpinBox  *calib_x[16];
     QComboBox       *reg_input[60];
     QSignalMapper   *SigMapReg_input;
 
@@ -173,14 +173,14 @@ private:
     QCheckBox       *check_data_s[60];
     QSpinBox        *id_data_s[60];
     QLineEdit       *name_data_s[60];
-    QSpinBox        *value_data_s[60];
+    QDoubleSpinBox  *value_data_s[60];
     QLineEdit       *unit_data_s[60];
-    QSpinBox        *range_l_data_s[60];
-    QSpinBox        *border_ll_data_s[60];
-    QSpinBox        *border_l_data_s[60];
-    QSpinBox        *border_h_data_s[60];
-    QSpinBox        *border_hh_data_s[60];
-    QSpinBox        *range_h_data_s[60];
+    QDoubleSpinBox  *range_l_data_s[60];
+    QDoubleSpinBox  *border_ll_data_s[60];
+    QDoubleSpinBox  *border_l_data_s[60];
+    QDoubleSpinBox  *border_h_data_s[60];
+    QDoubleSpinBox  *border_hh_data_s[60];
+    QDoubleSpinBox  *range_h_data_s[60];
     QComboBox       *state_data_s[60];
 
     /** Data Monitoring **/

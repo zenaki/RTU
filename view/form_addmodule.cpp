@@ -164,6 +164,23 @@ form_addModule::form_addModule(QWidget *parent, bool create, QString address, in
 
     connect(ui->edit_devicename_2,SIGNAL(textChanged(const QString &)),this,SLOT(enabledButton()));
     connect(ui->edit_number_2,SIGNAL(textChanged(const QString &)),this,SLOT(enabledButton()));
+
+    if (ui->spin_interval_d->value() > 0) {
+        ui->spin_interval_s->setRange(0, 60);
+    } else {
+        if (ui->spin_interval_h->value() > 0) {
+            ui->spin_interval_s->setRange(0, 60);
+        } else {
+            if (ui->spin_interval_m->value() > 0) {
+                ui->spin_interval_s->setRange(0, 60);
+            } else {
+                if (ui->spin_interval_s->value() < 6) {
+                    ui->spin_interval_s->setValue(6);
+                }
+                ui->spin_interval_s->setRange(6, 60);
+            }
+        }
+    }
 }
 
 form_addModule::~form_addModule()
@@ -457,10 +474,10 @@ void form_addModule::on_spin_interval_h_valueChanged(int arg1)
             if (ui->spin_interval_m->value() > 0) {
                 ui->spin_interval_s->setRange(0, 60);
             } else {
-                if (ui->spin_interval_s->value() < 7) {
+                if (ui->spin_interval_s->value() < 6) {
                     ui->spin_interval_s->setValue(7);
                 }
-                ui->spin_interval_s->setRange(7, 60);
+                ui->spin_interval_s->setRange(6, 60);
             }
         }
     }
@@ -480,7 +497,7 @@ void form_addModule::on_spin_interval_m_valueChanged(int arg1)
                 if (ui->spin_interval_s->value() < 6) {
                     ui->spin_interval_s->setValue(6);
                 }
-                ui->spin_interval_s->setRange(7, 60);
+                ui->spin_interval_s->setRange(6, 60);
             }
         }
     }
@@ -500,7 +517,7 @@ void form_addModule::on_spin_interval_d_valueChanged(int arg1)
                 if (ui->spin_interval_s->value() < 6) {
                     ui->spin_interval_s->setValue(6);
                 }
-                ui->spin_interval_s->setRange(7, 60);
+                ui->spin_interval_s->setRange(6, 60);
             }
         }
     }
