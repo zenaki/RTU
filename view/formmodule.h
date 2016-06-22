@@ -99,7 +99,9 @@ private:
     QString tmp;
     QString tmp2;
     QString str;
+    QString str2;
     QStringList list;
+    QStringList list2;
     bool fail;
     bool cancel;
 

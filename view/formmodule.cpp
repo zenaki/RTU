@@ -133,13 +133,18 @@ void formModule::setInterface_Input(QString address)
     connect(SigMapReg_input,SIGNAL(mapped(int)),this,SLOT(reg_kanal_changed()));
 
     tModule.data.clear();
-    for (int i = 0; i < data.length(); i++) {
-        str = data.at(i);
-        list =str.split(';');
-        if (list.at(11) == "1") {
-            tModule.data.append(str);
+    for (int i = 0; i < rowInputDigital + rowInputAnalog; i++) {
+        for (int j = 0; j < data.length(); j++) {
+            str = data.at(j);
+            str2 = tModule.Input.at(i);
+            list = str.split(';');
+            list2 = str2.split(';');
+            if (list.at(0) == list2.at(1)) {
+                tModule.data.append(str);
+            }
         }
     }
+
     str.clear();
     for (int i = 0; i < tModule.Input.length(); i++) {
         str.append(tModule.InputName.at(i)).append(";").append(tModule.Input.at(i)).append(";");
@@ -557,11 +562,15 @@ void formModule::setInterface_Alarm(QString address)
     QStringList list;
     QStringList data = tModule.data;
     tModule.data.clear();
-    for (int i = 0; i < data.length(); i++) {
-        str = data.at(i);
-        list =str.split(';');
-        if (list.at(11) == "1") {
-            tModule.data.append(str);
+    for (int i = 0; i < this->ui->tabel_input->rowCount(); i++) {
+        for (int j = 0; j < data.length(); j++) {
+            str = data.at(j);
+            str2 = tModule.Input.at(i);
+            list = str.split(';');
+            list2 = str2.split(';');
+            if (list.at(0) == list2.at(1)) {
+                tModule.data.append(str);
+            }
         }
     }
     data = tModule.data;
