@@ -16,7 +16,7 @@ UI_DIR += compile
 MOC_DIR += compile
 
 #########################################################################
-#FOR DEPLOY
+#FOR DEPLOY#
 #CONFIG += release
 #unix:QMAKE_RPATHDIR = "/usr/lib/x86_64-linux-gnu"
 #unix:QMAKE_LFLAGS += "-Wl,-rpath /usr/lib/x86_64-linux-gnu"
