@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 //    QString qt_conf_path =  QCoreApplication::applicationDirPath() + QDir::separator() + "qt.conf";
     /////////////////////////////////////////////////////////////////////////////////////////////////
     loginForm l;
-
+    //Comment Baru
     l.show();
 
     return a.exec();
