@@ -59,7 +59,7 @@
 #define PATH_USER_ACCESS     ".RTUdata/config/usr.cfg"
 #define PATH_LOG             ".RTUdata/log.txt"
 
-#define WAIT_WRITE           20 //ms
+#define WAIT_WRITE           1 //ms
 
 #define MODE_GET_ENV         "0000"
 #define MODE_GET_SIM         "0001"
@@ -103,7 +103,12 @@ struct t_module{
     char file_address[32];
     int  flag_webclient;
     char status_webclient[32];
-    int  interval;
+    int  interval_relay;
+    int  interval_data;
+    int  flag_mode_http;
+    char mode_http[32];
+    int  port;
+    int  utc;
 
     int  flag_dual_gsm;
     int  last_signal;

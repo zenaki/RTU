@@ -28,7 +28,18 @@ void module::write_module(struct t_module *tmodule){
         strcpy(tmodule->status_webclient, "ACTIVE");
         sett.setValue("WEBCLIENT", tmodule->status_webclient);
     }
-    sett.setValue("INTERVAL", tmodule->interval);
+    sett.setValue("INTERVAL_RELAY", tmodule->interval_relay);
+    sett.setValue("INTERVAL_DATA", tmodule->interval_data);
+    sett.setValue("FLAG_MODE_HTTP", tmodule->mode_http);
+    if (tmodule->flag_mode_http == 0) {
+        strcpy(tmodule->mode_http, "GET");
+        sett.setValue("MODE_HTTP", tmodule->mode_http);
+    } else if (tmodule->flag_mode_http == 1) {
+        strcpy(tmodule->mode_http, "POST");
+        sett.setValue("MODE_HTTP", tmodule->mode_http);
+    }
+    sett.setValue("PORT", tmodule->port);
+    sett.setValue("UTC", tmodule->utc);
     sett.endGroup();
 
     sett.beginGroup( "INPUT" );
@@ -144,7 +155,12 @@ void module::read_module(struct t_module *tmodule, QString addressModule){
     strcpy(tmodule->file_address, sett.value("MODULE/FILE_ADDRESS").toString().toLatin1());
     tmodule->flag_webclient = sett.value("MODULE/FLAG_WEBCLIENT").toInt();
     strcpy(tmodule->status_webclient, sett.value("MODULE/WEBCLIENT").toString().toLatin1());
-    tmodule->interval = sett.value("MODULE/INTERVAL").toInt();
+    tmodule->interval_relay = sett.value("MODULE/INTERVAL_RELAY").toInt();
+    tmodule->interval_data = sett.value("MODULE/INTERVAL_DATA").toInt();
+    tmodule->flag_mode_http = sett.value("MODULE/FLAG_MODE_HTTP").toInt();
+    strcpy(tmodule->mode_http, sett.value("MODULE/MODE_HTTP").toString().toLatin1());
+    tmodule->port = sett.value("MODULE/PORT").toInt();
+    tmodule->utc = sett.value("MODULE/UTC").toInt();
 
     tmodule->flag_dual_gsm = sett.value("MODULE/FLAG_DUAL_GSM").toInt();
 

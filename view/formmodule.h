@@ -175,7 +175,7 @@ private:
     QCheckBox       *check_data_s[60];
     QSpinBox        *id_data_s[60];
     QLineEdit       *name_data_s[60];
-    QDoubleSpinBox  *value_data_s[60];
+//    QDoubleSpinBox  *value_data_s[60];
     QLineEdit       *unit_data_s[60];
     QDoubleSpinBox  *range_l_data_s[60];
     QDoubleSpinBox  *border_ll_data_s[60];

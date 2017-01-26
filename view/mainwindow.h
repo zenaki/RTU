@@ -61,6 +61,8 @@ public:
 //    QLightBoxWidget *busy;
 
     bool FinishRead;
+    bool standBy;
+    void checkRinjaniPassword();
 
     QLabel *bottom_message;
 

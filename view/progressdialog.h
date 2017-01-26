@@ -72,6 +72,7 @@ public:
 
     bool    cancel;
     bool    finish;
+    int     cnt_try;
 
     void Set_ENV(bool stat, struct t_module *tModule);
     void Set_SIM(bool stat, struct t_module *tModule);

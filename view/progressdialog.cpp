@@ -6,6 +6,7 @@ ProgressDialog::ProgressDialog(QWidget *parent) :
     ui(new Ui::ProgressDialog)
 {
     ui->setupUi(this);
+    cnt_try = 0;
 }
 
 ProgressDialog::~ProgressDialog()
@@ -23,7 +24,7 @@ void ProgressDialog::Processing(QSerialPort *SerialPort, QString address, QStrin
     cancel = false; finish = false;
     progressVal = 0;
     ui->progressBar->reset();
-    if (index.isEmpty()) ui->Description->clear();
+    /*if (index.isEmpty()) */ui->Description->clear();
     QStringList list_mode = mode.split(';');
     QStringList list_index = index.split(';');
 /** ---------------------------------------------------------- **/
@@ -127,7 +128,7 @@ void ProgressDialog::Processing(QSerialPort *SerialPort, QString address, QStrin
 void ProgressDialog::Request_ENV(bool stat)
 {
     if (stat) {
-        Request = "0000\r\n";
+        Request = QString::fromUtf8(MODE_GET_ENV) + "\r\n";
         Desc = "Request Environment ..";
         serial_write(Desc, Request, WAIT_WRITE);
         ui->progressBar->setValue(progressVal++);
@@ -137,7 +138,7 @@ void ProgressDialog::Request_ENV(bool stat)
 void ProgressDialog::Request_SIM(bool stat)
 {
     if (stat) {
-        Request = "0001\r\n";
+        Request = QString::fromUtf8(MODE_GET_SIM) + "\r\n";
         Desc = "Request SIM Configuration ..";
         serial_write(Desc, Request, WAIT_WRITE);
         ui->progressBar->setValue(progressVal++);
@@ -147,7 +148,7 @@ void ProgressDialog::Request_SIM(bool stat)
 void ProgressDialog::Request_IO(bool stat)
 {
     if (stat) {
-        Request = "0002\r\n";
+        Request = QString::fromUtf8(MODE_GET_I0) + "\r\n";
         Desc = "Request I/O ..";
         serial_write(Desc, Request, WAIT_WRITE);
         ui->progressBar->setValue(progressVal++);
@@ -167,7 +168,7 @@ void ProgressDialog::Request_Signal(bool stat)
 void ProgressDialog::Request_Sumber(bool stat)
 {
     if (stat) {
-        Request = "0004\r\n";
+        Request = QString::fromUtf8(MODE_GET_SRC) + "\r\n";
         Desc = "Request Sources ..";
         serial_write(Desc, Request, WAIT_WRITE);
         ui->progressBar->setValue(progressVal++);
@@ -177,7 +178,7 @@ void ProgressDialog::Request_Sumber(bool stat)
 void ProgressDialog::Request_Data(bool stat)
 {
     if (stat) {
-        Request = "0005\r\n";
+        Request = QString::fromUtf8(MODE_GET_DAT) + "\r\n";
         Desc = "Request Data ..";
         serial_write(Desc, Request, WAIT_WRITE);
         ui->progressBar->setValue(progressVal++);
@@ -206,7 +207,22 @@ void ProgressDialog::Get_ENV(struct t_module *tModule, QStringList data)
         strcpy(tModule->status_webclient, temp.toUtf8().data());
     }
     temp = data.at(7);
-    tModule->interval = temp.toInt()+3;
+    tModule->interval_relay = temp.toInt()+3;
+    temp = data.at(8);
+    tModule->interval_data = temp.toInt()+3;
+    temp = data.at(9);
+    tModule->flag_mode_http = temp.toInt();
+    if (temp == "1") {
+        temp = "POST";
+        strcpy(tModule->mode_http, temp.toUtf8().data());
+    } else if (temp == "0") {
+        temp = "GET";
+        strcpy(tModule->mode_http, temp.toUtf8().data());
+    }
+    temp = data.at(10);
+    tModule->port = temp.toInt();
+    temp = data.at(11);
+    tModule->utc = temp.toInt();
 }
 
 void ProgressDialog::Get_SIM(struct t_module *tModule, QStringList data)
@@ -467,13 +483,18 @@ void ProgressDialog::Get_Data(struct t_module *tModule, QStringList data)
 void ProgressDialog::Set_ENV(bool stat, t_module *tModule)
 {
     /** SET ENVIRONTMENT **/
-    Request.sprintf("0100 %s %s %s %s %d %d\r\n"
+    Request.sprintf("%s %s %s %s %s %d %d %d %d %d %d\r\n"
+                    , MODE_SET_ENV
                     , tModule->module_name
                     , tModule->serial_number
                     , tModule->server_address
                     , tModule->file_address
                     , tModule->flag_webclient
-                    , tModule->interval-3);
+                    , tModule->interval_relay-3
+                    , tModule->interval_data-3
+                    , tModule->flag_mode_http
+                    , tModule->port
+                    , tModule->utc);
     Desc.sprintf("Set Environtment \"%s \" ..", tModule->module_name);
     if (stat) {
         serial_write(Desc, Request, WAIT_WRITE);
@@ -484,7 +505,8 @@ void ProgressDialog::Set_ENV(bool stat, t_module *tModule)
 void ProgressDialog::Set_SIM(bool stat, t_module *tModule)
 {
     /** SET SIM 1 **/
-    Request.sprintf("0101 1 %s %s %s %d %s %s %s %s"
+    Request.sprintf("%s 1 %s %s %s %d %s %s %s %s"
+                    , MODE_SET_SIM
                     , tModule->device_name_gsm_1
                     , tModule->name_gsm_1
                     , tModule->number_gsm_1
@@ -500,7 +522,8 @@ void ProgressDialog::Set_SIM(bool stat, t_module *tModule)
     } else {progressVal++;}
 
     /** SET SIM 2 **/
-    Request.sprintf("0101 2 %s %s %s %d %s %s %s %s"
+    Request.sprintf("%s 2 %s %s %s %d %s %s %s %s"
+                    , MODE_SET_SIM
                     , tModule->device_name_gsm_2
                     , tModule->name_gsm_2
                     , tModule->number_gsm_2
@@ -521,10 +544,13 @@ void ProgressDialog::Set_Input(bool stat, t_module *tModule, QString index)
     /** SET INPUT DIGITAL **/
     if (index.isEmpty()) {
         for (int i = 0; i < tModule->Input.length(); i++) {
+            int validation = 0;
+            if (i == 0) validation = 2;
+            if (i == tModule->sumber.length()-1) validation = 1;
             temp = tModule->Input.at(i);
             list1 = temp.split(';');
 
-            Request = "0102 " + list1.at(1) + " " + list1.at(2) + " " + list1.at(3) + " " + list1.at(4) + "\r\n";
+            Request = QString::fromUtf8(MODE_SET_KNL) + " " + list1.at(1) + " " + list1.at(2) + " " + list1.at(3) + " " + list1.at(4) + " " + QString::number(validation) + "\r\n";
             Desc = "Set Input Channel " + list1.at(1) + " ..";
             if (stat) {
                 serial_write(Desc, Request, WAIT_WRITE);
@@ -536,7 +562,7 @@ void ProgressDialog::Set_Input(bool stat, t_module *tModule, QString index)
         temp = tModule->Input.at(index.toInt());
         list1 = temp.split(';');
 
-        Request = "0102 " + list1.at(1) + " " + list1.at(2) + " " + list1.at(3) + " " + list1.at(4) + "\r\n";
+        Request = QString::fromUtf8(MODE_SET_KNL) + " " + list1.at(1) + " " + list1.at(2) + " " + list1.at(3) + " " + list1.at(4) + " 3\r\n";
         Desc = "Set Input Channel " + list1.at(1) + " ..";
         if (stat) {
             serial_write(Desc, Request, WAIT_WRITE);
@@ -552,7 +578,7 @@ void ProgressDialog::Set_Output(bool stat, t_module *tModule, QString index)
         for (int i = 0; i < tModule->Output.length(); i++) {
             temp = tModule->Output.at(i);
             list1 = temp.split(';');
-            Request = "0103 " + list1.at(1) + " " + list1.at(2) + " " + list1.at(4) + "\r\n";
+            Request = QString::fromUtf8(MODE_SET_RLY) + " " + list1.at(1) + " " + list1.at(2) + " " + list1.at(4) + "\r\n";
             Desc = "Set Output Channel " + list1.at(1) + " ..";
             if (stat) {
                 serial_write(Desc, Request, WAIT_WRITE);
@@ -563,7 +589,7 @@ void ProgressDialog::Set_Output(bool stat, t_module *tModule, QString index)
     } else {
         temp = tModule->Output.at(index.toInt());
         list1 = temp.split(';');
-        Request = "0103 " + list1.at(1) + " " + list1.at(2) + " " + list1.at(4) + "\r\n";
+        Request = QString::fromUtf8(MODE_SET_RLY) + " " + list1.at(1) + " " + list1.at(2) + " " + list1.at(4) + "\r\n";
         Desc = "Set Output Channel " + list1.at(1) + " ..";
         if (stat) {
             serial_write(Desc, Request, WAIT_WRITE);
@@ -576,101 +602,111 @@ void ProgressDialog::Set_Sumber(bool stat, t_module *tModule, QString index)
 {
     if (index.isEmpty()) {
         for (int i = 0; i < tModule->sumber.length(); i++) {
+            int validation = 0;
+            if (i == 0) validation = 2;
+            if (i == tModule->sumber.length()-1) validation = 1;
             temp = tModule->sumber.at(i);
             list1 = temp.split(";");
 
-            Request = "0104 " + list1.at(0) + " " + list1.at(1) + " " +
+            Request = QString::fromUtf8(MODE_SET_SRC) + " " + list1.at(0) + " " + list1.at(1) + " " +
                       list1.at(2) + " " + list1.at(3) + " " + list1.at(4) + " " +
                       list1.at(5) + ";" + list1.at(6) + ";" + list1.at(7) + ";" +
                       list1.at(8) + ";" + list1.at(9) + ";" +
-                      list1.at(10) + ";" + list1.at(11) + "\r\n";
+                      list1.at(10) + ";" + list1.at(11) + " " +
+                      QString::number(validation) + "\r\n";
             Desc = "Set Sources " + list1.at(0) + " : \"" + list1.at(1) + "\" ..";
             if (stat) {
                 serial_write(Desc, Request, WAIT_WRITE);
                 ui->progressBar->setValue(progressVal++);
             } else {progressVal++;}
 
-            if (list1.at(5) != "0" && list1.at(11) != "") {
-                temp = list1.at(11);
-                for (int k = 0; k < tModule->data.length(); k++) {
-                    str = tModule->data.at(k);
-                    list2 = str.split(';');
-                    if (temp == list2.at(1)) {
-                        str = list2.at(0);
-                        break;
-                    }
-                }
-                temp = list1.at(10);
-                for (int j = 0; j < temp.toInt()/2; j++) {
-                    Request = "set_data " + QString::number(str.toInt()+j) +
-                              " status " + list1.at(4);
-                    if (list1.at(4) == "1") {
-                        Desc = "Set Data " + QString::number(str.toInt()+j) + " with status : ACTIVE ..";
-                    } else {
-                        Desc = "Set Data " + QString::number(str.toInt()+j) + " with status : NOT ACTIVE ..";
-                    }
-                    if (stat) {
-                        serial_write(Desc, Request, WAIT_WRITE);
-                        ui->progressBar->setValue(progressVal++);
-                    } else {progressVal++;}
-                }
-            }
+//            if (list1.at(5) != "0" && list1.at(11) != "") {
+//                temp = list1.at(11);
+//                for (int k = 0; k < tModule->data.length(); k++) {
+//                    str = tModule->data.at(k);
+//                    list2 = str.split(';');
+//                    if (temp == list2.at(1)) {
+//                        str = list2.at(0);
+//                        break;
+//                    }
+//                }
+//                temp = list1.at(10);
+//                for (int j = 0; j < temp.toInt()/2; j++) {
+//                    Request = "set_data " + QString::number(str.toInt()+j) +
+//                              " status " + list1.at(4);
+//                    if (list1.at(4) == "1") {
+//                        Desc = "Set Data " + QString::number(str.toInt()+j) + " with status : ACTIVE ..";
+//                    } else {
+//                        Desc = "Set Data " + QString::number(str.toInt()+j) + " with status : NOT ACTIVE ..";
+//                    }
+//                    if (stat) {
+//                        serial_write(Desc, Request, WAIT_WRITE);
+//                        ui->progressBar->setValue(progressVal++);
+//                    } else {progressVal++;}
+//                }
+//            }
             if (cancel) break;
         }
     } else {
         temp = tModule->sumber.at(index.toInt());
         list1 = temp.split(";");
 
-        Request = "0104 " + list1.at(0) + " " + list1.at(1) + " " +
+        Request = QString::fromUtf8(MODE_SET_SRC) + " " + list1.at(0) + " " + list1.at(1) + " " +
                   list1.at(2) + " " + list1.at(3) + " " + list1.at(4) + " " +
                   list1.at(5) + ";" + list1.at(6) + ";" + list1.at(7) + ";" +
                   list1.at(8) + ";" + list1.at(9) + ";" +
-                  list1.at(10) + ";" + list1.at(11) + "\r\n";
+                  list1.at(10) + ";" + list1.at(11) + " 3\r\n";
         Desc = "Set Sources " + list1.at(0) + " : \"" + list1.at(1) + "\" ..";
         if (stat) {
             serial_write(Desc, Request, WAIT_WRITE);
             ui->progressBar->setValue(progressVal++);
         } else {progressVal++;}
 
-        if (list1.at(5) != "0" && list1.at(11) != "") {
-            temp = list1.at(11);
-            for (int k = 0; k < tModule->data.length(); k++) {
-                str = tModule->data.at(k);
-                list2 = str.split(';');
-                if (temp == list2.at(1)) {
-                    str = list2.at(0);
-                    break;
-                }
-            }
-            temp = list1.at(10);
-            for (int j = 0; j < temp.toInt()/2; j++) {
-                Request = "set_data " + QString::number(str.toInt()+j) +
-                          " status " + list1.at(4);
-                if (list1.at(4) == "1") {
-                    Desc = "Set Data " + QString::number(str.toInt()+j) + " with status : ACTIVE ..";
-                } else {
-                    Desc = "Set Data " + QString::number(str.toInt()+j) + " with status : NOT ACTIVE ..";
-                }
-                if (stat) {
-                    serial_write(Desc, Request, WAIT_WRITE);
-                    ui->progressBar->setValue(progressVal++);
-                } else {progressVal++;}
-            }
-        }
+//        if (list1.at(5) != "0" && list1.at(11) != "") {
+//            temp = list1.at(11);
+//            for (int k = 0; k < tModule->data.length(); k++) {
+//                str = tModule->data.at(k);
+//                list2 = str.split(';');
+//                if (temp == list2.at(1)) {
+//                    str = list2.at(0);
+//                    break;
+//                }
+//            }
+//            temp = list1.at(10);
+//            for (int j = 0; j < temp.toInt()/2; j++) {
+//                Request = "set_data " + QString::number(str.toInt()+j) +
+//                          " status " + list1.at(4);
+//                if (list1.at(4) == "1") {
+//                    Desc = "Set Data " + QString::number(str.toInt()+j) + " with status : ACTIVE ..";
+//                } else {
+//                    Desc = "Set Data " + QString::number(str.toInt()+j) + " with status : NOT ACTIVE ..";
+//                }
+//                if (stat) {
+//                    serial_write(Desc, Request, WAIT_WRITE);
+//                    ui->progressBar->setValue(progressVal++);
+//                } else {progressVal++;}
+//            }
+//        }
     }
 }
 
 void ProgressDialog::Set_Data(bool stat, t_module *tModule, QString index)
 {
-    if (index.isEmpty()) {
+//    qDebug() << "-----------------------------------";
+    if (index.length() == 0) {
         for (int i = 0; i < tModule->data.length(); i++) {
+            int validation = 0;
+            if (i == 0) validation = 2;
+            if (i == tModule->data.length()-1) validation = 1;
             temp = tModule->data.at(i);
             list1 = temp.split(";");
 
-            Request = "0105 " + list1.at(0) + " " + list1.at(1) + " " +
+            Request = QString::fromUtf8(MODE_SET_DAT) + " " + list1.at(0) + " " + list1.at(1) + " " +
                       list1.at(2) + " " + list1.at(4) + " " + list1.at(5) + " " +
                       list1.at(6) + " " + list1.at(7) + " " + list1.at(8) + " " +
-                      list1.at(9) + " " + list1.at(10) + " " + list1.at(11) + "\r\n";
+                      list1.at(9) + " " + list1.at(10) + " " + list1.at(11) + " " +
+                      QString::number(validation) + "\r\n";
+//            qDebug() << Request;
             Desc = "Set Data " + list1.at(0) + " ..";
             if (stat) {
                 serial_write(Desc, Request, WAIT_WRITE);
@@ -679,19 +715,43 @@ void ProgressDialog::Set_Data(bool stat, t_module *tModule, QString index)
             if (cancel) break;
         }
     } else {
-        temp = tModule->data.at(index.toInt());
-        list1 = temp.split(";");
+//        if (index.length() > 1) {
+//            for (int i = 0; i < index.length(); i++) {
+//                int validation = 0;
+//                if (i == 0) validation = 2;
+//                if (i == index.length()-1) validation = 1;
+//                temp = tModule->data.at(index.at(i).toInt());
+//                list1 = temp.split(";");
 
-        Request = "0105 " + list1.at(0) + " " + list1.at(1) + " " +
-                  list1.at(2) + " " + list1.at(4) + " " + list1.at(5) + " " +
-                  list1.at(6) + " " + list1.at(7) + " " + list1.at(8) + " " +
-                  list1.at(9) + " " + list1.at(10) + " " + list1.at(11) + "\r\n";
-        Desc = "Set Data " + list1.at(0)  + " ..";
-        if (stat) {
-            serial_write(Desc, Request, WAIT_WRITE);
-            ui->progressBar->setValue(progressVal++);
-        } else {progressVal++;}
+//                Request = "0105 " + list1.at(0) + " " + list1.at(1) + " " +
+//                          list1.at(2) + " " + list1.at(4) + " " + list1.at(5) + " " +
+//                          list1.at(6) + " " + list1.at(7) + " " + list1.at(8) + " " +
+//                          list1.at(9) + " " + list1.at(10) + " " + list1.at(11) + " " +
+//                          QString::number(validation) + "\r\n";
+//                Desc = "Set Data " + list1.at(0)  + " ..";
+//                qDebug() << Request;
+//                if (stat) {
+//                    serial_write(Desc, Request, WAIT_WRITE);
+//                    ui->progressBar->setValue(progressVal++);
+//                } else {progressVal++;}
+//            }
+//        } else {
+            temp = tModule->data.at(index.toInt());
+            list1 = temp.split(";");
+
+            Request = QString::fromUtf8(MODE_SET_DAT) + " " + list1.at(0) + " " + list1.at(1) + " " +
+                      list1.at(2) + " " + list1.at(4) + " " + list1.at(5) + " " +
+                      list1.at(6) + " " + list1.at(7) + " " + list1.at(8) + " " +
+                      list1.at(9) + " " + list1.at(10) + " " + list1.at(11) + " 3\r\n";
+            Desc = "Set Data " + list1.at(0)  + " ..";
+//            qDebug() << Request;
+            if (stat) {
+                serial_write(Desc, Request, WAIT_WRITE);
+                ui->progressBar->setValue(progressVal++);
+            } else {progressVal++;}
+//        }
     }
+//    qDebug() << "-----------------------------------";
 }
 
 void ProgressDialog::Reset_Board(bool stat)

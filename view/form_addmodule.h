@@ -42,11 +42,17 @@ private slots:
 
     void enabledButton();
 
-    void on_spin_interval_h_valueChanged(int arg1);
+    void on_spin_interval_relay_d_valueChanged(int arg1);
 
-    void on_spin_interval_m_valueChanged(int arg1);
+    void on_spin_interval_relay_h_valueChanged(int arg1);
 
-    void on_spin_interval_d_valueChanged(int arg1);
+    void on_spin_interval_relay_m_valueChanged(int arg1);
+
+    void on_spin_interval_data_d_valueChanged(int arg1);
+
+    void on_spin_interval_data_h_valueChanged(int arg1);
+
+    void on_spin_interval_data_m_valueChanged(int arg1);
 
 private:
     bool active_button;

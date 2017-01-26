@@ -57,6 +57,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     progress_dialog = new ProgressDialog(this);
     progress_dialog->setModal(true);
+    standBy = false;
 }
 
 MainWindow::~MainWindow()
@@ -100,53 +101,99 @@ void MainWindow::setActiveSubWindow(QWidget *window)
 void MainWindow::on_actionNew_triggered()
 {
     if (SerialPort->isOpen()) {
-        bool timeout = false;
-        timeout = work->Request_ENV(SerialPort, timeout);
-        if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
+//        this->checkRinjaniPassword();
+//        if (standBy) {
+            bool timeout = false;
+            timeout = work->Request_ENV(SerialPort, timeout);
+            if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port ..", 0, 0); return;}
 
-        struct t_module tModule;
-        bool cek = false;
-        QString command;
-        QString newFiles;
-        QDir path(".RTUdata/module");
-        QStringList files = path.entryList(QDir::Files);
+            struct t_module tModule;
+            bool cek = false;
+            QString command;
+            QString newFiles;
+            QDir path(".RTUdata/module");
+            QStringList files = path.entryList(QDir::Files);
 
-        newFiles = GetNamaBoard;
-        newFiles.prepend("m_").append(".dbe");
+            newFiles = GetNamaBoard;
+            newFiles.prepend("m_").append(".dbe");
 
-        /* cek apakah nama module sudah dipakai atau belum */
-        for(int i = 0; i < files.count(); i++){
-            if(newFiles == QString(files.at(i))) {
-                cek = true;
-                break;
-            } else {
-                cek = false;
+            /* cek apakah nama module sudah dipakai atau belum */
+            for(int i = 0; i < files.count(); i++){
+                if(newFiles == QString(files.at(i))) {
+                    cek = true;
+                    break;
+                } else {
+                    cek = false;
+                }
             }
-        }
 
-        if (cek) {
-            command.sprintf("Module : %s\nis Exist !!\n\n", GetNamaBoard.toUtf8().data());
-            command.append("Replace it ??");
-            QMessageBox::StandardButton reply;
-            reply = QMessageBox::question(this, "Attention !!", command,
-                                          QMessageBox::Yes|QMessageBox::No);
-            if (reply == QMessageBox::Yes) {
-                QString Address = ".RTUdata/module/" + newFiles;
-                mod->read_module(&tModule, Address);
-                strcpy(tModule.serial_number, GetNoSeri.toLatin1());
+            if (cek) {
+                command.sprintf("Module : %s\nis Exist !!\n\n", GetNamaBoard.toUtf8().data());
+                command.append("Replace it ??");
+                QMessageBox::StandardButton reply;
+                reply = QMessageBox::question(this, "Attention !!", command,
+                                              QMessageBox::Yes|QMessageBox::No);
+                if (reply == QMessageBox::Yes) {
+                    QString Address = ".RTUdata/module/" + newFiles;
+                    mod->read_module(&tModule, Address);
+                    strcpy(tModule.serial_number, GetNoSeri.toLatin1());
 
-                progress_dialog->show();
-                progress_dialog->setWindowTitle("Get from board ..");
-                progress_dialog->Processing(SerialPort, Address, "0000;0001;0005;0002;0004");
-                progress_dialog->close();
+                    progress_dialog->show();
+                    progress_dialog->setWindowTitle("Get from board ..");
+                    progress_dialog->Processing(SerialPort, Address, "0000;0001;0005;0002;0004");
+                    progress_dialog->close();
 
+                } else {
+                    GetNamaBoard.append("_new");
+                    QString newModule = "m_" + GetNamaBoard + ".dbe";
+                    strcpy(tModule.module_name, GetNamaBoard.toUtf8().data());
+                    strcpy(tModule.serial_number, GetNoSeri.toLatin1());
+                    QString Address = ".RTUdata/module/" + newModule;
+
+                    tModule.InputName.clear();
+                    tModule.OutputName.clear();
+                    tModule.jml_alarm = 0;
+
+                    progress_dialog->show();
+                    progress_dialog->setWindowTitle("Get from board ..");
+                    progress_dialog->Processing(SerialPort, Address, "0000;0001;0005;0002;0004");
+                    progress_dialog->close();
+
+                    faddModule = new form_addModule(this, false, Address, 1);
+                    faddModule->setWindowTitle("New Module");
+                    faddModule->setModal(true);
+
+                    faddModule->exec();
+
+                    if (faddModule->accept == 0) {
+                        QFile CurrFile(Address);
+                        CurrFile.remove();
+                        return;
+                    }
+
+                    Address = faddModule->currentFile;
+                    mod->read_module(&tModule, Address);
+
+                    bool fail = false;
+
+                    progress_dialog->show();
+                    progress_dialog->setWindowTitle("Set to board ..");
+                    progress_dialog->Processing(SerialPort, Address, "0100;0101");
+                    progress_dialog->close();
+
+                    this->GetNamaBoard.sprintf("%s", tModule.module_name);
+                    this->Refresh_Tree();
+
+                    if (fail) {
+                        this->on_actionDisconnect_triggered();
+                        QMessageBox::information(this,
+                                                 "Serial Communication",
+                                                 "Please check your serial communication port ..", 0, 0);
+                        return;
+                    }
+                }
             } else {
-                GetNamaBoard.append("_new");
-                QString newModule = "m_" + GetNamaBoard + ".dbe";
-                strcpy(tModule.module_name, GetNamaBoard.toUtf8().data());
-                strcpy(tModule.serial_number, GetNoSeri.toLatin1());
-                QString Address = ".RTUdata/module/" + newModule;
-
+                QString Address = ".RTUdata/module/" + newFiles;
                 tModule.InputName.clear();
                 tModule.OutputName.clear();
                 tModule.jml_alarm = 0;
@@ -156,59 +203,26 @@ void MainWindow::on_actionNew_triggered()
                 progress_dialog->Processing(SerialPort, Address, "0000;0001;0005;0002;0004");
                 progress_dialog->close();
 
-                faddModule = new form_addModule(this, false, Address, 1);
-                faddModule->setWindowTitle("New Module");
-                faddModule->setModal(true);
+                strcpy(tModule.module_name, GetNamaBoard.toUtf8().data());
+                strcpy(tModule.serial_number, GetNoSeri.toLatin1());
 
-                faddModule->exec();
+                QString title;
+                title.sprintf("%s", tModule.module_name);
 
-                if (faddModule->accept == 0) {
-                    QFile CurrFile(Address);
-                    CurrFile.remove();
-                    return;
-                }
-
-                Address = faddModule->currentFile;
-                mod->read_module(&tModule, Address);
-
-                bool fail = false;
-
-                progress_dialog->show();
-                progress_dialog->setWindowTitle("Set to board ..");
-                progress_dialog->Processing(SerialPort, Address, "0100;0101");
-                progress_dialog->close();
-
-                this->GetNamaBoard.sprintf("%s", tModule.module_name);
-                this->Refresh_Tree();
-
-                if (fail) {
-                    this->on_actionDisconnect_triggered();
-                    QMessageBox::information(this,
-                                             "Serial Communication",
-                                             "Please check your serial communication port ..", 0, 0);
-                    return;
-                }
+                module_name[module_count] = work->newModule(modelTree, this->ui->treeView, title);
+                module_count++;
             }
-        } else {
-            QString Address = ".RTUdata/module/" + newFiles;
-            tModule.InputName.clear();
-            tModule.OutputName.clear();
-            tModule.jml_alarm = 0;
-
-            progress_dialog->show();
-            progress_dialog->setWindowTitle("Get from board ..");
-            progress_dialog->Processing(SerialPort, Address, "0000;0001;0005;0002;0004");
-            progress_dialog->close();
-
-            strcpy(tModule.module_name, GetNamaBoard.toUtf8().data());
-            strcpy(tModule.serial_number, GetNoSeri.toLatin1());
-
-            QString title;
-            title.sprintf("%s", tModule.module_name);
-
-            module_name[module_count] = work->newModule(modelTree, this->ui->treeView, title);
-            module_count++;
-        }
+//        } else {
+////            QMessageBox::critical(this, tr("Error"), SerialPort->errorString());
+//            bottom_message->setStyleSheet("QLabel { color : red; }");
+//            bottom_message->setText("Connecting Fail");
+////            this->ui->statusBar->setStyleSheet("QLabel { color : red; }");
+////            this->ui->statusBar->showMessage("Connecting Fail");
+//            if (SerialPort->isOpen()) SerialPort->close();
+//            this->ui->actionConnect->setEnabled(true);
+//            this->ui->actionDisconnect->setEnabled(false);
+//            this->ui->actionConfig->setEnabled(true);
+//        }
     } else {
         faddModule = new form_addModule(this, true);
         faddModule->setWindowTitle("New Module");
@@ -426,20 +440,33 @@ void MainWindow::on_actionConnect_triggered()
     }
 
     if (SerialPort->open(QIODevice::ReadWrite)) {
-        Setting.read_setting(&tSerial);
-        bottom_message->setStyleSheet("QLabel { color : blue; }");
-//        this->ui->statusBar->setStyleSheet("QLabel { color : blue; }");
-        StatusMessage = QString("Connected to ") + tSerial.name +
-                        QString(", BR = ") + tSerial.stringBaudRate +
-                        QString(", DB = ") + tSerial.stringDataBits +
-                        QString(", PR = ") + tSerial.stringParity +
-                        QString(", SB = ") + tSerial.stringStopBits +
-                        QString(", FC = ") + tSerial.stringFlowControl;
-        bottom_message->setText(StatusMessage);
-        this->ui->statusBar->showMessage(StatusMessage);
-        this->ui->actionConnect->setEnabled(false);
-        this->ui->actionDisconnect->setEnabled(true);
-        this->ui->actionConfig->setEnabled(false);
+        this->checkRinjaniPassword();
+//        if (standBy) {
+            Setting.read_setting(&tSerial);
+            bottom_message->setStyleSheet("QLabel { color : blue; }");
+//            this->ui->statusBar->setStyleSheet("QLabel { color : blue; }");
+            StatusMessage = QString("Connected to ") + tSerial.name +
+                            QString(", BR = ") + tSerial.stringBaudRate +
+                            QString(", DB = ") + tSerial.stringDataBits +
+                            QString(", PR = ") + tSerial.stringParity +
+                            QString(", SB = ") + tSerial.stringStopBits +
+                            QString(", FC = ") + tSerial.stringFlowControl;
+            bottom_message->setText(StatusMessage);
+            this->ui->statusBar->showMessage(StatusMessage);
+            this->ui->actionConnect->setEnabled(false);
+            this->ui->actionDisconnect->setEnabled(true);
+            this->ui->actionConfig->setEnabled(false);
+//        } else {
+////            QMessageBox::critical(this, tr("Error"), SerialPort->errorString());
+//            bottom_message->setStyleSheet("QLabel { color : red; }");
+//            bottom_message->setText("Connecting Fail");
+////            this->ui->statusBar->setStyleSheet("QLabel { color : red; }");
+////            this->ui->statusBar->showMessage("Connecting Fail");
+//            if (SerialPort->isOpen()) SerialPort->close();
+//            this->ui->actionConnect->setEnabled(true);
+//            this->ui->actionDisconnect->setEnabled(false);
+//            this->ui->actionConfig->setEnabled(true);
+//        }
     } else {
 //        QMessageBox::critical(this, tr("Error"), SerialPort->errorString());
         bottom_message->setStyleSheet("QLabel { color : red; }");
@@ -616,6 +643,12 @@ void MainWindow::readData()
         progress_dialog->write_FinishRead(FinishRead, 1, str_data);
         cryp code; code.encryp(PATH_SERIAL_PARSING);
         str_data.clear();
+    } else if (str_data.indexOf("Passwd salah	!") > 0 || str_data.indexOf("assword lock!") > 0) {
+        SerialPort->write("kzl\r\n");
+        SerialPort->write("\r\n");
+        str_data.clear();
+    } else if (str_data.indexOf("injani$") > 0) {
+        standBy = true;
     }
 }
 
@@ -653,7 +686,28 @@ void MainWindow::Refresh_Tree()
     }
 
 //    mTree.add_firstItem(modelTree, ui->treeView, "Text");
-//    mTree.add_firstItem(modelTree, ui->treeView, "Configuration");
+    //    mTree.add_firstItem(modelTree, ui->treeView, "Configuration");
+}
+
+void MainWindow::checkRinjaniPassword()
+{
+    standBy = false;
+//    int cnt_standBy_timeout = 0; int cnt = 0;
+//    while (!standBy) {
+//        cnt_standBy_timeout++;
+//        if (cnt_standBy_timeout > 50000) {
+//            if (SerialPort->isOpen()) {
+//                SerialPort->write("\r\n");
+//                cnt_standBy_timeout = 0; cnt++;
+//            } else {
+//                qDebug() << "Not Connected";
+//            }
+//        }
+//        if (standBy) break;
+//        if (cnt > 10) break;
+//    }
+    SerialPort->write("\r\n");
+    qDebug() << "Selesai Periksa";
 }
 
 void MainWindow::on_actionRefresh_triggered()

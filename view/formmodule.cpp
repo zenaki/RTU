@@ -343,32 +343,51 @@ void formModule::setInterface_Environtment(QString address)
     modules.sprintf("%s", tModule.status_webclient);
     this->ui->web_client->setText(modules);
     int s = 0; int m = 0; int h = 0; int d = 0;
-    if (tModule.interval <= 60) {
-        this->ui->interval->setText(QString::number(tModule.interval) + " s");
+    if (tModule.interval_relay <= 60) {
+        this->ui->interval_relay->setText(QString::number(tModule.interval_relay) + " s");
     } else {
-        s = tModule.interval;
+        s = tModule.interval_relay;
         m = s / 60;
-        for (int i = 0; i < m; i++) {
-            s = s - 60;
-        }
+        for (int i = 0; i < m; i++) s = s - 60;
         if (m > 60) {
             h = m / 60;
-            for (int i = 0; i < h; i++) {
-                m = m - 60;
-            }
+            for (int i = 0; i < h; i++) m = m - 60;
             if (h > 24) {
                 d = h / 24;
-                for (int i = 0; i < d; i++) {
-                    h = h - 24;
-                }
-                this->ui->interval->setText(QString::number(d) + " d " + QString::number(h) + " h " + QString::number(m) + " m " + QString::number(s) + " s");
+                for (int i = 0; i < d; i++) h = h - 24;
+                this->ui->interval_relay->setText(QString::number(d) + " d " + QString::number(h) + " h " + QString::number(m) + " m " + QString::number(s) + " s");
             } else {
-                this->ui->interval->setText(QString::number(h) + " h " + QString::number(m) + " m " + QString::number(s) + " s");
+                this->ui->interval_relay->setText(QString::number(h) + " h " + QString::number(m) + " m " + QString::number(s) + " s");
             }
         } else {
-            this->ui->interval->setText(QString::number(m) + " m " + QString::number(s) + " s");
+            this->ui->interval_relay->setText(QString::number(m) + " m " + QString::number(s) + " s");
         }
     }
+    s = 0; m = 0; h = 0; d = 0;
+    if (tModule.interval_data <= 60) {
+        this->ui->interval_data->setText(QString::number(tModule.interval_data) + " s");
+    } else {
+        s = tModule.interval_data;
+        m = s / 60;
+        for (int i = 0; i < m; i++) s = s - 60;
+        if (m > 60) {
+            h = m / 60;
+            for (int i = 0; i < h; i++) m = m - 60;
+            if (h > 24) {
+                d = h / 24;
+                for (int i = 0; i < d; i++) h = h - 24;
+                this->ui->interval_data->setText(QString::number(d) + " d " + QString::number(h) + " h " + QString::number(m) + " m " + QString::number(s) + " s");
+            } else {
+                this->ui->interval_data->setText(QString::number(h) + " h " + QString::number(m) + " m " + QString::number(s) + " s");
+            }
+        } else {
+            this->ui->interval_data->setText(QString::number(m) + " m " + QString::number(s) + " s");
+        }
+    }
+    modules.sprintf("%s", tModule.mode_http);
+    this->ui->mode_http->setText(modules);
+    this->ui->port->setText(QString::number(tModule.port));
+    this->ui->utc->setText(QString::number(tModule.utc));
 }
 
 void formModule::setInterface_Sumber(QString address)
@@ -722,20 +741,20 @@ void formModule::setInterface_Data_Settings(QString address)
     QString type;
 
     this->ui->tabel_data_s->verticalHeader()->setHidden(true);
-    this->ui->tabel_data_s->setColumnCount(13);
+    this->ui->tabel_data_s->setColumnCount(12);
     this->ui->tabel_data_s->setColumnWidth(0, 25);
     this->ui->tabel_data_s->setColumnWidth(1, 25);
     this->ui->tabel_data_s->setColumnWidth(2, 75);
     this->ui->tabel_data_s->setColumnWidth(3, 75);
+//    this->ui->tabel_data_s->setColumnWidth(4, 75);
     this->ui->tabel_data_s->setColumnWidth(4, 75);
-    this->ui->tabel_data_s->setColumnWidth(5, 75);
+    this->ui->tabel_data_s->setColumnWidth(5, 100);
     this->ui->tabel_data_s->setColumnWidth(6, 100);
     this->ui->tabel_data_s->setColumnWidth(7, 100);
     this->ui->tabel_data_s->setColumnWidth(8, 100);
     this->ui->tabel_data_s->setColumnWidth(9, 100);
     this->ui->tabel_data_s->setColumnWidth(10, 100);
-    this->ui->tabel_data_s->setColumnWidth(11, 100);
-    this->ui->tabel_data_s->setColumnWidth(12, 125);
+    this->ui->tabel_data_s->setColumnWidth(11, 125);
     this->ui->tabel_data_s->setRowCount(rowData);
 
     for (int i = 0; i < rowData; i++){
@@ -749,9 +768,10 @@ void formModule::setInterface_Data_Settings(QString address)
         name_data_s[i]->setAlignment(Qt::AlignHCenter);
         name_data_s[i]->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
 
-        value_data_s[i] = new QDoubleSpinBox(this);
-        value_data_s[i]->setAlignment(Qt::AlignHCenter);
-        value_data_s[i]->setEnabled(false);
+//        value_data_s[i] = new QDoubleSpinBox(this);
+//        value_data_s[i]->setAlignment(Qt::AlignHCenter);
+//        value_data_s[i]->setEnabled(false);
+//        value_data_s[i]->setRange(-999999,999999);
 
         unit_data_s[i] = new QLineEdit(this);
         unit_data_s[i]->setAlignment(Qt::AlignHCenter);
@@ -793,7 +813,7 @@ void formModule::setInterface_Data_Settings(QString address)
 
         id_data_s[i]->setValue(list.at(1).toInt());
         name_data_s[i]->setText(list.at(2));
-        value_data_s[i]->setValue(list.at(3).toInt());
+//        value_data_s[i]->setValue(list.at(3).toInt());
         unit_data_s[i]->setText(list.at(4));
         range_l_data_s[i]->setValue(list.at(5).toInt());
         border_ll_data_s[i]->setValue(list.at(6).toInt());
@@ -807,15 +827,15 @@ void formModule::setInterface_Data_Settings(QString address)
         this->ui->tabel_data_s->setItem(i,1, new QTableWidgetItem(type));
         this->ui->tabel_data_s->setCellWidget(i,2, id_data_s[i]);
         this->ui->tabel_data_s->setCellWidget(i,3, name_data_s[i]);
-        this->ui->tabel_data_s->setCellWidget(i,4, value_data_s[i]);
-        this->ui->tabel_data_s->setCellWidget(i,5, unit_data_s[i]);
-        this->ui->tabel_data_s->setCellWidget(i,6, range_l_data_s[i]);
-        this->ui->tabel_data_s->setCellWidget(i,7, border_ll_data_s[i]);
-        this->ui->tabel_data_s->setCellWidget(i,8, border_l_data_s[i]);
-        this->ui->tabel_data_s->setCellWidget(i,9, border_h_data_s[i]);
-        this->ui->tabel_data_s->setCellWidget(i,10, border_hh_data_s[i]);
-        this->ui->tabel_data_s->setCellWidget(i,11, range_h_data_s[i]);
-        this->ui->tabel_data_s->setCellWidget(i,12, state_data_s[i]);
+//        this->ui->tabel_data_s->setCellWidget(i,4, value_data_s[i]);
+        this->ui->tabel_data_s->setCellWidget(i,4, unit_data_s[i]);
+        this->ui->tabel_data_s->setCellWidget(i,5, range_l_data_s[i]);
+        this->ui->tabel_data_s->setCellWidget(i,6, border_ll_data_s[i]);
+        this->ui->tabel_data_s->setCellWidget(i,7, border_l_data_s[i]);
+        this->ui->tabel_data_s->setCellWidget(i,8, border_h_data_s[i]);
+        this->ui->tabel_data_s->setCellWidget(i,9, border_hh_data_s[i]);
+        this->ui->tabel_data_s->setCellWidget(i,10, range_h_data_s[i]);
+        this->ui->tabel_data_s->setCellWidget(i,11, state_data_s[i]);
     }
 
     this->ui->tabel_data_s->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -1197,7 +1217,7 @@ void formModule::on_pbSetAll_clicked()
         data[i] = QString::number(i+1) + ";" +
                   QString::number(id_data_s[i]->value()) + ";" +
                   name_data_s[i]->text() + ";" +
-                  QString::number(value_data_s[i]->value()) + ";" +
+                  "0;" +
                   unit_data_s[i]->text() + ";" +
                   QString::number(range_l_data_s[i]->value()) + ";" +
                   QString::number(border_ll_data_s[i]->value()) + ";" +
@@ -1442,7 +1462,7 @@ void formModule::on_pbSet_clicked()
             data[i] = QString::number(i+1) + ";" +
                       QString::number(id_data_s[i]->value()) + ";" +
                       name_data_s[i]->text() + ";" +
-                      QString::number(value_data_s[i]->value()) + ";" +
+                      "0;" +
                       unit_data_s[i]->text() + ";" +
                       QString::number(range_l_data_s[i]->value()) + ";" +
                       QString::number(border_ll_data_s[i]->value()) + ";" +
@@ -1739,7 +1759,7 @@ void formModule::on_pbSetChk_clicked()
                 data[i] = QString::number(i+1) + ";" +
                           QString::number(id_data_s[i]->value()) + ";" +
                           name_data_s[i]->text() + ";" +
-                          QString::number(value_data_s[i]->value()) + ";" +
+                          "0;" +
                           unit_data_s[i]->text() + ";" +
                           QString::number(range_l_data_s[i]->value()) + ";" +
                           QString::number(border_ll_data_s[i]->value()) + ";" +
