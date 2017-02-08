@@ -106,7 +106,6 @@ void worker::showModule(QWidget *parent, QMdiArea *mdiArea, QString module, QSer
 }
 
 bool worker::checkIfmodule(QString name){
-    /** ----------------------------- WRITE ---------------------------- **/
     bool cek = false;
     QDir path(".RTUdata/module");
     QStringList files = path.entryList(QDir::Files);

@@ -12,13 +12,33 @@
 #include "model/cryp.h"
 class cryp;
 
+/**
+ * @brief The module class
+ */
 class module
 {
 public:
+    /**
+     * @brief module
+     */
     module();
 
+    /**
+     * @brief write_module
+     * @param tmodule
+     */
     void write_module(struct t_module *tmodule);
+    /**
+     * @brief read_module
+     * @param tmodule
+     * @param addressModule
+     */
     void read_module(struct t_module *tmodule, QString addressModule);
+    /**
+     * @brief save_as_module
+     * @param tmodule
+     * @param address
+     */
     void save_as_module(struct t_module *tmodule, QString address);
 };
 

@@ -176,9 +176,11 @@ void module::read_module(struct t_module *tmodule, QString addressModule){
             tmodule->InputName.insert(j,sett.value(temp).toString());
             j++;
         } else {
-            temp.sprintf("INPUT/KANAL_%d", i+(DATA_PERIOD-tmodule->jml_input_digital));
+//            temp.sprintf("INPUT/KANAL_%d", i+(DATA_PERIOD-tmodule->jml_input_digital));
+            temp.sprintf("INPUT/KANAL_%d", i);
             tmodule->Input.insert(j,sett.value(temp).toString());
-            temp.sprintf("INPUT/KANAL_NAME_%d", i+(DATA_PERIOD-tmodule->jml_input_digital));
+//            temp.sprintf("INPUT/KANAL_NAME_%d", i+(DATA_PERIOD-tmodule->jml_input_digital));
+            temp.sprintf("INPUT/KANAL_NAME_%d", i);
             tmodule->InputName.insert(j,sett.value(temp).toString());
             j++;
         }

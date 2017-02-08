@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    MainWindow::setWindowTitle("Sarasvati - MONITA RTU Configuration");
+    MainWindow::setWindowTitle("Sarasvati ver 1.0.2-4 - MONITA RTU Configuration");
     ui->treeView->header()->setHidden(true);
     ui->treeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
@@ -644,7 +644,7 @@ void MainWindow::readData()
         cryp code; code.encryp(PATH_SERIAL_PARSING);
         str_data.clear();
     } else if (str_data.indexOf("Passwd salah	!") > 0 || str_data.indexOf("assword lock!") > 0) {
-        SerialPort->write("kzl\r\n");
+        SerialPort->write("monita\r\n");
         SerialPort->write("\r\n");
         str_data.clear();
     } else if (str_data.indexOf("injani$") > 0) {

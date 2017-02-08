@@ -15,7 +15,15 @@ class cryp
 public:
     cryp();
 
+    /**
+     * @brief encryp
+     * @param address
+     */
     void encryp(QString address);
+    /**
+     * @brief decryp
+     * @param address
+     */
     void decryp(QString address);
 };
 

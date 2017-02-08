@@ -232,7 +232,7 @@ void ProgressDialog::Get_SIM(struct t_module *tModule, QStringList data)
     str = data.at(1);
     list2 = str.split(";");
 
-    /** MODUlE **/
+    /** MODULE **/
     tModule->flag_active = 1;
     if (list2.at(3) != "-") {tModule->flag_dual_gsm = 1;}
     else {tModule->flag_dual_gsm = 0;}
@@ -496,6 +496,7 @@ void ProgressDialog::Set_ENV(bool stat, t_module *tModule)
                     , tModule->port
                     , tModule->utc);
     Desc.sprintf("Set Environtment \"%s \" ..", tModule->module_name);
+//    0100 RTU-PDAM_Ciburial PKP1-280616-001-RJN1R 119.18.154.235 /api/loket 1 10 30 0 1337 7
     if (stat) {
         serial_write(Desc, Request, WAIT_WRITE);
         ui->progressBar->setValue(progressVal++);
@@ -546,7 +547,7 @@ void ProgressDialog::Set_Input(bool stat, t_module *tModule, QString index)
         for (int i = 0; i < tModule->Input.length(); i++) {
             int validation = 0;
             if (i == 0) validation = 2;
-            if (i == tModule->sumber.length()-1) validation = 1;
+            if (i == tModule->Input.length()-1) validation = 1;
             temp = tModule->Input.at(i);
             list1 = temp.split(';');
 
@@ -558,10 +559,31 @@ void ProgressDialog::Set_Input(bool stat, t_module *tModule, QString index)
             } else {progressVal++;}
             if (cancel) break;
         }
+
+        for (int i = 0; i < tModule->Input.length(); i++) {
+            int validation = 0;
+            if (i == 0) validation = 2;
+            if (i == tModule->data.length()-1) validation = 1;
+            temp = tModule->data.at(i);
+            list1 = temp.split(";");
+
+            Request = QString::fromUtf8(MODE_SET_DAT) + " " + list1.at(0) + " " + list1.at(1) + " " +
+                      list1.at(2) + " " + list1.at(4) + " " + list1.at(5) + " " +
+                      list1.at(6) + " " + list1.at(7) + " " + list1.at(8) + " " +
+                      list1.at(9) + " " + list1.at(10) + " " + list1.at(11) + " " +
+                      QString::number(validation) + "\r\n";
+//            qDebug() << Request;
+            Desc = "Set Data " + list1.at(0) + " ..";
+            if (stat) {
+                serial_write(Desc, Request, WAIT_WRITE);
+                ui->progressBar->setValue(progressVal++);
+            } else {progressVal++;}
+            if (cancel) break;
+        }
     } else {
         temp = tModule->Input.at(index.toInt());
         list1 = temp.split(';');
-
+//        0102 12 250 10.000 0.000 3
         Request = QString::fromUtf8(MODE_SET_KNL) + " " + list1.at(1) + " " + list1.at(2) + " " + list1.at(3) + " " + list1.at(4) + " 3\r\n";
         Desc = "Set Input Channel " + list1.at(1) + " ..";
         if (stat) {

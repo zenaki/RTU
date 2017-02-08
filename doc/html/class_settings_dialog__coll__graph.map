@@ -1,0 +1,5 @@
+<map id="SettingsDialog" name="SettingsDialog">
+<area shape="rect" id="node3" href="$classsetting.html" title="setting" alt="" coords="99,83,160,109"/>
+<area shape="rect" id="node4" href="$classserial.html" title="The serial class. " alt="" coords="184,83,237,109"/>
+<area shape="rect" id="node5" href="$class_main_window.html" title="The MainWindow class. " alt="" coords="262,83,359,109"/>
+</map>

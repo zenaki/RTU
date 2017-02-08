@@ -366,14 +366,14 @@ void form_addModule::on_buttonBox_accepted()
             /** INPUT **/
             tModule.Input.clear(); tModule.InputName.clear();
             tModule.jml_input_digital = 0; tModule.jml_input_analog = 0;
-            for (int i = 1; i < DATA_PERIOD*2; i++) {
-                if (i < 7) {
+            for (int i = 1; i <= PIN_DIGITAL+PIN_ANALOG; i++) {
+                if (i <= PIN_DIGITAL) {
                     temp.sprintf("D;%d;0;0.000;0.000", i);
                     tModule.Input.insert(j, temp);
                     tModule.InputName.insert(j, "");
                     j++;
                     tModule.jml_input_digital++;
-                } else if (i > 10 && i < 17) {
+                } else if (i > PIN_DIGITAL && i <= PIN_DIGITAL+PIN_ANALOG) {
                     temp.sprintf("A;%d;0;0.000;0.000", i);
                     tModule.Input.insert(j, temp);
                     tModule.InputName.insert(j, "");
@@ -385,7 +385,7 @@ void form_addModule::on_buttonBox_accepted()
             /** OUTPUT **/
             tModule.Output.clear(); tModule.OutputName.clear();
             tModule.jml_output = 0;
-            for (int i = 1; i <= DATA_PERIOD/5; i++) {
+            for (int i = 1; i <= PIN_OUTPUT; i++) {
                 temp.sprintf("R;%d;0;0.000;0.000", i);
                 tModule.Output.insert(i-1, temp);
                 tModule.OutputName.insert(i-1, "");
@@ -401,11 +401,11 @@ void form_addModule::on_buttonBox_accepted()
 
             /** DATA **/
             for (int i = 0; i < DATA_PERIOD*6; i++) {
-                if (i < 6) {
+                if (i <= PIN_DIGITAL) {
                     temp.sprintf("%d;%d;;0;-;-50;0;10;500;800;1000;%d", i+1, 1000+i+1, 1);
                     tModule.data.insert(i, temp);
                     tModule.jml_data++;
-                } else if (i >= 10 && i < 16) {
+                } else if (i > PIN_DIGITAL && i < PIN_DIGITAL+PIN_ANALOG) {
                     temp.sprintf("%d;%d;;0;-;-50;0;10;500;800;1000;%d", i+1, 1000+i+1, 1);
                     tModule.data.insert(i, temp);
                     tModule.jml_data++;

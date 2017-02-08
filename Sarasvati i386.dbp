@@ -1,7 +1,7 @@
 [DEBREATE-0.7.10]
 <<CTRL>>
 Package: sarasvati
-Version: 1.0-4
+Version: 1.0.2-4
 Section: utils
 Maintainer: Dendy Gema <dendy@daunbiru.com>
 Priority: optional
@@ -111,7 +111,7 @@ copyright PT. Daun Biru Engineering Indonesia
 <</COPYRIGHT>>
 <<MENU>>
 1
-Name=Sarasvati ver 1.0-4
+Name=Sarasvati ver 1.0.2-4
 Version=1.0
 Exec=/usr/local/bin/sarasvati
 Comment=Monita RTU Configuration Software (by PT. Daun Biru Engineering)
@@ -121,7 +121,7 @@ Terminal=false
 StartupNotify=false
 Encoding=UTF-8
 Categories=Utility;Qt;
-Version=1.0-4
+Version=1.0.2-4
 <</MENU>>
 <<BUILD>>
 0

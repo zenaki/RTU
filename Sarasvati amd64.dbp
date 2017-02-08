@@ -1,7 +1,7 @@
 [DEBREATE-0.7.10]
 <<CTRL>>
 Package: sarasvati
-Version: 1.0-4
+Version: 1.0.2-4
 Section: utils
 Maintainer: Dendy Gema <dendy@daunbiru.com>
 Priority: optional
@@ -31,6 +31,7 @@ if [[ $REPLY =~ ^[Yy]$ ]];
 then
     echo "add-apt-repository deb http://119.18.154.235:8077/html/repo/qt561-trusty trusty main";
     add-apt-repository 'deb http://119.18.154.235:8077/html/repo/qt561-trusty trusty main';
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E9977759
     read -p "Ingin Update Repository List ?? [y/N] "
     if [[ $REPLY =~ ^[Yy]$ ]];
     then
@@ -111,7 +112,7 @@ copyright PT. Daun Biru Engineering Indonesia
 <</COPYRIGHT>>
 <<MENU>>
 1
-Name=Sarasvati ver 1.0-4
+Name=Sarasvati ver 1.0.2-4
 Version=1.0
 Exec=/usr/local/bin/sarasvati
 Comment=Monita RTU Configuration Software (by PT. Daun Biru Engineering)
@@ -121,7 +122,7 @@ Terminal=false
 StartupNotify=false
 Encoding=UTF-8
 Categories=Utility;Qt;
-Version=1.0-4
+Version=1.0.2-4
 <</MENU>>
 <<BUILD>>
 0

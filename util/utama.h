@@ -48,6 +48,9 @@
 #define ON_OFF_RH            9
 
 #define DATA_PERIOD          10
+#define PIN_DIGITAL          6
+#define PIN_ANALOG           6
+#define PIN_OUTPUT           2
 
 #define DELAY_MS             50
 #define TIMEOUT              5000 //ms
@@ -59,7 +62,7 @@
 #define PATH_USER_ACCESS     ".RTUdata/config/usr.cfg"
 #define PATH_LOG             ".RTUdata/log.txt"
 
-#define WAIT_WRITE           1 //ms
+#define WAIT_WRITE           10 //ms
 
 #define MODE_GET_ENV         "0000"
 #define MODE_GET_SIM         "0001"

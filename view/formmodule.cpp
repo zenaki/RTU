@@ -82,7 +82,8 @@ void formModule::setInterface_Input(QString address)
     this->ui->tabel_input->setRowCount(rowInputDigital + rowInputAnalog);
 
     SigMapReg_input = new QSignalMapper(this);
-    for (int i = 0; i < rowInputDigital + rowInputAnalog; i++){
+    SigMapState_input = new QSignalMapper(this);
+    for (int i = 0; i < rowInputDigital + rowInputAnalog; i++) {
         check_input[i] = new QCheckBox(this);
 
         name_input[i] = new QLineEdit(this);
@@ -115,12 +116,12 @@ void formModule::setInterface_Input(QString address)
         SigMapReg_input->setMapping(reg_input[i], i);
         connect(reg_input[i],SIGNAL(currentIndexChanged(int)),SigMapReg_input,SLOT(map()));
         if (i < rowInputDigital) {
-            for (int j = 0; j < DATA_PERIOD; j++) {
+            for (int j = 0; j < PIN_DIGITAL; j++) {
                 tmp = tModule.data.at(j); list = tmp.split(';');
                 reg_input[i]->addItem(list.at(1));
             }
         } else {
-            for (int j = DATA_PERIOD; j < DATA_PERIOD*2; j++) {
+            for (int j = PIN_DIGITAL; j < PIN_DIGITAL + PIN_ANALOG; j++) {
                 tmp = tModule.data.at(j); list = tmp.split(';');
                 reg_input[i]->addItem(list.at(1));
             }
@@ -129,8 +130,11 @@ void formModule::setInterface_Input(QString address)
         state_input[i] = new QComboBox(this);
         state_input[i]->addItem("NOT ACTIVE",0);
         state_input[i]->addItem("ACTIVE",1);
+        SigMapState_input->setMapping(state_input[i], i);
+        connect(state_input[i], SIGNAL(currentIndexChanged(int)), SigMapState_input, SLOT(map()));
     }
     connect(SigMapReg_input,SIGNAL(mapped(int)),this,SLOT(reg_kanal_changed()));
+    connect(SigMapState_input,SIGNAL(mapped(int)),this,SLOT(state_kanal_change(int)));
 
     tModule.data.clear();
     for (int i = 0; i < rowInputDigital + rowInputAnalog; i++) {
@@ -153,6 +157,7 @@ void formModule::setInterface_Input(QString address)
     }
 
     list = str.split(';');
+    tModule.data = data;
 
     for(int i = 0; i < rowInputDigital + rowInputAnalog; i++){
         if (i >= rowInputDigital) {
@@ -580,6 +585,7 @@ void formModule::setInterface_Alarm(QString address)
     QString tmp;
     QStringList list;
     QStringList data = tModule.data;
+    QStringList temp = tModule.data;
     tModule.data.clear();
     for (int i = 0; i < this->ui->tabel_input->rowCount(); i++) {
         for (int j = 0; j < data.length(); j++) {
@@ -593,6 +599,7 @@ void formModule::setInterface_Alarm(QString address)
         }
     }
     data = tModule.data;
+    tModule.data = temp;
     mod.read_module(&tModule, Address_Module);
     int rowAlarm = tModule.jml_alarm;
 
@@ -757,6 +764,7 @@ void formModule::setInterface_Data_Settings(QString address)
     this->ui->tabel_data_s->setColumnWidth(11, 125);
     this->ui->tabel_data_s->setRowCount(rowData);
 
+    SigMapState_data_s = new QSignalMapper(this);
     for (int i = 0; i < rowData; i++){
         check_data_s[i] = new QCheckBox(this);
 
@@ -804,7 +812,10 @@ void formModule::setInterface_Data_Settings(QString address)
         state_data_s[i] = new QComboBox(this);
         state_data_s[i]->addItem("NOT ACTIVE");
         state_data_s[i]->addItem("ACTIVE");
+        SigMapState_data_s->setMapping(state_data_s[i], i);
+        connect(state_data_s[i], SIGNAL(currentIndexChanged(int)), SigMapState_data_s, SLOT(map()));
     }
+    connect(SigMapState_data_s,SIGNAL(mapped(int)),this,SLOT(state_data_change(int)));
 
     for (int i = 0; i < rowData; i++){
         str = tModule.data.at(i);
@@ -853,6 +864,7 @@ void formModule::setInterface_Data_Monitoring(QString address)
     QString tmp;
     QStringList list;
     QStringList data = tModule.data;
+    QStringList temp = tModule.data;
     tModule.data.clear();
     for (int i = 0; i < data.length(); i++) {
         str = data.at(i);
@@ -861,9 +873,8 @@ void formModule::setInterface_Data_Monitoring(QString address)
             tModule.data.append(str);
         }
     }
-    tModule.jml_data = tModule.data.length();
 
-    int rowData = tModule.jml_data;
+    int rowData = tModule.data.length();
     QString type;
 
     this->ui->tabel_data_m->verticalHeader()->setHidden(true);
@@ -906,6 +917,7 @@ void formModule::setInterface_Data_Monitoring(QString address)
     }
 
     this->ui->tabel_data_m->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    tModule.data = temp;
 }
 
 bool formModule::checkFormula(QString data)
@@ -959,17 +971,21 @@ void formModule::data_monitoring()
                 progress_dialog->Get_Data(&tModule, val_data);
 
                 QStringList data = tModule.data;
-                tModule.data.clear(); tModule.jml_data = 0;
+                QStringList temp = tModule.data;
+                int data_count = 0;
+                tModule.data.clear();
                 for (int i = 0; i < data.length(); i++) {
                     str = data.at(i);
                     list =str.split(';');
-                    if (list.at(11) == "1") {
-                        tModule.data.append(str);
-                        tModule.jml_data++;
+                    if (list.length() == 12) {
+                        if (list.at(11) == "1") {
+                            tModule.data.append(str);
+                            data_count++;
+                        }
                     }
                 }
 
-                for (int i = 0; i < tModule.jml_data; i++){
+                for (int i = 0; i < data_count; i++){
                     str = tModule.data.at(i);
                     list = str.split(';');
                     str = list[0];
@@ -984,7 +1000,7 @@ void formModule::data_monitoring()
                     this->ui->tabel_data_m->setCellWidget(i,3, value_data[i]);
                     this->ui->tabel_data_m->setCellWidget(i,4, unit_data[i]);
                 }
-
+                tModule.data = temp;
                 mod.write_module(&tModule);
                 cryp code; code.encryp(Address_Module);
 
@@ -1087,7 +1103,7 @@ void formModule::on_pbSetAll_clicked()
             if (type_input[i]->currentIndex() == 1) {indx = 230;}
             tModule.d_port[i].type_input = indx;
 
-            data[i].sprintf("A;%d;%d;%.3f;%.3f", i-6+11
+            data[i].sprintf("A;%d;%d;%.3f;%.3f", i+1
                             , indx
                             , tModule.d_port[i].calib_m
                             , tModule.d_port[i].calib_x);
@@ -1111,6 +1127,7 @@ void formModule::on_pbSetAll_clicked()
         list = data[i].split(';');
         list[1] = reg_input[i]->currentText();
         list[2] = name_input[i]->text();
+        list[11] = QString::number(state_input[i]->currentIndex());
         data[i].clear();
         data[i] = list[0];
         for (int j = 1; j < 12; j++) {
@@ -1332,7 +1349,7 @@ void formModule::on_pbSet_clicked()
                 if (type_input[i]->currentIndex() == 1) {indx = 230;}
                 tModule.d_port[i].type_input = indx;
 
-                data[i].sprintf("A;%d;%d;%.3f;%.3f", i-6+11
+                data[i].sprintf("A;%d;%d;%.3f;%.3f", i+1
                                 , indx
                                 , tModule.d_port[i].calib_m
                                 , tModule.d_port[i].calib_x);
@@ -1356,6 +1373,7 @@ void formModule::on_pbSet_clicked()
             list = data[i].split(';');
             list[1] = reg_input[i]->currentText();
             list[2] = name_input[i]->text();
+            list[11] = QString::number(state_input[i]->currentIndex());
             data[i].clear();
             data[i] = list[0];
             for (int j = 1; j < 12; j++) {
@@ -1618,7 +1636,7 @@ void formModule::on_pbSetChk_clicked()
                     if (type_input[i]->currentIndex() == 1) {indx = 230;}
                     tModule.d_port[i].type_input = indx;
 
-                    data[i].sprintf("A;%d;%d;%.3f;%.3f", i-6+11
+                    data[i].sprintf("A;%d;%d;%.3f;%.3f", i+1
                                     , indx
                                     , tModule.d_port[i].calib_m
                                     , tModule.d_port[i].calib_x);
@@ -1642,6 +1660,7 @@ void formModule::on_pbSetChk_clicked()
                 list = data[i].split(';');
                 list[1] = reg_input[i]->currentText();
                 list[2] = name_input[i]->text();
+                list[11] = QString::number(state_input[i]->currentIndex());
                 data[i].clear();
                 data[i] = list[0];
                 for (int j = 1; j < 12; j++) {
@@ -1800,7 +1819,7 @@ void formModule::on_pbSetChk_clicked()
                             if (i < 6) {
                                 progress_dialog->Processing(Serial_Com, Address_Module, "0102;0105", QString::number(i) + ";" + QString::number(i));
                             } else {
-                                progress_dialog->Processing(Serial_Com, Address_Module, "0102;0105", QString::number(i) + ";" + QString::number(i+4));
+                                progress_dialog->Processing(Serial_Com, Address_Module, "0102;0105", QString::number(i) + ";" + QString::number(i));
                             }
                         }
                     }
@@ -2466,6 +2485,16 @@ void formModule::on_pbRefresh_clicked()
     this->ui->pbRefresh->setEnabled(true);
 }
 
+void formModule::state_kanal_change(int index)
+{
+//    state_data_s[index]->setCurrentIndex(state_input[index]->currentIndex());
+}
+
+void formModule::state_data_change(int index)
+{
+//    state_input[index]->setCurrentIndex(state_data_s[index]->currentIndex());
+}
+
 void formModule::reg_kanal_changed()
 {
     struct t_module tModule; module mod;
@@ -2474,12 +2503,12 @@ void formModule::reg_kanal_changed()
     mod.read_module(&tModule, Address_Module);
 
     for (int i = 0; i < tModule.jml_input_digital; i++) {
-        for (int j = 0; j < DATA_PERIOD; j++) {
+        for (int j = 0; j < PIN_DIGITAL; j++) {
             qobject_cast<QStandardItemModel *>(reg_input[i]->model())->item(j)->setEnabled(true);
         }
     }
     for (int i = tModule.jml_input_digital; i < tModule.jml_input_digital + tModule.jml_input_analog; i++) {
-        for (int j = 0; j < DATA_PERIOD; j++) {
+        for (int j = 0; j < PIN_ANALOG; j++) {
             qobject_cast<QStandardItemModel *>(reg_input[i]->model())->item(j)->setEnabled(true);
         }
     }
