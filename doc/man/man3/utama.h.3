@@ -12,266 +12,272 @@ util/utama.h
 .ti -1c
 .RI "struct \fBdata_port\fP"
 .br
-.RI "STRUCT\&. "
+.RI "The \fBdata_port\fP struct\&. "
 .ti -1c
 .RI "struct \fBt_module\fP"
 .br
+.RI "The \fBt_module\fP struct\&. "
 .ti -1c
 .RI "struct \fBt_serial_settings\fP"
 .br
+.RI "The \fBt_serial_settings\fP struct\&. "
 .in -1c
 .SH "Dokumentasi Tipe Data"
 .PP 
 .SH "struct data_port"
 .PP 
-STRUCT\&. 
+The \fBdata_port\fP struct\&. 
 .PP
 \fBVariabel Data:\fP
 .RS 4
-float \fIcalib_m\fP 
+float \fIcalib_m\fP calib_m 
 .br
 .PP
-float \fIcalib_x\fP 
+float \fIcalib_x\fP calib_x 
 .br
 .PP
-int \fIcontrol\fP 
+int \fIcontrol\fP control 
 .br
 .PP
-char \fInama_input[64]\fP 
+char \fInama_input[64]\fP nama_input 
 .br
 .PP
-char \fInama_output[64]\fP 
+char \fInama_output[64]\fP nama_output 
 .br
 .PP
-int \fIreg_output\fP 
+int \fIreg_output\fP reg_output 
 .br
 .PP
-int \fIstatus_input\fP 
+int \fIstatus_input\fP status_input 
 .br
 .PP
-int \fIstatus_output\fP 
+int \fIstatus_output\fP status_output 
 .br
 .PP
-int \fItype_input\fP 
+int \fItype_input\fP type_input 
 .br
 .PP
-char \fItype_output[32]\fP 
+char \fItype_output[32]\fP type_output 
 .br
 .PP
 .RE
 .PP
 .SH "struct t_module"
 .PP 
+The \fBt_module\fP struct\&. 
+.PP
 \fBVariabel Data:\fP
 .RS 4
-QStringList \fIalarm\fP 
+QStringList \fIalarm\fP alarm 
 .br
 .PP
-char \fIapn_gsm_1[16]\fP 
+char \fIapn_gsm_1[16]\fP apn_gsm_1 
 .br
 .PP
-char \fIapn_gsm_2[16]\fP 
+char \fIapn_gsm_2[16]\fP apn_gsm_2 
 .br
 .PP
-char \fIcom_gsm_1[32]\fP 
+char \fIcom_gsm_1[32]\fP com_gsm_1 
 .br
 .PP
-char \fIcom_gsm_2[32]\fP 
+char \fIcom_gsm_2[32]\fP com_gsm_2 
 .br
 .PP
-struct \fBdata_port\fP \fId_port[16]\fP 
+struct \fBdata_port\fP \fId_port[16]\fP d_port 
 .br
 .PP
-QStringList \fIdata\fP 
+QStringList \fIdata\fP data 
 .br
 .PP
-char \fIdevice_name_gsm_1[64]\fP 
+char \fIdevice_name_gsm_1[64]\fP device_name_gsm_1 
 .br
 .PP
-char \fIdevice_name_gsm_2[64]\fP 
+char \fIdevice_name_gsm_2[64]\fP device_name_gsm_2 
 .br
 .PP
-char \fIfile_address[32]\fP 
+char \fIfile_address[32]\fP file_address 
 .br
 .PP
-int \fIflag_active\fP 
+int \fIflag_active\fP flag_active 
 .br
 .PP
-int \fIflag_com_gsm_1\fP 
+int \fIflag_com_gsm_1\fP flag_com_gsm_1 
 .br
 .PP
-int \fIflag_com_gsm_2\fP 
+int \fIflag_com_gsm_2\fP flag_com_gsm_2 
 .br
 .PP
-int \fIflag_dual_gsm\fP 
+int \fIflag_dual_gsm\fP flag_dual_gsm 
 .br
 .PP
-int \fIflag_gsm_1\fP 
+int \fIflag_gsm_1\fP flag_gsm_1 
 .br
 .PP
-int \fIflag_gsm_2\fP 
+int \fIflag_gsm_2\fP flag_gsm_2 
 .br
 .PP
-int \fIflag_mode_http\fP 
+int \fIflag_mode_http\fP flag_mode_http 
 .br
 .PP
-int \fIflag_status_active_gsm_1\fP 
+int \fIflag_status_active_gsm_1\fP flag_status_active_gsm_1 
 .br
 .PP
-int \fIflag_status_active_gsm_2\fP 
+int \fIflag_status_active_gsm_2\fP flag_status_active_gsm_2 
 .br
 .PP
-int \fIflag_webclient\fP 
+int \fIflag_webclient\fP flag_webclient 
 .br
 .PP
-QStringList \fIInput\fP 
+QStringList \fIInput\fP Input\&. 
 .br
 .PP
-QStringList \fIInputName\fP 
+QStringList \fIInputName\fP InputName\&. 
 .br
 .PP
-int \fIinterval_data\fP 
+int \fIinterval_data\fP interval_data 
 .br
 .PP
-int \fIinterval_relay\fP 
+int \fIinterval_relay\fP interval_relay 
 .br
 .PP
-char \fIip_address[32]\fP 
+char \fIip_address[32]\fP ip_address 
 .br
 .PP
-int \fIjml_alarm\fP 
+int \fIjml_alarm\fP jml_alarm 
 .br
 .PP
-int \fIjml_data\fP 
+int \fIjml_data\fP jml_data 
 .br
 .PP
-int \fIjml_input_analog\fP 
+int \fIjml_input_analog\fP jml_input_analog 
 .br
 .PP
-int \fIjml_input_digital\fP 
+int \fIjml_input_digital\fP jml_input_digital 
 .br
 .PP
-int \fIjml_output\fP 
+int \fIjml_output\fP jml_output 
 .br
 .PP
-int \fIjml_sumber\fP 
+int \fIjml_sumber\fP jml_sumber 
 .br
 .PP
-int \fIlast_signal\fP 
+int \fIlast_signal\fP last_signal 
 .br
 .PP
-char \fImode_http[32]\fP 
+char \fImode_http[32]\fP mode_http 
 .br
 .PP
-char \fImodule_name[32]\fP 
+char \fImodule_name[32]\fP module_name 
 .br
 .PP
-char \fIname_gsm_1[32]\fP 
+char \fIname_gsm_1[32]\fP name_gsm_1 
 .br
 .PP
-char \fIname_gsm_2[32]\fP 
+char \fIname_gsm_2[32]\fP name_gsm_2 
 .br
 .PP
-char \fInumber_gsm_1[16]\fP 
+char \fInumber_gsm_1[16]\fP number_gsm_1 
 .br
 .PP
-char \fInumber_gsm_2[16]\fP 
+char \fInumber_gsm_2[16]\fP number_gsm_2 
 .br
 .PP
-QStringList \fIOutput\fP 
+QStringList \fIOutput\fP Output\&. 
 .br
 .PP
-QStringList \fIOutputName\fP 
+QStringList \fIOutputName\fP OutputName\&. 
 .br
 .PP
-char \fIpasswd_gsm_1[16]\fP 
+char \fIpasswd_gsm_1[16]\fP passwd_gsm_1 
 .br
 .PP
-char \fIpasswd_gsm_2[16]\fP 
+char \fIpasswd_gsm_2[16]\fP passwd_gsm_2 
 .br
 .PP
-int \fIport\fP 
+int \fIport\fP port 
 .br
 .PP
-char \fIserial_number[32]\fP 
+char \fIserial_number[32]\fP serial_number 
 .br
 .PP
-char \fIserver_address[32]\fP 
+char \fIserver_address[32]\fP server_address 
 .br
 .PP
-char \fIstatus_gsm_1[32]\fP 
+char \fIstatus_gsm_1[32]\fP status_gsm_1 
 .br
 .PP
-char \fIstatus_gsm_2[32]\fP 
+char \fIstatus_gsm_2[32]\fP status_gsm_2 
 .br
 .PP
-char \fIstatus_webclient[32]\fP 
+char \fIstatus_webclient[32]\fP status_webclient 
 .br
 .PP
-QStringList \fIsumber\fP 
+QStringList \fIsumber\fP sumber 
 .br
 .PP
-char \fIuser_gsm_1[16]\fP 
+char \fIuser_gsm_1[16]\fP user_gsm_1 
 .br
 .PP
-char \fIuser_gsm_2[16]\fP 
+char \fIuser_gsm_2[16]\fP user_gsm_2 
 .br
 .PP
-int \fIutc\fP 
+int \fIutc\fP utc 
 .br
 .PP
 .RE
 .PP
 .SH "struct t_serial_settings"
 .PP 
+The \fBt_serial_settings\fP struct\&. 
+.PP
 \fBVariabel Data:\fP
 .RS 4
-qint32 \fIbaudRate\fP 
+qint32 \fIbaudRate\fP baudRate 
 .br
 .PP
-DataBits \fIdataBits\fP 
+DataBits \fIdataBits\fP dataBits 
 .br
 .PP
-FlowControl \fIflowControl\fP 
+FlowControl \fIflowControl\fP flowControl 
 .br
 .PP
-QString \fIname\fP 
+QString \fIname\fP name 
 .br
 .PP
-Parity \fIparity\fP 
+Parity \fIparity\fP parity 
 .br
 .PP
-StopBits \fIstopBits\fP 
+StopBits \fIstopBits\fP stopBits 
 .br
 .PP
-QString \fIstr_data_dat\fP 
+QString \fIstr_data_dat\fP str_data_dat 
 .br
 .PP
-QString \fIstr_data_env\fP 
+QString \fIstr_data_env\fP str_data_env 
 .br
 .PP
-QString \fIstr_data_io\fP 
+QString \fIstr_data_io\fP str_data_io 
 .br
 .PP
-QString \fIstr_data_sim\fP 
+QString \fIstr_data_sim\fP str_data_sim 
 .br
 .PP
-QString \fIstr_data_src\fP 
+QString \fIstr_data_src\fP str_data_src 
 .br
 .PP
-QString \fIstringBaudRate\fP 
+QString \fIstringBaudRate\fP stringBaudRate 
 .br
 .PP
-QString \fIstringDataBits\fP 
+QString \fIstringDataBits\fP stringDataBits 
 .br
 .PP
-QString \fIstringFlowControl\fP 
+QString \fIstringFlowControl\fP stringFlowControl 
 .br
 .PP
-QString \fIstringParity\fP 
+QString \fIstringParity\fP stringParity 
 .br
 .PP
-QString \fIstringStopBits\fP 
+QString \fIstringStopBits\fP stringStopBits 
 .br
 .PP
 .RE

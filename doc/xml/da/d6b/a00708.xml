@@ -10,12 +10,12 @@
         <argsstring>[64]</argsstring>
         <name>nama_input</name>
         <briefdescription>
-        </briefdescription>
+<para>nama_input </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="86" column="1" bodyfile="util/utama.h" bodystart="86" bodyend="-1"/>
+        <location file="util/utama.h" line="91" column="1" bodyfile="util/utama.h" bodystart="91" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="da/d6b/a00708_1a03b082c37699b27e6d0688f435e794d6" prot="public" static="no" mutable="no">
         <type>int</type>
@@ -23,12 +23,12 @@
         <argsstring></argsstring>
         <name>type_input</name>
         <briefdescription>
-        </briefdescription>
+<para>type_input </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="87" column="1" bodyfile="util/utama.h" bodystart="87" bodyend="-1"/>
+        <location file="util/utama.h" line="95" column="1" bodyfile="util/utama.h" bodystart="95" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="da/d6b/a00708_1a5051f45f210d24ab4ec723f13f8875c3" prot="public" static="no" mutable="no">
         <type>int</type>
@@ -36,12 +36,12 @@
         <argsstring></argsstring>
         <name>status_input</name>
         <briefdescription>
-        </briefdescription>
+<para>status_input </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="88" column="1" bodyfile="util/utama.h" bodystart="88" bodyend="-1"/>
+        <location file="util/utama.h" line="99" column="1" bodyfile="util/utama.h" bodystart="99" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="da/d6b/a00708_1acc8ce28ad14edeb6cf9f05e5cfdcbe1b" prot="public" static="no" mutable="no">
         <type>float</type>
@@ -49,12 +49,12 @@
         <argsstring></argsstring>
         <name>calib_m</name>
         <briefdescription>
-        </briefdescription>
+<para>calib_m </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="89" column="1" bodyfile="util/utama.h" bodystart="89" bodyend="-1"/>
+        <location file="util/utama.h" line="103" column="1" bodyfile="util/utama.h" bodystart="103" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="da/d6b/a00708_1a3d9fc7fac2023273c72b50361ad73c30" prot="public" static="no" mutable="no">
         <type>float</type>
@@ -62,12 +62,12 @@
         <argsstring></argsstring>
         <name>calib_x</name>
         <briefdescription>
-        </briefdescription>
+<para>calib_x </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="90" column="1" bodyfile="util/utama.h" bodystart="90" bodyend="-1"/>
+        <location file="util/utama.h" line="107" column="1" bodyfile="util/utama.h" bodystart="107" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="da/d6b/a00708_1ae7a70a00843294e0e6343aa8492c2b81" prot="public" static="no" mutable="no">
         <type>char</type>
@@ -75,12 +75,12 @@
         <argsstring>[64]</argsstring>
         <name>nama_output</name>
         <briefdescription>
-        </briefdescription>
+<para>nama_output </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="92" column="1" bodyfile="util/utama.h" bodystart="92" bodyend="-1"/>
+        <location file="util/utama.h" line="112" column="1" bodyfile="util/utama.h" bodystart="112" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="da/d6b/a00708_1a42e6b57c6164792184af5bb014038990" prot="public" static="no" mutable="no">
         <type>char</type>
@@ -88,12 +88,12 @@
         <argsstring>[32]</argsstring>
         <name>type_output</name>
         <briefdescription>
-        </briefdescription>
+<para>type_output </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="93" column="1" bodyfile="util/utama.h" bodystart="93" bodyend="-1"/>
+        <location file="util/utama.h" line="116" column="1" bodyfile="util/utama.h" bodystart="116" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="da/d6b/a00708_1a25009e45555b1b2371b758a16637746d" prot="public" static="no" mutable="no">
         <type>int</type>
@@ -101,12 +101,12 @@
         <argsstring></argsstring>
         <name>status_output</name>
         <briefdescription>
-        </briefdescription>
+<para>status_output </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="94" column="1" bodyfile="util/utama.h" bodystart="94" bodyend="-1"/>
+        <location file="util/utama.h" line="120" column="1" bodyfile="util/utama.h" bodystart="120" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="da/d6b/a00708_1a38a5fff93fa70faa75b8fa0bc27d8550" prot="public" static="no" mutable="no">
         <type>int</type>
@@ -114,12 +114,12 @@
         <argsstring></argsstring>
         <name>control</name>
         <briefdescription>
-        </briefdescription>
+<para>control </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="95" column="1" bodyfile="util/utama.h" bodystart="95" bodyend="-1"/>
+        <location file="util/utama.h" line="124" column="1" bodyfile="util/utama.h" bodystart="124" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="da/d6b/a00708_1a4f37513b3fac261fdac94f9565654abc" prot="public" static="no" mutable="no">
         <type>int</type>
@@ -127,16 +127,16 @@
         <argsstring></argsstring>
         <name>reg_output</name>
         <briefdescription>
-        </briefdescription>
+<para>reg_output </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="96" column="1" bodyfile="util/utama.h" bodystart="96" bodyend="-1"/>
+        <location file="util/utama.h" line="128" column="1" bodyfile="util/utama.h" bodystart="128" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
-<para>STRUCT. </para>    </briefdescription>
+<para>The <ref refid="da/d6b/a00708" kindref="compound">data_port</ref> struct. </para>    </briefdescription>
     <detaileddescription>
     </detaileddescription>
     <collaborationgraph>
@@ -145,7 +145,7 @@
         <link refid="da/d6b/a00708"/>
       </node>
     </collaborationgraph>
-    <location file="util/utama.h" line="85" column="1" bodyfile="util/utama.h" bodystart="85" bodyend="97"/>
+    <location file="util/utama.h" line="87" column="1" bodyfile="util/utama.h" bodystart="87" bodyend="129"/>
     <listofallmembers>
       <member refid="da/d6b/a00708_1acc8ce28ad14edeb6cf9f05e5cfdcbe1b" prot="public" virt="non-virtual"><scope>data_port</scope><name>calib_m</name></member>
       <member refid="da/d6b/a00708_1a3d9fc7fac2023273c72b50361ad73c30" prot="public" virt="non-virtual"><scope>data_port</scope><name>calib_x</name></member>

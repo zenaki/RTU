@@ -10,12 +10,12 @@
         <argsstring></argsstring>
         <name>flag_active</name>
         <briefdescription>
-        </briefdescription>
+<para>flag_active </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="100" column="1" bodyfile="util/utama.h" bodystart="100" bodyend="-1"/>
+        <location file="util/utama.h" line="137" column="1" bodyfile="util/utama.h" bodystart="137" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1a1a3a1f08db562e61771132bfa57b5560" prot="public" static="no" mutable="no">
         <type>char</type>
@@ -23,12 +23,12 @@
         <argsstring>[32]</argsstring>
         <name>module_name</name>
         <briefdescription>
-        </briefdescription>
+<para>module_name </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="101" column="1" bodyfile="util/utama.h" bodystart="101" bodyend="-1"/>
+        <location file="util/utama.h" line="141" column="1" bodyfile="util/utama.h" bodystart="141" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1a222e0352868ece4123231625b754b683" prot="public" static="no" mutable="no">
         <type>char</type>
@@ -36,12 +36,12 @@
         <argsstring>[32]</argsstring>
         <name>serial_number</name>
         <briefdescription>
-        </briefdescription>
+<para>serial_number </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="102" column="1" bodyfile="util/utama.h" bodystart="102" bodyend="-1"/>
+        <location file="util/utama.h" line="145" column="1" bodyfile="util/utama.h" bodystart="145" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1a8ca175014887e87d70f790c326b730a5" prot="public" static="no" mutable="no">
         <type>char</type>
@@ -49,12 +49,12 @@
         <argsstring>[32]</argsstring>
         <name>ip_address</name>
         <briefdescription>
-        </briefdescription>
+<para>ip_address </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="104" column="1" bodyfile="util/utama.h" bodystart="104" bodyend="-1"/>
+        <location file="util/utama.h" line="150" column="1" bodyfile="util/utama.h" bodystart="150" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1abfe29a1d1710c89bc96cb811880e0f3e" prot="public" static="no" mutable="no">
         <type>char</type>
@@ -62,12 +62,12 @@
         <argsstring>[32]</argsstring>
         <name>server_address</name>
         <briefdescription>
-        </briefdescription>
+<para>server_address </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="105" column="1" bodyfile="util/utama.h" bodystart="105" bodyend="-1"/>
+        <location file="util/utama.h" line="154" column="1" bodyfile="util/utama.h" bodystart="154" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1a3893b700240cae3ea169ada4cfcb228e" prot="public" static="no" mutable="no">
         <type>char</type>
@@ -75,12 +75,12 @@
         <argsstring>[32]</argsstring>
         <name>file_address</name>
         <briefdescription>
-        </briefdescription>
+<para>file_address </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="106" column="1" bodyfile="util/utama.h" bodystart="106" bodyend="-1"/>
+        <location file="util/utama.h" line="158" column="1" bodyfile="util/utama.h" bodystart="158" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1aca0650bf4dd8be8571d8c05fb0dae985" prot="public" static="no" mutable="no">
         <type>int</type>
@@ -88,12 +88,12 @@
         <argsstring></argsstring>
         <name>flag_webclient</name>
         <briefdescription>
-        </briefdescription>
+<para>flag_webclient </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="107" column="1" bodyfile="util/utama.h" bodystart="107" bodyend="-1"/>
+        <location file="util/utama.h" line="162" column="1" bodyfile="util/utama.h" bodystart="162" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1ac685b3477e6cde6638258a65d1bfe21d" prot="public" static="no" mutable="no">
         <type>char</type>
@@ -101,12 +101,12 @@
         <argsstring>[32]</argsstring>
         <name>status_webclient</name>
         <briefdescription>
-        </briefdescription>
+<para>status_webclient </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="108" column="1" bodyfile="util/utama.h" bodystart="108" bodyend="-1"/>
+        <location file="util/utama.h" line="166" column="1" bodyfile="util/utama.h" bodystart="166" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1a6f03d274f7ad5b944b6d087bb9ed7b09" prot="public" static="no" mutable="no">
         <type>int</type>
@@ -114,12 +114,12 @@
         <argsstring></argsstring>
         <name>interval_relay</name>
         <briefdescription>
-        </briefdescription>
+<para>interval_relay </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="109" column="1" bodyfile="util/utama.h" bodystart="109" bodyend="-1"/>
+        <location file="util/utama.h" line="170" column="1" bodyfile="util/utama.h" bodystart="170" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1af7f71cab211b08d706f18021bdbadb85" prot="public" static="no" mutable="no">
         <type>int</type>
@@ -127,12 +127,12 @@
         <argsstring></argsstring>
         <name>interval_data</name>
         <briefdescription>
-        </briefdescription>
+<para>interval_data </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="110" column="1" bodyfile="util/utama.h" bodystart="110" bodyend="-1"/>
+        <location file="util/utama.h" line="174" column="1" bodyfile="util/utama.h" bodystart="174" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1ad44edbbe959edfa16ccb49b1730d067a" prot="public" static="no" mutable="no">
         <type>int</type>
@@ -140,12 +140,12 @@
         <argsstring></argsstring>
         <name>flag_mode_http</name>
         <briefdescription>
-        </briefdescription>
+<para>flag_mode_http </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="111" column="1" bodyfile="util/utama.h" bodystart="111" bodyend="-1"/>
+        <location file="util/utama.h" line="178" column="1" bodyfile="util/utama.h" bodystart="178" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1a87d95d67ac3002e017393de34d77d86a" prot="public" static="no" mutable="no">
         <type>char</type>
@@ -153,12 +153,12 @@
         <argsstring>[32]</argsstring>
         <name>mode_http</name>
         <briefdescription>
-        </briefdescription>
+<para>mode_http </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="112" column="1" bodyfile="util/utama.h" bodystart="112" bodyend="-1"/>
+        <location file="util/utama.h" line="182" column="1" bodyfile="util/utama.h" bodystart="182" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1a63c89c04d1feae07ca35558055155ffb" prot="public" static="no" mutable="no">
         <type>int</type>
@@ -166,12 +166,12 @@
         <argsstring></argsstring>
         <name>port</name>
         <briefdescription>
-        </briefdescription>
+<para>port </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="113" column="1" bodyfile="util/utama.h" bodystart="113" bodyend="-1"/>
+        <location file="util/utama.h" line="186" column="1" bodyfile="util/utama.h" bodystart="186" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1a2d5cbcb3a0cf18d33be14b1312a2a209" prot="public" static="no" mutable="no">
         <type>int</type>
@@ -179,12 +179,12 @@
         <argsstring></argsstring>
         <name>utc</name>
         <briefdescription>
-        </briefdescription>
+<para>utc </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="114" column="1" bodyfile="util/utama.h" bodystart="114" bodyend="-1"/>
+        <location file="util/utama.h" line="190" column="1" bodyfile="util/utama.h" bodystart="190" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1a25ef13752acdbb4c6e09351814b95336" prot="public" static="no" mutable="no">
         <type>int</type>
@@ -192,12 +192,12 @@
         <argsstring></argsstring>
         <name>flag_dual_gsm</name>
         <briefdescription>
-        </briefdescription>
+<para>flag_dual_gsm </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="116" column="1" bodyfile="util/utama.h" bodystart="116" bodyend="-1"/>
+        <location file="util/utama.h" line="195" column="1" bodyfile="util/utama.h" bodystart="195" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1a1d01d8e411dc32dde1ab25208eab05f8" prot="public" static="no" mutable="no">
         <type>int</type>
@@ -205,12 +205,12 @@
         <argsstring></argsstring>
         <name>last_signal</name>
         <briefdescription>
-        </briefdescription>
+<para>last_signal </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="117" column="1" bodyfile="util/utama.h" bodystart="117" bodyend="-1"/>
+        <location file="util/utama.h" line="199" column="1" bodyfile="util/utama.h" bodystart="199" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1ab2529e635724fbfa4f5b6071f87ad434" prot="public" static="no" mutable="no">
         <type>int</type>
@@ -218,12 +218,12 @@
         <argsstring></argsstring>
         <name>flag_gsm_1</name>
         <briefdescription>
-        </briefdescription>
+<para>flag_gsm_1 </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="119" column="1" bodyfile="util/utama.h" bodystart="119" bodyend="-1"/>
+        <location file="util/utama.h" line="204" column="1" bodyfile="util/utama.h" bodystart="204" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1a72cca7ad3382833143416edef594c255" prot="public" static="no" mutable="no">
         <type>char</type>
@@ -231,12 +231,12 @@
         <argsstring>[32]</argsstring>
         <name>name_gsm_1</name>
         <briefdescription>
-        </briefdescription>
+<para>name_gsm_1 </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="120" column="1" bodyfile="util/utama.h" bodystart="120" bodyend="-1"/>
+        <location file="util/utama.h" line="208" column="1" bodyfile="util/utama.h" bodystart="208" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1a79d64558c873e19d9dd772e79e328c37" prot="public" static="no" mutable="no">
         <type>char</type>
@@ -244,12 +244,12 @@
         <argsstring>[64]</argsstring>
         <name>device_name_gsm_1</name>
         <briefdescription>
-        </briefdescription>
+<para>device_name_gsm_1 </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="121" column="1" bodyfile="util/utama.h" bodystart="121" bodyend="-1"/>
+        <location file="util/utama.h" line="212" column="1" bodyfile="util/utama.h" bodystart="212" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1a30b93669fb27a984bfce02e802216304" prot="public" static="no" mutable="no">
         <type>int</type>
@@ -257,12 +257,12 @@
         <argsstring></argsstring>
         <name>flag_status_active_gsm_1</name>
         <briefdescription>
-        </briefdescription>
+<para>flag_status_active_gsm_1 </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="122" column="1" bodyfile="util/utama.h" bodystart="122" bodyend="-1"/>
+        <location file="util/utama.h" line="216" column="1" bodyfile="util/utama.h" bodystart="216" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1a22b842fa237962ef3cefe0692545494b" prot="public" static="no" mutable="no">
         <type>char</type>
@@ -270,12 +270,12 @@
         <argsstring>[32]</argsstring>
         <name>status_gsm_1</name>
         <briefdescription>
-        </briefdescription>
+<para>status_gsm_1 </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="123" column="1" bodyfile="util/utama.h" bodystart="123" bodyend="-1"/>
+        <location file="util/utama.h" line="220" column="1" bodyfile="util/utama.h" bodystart="220" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1a3497d4cea7f3ef3e4626d50b9dfd73de" prot="public" static="no" mutable="no">
         <type>int</type>
@@ -283,12 +283,12 @@
         <argsstring></argsstring>
         <name>flag_com_gsm_1</name>
         <briefdescription>
-        </briefdescription>
+<para>flag_com_gsm_1 </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="124" column="1" bodyfile="util/utama.h" bodystart="124" bodyend="-1"/>
+        <location file="util/utama.h" line="224" column="1" bodyfile="util/utama.h" bodystart="224" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1aec6290dd3da32afa5a3f96ca34b31e1f" prot="public" static="no" mutable="no">
         <type>char</type>
@@ -296,12 +296,12 @@
         <argsstring>[32]</argsstring>
         <name>com_gsm_1</name>
         <briefdescription>
-        </briefdescription>
+<para>com_gsm_1 </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="125" column="1" bodyfile="util/utama.h" bodystart="125" bodyend="-1"/>
+        <location file="util/utama.h" line="228" column="1" bodyfile="util/utama.h" bodystart="228" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1a362de1bde1440c07e1f7fe1631df6b87" prot="public" static="no" mutable="no">
         <type>char</type>
@@ -309,12 +309,12 @@
         <argsstring>[16]</argsstring>
         <name>number_gsm_1</name>
         <briefdescription>
-        </briefdescription>
+<para>number_gsm_1 </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="126" column="1" bodyfile="util/utama.h" bodystart="126" bodyend="-1"/>
+        <location file="util/utama.h" line="232" column="1" bodyfile="util/utama.h" bodystart="232" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1a71f75e2719bcf75d2e494fbb2dcb06b2" prot="public" static="no" mutable="no">
         <type>char</type>
@@ -322,12 +322,12 @@
         <argsstring>[16]</argsstring>
         <name>user_gsm_1</name>
         <briefdescription>
-        </briefdescription>
+<para>user_gsm_1 </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="127" column="1" bodyfile="util/utama.h" bodystart="127" bodyend="-1"/>
+        <location file="util/utama.h" line="236" column="1" bodyfile="util/utama.h" bodystart="236" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1a0043d47309ffeae9f20a4b19c847e829" prot="public" static="no" mutable="no">
         <type>char</type>
@@ -335,12 +335,12 @@
         <argsstring>[16]</argsstring>
         <name>passwd_gsm_1</name>
         <briefdescription>
-        </briefdescription>
+<para>passwd_gsm_1 </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="128" column="1" bodyfile="util/utama.h" bodystart="128" bodyend="-1"/>
+        <location file="util/utama.h" line="240" column="1" bodyfile="util/utama.h" bodystart="240" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1ae682b2cc2093b9cf0226e1b1d0ac51fe" prot="public" static="no" mutable="no">
         <type>char</type>
@@ -348,12 +348,12 @@
         <argsstring>[16]</argsstring>
         <name>apn_gsm_1</name>
         <briefdescription>
-        </briefdescription>
+<para>apn_gsm_1 </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="129" column="1" bodyfile="util/utama.h" bodystart="129" bodyend="-1"/>
+        <location file="util/utama.h" line="244" column="1" bodyfile="util/utama.h" bodystart="244" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1aed600ba4a66af98b21d59f3279271964" prot="public" static="no" mutable="no">
         <type>int</type>
@@ -361,12 +361,12 @@
         <argsstring></argsstring>
         <name>flag_gsm_2</name>
         <briefdescription>
-        </briefdescription>
+<para>flag_gsm_2 </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="131" column="1" bodyfile="util/utama.h" bodystart="131" bodyend="-1"/>
+        <location file="util/utama.h" line="249" column="1" bodyfile="util/utama.h" bodystart="249" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1a6473a594ec7852df47cebbd6a13afa4a" prot="public" static="no" mutable="no">
         <type>char</type>
@@ -374,12 +374,12 @@
         <argsstring>[32]</argsstring>
         <name>name_gsm_2</name>
         <briefdescription>
-        </briefdescription>
+<para>name_gsm_2 </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="132" column="1" bodyfile="util/utama.h" bodystart="132" bodyend="-1"/>
+        <location file="util/utama.h" line="253" column="1" bodyfile="util/utama.h" bodystart="253" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1a57ccbb5e06dd347319526edb4bb52f1e" prot="public" static="no" mutable="no">
         <type>char</type>
@@ -387,12 +387,12 @@
         <argsstring>[64]</argsstring>
         <name>device_name_gsm_2</name>
         <briefdescription>
-        </briefdescription>
+<para>device_name_gsm_2 </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="133" column="1" bodyfile="util/utama.h" bodystart="133" bodyend="-1"/>
+        <location file="util/utama.h" line="257" column="1" bodyfile="util/utama.h" bodystart="257" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1a7f7ce453e785391c4a88f8e6e34620d6" prot="public" static="no" mutable="no">
         <type>int</type>
@@ -400,12 +400,12 @@
         <argsstring></argsstring>
         <name>flag_status_active_gsm_2</name>
         <briefdescription>
-        </briefdescription>
+<para>flag_status_active_gsm_2 </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="134" column="1" bodyfile="util/utama.h" bodystart="134" bodyend="-1"/>
+        <location file="util/utama.h" line="261" column="1" bodyfile="util/utama.h" bodystart="261" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1a074fb3ae35fcf3ae8968fa015b151296" prot="public" static="no" mutable="no">
         <type>char</type>
@@ -413,12 +413,12 @@
         <argsstring>[32]</argsstring>
         <name>status_gsm_2</name>
         <briefdescription>
-        </briefdescription>
+<para>status_gsm_2 </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="135" column="1" bodyfile="util/utama.h" bodystart="135" bodyend="-1"/>
+        <location file="util/utama.h" line="265" column="1" bodyfile="util/utama.h" bodystart="265" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1aaed238f750294c16f752274529c2da39" prot="public" static="no" mutable="no">
         <type>int</type>
@@ -426,12 +426,12 @@
         <argsstring></argsstring>
         <name>flag_com_gsm_2</name>
         <briefdescription>
-        </briefdescription>
+<para>flag_com_gsm_2 </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="136" column="1" bodyfile="util/utama.h" bodystart="136" bodyend="-1"/>
+        <location file="util/utama.h" line="269" column="1" bodyfile="util/utama.h" bodystart="269" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1a71318331878a17649a6aeddd7bc5c0a4" prot="public" static="no" mutable="no">
         <type>char</type>
@@ -439,12 +439,12 @@
         <argsstring>[32]</argsstring>
         <name>com_gsm_2</name>
         <briefdescription>
-        </briefdescription>
+<para>com_gsm_2 </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="137" column="1" bodyfile="util/utama.h" bodystart="137" bodyend="-1"/>
+        <location file="util/utama.h" line="273" column="1" bodyfile="util/utama.h" bodystart="273" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1a7a8bc792301f96ad21f250224ba63f31" prot="public" static="no" mutable="no">
         <type>char</type>
@@ -452,12 +452,12 @@
         <argsstring>[16]</argsstring>
         <name>number_gsm_2</name>
         <briefdescription>
-        </briefdescription>
+<para>number_gsm_2 </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="138" column="1" bodyfile="util/utama.h" bodystart="138" bodyend="-1"/>
+        <location file="util/utama.h" line="277" column="1" bodyfile="util/utama.h" bodystart="277" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1a5b7b654e8c4b8a921d3233545fe4ed2d" prot="public" static="no" mutable="no">
         <type>char</type>
@@ -465,12 +465,12 @@
         <argsstring>[16]</argsstring>
         <name>user_gsm_2</name>
         <briefdescription>
-        </briefdescription>
+<para>user_gsm_2 </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="139" column="1" bodyfile="util/utama.h" bodystart="139" bodyend="-1"/>
+        <location file="util/utama.h" line="281" column="1" bodyfile="util/utama.h" bodystart="281" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1a259f5df9cc40bdf17472bdcb3dd88517" prot="public" static="no" mutable="no">
         <type>char</type>
@@ -478,12 +478,12 @@
         <argsstring>[16]</argsstring>
         <name>passwd_gsm_2</name>
         <briefdescription>
-        </briefdescription>
+<para>passwd_gsm_2 </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="140" column="1" bodyfile="util/utama.h" bodystart="140" bodyend="-1"/>
+        <location file="util/utama.h" line="285" column="1" bodyfile="util/utama.h" bodystart="285" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1ac51114b37cb27dd39c0bb7d5496fff64" prot="public" static="no" mutable="no">
         <type>char</type>
@@ -491,12 +491,12 @@
         <argsstring>[16]</argsstring>
         <name>apn_gsm_2</name>
         <briefdescription>
-        </briefdescription>
+<para>apn_gsm_2 </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="141" column="1" bodyfile="util/utama.h" bodystart="141" bodyend="-1"/>
+        <location file="util/utama.h" line="289" column="1" bodyfile="util/utama.h" bodystart="289" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1ada08f6a638d19653ddbde79e30600d21" prot="public" static="no" mutable="no">
         <type>struct <ref refid="da/d6b/a00708" kindref="compound">data_port</ref></type>
@@ -504,12 +504,12 @@
         <argsstring>[16]</argsstring>
         <name>d_port</name>
         <briefdescription>
-        </briefdescription>
+<para>d_port </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="141" column="1" bodyfile="util/utama.h" bodystart="143" bodyend="-1"/>
+        <location file="util/utama.h" line="289" column="1" bodyfile="util/utama.h" bodystart="294" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1a15b212d2cdfb271990d2f57d19980b6b" prot="public" static="no" mutable="no">
         <type>QStringList</type>
@@ -517,12 +517,12 @@
         <argsstring></argsstring>
         <name>Input</name>
         <briefdescription>
-        </briefdescription>
+<para>Input. </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="145" column="1" bodyfile="util/utama.h" bodystart="145" bodyend="-1"/>
+        <location file="util/utama.h" line="299" column="1" bodyfile="util/utama.h" bodystart="299" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1a294b0cc6f74546dde25ed7044c31d331" prot="public" static="no" mutable="no">
         <type>QStringList</type>
@@ -530,12 +530,12 @@
         <argsstring></argsstring>
         <name>InputName</name>
         <briefdescription>
-        </briefdescription>
+<para>InputName. </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="146" column="1" bodyfile="util/utama.h" bodystart="146" bodyend="-1"/>
+        <location file="util/utama.h" line="303" column="1" bodyfile="util/utama.h" bodystart="303" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1a7adec5a3741cdf485be1e5cfcfb7b23f" prot="public" static="no" mutable="no">
         <type>int</type>
@@ -543,12 +543,12 @@
         <argsstring></argsstring>
         <name>jml_input_digital</name>
         <briefdescription>
-        </briefdescription>
+<para>jml_input_digital </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="147" column="1" bodyfile="util/utama.h" bodystart="147" bodyend="-1"/>
+        <location file="util/utama.h" line="307" column="1" bodyfile="util/utama.h" bodystart="307" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1ab6ffa7aa9940aeee7e8ee780be0d0192" prot="public" static="no" mutable="no">
         <type>int</type>
@@ -556,12 +556,12 @@
         <argsstring></argsstring>
         <name>jml_input_analog</name>
         <briefdescription>
-        </briefdescription>
+<para>jml_input_analog </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="148" column="1" bodyfile="util/utama.h" bodystart="148" bodyend="-1"/>
+        <location file="util/utama.h" line="311" column="1" bodyfile="util/utama.h" bodystart="311" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1a3ca6dd2659487a627133043f22ddd387" prot="public" static="no" mutable="no">
         <type>QStringList</type>
@@ -569,12 +569,12 @@
         <argsstring></argsstring>
         <name>Output</name>
         <briefdescription>
-        </briefdescription>
+<para>Output. </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="149" column="1" bodyfile="util/utama.h" bodystart="149" bodyend="-1"/>
+        <location file="util/utama.h" line="315" column="1" bodyfile="util/utama.h" bodystart="315" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1a10dc6fa37deccf1c5ff89580db7d3ba4" prot="public" static="no" mutable="no">
         <type>QStringList</type>
@@ -582,12 +582,12 @@
         <argsstring></argsstring>
         <name>OutputName</name>
         <briefdescription>
-        </briefdescription>
+<para>OutputName. </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="150" column="1" bodyfile="util/utama.h" bodystart="150" bodyend="-1"/>
+        <location file="util/utama.h" line="319" column="1" bodyfile="util/utama.h" bodystart="319" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1acc72132ce5e14a34a6777160bfda88d2" prot="public" static="no" mutable="no">
         <type>int</type>
@@ -595,12 +595,12 @@
         <argsstring></argsstring>
         <name>jml_output</name>
         <briefdescription>
-        </briefdescription>
+<para>jml_output </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="151" column="1" bodyfile="util/utama.h" bodystart="151" bodyend="-1"/>
+        <location file="util/utama.h" line="323" column="1" bodyfile="util/utama.h" bodystart="323" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1acb8974b788ec0fe844ac33dc2ea67496" prot="public" static="no" mutable="no">
         <type>QStringList</type>
@@ -608,12 +608,12 @@
         <argsstring></argsstring>
         <name>sumber</name>
         <briefdescription>
-        </briefdescription>
+<para>sumber </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="153" column="1" bodyfile="util/utama.h" bodystart="153" bodyend="-1"/>
+        <location file="util/utama.h" line="328" column="1" bodyfile="util/utama.h" bodystart="328" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1a169ac6f0659f2098323be49e17afb75d" prot="public" static="no" mutable="no">
         <type>int</type>
@@ -621,12 +621,12 @@
         <argsstring></argsstring>
         <name>jml_sumber</name>
         <briefdescription>
-        </briefdescription>
+<para>jml_sumber </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="154" column="1" bodyfile="util/utama.h" bodystart="154" bodyend="-1"/>
+        <location file="util/utama.h" line="332" column="1" bodyfile="util/utama.h" bodystart="332" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1a683ef0c23fadfdec4537f0fa862e0d2e" prot="public" static="no" mutable="no">
         <type>QStringList</type>
@@ -634,12 +634,12 @@
         <argsstring></argsstring>
         <name>alarm</name>
         <briefdescription>
-        </briefdescription>
+<para>alarm </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="155" column="1" bodyfile="util/utama.h" bodystart="155" bodyend="-1"/>
+        <location file="util/utama.h" line="336" column="1" bodyfile="util/utama.h" bodystart="336" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1a72b9f8baad9f8b4d79f5822f2731a060" prot="public" static="no" mutable="no">
         <type>int</type>
@@ -647,12 +647,12 @@
         <argsstring></argsstring>
         <name>jml_alarm</name>
         <briefdescription>
-        </briefdescription>
+<para>jml_alarm </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="156" column="1" bodyfile="util/utama.h" bodystart="156" bodyend="-1"/>
+        <location file="util/utama.h" line="340" column="1" bodyfile="util/utama.h" bodystart="340" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1a70b1059107816ee3dbe8f1032e949401" prot="public" static="no" mutable="no">
         <type>QStringList</type>
@@ -660,12 +660,12 @@
         <argsstring></argsstring>
         <name>data</name>
         <briefdescription>
-        </briefdescription>
+<para>data </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="157" column="1" bodyfile="util/utama.h" bodystart="157" bodyend="-1"/>
+        <location file="util/utama.h" line="344" column="1" bodyfile="util/utama.h" bodystart="344" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="d3/dda/a00712_1a53206b049c2cd94ab8a7e5ccc2c597e4" prot="public" static="no" mutable="no">
         <type>int</type>
@@ -673,16 +673,16 @@
         <argsstring></argsstring>
         <name>jml_data</name>
         <briefdescription>
-        </briefdescription>
+<para>jml_data </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="util/utama.h" line="158" column="1" bodyfile="util/utama.h" bodystart="158" bodyend="-1"/>
+        <location file="util/utama.h" line="348" column="1" bodyfile="util/utama.h" bodystart="348" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
-    </briefdescription>
+<para>The <ref refid="d3/dda/a00712" kindref="compound">t_module</ref> struct. </para>    </briefdescription>
     <detaileddescription>
     </detaileddescription>
     <collaborationgraph>
@@ -698,7 +698,7 @@
         </childnode>
       </node>
     </collaborationgraph>
-    <location file="util/utama.h" line="99" column="1" bodyfile="util/utama.h" bodystart="99" bodyend="159"/>
+    <location file="util/utama.h" line="133" column="1" bodyfile="util/utama.h" bodystart="133" bodyend="349"/>
     <listofallmembers>
       <member refid="d3/dda/a00712_1a683ef0c23fadfdec4537f0fa862e0d2e" prot="public" virt="non-virtual"><scope>t_module</scope><name>alarm</name></member>
       <member refid="d3/dda/a00712_1ae682b2cc2093b9cf0226e1b1d0ac51fe" prot="public" virt="non-virtual"><scope>t_module</scope><name>apn_gsm_1</name></member>

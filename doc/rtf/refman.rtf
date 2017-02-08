@@ -86,7 +86,7 @@
 1.0.2-4 \par
 }}Sarasvati}
 {\comment Dibangkitkan olehDoxgyen. }
-{\creatim \yr2017\mo2\dy8\hr16\min22\sec53}
+{\creatim \yr2017\mo2\dy8\hr16\min35\sec23}
 }\pard\plain 
 \sectd\pgnlcrm
 {\footer \s29\widctlpar\tqc\tx4320\tqr\tx8640\qr\adjustright \fs20\cgrid {\chpgn}}
@@ -14338,11 +14338,17 @@ Struktur Data\par
 struct {\b data_port}\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-STRUCT. }}}
+The {\b data_port} struct. }}}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 struct {\b t_module}\par
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+The {\b t_module} struct. }}}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 struct {\b t_serial_settings}\par
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+The {\b t_serial_settings} struct. }}}
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
@@ -14356,7 +14362,7 @@ struct data_port\par
 \pard\plain 
 {
 \pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-STRUCT. \par
+The {\b data_port} struct. \par
 }}
 Diagram kolaborasi untuk data_port:{
 \pard\plain 
@@ -14373,34 +14379,44 @@ Variabel Data:\par}
 \pard \widctlpar\intbl\adjustright
 {\qr float{\bkmkstart AAAAAAAABD}
 {\bkmkend AAAAAAAABD}
-\cell }{calib_m\cell }{\cell }{\row }
+\cell }{calib_m\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+calib_m }\cell }{\row }
 {\qr float{\bkmkstart AAAAAAAABE}
 {\bkmkend AAAAAAAABE}
-\cell }{calib_x\cell }{\cell }{\row }
+\cell }{calib_x\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+calib_x }\cell }{\row }
 {\qr int{\bkmkstart AAAAAAAABF}
 {\bkmkend AAAAAAAABF}
-\cell }{control\cell }{\cell }{\row }
+\cell }{control\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+control }\cell }{\row }
 {\qr char{\bkmkstart AAAAAAAABG}
 {\bkmkend AAAAAAAABG}
-\cell }{nama_input[64]\cell }{\cell }{\row }
+\cell }{nama_input[64]\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+nama_input }\cell }{\row }
 {\qr char{\bkmkstart AAAAAAAABH}
 {\bkmkend AAAAAAAABH}
-\cell }{nama_output[64]\cell }{\cell }{\row }
+\cell }{nama_output[64]\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+nama_output }\cell }{\row }
 {\qr int{\bkmkstart AAAAAAAABI}
 {\bkmkend AAAAAAAABI}
-\cell }{reg_output\cell }{\cell }{\row }
+\cell }{reg_output\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+reg_output }\cell }{\row }
 {\qr int{\bkmkstart AAAAAAAABJ}
 {\bkmkend AAAAAAAABJ}
-\cell }{status_input\cell }{\cell }{\row }
+\cell }{status_input\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+status_input }\cell }{\row }
 {\qr int{\bkmkstart AAAAAAAABK}
 {\bkmkend AAAAAAAABK}
-\cell }{status_output\cell }{\cell }{\row }
+\cell }{status_output\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+status_output }\cell }{\row }
 {\qr int{\bkmkstart AAAAAAAABL}
 {\bkmkend AAAAAAAABL}
-\cell }{type_input\cell }{\cell }{\row }
+\cell }{type_input\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+type_input }\cell }{\row }
 {\qr char{\bkmkstart AAAAAAAABM}
 {\bkmkend AAAAAAAABM}
-\cell }{type_output[32]\cell }{\cell }{\row }
+\cell }{type_output[32]\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+type_output }\cell }{\row }
 }
 {\xe \v t_module}
 {\bkmkstart AAAAAAAABN}
@@ -14409,7 +14425,9 @@ Variabel Data:\par}
 struct t_module\par
 \pard\plain 
 {
-\pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid }
+\pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+The {\b t_module} struct. \par
+}}
 Diagram kolaborasi untuk t_module:{
 \pard\plain 
 \par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d4/deb/a00710.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
@@ -14425,160 +14443,212 @@ Variabel Data:\par}
 \pard \widctlpar\intbl\adjustright
 {\qr QStringList{\bkmkstart AAAAAAAABO}
 {\bkmkend AAAAAAAABO}
-\cell }{alarm\cell }{\cell }{\row }
+\cell }{alarm\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+alarm }\cell }{\row }
 {\qr char{\bkmkstart AAAAAAAABP}
 {\bkmkend AAAAAAAABP}
-\cell }{apn_gsm_1[16]\cell }{\cell }{\row }
+\cell }{apn_gsm_1[16]\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+apn_gsm_1 }\cell }{\row }
 {\qr char{\bkmkstart AAAAAAAABQ}
 {\bkmkend AAAAAAAABQ}
-\cell }{apn_gsm_2[16]\cell }{\cell }{\row }
+\cell }{apn_gsm_2[16]\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+apn_gsm_2 }\cell }{\row }
 {\qr char{\bkmkstart AAAAAAAABR}
 {\bkmkend AAAAAAAABR}
-\cell }{com_gsm_1[32]\cell }{\cell }{\row }
+\cell }{com_gsm_1[32]\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+com_gsm_1 }\cell }{\row }
 {\qr char{\bkmkstart AAAAAAAABS}
 {\bkmkend AAAAAAAABS}
-\cell }{com_gsm_2[32]\cell }{\cell }{\row }
+\cell }{com_gsm_2[32]\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+com_gsm_2 }\cell }{\row }
 {\qr struct {\b data_port}{\bkmkstart AAAAAAAABT}
 {\bkmkend AAAAAAAABT}
-\cell }{d_port[16]\cell }{\cell }{\row }
+\cell }{d_port[16]\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+d_port }\cell }{\row }
 {\qr QStringList{\bkmkstart AAAAAAAABU}
 {\bkmkend AAAAAAAABU}
-\cell }{data\cell }{\cell }{\row }
+\cell }{data\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+data }\cell }{\row }
 {\qr char{\bkmkstart AAAAAAAABV}
 {\bkmkend AAAAAAAABV}
-\cell }{device_name_gsm_1[64]\cell }{\cell }{\row }
+\cell }{device_name_gsm_1[64]\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+device_name_gsm_1 }\cell }{\row }
 {\qr char{\bkmkstart AAAAAAAABW}
 {\bkmkend AAAAAAAABW}
-\cell }{device_name_gsm_2[64]\cell }{\cell }{\row }
+\cell }{device_name_gsm_2[64]\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+device_name_gsm_2 }\cell }{\row }
 {\qr char{\bkmkstart AAAAAAAABX}
 {\bkmkend AAAAAAAABX}
-\cell }{file_address[32]\cell }{\cell }{\row }
+\cell }{file_address[32]\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+file_address }\cell }{\row }
 {\qr int{\bkmkstart AAAAAAAABY}
 {\bkmkend AAAAAAAABY}
-\cell }{flag_active\cell }{\cell }{\row }
+\cell }{flag_active\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+flag_active }\cell }{\row }
 {\qr int{\bkmkstart AAAAAAAABZ}
 {\bkmkend AAAAAAAABZ}
-\cell }{flag_com_gsm_1\cell }{\cell }{\row }
+\cell }{flag_com_gsm_1\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+flag_com_gsm_1 }\cell }{\row }
 {\qr int{\bkmkstart AAAAAAAACA}
 {\bkmkend AAAAAAAACA}
-\cell }{flag_com_gsm_2\cell }{\cell }{\row }
+\cell }{flag_com_gsm_2\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+flag_com_gsm_2 }\cell }{\row }
 {\qr int{\bkmkstart AAAAAAAACB}
 {\bkmkend AAAAAAAACB}
-\cell }{flag_dual_gsm\cell }{\cell }{\row }
+\cell }{flag_dual_gsm\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+flag_dual_gsm }\cell }{\row }
 {\qr int{\bkmkstart AAAAAAAACC}
 {\bkmkend AAAAAAAACC}
-\cell }{flag_gsm_1\cell }{\cell }{\row }
+\cell }{flag_gsm_1\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+flag_gsm_1 }\cell }{\row }
 {\qr int{\bkmkstart AAAAAAAACD}
 {\bkmkend AAAAAAAACD}
-\cell }{flag_gsm_2\cell }{\cell }{\row }
+\cell }{flag_gsm_2\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+flag_gsm_2 }\cell }{\row }
 {\qr int{\bkmkstart AAAAAAAACE}
 {\bkmkend AAAAAAAACE}
-\cell }{flag_mode_http\cell }{\cell }{\row }
+\cell }{flag_mode_http\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+flag_mode_http }\cell }{\row }
 {\qr int{\bkmkstart AAAAAAAACF}
 {\bkmkend AAAAAAAACF}
-\cell }{flag_status_active_gsm_1\cell }{\cell }{\row }
+\cell }{flag_status_active_gsm_1\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+flag_status_active_gsm_1 }\cell }{\row }
 {\qr int{\bkmkstart AAAAAAAACG}
 {\bkmkend AAAAAAAACG}
-\cell }{flag_status_active_gsm_2\cell }{\cell }{\row }
+\cell }{flag_status_active_gsm_2\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+flag_status_active_gsm_2 }\cell }{\row }
 {\qr int{\bkmkstart AAAAAAAACH}
 {\bkmkend AAAAAAAACH}
-\cell }{flag_webclient\cell }{\cell }{\row }
+\cell }{flag_webclient\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+flag_webclient }\cell }{\row }
 {\qr QStringList{\bkmkstart AAAAAAAACI}
 {\bkmkend AAAAAAAACI}
-\cell }{Input\cell }{\cell }{\row }
+\cell }{Input\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Input. }\cell }{\row }
 {\qr QStringList{\bkmkstart AAAAAAAACJ}
 {\bkmkend AAAAAAAACJ}
-\cell }{InputName\cell }{\cell }{\row }
+\cell }{InputName\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+InputName. }\cell }{\row }
 {\qr int{\bkmkstart AAAAAAAACK}
 {\bkmkend AAAAAAAACK}
-\cell }{interval_data\cell }{\cell }{\row }
+\cell }{interval_data\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+interval_data }\cell }{\row }
 {\qr int{\bkmkstart AAAAAAAACL}
 {\bkmkend AAAAAAAACL}
-\cell }{interval_relay\cell }{\cell }{\row }
+\cell }{interval_relay\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+interval_relay }\cell }{\row }
 {\qr char{\bkmkstart AAAAAAAACM}
 {\bkmkend AAAAAAAACM}
-\cell }{ip_address[32]\cell }{\cell }{\row }
+\cell }{ip_address[32]\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+ip_address }\cell }{\row }
 {\qr int{\bkmkstart AAAAAAAACN}
 {\bkmkend AAAAAAAACN}
-\cell }{jml_alarm\cell }{\cell }{\row }
+\cell }{jml_alarm\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+jml_alarm }\cell }{\row }
 {\qr int{\bkmkstart AAAAAAAACO}
 {\bkmkend AAAAAAAACO}
-\cell }{jml_data\cell }{\cell }{\row }
+\cell }{jml_data\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+jml_data }\cell }{\row }
 {\qr int{\bkmkstart AAAAAAAACP}
 {\bkmkend AAAAAAAACP}
-\cell }{jml_input_analog\cell }{\cell }{\row }
+\cell }{jml_input_analog\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+jml_input_analog }\cell }{\row }
 {\qr int{\bkmkstart AAAAAAAACQ}
 {\bkmkend AAAAAAAACQ}
-\cell }{jml_input_digital\cell }{\cell }{\row }
+\cell }{jml_input_digital\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+jml_input_digital }\cell }{\row }
 {\qr int{\bkmkstart AAAAAAAACR}
 {\bkmkend AAAAAAAACR}
-\cell }{jml_output\cell }{\cell }{\row }
+\cell }{jml_output\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+jml_output }\cell }{\row }
 {\qr int{\bkmkstart AAAAAAAACS}
 {\bkmkend AAAAAAAACS}
-\cell }{jml_sumber\cell }{\cell }{\row }
+\cell }{jml_sumber\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+jml_sumber }\cell }{\row }
 {\qr int{\bkmkstart AAAAAAAACT}
 {\bkmkend AAAAAAAACT}
-\cell }{last_signal\cell }{\cell }{\row }
+\cell }{last_signal\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+last_signal }\cell }{\row }
 {\qr char{\bkmkstart AAAAAAAACU}
 {\bkmkend AAAAAAAACU}
-\cell }{mode_http[32]\cell }{\cell }{\row }
+\cell }{mode_http[32]\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+mode_http }\cell }{\row }
 {\qr char{\bkmkstart AAAAAAAACV}
 {\bkmkend AAAAAAAACV}
-\cell }{module_name[32]\cell }{\cell }{\row }
+\cell }{module_name[32]\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+module_name }\cell }{\row }
 {\qr char{\bkmkstart AAAAAAAACW}
 {\bkmkend AAAAAAAACW}
-\cell }{name_gsm_1[32]\cell }{\cell }{\row }
+\cell }{name_gsm_1[32]\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+name_gsm_1 }\cell }{\row }
 {\qr char{\bkmkstart AAAAAAAACX}
 {\bkmkend AAAAAAAACX}
-\cell }{name_gsm_2[32]\cell }{\cell }{\row }
+\cell }{name_gsm_2[32]\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+name_gsm_2 }\cell }{\row }
 {\qr char{\bkmkstart AAAAAAAACY}
 {\bkmkend AAAAAAAACY}
-\cell }{number_gsm_1[16]\cell }{\cell }{\row }
+\cell }{number_gsm_1[16]\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+number_gsm_1 }\cell }{\row }
 {\qr char{\bkmkstart AAAAAAAACZ}
 {\bkmkend AAAAAAAACZ}
-\cell }{number_gsm_2[16]\cell }{\cell }{\row }
+\cell }{number_gsm_2[16]\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+number_gsm_2 }\cell }{\row }
 {\qr QStringList{\bkmkstart AAAAAAAADA}
 {\bkmkend AAAAAAAADA}
-\cell }{Output\cell }{\cell }{\row }
+\cell }{Output\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Output. }\cell }{\row }
 {\qr QStringList{\bkmkstart AAAAAAAADB}
 {\bkmkend AAAAAAAADB}
-\cell }{OutputName\cell }{\cell }{\row }
+\cell }{OutputName\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+OutputName. }\cell }{\row }
 {\qr char{\bkmkstart AAAAAAAADC}
 {\bkmkend AAAAAAAADC}
-\cell }{passwd_gsm_1[16]\cell }{\cell }{\row }
+\cell }{passwd_gsm_1[16]\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+passwd_gsm_1 }\cell }{\row }
 {\qr char{\bkmkstart AAAAAAAADD}
 {\bkmkend AAAAAAAADD}
-\cell }{passwd_gsm_2[16]\cell }{\cell }{\row }
+\cell }{passwd_gsm_2[16]\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+passwd_gsm_2 }\cell }{\row }
 {\qr int{\bkmkstart AAAAAAAADE}
 {\bkmkend AAAAAAAADE}
-\cell }{port\cell }{\cell }{\row }
+\cell }{port\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+port }\cell }{\row }
 {\qr char{\bkmkstart AAAAAAAADF}
 {\bkmkend AAAAAAAADF}
-\cell }{serial_number[32]\cell }{\cell }{\row }
+\cell }{serial_number[32]\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+serial_number }\cell }{\row }
 {\qr char{\bkmkstart AAAAAAAADG}
 {\bkmkend AAAAAAAADG}
-\cell }{server_address[32]\cell }{\cell }{\row }
+\cell }{server_address[32]\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+server_address }\cell }{\row }
 {\qr char{\bkmkstart AAAAAAAADH}
 {\bkmkend AAAAAAAADH}
-\cell }{status_gsm_1[32]\cell }{\cell }{\row }
+\cell }{status_gsm_1[32]\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+status_gsm_1 }\cell }{\row }
 {\qr char{\bkmkstart AAAAAAAADI}
 {\bkmkend AAAAAAAADI}
-\cell }{status_gsm_2[32]\cell }{\cell }{\row }
+\cell }{status_gsm_2[32]\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+status_gsm_2 }\cell }{\row }
 {\qr char{\bkmkstart AAAAAAAADJ}
 {\bkmkend AAAAAAAADJ}
-\cell }{status_webclient[32]\cell }{\cell }{\row }
+\cell }{status_webclient[32]\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+status_webclient }\cell }{\row }
 {\qr QStringList{\bkmkstart AAAAAAAADK}
 {\bkmkend AAAAAAAADK}
-\cell }{sumber\cell }{\cell }{\row }
+\cell }{sumber\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+sumber }\cell }{\row }
 {\qr char{\bkmkstart AAAAAAAADL}
 {\bkmkend AAAAAAAADL}
-\cell }{user_gsm_1[16]\cell }{\cell }{\row }
+\cell }{user_gsm_1[16]\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+user_gsm_1 }\cell }{\row }
 {\qr char{\bkmkstart AAAAAAAADM}
 {\bkmkend AAAAAAAADM}
-\cell }{user_gsm_2[16]\cell }{\cell }{\row }
+\cell }{user_gsm_2[16]\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+user_gsm_2 }\cell }{\row }
 {\qr int{\bkmkstart AAAAAAAADN}
 {\bkmkend AAAAAAAADN}
-\cell }{utc\cell }{\cell }{\row }
+\cell }{utc\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+utc }\cell }{\row }
 }
 {\xe \v t_serial_settings}
 {\bkmkstart AAAAAAAADO}
@@ -14587,7 +14657,9 @@ Variabel Data:\par}
 struct t_serial_settings\par
 \pard\plain 
 {
-\pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid }
+\pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+The {\b t_serial_settings} struct. \par
+}}
 Diagram kolaborasi untuk t_serial_settings:{
 \pard\plain 
 \par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "df/d96/a00714.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
@@ -14603,52 +14675,68 @@ Variabel Data:\par}
 \pard \widctlpar\intbl\adjustright
 {\qr qint32{\bkmkstart AAAAAAAADP}
 {\bkmkend AAAAAAAADP}
-\cell }{baudRate\cell }{\cell }{\row }
+\cell }{baudRate\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+baudRate }\cell }{\row }
 {\qr DataBits{\bkmkstart AAAAAAAADQ}
 {\bkmkend AAAAAAAADQ}
-\cell }{dataBits\cell }{\cell }{\row }
+\cell }{dataBits\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+dataBits }\cell }{\row }
 {\qr FlowControl{\bkmkstart AAAAAAAADR}
 {\bkmkend AAAAAAAADR}
-\cell }{flowControl\cell }{\cell }{\row }
+\cell }{flowControl\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+flowControl }\cell }{\row }
 {\qr QString{\bkmkstart AAAAAAAADS}
 {\bkmkend AAAAAAAADS}
-\cell }{name\cell }{\cell }{\row }
+\cell }{name\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+name }\cell }{\row }
 {\qr Parity{\bkmkstart AAAAAAAADT}
 {\bkmkend AAAAAAAADT}
-\cell }{parity\cell }{\cell }{\row }
+\cell }{parity\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+parity }\cell }{\row }
 {\qr StopBits{\bkmkstart AAAAAAAADU}
 {\bkmkend AAAAAAAADU}
-\cell }{stopBits\cell }{\cell }{\row }
+\cell }{stopBits\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+stopBits }\cell }{\row }
 {\qr QString{\bkmkstart AAAAAAAADV}
 {\bkmkend AAAAAAAADV}
-\cell }{str_data_dat\cell }{\cell }{\row }
+\cell }{str_data_dat\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+str_data_dat }\cell }{\row }
 {\qr QString{\bkmkstart AAAAAAAADW}
 {\bkmkend AAAAAAAADW}
-\cell }{str_data_env\cell }{\cell }{\row }
+\cell }{str_data_env\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+str_data_env }\cell }{\row }
 {\qr QString{\bkmkstart AAAAAAAADX}
 {\bkmkend AAAAAAAADX}
-\cell }{str_data_io\cell }{\cell }{\row }
+\cell }{str_data_io\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+str_data_io }\cell }{\row }
 {\qr QString{\bkmkstart AAAAAAAADY}
 {\bkmkend AAAAAAAADY}
-\cell }{str_data_sim\cell }{\cell }{\row }
+\cell }{str_data_sim\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+str_data_sim }\cell }{\row }
 {\qr QString{\bkmkstart AAAAAAAADZ}
 {\bkmkend AAAAAAAADZ}
-\cell }{str_data_src\cell }{\cell }{\row }
+\cell }{str_data_src\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+str_data_src }\cell }{\row }
 {\qr QString{\bkmkstart AAAAAAAAEA}
 {\bkmkend AAAAAAAAEA}
-\cell }{stringBaudRate\cell }{\cell }{\row }
+\cell }{stringBaudRate\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+stringBaudRate }\cell }{\row }
 {\qr QString{\bkmkstart AAAAAAAAEB}
 {\bkmkend AAAAAAAAEB}
-\cell }{stringDataBits\cell }{\cell }{\row }
+\cell }{stringDataBits\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+stringDataBits }\cell }{\row }
 {\qr QString{\bkmkstart AAAAAAAAEC}
 {\bkmkend AAAAAAAAEC}
-\cell }{stringFlowControl\cell }{\cell }{\row }
+\cell }{stringFlowControl\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+stringFlowControl }\cell }{\row }
 {\qr QString{\bkmkstart AAAAAAAAED}
 {\bkmkend AAAAAAAAED}
-\cell }{stringParity\cell }{\cell }{\row }
+\cell }{stringParity\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+stringParity }\cell }{\row }
 {\qr QString{\bkmkstart AAAAAAAAEE}
 {\bkmkend AAAAAAAAEE}
-\cell }{stringStopBits\cell }{\cell }{\row }
+\cell }{stringStopBits\cell }{{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+stringStopBits }\cell }{\row }
 }
 \par \pard\plain 
 
