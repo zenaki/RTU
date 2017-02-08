@@ -1,0 +1,389 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.14">
+  <compounddef id="d5/d39/a00676" kind="class" language="C++" prot="public">
+    <compoundname>serial</compoundname>
+    <includes refid="d6/d5b/a00026" local="no">serial.h</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="d5/d39/a00676_1a340a620b6a94e5140ea9b572f7d07ec9" prot="private" static="no" mutable="no">
+        <type>QByteArray</type>
+        <definition>QByteArray m_writeData</definition>
+        <argsstring></argsstring>
+        <name>m_writeData</name>
+        <briefdescription>
+<para>m_writeData </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="model/communication/serial.h" line="100" column="1" bodyfile="model/communication/serial.h" bodystart="100" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d5/d39/a00676_1ac1097dafd4f97ad36275e9031ca1c156" prot="private" static="no" mutable="no">
+        <type>QTextStream</type>
+        <definition>QTextStream m_standardOutput</definition>
+        <argsstring></argsstring>
+        <name>m_standardOutput</name>
+        <briefdescription>
+<para>m_standardOutput </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="model/communication/serial.h" line="104" column="1" bodyfile="model/communication/serial.h" bodystart="104" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d5/d39/a00676_1a891b39b669acd03bf2044ba85d2feda8" prot="private" static="no" mutable="no">
+        <type>qint64</type>
+        <definition>qint64 m_bytesWritten</definition>
+        <argsstring></argsstring>
+        <name>m_bytesWritten</name>
+        <briefdescription>
+<para>m_bytesWritten </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="model/communication/serial.h" line="108" column="1" bodyfile="model/communication/serial.h" bodystart="108" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d5/d39/a00676_1a35d5e61f4986106a994025d3e7c4b9ef" prot="private" static="no" mutable="no">
+        <type>QTimer</type>
+        <definition>QTimer m_timer</definition>
+        <argsstring></argsstring>
+        <name>m_timer</name>
+        <briefdescription>
+<para>m_timer </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="model/communication/serial.h" line="112" column="1" bodyfile="model/communication/serial.h" bodystart="112" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="d5/d39/a00676_1a20d848af138f92c4604f0bcecce267e2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>serial</definition>
+        <argsstring>()</argsstring>
+        <name>serial</name>
+        <briefdescription>
+<para>serial </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="model/communication/serial.h" line="25" column="1" bodyfile="model/communication/serial.cpp" bodystart="3" bodyend="6"/>
+      </memberdef>
+      <memberdef kind="function" id="d5/d39/a00676_1aa63099330a47cf7e95966b6237043222" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void open_serial</definition>
+        <argsstring>(QSerialPort *SerialPort, struct t_serial_settings *tSerial)</argsstring>
+        <name>open_serial</name>
+        <param>
+          <type>QSerialPort *</type>
+          <declname>SerialPort</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="d2/d94/a00716" kindref="compound">t_serial_settings</ref> *</type>
+          <declname>tSerial</declname>
+        </param>
+        <briefdescription>
+<para>open_serial </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>SerialPort</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>tSerial</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="model/communication/serial.h" line="37" column="1" bodyfile="model/communication/serial.cpp" bodystart="8" bodyend="16"/>
+      </memberdef>
+      <memberdef kind="function" id="d5/d39/a00676_1aad0cc20ddf875e131e4167b6cde088d3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void close_serial</definition>
+        <argsstring>(QSerialPort *SerialPort)</argsstring>
+        <name>close_serial</name>
+        <param>
+          <type>QSerialPort *</type>
+          <declname>SerialPort</declname>
+        </param>
+        <briefdescription>
+<para>close_serial </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>SerialPort</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="model/communication/serial.h" line="42" column="1" bodyfile="model/communication/serial.cpp" bodystart="18" bodyend="22"/>
+      </memberdef>
+      <memberdef kind="function" id="d5/d39/a00676_1a63b5f23e9319a9e5dbcd9fc46de9bbbc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void write_data</definition>
+        <argsstring>(QSerialPort *port, QByteArray data)</argsstring>
+        <name>write_data</name>
+        <param>
+          <type>QSerialPort *</type>
+          <declname>port</declname>
+        </param>
+        <param>
+          <type>QByteArray</type>
+          <declname>data</declname>
+        </param>
+        <briefdescription>
+<para>write_data </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>port</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>data</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="model/communication/serial.h" line="48" column="1" bodyfile="model/communication/serial.cpp" bodystart="24" bodyend="42"/>
+      </memberdef>
+      <memberdef kind="function" id="d5/d39/a00676_1aa01e3ceb6c7fa0a9a3c809c1120a4b50" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void write_parsing_env</definition>
+        <argsstring>(struct t_serial_settings *tSerial)</argsstring>
+        <name>write_parsing_env</name>
+        <param>
+          <type>struct <ref refid="d2/d94/a00716" kindref="compound">t_serial_settings</ref> *</type>
+          <declname>tSerial</declname>
+        </param>
+        <briefdescription>
+<para>write_parsing_env </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>tSerial</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="model/communication/serial.h" line="54" column="1" bodyfile="model/communication/serial.cpp" bodystart="71" bodyend="78"/>
+      </memberdef>
+      <memberdef kind="function" id="d5/d39/a00676_1ad249d0dc623c51fb96bb3aa6485c1a6e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void write_parsing_io</definition>
+        <argsstring>(struct t_serial_settings *tSerial)</argsstring>
+        <name>write_parsing_io</name>
+        <param>
+          <type>struct <ref refid="d2/d94/a00716" kindref="compound">t_serial_settings</ref> *</type>
+          <declname>tSerial</declname>
+        </param>
+        <briefdescription>
+<para>write_parsing_io </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>tSerial</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="model/communication/serial.h" line="59" column="1" bodyfile="model/communication/serial.cpp" bodystart="80" bodyend="87"/>
+      </memberdef>
+      <memberdef kind="function" id="d5/d39/a00676_1aa686800c343de737a8554f3555a32e79" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void write_parsing_sim</definition>
+        <argsstring>(struct t_serial_settings *tSerial)</argsstring>
+        <name>write_parsing_sim</name>
+        <param>
+          <type>struct <ref refid="d2/d94/a00716" kindref="compound">t_serial_settings</ref> *</type>
+          <declname>tSerial</declname>
+        </param>
+        <briefdescription>
+<para>write_parsing_sim </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>tSerial</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="model/communication/serial.h" line="64" column="1" bodyfile="model/communication/serial.cpp" bodystart="89" bodyend="96"/>
+      </memberdef>
+      <memberdef kind="function" id="d5/d39/a00676_1a4a2b34be15bb3819c4af87d519d4d5fd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void write_parsing_src</definition>
+        <argsstring>(struct t_serial_settings *tSerial)</argsstring>
+        <name>write_parsing_src</name>
+        <param>
+          <type>struct <ref refid="d2/d94/a00716" kindref="compound">t_serial_settings</ref> *</type>
+          <declname>tSerial</declname>
+        </param>
+        <briefdescription>
+<para>write_parsing_src </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>tSerial</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="model/communication/serial.h" line="69" column="1" bodyfile="model/communication/serial.cpp" bodystart="98" bodyend="105"/>
+      </memberdef>
+      <memberdef kind="function" id="d5/d39/a00676_1a7e798d571c1b22bc0f9b67a438dcd1b1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void write_parsing_dat</definition>
+        <argsstring>(struct t_serial_settings *tSerial)</argsstring>
+        <name>write_parsing_dat</name>
+        <param>
+          <type>struct <ref refid="d2/d94/a00716" kindref="compound">t_serial_settings</ref> *</type>
+          <declname>tSerial</declname>
+        </param>
+        <briefdescription>
+<para>write_parsing_dat </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>tSerial</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="model/communication/serial.h" line="74" column="1" bodyfile="model/communication/serial.cpp" bodystart="107" bodyend="114"/>
+      </memberdef>
+      <memberdef kind="function" id="d5/d39/a00676_1aff0f1e9759eab9e12020018b454a760a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void read_parsing</definition>
+        <argsstring>(struct t_serial_settings *tSerial)</argsstring>
+        <name>read_parsing</name>
+        <param>
+          <type>struct <ref refid="d2/d94/a00716" kindref="compound">t_serial_settings</ref> *</type>
+          <declname>tSerial</declname>
+        </param>
+        <briefdescription>
+<para>read_parsing </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>tSerial</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="model/communication/serial.h" line="80" column="1" bodyfile="model/communication/serial.cpp" bodystart="116" bodyend="131"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-slot">
+      <memberdef kind="slot" id="d5/d39/a00676_1a87972004eade6c0d400087ebc6cfee3c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void read_data</definition>
+        <argsstring>(QString str_data, QStringList val_data)</argsstring>
+        <name>read_data</name>
+        <param>
+          <type>QString</type>
+          <declname>str_data</declname>
+        </param>
+        <param>
+          <type>QStringList</type>
+          <declname>val_data</declname>
+        </param>
+        <briefdescription>
+<para>read_data </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>str_data</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>val_data</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="model/communication/serial.h" line="88" column="1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>The serial class. </para>    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="63">
+        <label>serial</label>
+        <link refid="d5/d39/a00676"/>
+      </node>
+    </collaborationgraph>
+    <location file="model/communication/serial.h" line="20" column="1" bodyfile="model/communication/serial.h" bodystart="19" bodyend="114"/>
+    <listofallmembers>
+      <member refid="d5/d39/a00676_1aad0cc20ddf875e131e4167b6cde088d3" prot="public" virt="non-virtual"><scope>serial</scope><name>close_serial</name></member>
+      <member refid="d5/d39/a00676_1a891b39b669acd03bf2044ba85d2feda8" prot="private" virt="non-virtual"><scope>serial</scope><name>m_bytesWritten</name></member>
+      <member refid="d5/d39/a00676_1ac1097dafd4f97ad36275e9031ca1c156" prot="private" virt="non-virtual"><scope>serial</scope><name>m_standardOutput</name></member>
+      <member refid="d5/d39/a00676_1a35d5e61f4986106a994025d3e7c4b9ef" prot="private" virt="non-virtual"><scope>serial</scope><name>m_timer</name></member>
+      <member refid="d5/d39/a00676_1a340a620b6a94e5140ea9b572f7d07ec9" prot="private" virt="non-virtual"><scope>serial</scope><name>m_writeData</name></member>
+      <member refid="d5/d39/a00676_1aa63099330a47cf7e95966b6237043222" prot="public" virt="non-virtual"><scope>serial</scope><name>open_serial</name></member>
+      <member refid="d5/d39/a00676_1a87972004eade6c0d400087ebc6cfee3c" prot="public" virt="non-virtual"><scope>serial</scope><name>read_data</name></member>
+      <member refid="d5/d39/a00676_1aff0f1e9759eab9e12020018b454a760a" prot="public" virt="non-virtual"><scope>serial</scope><name>read_parsing</name></member>
+      <member refid="d5/d39/a00676_1a20d848af138f92c4604f0bcecce267e2" prot="public" virt="non-virtual"><scope>serial</scope><name>serial</name></member>
+      <member refid="d5/d39/a00676_1a63b5f23e9319a9e5dbcd9fc46de9bbbc" prot="public" virt="non-virtual"><scope>serial</scope><name>write_data</name></member>
+      <member refid="d5/d39/a00676_1a7e798d571c1b22bc0f9b67a438dcd1b1" prot="public" virt="non-virtual"><scope>serial</scope><name>write_parsing_dat</name></member>
+      <member refid="d5/d39/a00676_1aa01e3ceb6c7fa0a9a3c809c1120a4b50" prot="public" virt="non-virtual"><scope>serial</scope><name>write_parsing_env</name></member>
+      <member refid="d5/d39/a00676_1ad249d0dc623c51fb96bb3aa6485c1a6e" prot="public" virt="non-virtual"><scope>serial</scope><name>write_parsing_io</name></member>
+      <member refid="d5/d39/a00676_1aa686800c343de737a8554f3555a32e79" prot="public" virt="non-virtual"><scope>serial</scope><name>write_parsing_sim</name></member>
+      <member refid="d5/d39/a00676_1a4a2b34be15bb3819c4af87d519d4d5fd" prot="public" virt="non-virtual"><scope>serial</scope><name>write_parsing_src</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

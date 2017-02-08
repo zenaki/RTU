@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.14">
+  <compounddef id="d0/d15/a00700" kind="class" language="C++" prot="public">
+    <compoundname>setting</compoundname>
+    <includes refid="da/d24/a00068" local="no">setting.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="d0/d15/a00700_1a29ca030f3e5e20bca15c6f4922b48a31" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>setting</definition>
+        <argsstring>()</argsstring>
+        <name>setting</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="model/setting.h" line="17" column="1" bodyfile="model/setting.cpp" bodystart="3" bodyend="6"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d15/a00700_1af719af093d52d1ca29ff2465a7a64b79" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void write_setting</definition>
+        <argsstring>(SettingsDialog *s_d, struct t_serial_settings *tSerial)</argsstring>
+        <name>write_setting</name>
+        <param>
+          <type><ref refid="dc/dce/a00740" kindref="compound">SettingsDialog</ref> *</type>
+          <declname>s_d</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="d2/d94/a00716" kindref="compound">t_serial_settings</ref> *</type>
+          <declname>tSerial</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="model/setting.h" line="19" column="1" bodyfile="model/setting.cpp" bodystart="8" bodyend="55"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d15/a00700_1a65bb7749dc9e0c2bcc7e76b7f78dc987" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void read_setting</definition>
+        <argsstring>(struct t_serial_settings *tSerial)</argsstring>
+        <name>read_setting</name>
+        <param>
+          <type>struct <ref refid="d2/d94/a00716" kindref="compound">t_serial_settings</ref> *</type>
+          <declname>tSerial</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="model/setting.h" line="20" column="1" bodyfile="model/setting.cpp" bodystart="57" bodyend="97"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d15/a00700_1ae9b283ef17f51572f30f96c8479586f5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool checkSetting</definition>
+        <argsstring>()</argsstring>
+        <name>checkSetting</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="model/setting.h" line="21" column="1" bodyfile="model/setting.cpp" bodystart="99" bodyend="111"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="65">
+        <label>setting</label>
+        <link refid="d0/d15/a00700"/>
+      </node>
+    </collaborationgraph>
+    <location file="model/setting.h" line="15" column="1" bodyfile="model/setting.h" bodystart="14" bodyend="22"/>
+    <listofallmembers>
+      <member refid="d0/d15/a00700_1ae9b283ef17f51572f30f96c8479586f5" prot="public" virt="non-virtual"><scope>setting</scope><name>checkSetting</name></member>
+      <member refid="d0/d15/a00700_1a65bb7749dc9e0c2bcc7e76b7f78dc987" prot="public" virt="non-virtual"><scope>setting</scope><name>read_setting</name></member>
+      <member refid="d0/d15/a00700_1a29ca030f3e5e20bca15c6f4922b48a31" prot="public" virt="non-virtual"><scope>setting</scope><name>setting</name></member>
+      <member refid="d0/d15/a00700_1af719af093d52d1ca29ff2465a7a64b79" prot="public" virt="non-virtual"><scope>setting</scope><name>write_setting</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

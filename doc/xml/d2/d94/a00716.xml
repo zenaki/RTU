@@ -1,0 +1,246 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.14">
+  <compounddef id="d2/d94/a00716" kind="struct" language="C++" prot="public">
+    <compoundname>t_serial_settings</compoundname>
+    <includes refid="df/da5/a00912" local="no">utama.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="d2/d94/a00716_1abc29e461e01cc0c712944f8f47f91331" prot="public" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString name</definition>
+        <argsstring></argsstring>
+        <name>name</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="util/utama.h" line="162" column="1" bodyfile="util/utama.h" bodystart="162" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d2/d94/a00716_1ae4da8c1cc1086a8440011e7a9b530ceb" prot="public" static="no" mutable="no">
+        <type>qint32</type>
+        <definition>qint32 baudRate</definition>
+        <argsstring></argsstring>
+        <name>baudRate</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="util/utama.h" line="163" column="1" bodyfile="util/utama.h" bodystart="163" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d2/d94/a00716_1a3f663d8149be39c46a2d5f38d9e127c0" prot="public" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString stringBaudRate</definition>
+        <argsstring></argsstring>
+        <name>stringBaudRate</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="util/utama.h" line="164" column="1" bodyfile="util/utama.h" bodystart="164" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d2/d94/a00716_1a30bfcdadf644ba49462098536070ef6e" prot="public" static="no" mutable="no">
+        <type>QSerialPort::DataBits</type>
+        <definition>QSerialPort::DataBits dataBits</definition>
+        <argsstring></argsstring>
+        <name>dataBits</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="util/utama.h" line="165" column="1" bodyfile="util/utama.h" bodystart="165" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d2/d94/a00716_1ab21aa4bfe01e48658c549113094c4c29" prot="public" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString stringDataBits</definition>
+        <argsstring></argsstring>
+        <name>stringDataBits</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="util/utama.h" line="166" column="1" bodyfile="util/utama.h" bodystart="166" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d2/d94/a00716_1aa3276e28333a211e56ff16aeaf2051a5" prot="public" static="no" mutable="no">
+        <type>QSerialPort::Parity</type>
+        <definition>QSerialPort::Parity parity</definition>
+        <argsstring></argsstring>
+        <name>parity</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="util/utama.h" line="167" column="1" bodyfile="util/utama.h" bodystart="167" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d2/d94/a00716_1adc3905c485c9fdda73e7616a3f786e10" prot="public" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString stringParity</definition>
+        <argsstring></argsstring>
+        <name>stringParity</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="util/utama.h" line="168" column="1" bodyfile="util/utama.h" bodystart="168" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d2/d94/a00716_1a4424bcca5efa0394657fece4faac0144" prot="public" static="no" mutable="no">
+        <type>QSerialPort::StopBits</type>
+        <definition>QSerialPort::StopBits stopBits</definition>
+        <argsstring></argsstring>
+        <name>stopBits</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="util/utama.h" line="169" column="1" bodyfile="util/utama.h" bodystart="169" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d2/d94/a00716_1a5c7323c983a0466535c03fabbe963bcf" prot="public" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString stringStopBits</definition>
+        <argsstring></argsstring>
+        <name>stringStopBits</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="util/utama.h" line="170" column="1" bodyfile="util/utama.h" bodystart="170" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d2/d94/a00716_1aaaf840bbe91f7880fe67838452f34a7c" prot="public" static="no" mutable="no">
+        <type>QSerialPort::FlowControl</type>
+        <definition>QSerialPort::FlowControl flowControl</definition>
+        <argsstring></argsstring>
+        <name>flowControl</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="util/utama.h" line="171" column="1" bodyfile="util/utama.h" bodystart="171" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d2/d94/a00716_1a55924e8ec858d0f90d6afc1ac3a69dca" prot="public" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString stringFlowControl</definition>
+        <argsstring></argsstring>
+        <name>stringFlowControl</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="util/utama.h" line="172" column="1" bodyfile="util/utama.h" bodystart="172" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d2/d94/a00716_1a7a38393fcc494fcdc580f5a565fe9e1f" prot="public" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString str_data_env</definition>
+        <argsstring></argsstring>
+        <name>str_data_env</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="util/utama.h" line="174" column="1" bodyfile="util/utama.h" bodystart="174" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d2/d94/a00716_1a98d4af4ede4c4f30d06c07b04903411a" prot="public" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString str_data_io</definition>
+        <argsstring></argsstring>
+        <name>str_data_io</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="util/utama.h" line="175" column="1" bodyfile="util/utama.h" bodystart="175" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d2/d94/a00716_1a3e16e74dec1c32bc9e7fd44de51278a0" prot="public" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString str_data_sim</definition>
+        <argsstring></argsstring>
+        <name>str_data_sim</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="util/utama.h" line="176" column="1" bodyfile="util/utama.h" bodystart="176" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d2/d94/a00716_1a0934c0a99a4e8443e3b36b6e208d75de" prot="public" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString str_data_src</definition>
+        <argsstring></argsstring>
+        <name>str_data_src</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="util/utama.h" line="177" column="1" bodyfile="util/utama.h" bodystart="177" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d2/d94/a00716_1a4f23a9f54e0cf93086c08d531d584db4" prot="public" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString str_data_dat</definition>
+        <argsstring></argsstring>
+        <name>str_data_dat</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="util/utama.h" line="178" column="1" bodyfile="util/utama.h" bodystart="178" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="84">
+        <label>t_serial_settings</label>
+        <link refid="d2/d94/a00716"/>
+      </node>
+    </collaborationgraph>
+    <location file="util/utama.h" line="161" column="1" bodyfile="util/utama.h" bodystart="161" bodyend="179"/>
+    <listofallmembers>
+      <member refid="d2/d94/a00716_1ae4da8c1cc1086a8440011e7a9b530ceb" prot="public" virt="non-virtual"><scope>t_serial_settings</scope><name>baudRate</name></member>
+      <member refid="d2/d94/a00716_1a30bfcdadf644ba49462098536070ef6e" prot="public" virt="non-virtual"><scope>t_serial_settings</scope><name>dataBits</name></member>
+      <member refid="d2/d94/a00716_1aaaf840bbe91f7880fe67838452f34a7c" prot="public" virt="non-virtual"><scope>t_serial_settings</scope><name>flowControl</name></member>
+      <member refid="d2/d94/a00716_1abc29e461e01cc0c712944f8f47f91331" prot="public" virt="non-virtual"><scope>t_serial_settings</scope><name>name</name></member>
+      <member refid="d2/d94/a00716_1aa3276e28333a211e56ff16aeaf2051a5" prot="public" virt="non-virtual"><scope>t_serial_settings</scope><name>parity</name></member>
+      <member refid="d2/d94/a00716_1a4424bcca5efa0394657fece4faac0144" prot="public" virt="non-virtual"><scope>t_serial_settings</scope><name>stopBits</name></member>
+      <member refid="d2/d94/a00716_1a4f23a9f54e0cf93086c08d531d584db4" prot="public" virt="non-virtual"><scope>t_serial_settings</scope><name>str_data_dat</name></member>
+      <member refid="d2/d94/a00716_1a7a38393fcc494fcdc580f5a565fe9e1f" prot="public" virt="non-virtual"><scope>t_serial_settings</scope><name>str_data_env</name></member>
+      <member refid="d2/d94/a00716_1a98d4af4ede4c4f30d06c07b04903411a" prot="public" virt="non-virtual"><scope>t_serial_settings</scope><name>str_data_io</name></member>
+      <member refid="d2/d94/a00716_1a3e16e74dec1c32bc9e7fd44de51278a0" prot="public" virt="non-virtual"><scope>t_serial_settings</scope><name>str_data_sim</name></member>
+      <member refid="d2/d94/a00716_1a0934c0a99a4e8443e3b36b6e208d75de" prot="public" virt="non-virtual"><scope>t_serial_settings</scope><name>str_data_src</name></member>
+      <member refid="d2/d94/a00716_1a3f663d8149be39c46a2d5f38d9e127c0" prot="public" virt="non-virtual"><scope>t_serial_settings</scope><name>stringBaudRate</name></member>
+      <member refid="d2/d94/a00716_1ab21aa4bfe01e48658c549113094c4c29" prot="public" virt="non-virtual"><scope>t_serial_settings</scope><name>stringDataBits</name></member>
+      <member refid="d2/d94/a00716_1a55924e8ec858d0f90d6afc1ac3a69dca" prot="public" virt="non-virtual"><scope>t_serial_settings</scope><name>stringFlowControl</name></member>
+      <member refid="d2/d94/a00716_1adc3905c485c9fdda73e7616a3f786e10" prot="public" virt="non-virtual"><scope>t_serial_settings</scope><name>stringParity</name></member>
+      <member refid="d2/d94/a00716_1a5c7323c983a0466535c03fabbe963bcf" prot="public" virt="non-virtual"><scope>t_serial_settings</scope><name>stringStopBits</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

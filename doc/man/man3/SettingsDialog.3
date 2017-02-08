@@ -1,0 +1,290 @@
+.TH "SettingsDialog" 3 "Rabu 8 Februari 2017" "Version 1.0.2-4" "Sarasvati" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+SettingsDialog \- The \fBSettingsDialog\fP class\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <settingsdialog\&.h>\fP
+.PP
+Mewarisi QDialog\&.
+.SS "Fungsi Anggota Publik"
+.SS "Variabel Data"
+.SS "Slot Privat"
+.SS "Fungsi Anggota Privat"
+.SS "Atribut Privat"
+.SH "Keterangan Lengkap"
+.PP 
+The \fBSettingsDialog\fP class\&. 
+.SH "Dokumentasi Konstruktor & Destruktor"
+.PP 
+.SS "\fBSettingsDialog\fP (QWidget * parent = \fC0\fP)\fC [explicit]\fP"
+
+.PP
+\fBSettingsDialog\fP\&. 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIparent\fP 
+.RE
+.PP
+
+.PP
+.nf
+12                                               :
+13     QDialog(parent),
+14     ui(new Ui::SettingsDialog)
+15 {
+16     ui->setupUi(this);
+17 
+18     intValidator = new QIntValidator(0, 4000000, this);
+19 
+20     ui->baudRateBox->setInsertPolicy(QComboBox::NoInsert);
+21 
+22     connect(ui->applyButton, SIGNAL(clicked()), this, SLOT(apply()));
+23     
+24     connect(ui->serialPortInfoListBox, SIGNAL(currentIndexChanged(int)),
+25             this, SLOT(showPortInfo(int)));
+26     connect(ui->baudRateBox, SIGNAL(currentIndexChanged(int)),
+27             this, SLOT(checkCustomBaudRatePolicy(int)));
+28     connect(ui->serialPortInfoListBox, SIGNAL(currentIndexChanged(int)),
+29             this, SLOT(checkCustomDevicePathPolicy(int)));
+30 
+31     fillPortsParameters();
+32     fillPortsInfo();
+33 
+34     //updateSettings(tSerial);
+35 }
+.fi
+.SS "~\fBSettingsDialog\fP ()"
+
+.PP
+.nf
+38 {
+39 //    Serial->serial_set = 0;
+40 //    currentSettings\&.serial_set = 0;
+41     delete ui;
+42 }
+.fi
+.SH "Dokumentasi Anggota: Fungsi"
+.PP 
+.SS "void apply ()\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+apply 
+.PP
+.nf
+64 {
+65     struct t_serial_settings tSerial;
+66     updateSettings(&tSerial);
+67 
+68     this->accept();
+69 
+70 //    Serial->serial_set = 1;
+71 //    currentSettings\&.serial_set = 1;
+72 //    close();
+73 //    hide();
+74 }
+.fi
+.SS "void checkCustomBaudRatePolicy (int idx)\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+checkCustomBaudRatePolicy 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIidx\fP 
+.RE
+.PP
+
+.PP
+.nf
+77 {
+78     bool isCustomBaudRate = !ui->baudRateBox->itemData(idx)\&.isValid();
+79     ui->baudRateBox->setEditable(isCustomBaudRate);
+80     if (isCustomBaudRate) {
+81         ui->baudRateBox->clearEditText();
+82         QLineEdit *edit = ui->baudRateBox->lineEdit();
+83         edit->setValidator(intValidator);
+84     }
+85 }
+.fi
+.SS "void checkCustomDevicePathPolicy (int idx)\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+checkCustomDevicePathPolicy 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIidx\fP 
+.RE
+.PP
+
+.PP
+.nf
+88 {
+89     bool isCustomPath = !ui->serialPortInfoListBox->itemData(idx)\&.isValid();
+90     ui->serialPortInfoListBox->setEditable(isCustomPath);
+91     if (isCustomPath)
+92         ui->serialPortInfoListBox->clearEditText();
+93 }
+.fi
+.SS "void fillPortsInfo ()\fC [private]\fP"
+
+.PP
+fillPortsInfo 
+.PP
+.nf
+139 {
+140     ui->serialPortInfoListBox->clear();
+141     QString description;
+142     QString manufacturer;
+143     QString serialNumber;
+144     foreach (const QSerialPortInfo &info, QSerialPortInfo::availablePorts()) {
+145         QStringList list;
+146         description = info\&.description();
+147         manufacturer = info\&.manufacturer();
+148 //        serialNumber = info\&.serialNumber();
+149         list << info\&.portName()
+150              << (!description\&.isEmpty() ? description : blankString)
+151              << (!manufacturer\&.isEmpty() ? manufacturer : blankString)
+152              << (!serialNumber\&.isEmpty() ? serialNumber : blankString)
+153              << info\&.systemLocation()
+154              << (info\&.vendorIdentifier() ? QString::number(info\&.vendorIdentifier(), 16) : blankString)
+155              << (info\&.productIdentifier() ? QString::number(info\&.productIdentifier(), 16) : blankString);
+156 
+157         ui->serialPortInfoListBox->addItem(list\&.first(), list);
+158     }
+159 
+160     ui->serialPortInfoListBox->addItem(tr("Custom"));
+161 }
+.fi
+.SS "void fillPortsParameters ()\fC [private]\fP"
+
+.PP
+fillPortsParameters 
+.PP
+.nf
+96 {
+97     ui->baudRateBox->addItem(QStringLiteral("9600"), QSerialPort::Baud9600);
+98     ui->baudRateBox->addItem(QStringLiteral("19200"), QSerialPort::Baud19200);
+99     ui->baudRateBox->addItem(QStringLiteral("38400"), QSerialPort::Baud38400);
+100     ui->baudRateBox->addItem(QStringLiteral("115200"), QSerialPort::Baud115200);
+101 
+102     ui->dataBitsBox->addItem(QStringLiteral("5"), QSerialPort::Data5);
+103     ui->dataBitsBox->addItem(QStringLiteral("6"), QSerialPort::Data6);
+104     ui->dataBitsBox->addItem(QStringLiteral("7"), QSerialPort::Data7);
+105     ui->dataBitsBox->addItem(QStringLiteral("8"), QSerialPort::Data8);
+106     ui->dataBitsBox->setCurrentIndex(3);
+107 
+108     ui->parityBox->addItem(tr("None"), QSerialPort::NoParity);
+109     ui->parityBox->addItem(tr("Even"), QSerialPort::EvenParity);
+110     ui->parityBox->addItem(tr("Odd"), QSerialPort::OddParity);
+111     ui->parityBox->addItem(tr("Mark"), QSerialPort::MarkParity);
+112     ui->parityBox->addItem(tr("Space"), QSerialPort::SpaceParity);
+113 
+114     ui->stopBitsBox->addItem(QStringLiteral("1"), QSerialPort::OneStop);
+115 #ifdef Q_OS_WIN
+116     ui->stopBitsBox->addItem(tr("1\&.5"), QSerialPort::OneAndHalfStop);
+117 #endif
+118     ui->stopBitsBox->addItem(QStringLiteral("2"), QSerialPort::TwoStop);
+119 
+120     ui->flowControlBox->addItem(tr("None"), QSerialPort::NoFlowControl);
+121     ui->flowControlBox->addItem(tr("RTS/CTS"), QSerialPort::HardwareControl);
+122     ui->flowControlBox->addItem(tr("XON/XOFF"), QSerialPort::SoftwareControl);
+123 
+124     if (Setting->checkSetting())
+125     {
+126         struct t_serial_settings tSerial;
+127         Setting->read_setting(&tSerial);
+128 
+129 //        ui->serialPortInfoListBox->currentText(tSerial\&.name);
+130         ui->baudRateBox->currentData(tSerial\&.baudRate);
+131         ui->dataBitsBox->currentData(tSerial\&.dataBits);
+132         ui->parityBox->currentData(tSerial\&.parity);
+133         ui->stopBitsBox->currentData(tSerial\&.stopBits);
+134         ui->flowControlBox->currentData(tSerial\&.flowControl);
+135     }
+136 }
+.fi
+.SS "void fillSettings ()\fC [private]\fP"
+
+.PP
+fillSettings 
+.SS "void showPortInfo (int idx)\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+showPortInfo 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIidx\fP 
+.RE
+.PP
+
+.PP
+.nf
+50 {
+51     if (idx == -1)
+52         return;
+53 
+54     QStringList list = ui->serialPortInfoListBox->itemData(idx)\&.toStringList();
+55     ui->descriptionLabel->setText(tr("Description: %1")\&.arg(list\&.count() > 1 ? list\&.at(1) : tr(blankString)));
+56     ui->manufacturerLabel->setText(tr("Manufacturer: %1")\&.arg(list\&.count() > 2 ? list\&.at(2) : tr(blankString)));
+57     ui->serialNumberLabel->setText(tr("Serial number: %1")\&.arg(list\&.count() > 3 ? list\&.at(3) : tr(blankString)));
+58     ui->locationLabel->setText(tr("Location: %1")\&.arg(list\&.count() > 4 ? list\&.at(4) : tr(blankString)));
+59     ui->vidLabel->setText(tr("Vendor Identifier: %1")\&.arg(list\&.count() > 5 ? list\&.at(5) : tr(blankString)));
+60     ui->pidLabel->setText(tr("Product Identifier: %1")\&.arg(list\&.count() > 6 ? list\&.at(6) : tr(blankString)));
+61 }
+.fi
+.SS "void updateSettings (struct \fBt_serial_settings\fP * tSerial)\fC [private]\fP"
+
+.PP
+updateSettings 
+.PP
+\fBParameter:\fP
+.RS 4
+\fItSerial\fP 
+.RE
+.PP
+
+.PP
+.nf
+164 {
+165     if (Setting->checkSetting())
+166         Setting->read_setting(tSerial);
+167 
+168     Setting->write_setting(this, tSerial);
+169     cryp code; code\&.encryp(PATH_SERIAL_SETTING);
+170 
+171 }
+.fi
+.SH "Dokumentasi Variabel"
+.PP 
+.SS "QIntValidator* intValidator\fC [private]\fP"
+
+.PP
+intValidator 
+.SS "\fBMainWindow\fP* Main"
+
+.PP
+Main\&. 
+.SS "\fBserial\fP* Serial"
+
+.PP
+Serial\&. 
+.SS "\fBsetting\fP* Setting"
+
+.PP
+Setting\&. 
+.SS "Ui::SettingsDialog* ui"
+
+.PP
+ui 
+
+.SH "Penulis"
+.PP 
+Dibangkitkan secara otomatis oleh Doxygen untuk Sarasvati dari kode sumber\&.

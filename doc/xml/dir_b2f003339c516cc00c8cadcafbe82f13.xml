@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.14">
+  <compounddef id="dir_b2f003339c516cc00c8cadcafbe82f13" kind="dir">
+    <compoundname>view</compoundname>
+    <innerfile refid="d1/d09/a00077">form_addmodule.cpp</innerfile>
+    <innerfile refid="da/dec/a00080">form_addmodule.h</innerfile>
+    <innerfile refid="d2/d1f/a00083">formmodule.cpp</innerfile>
+    <innerfile refid="da/d2a/a00086">formmodule.h</innerfile>
+    <innerfile refid="db/dab/a00089">loginform.cpp</innerfile>
+    <innerfile refid="d1/dc1/a00092">loginform.h</innerfile>
+    <innerfile refid="d9/d77/a00095">mainwindow.cpp</innerfile>
+    <innerfile refid="d1/d44/a00098">mainwindow.h</innerfile>
+    <innerfile refid="d4/d3a/a00101">progressdialog.cpp</innerfile>
+    <innerfile refid="d0/dc2/a00104">progressdialog.h</innerfile>
+    <innerfile refid="df/d98/a00107">settingsdialog.cpp</innerfile>
+    <innerfile refid="d4/d81/a00110">settingsdialog.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="view/"/>
+  </compounddef>
+</doxygen>

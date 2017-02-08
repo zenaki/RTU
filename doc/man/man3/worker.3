@@ -1,0 +1,681 @@
+.TH "worker" 3 "Rabu 8 Februari 2017" "Version 1.0.2-4" "Sarasvati" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+worker \- Class worker\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <worker\&.h>\fP
+.SS "Fungsi Anggota Publik"
+.SS "Variabel Data"
+.SH "Keterangan Lengkap"
+.PP 
+Class worker\&. 
+.SH "Dokumentasi Konstruktor & Destruktor"
+.PP 
+.SS "\fBworker\fP ()"
+
+.PP
+worker 
+.PP
+.nf
+4 {
+5 //    cancelSetting = false;
+6 }
+.fi
+.SH "Dokumentasi Anggota: Fungsi"
+.PP 
+.SS "QString check_statusModule (QString address)"
+
+.PP
+check_statusModule 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIaddress\fP 
+.RE
+.PP
+\fBMengembalikan:\fP
+.RS 4
+.RE
+.PP
+
+.PP
+.nf
+71                                                  {
+72     struct t_module tModule;
+73 
+74     address\&.sprintf("\&.RTUdata/module/%s", address\&.toUtf8()\&.data());
+75 
+76     mod\&.read_module(&tModule, address);
+77 
+78     QString modules;
+79     if(tModule\&.flag_active){
+80         modules\&.sprintf("m_%s\&.dbe", tModule\&.module_name);
+81         return modules;
+82     }
+83     return "none";
+84 }
+.fi
+.SS "bool checkIfmodule (QString name)"
+
+.PP
+checkIfmodule 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIname\fP 
+.RE
+.PP
+\fBMengembalikan:\fP
+.RS 4
+.RE
+.PP
+
+.PP
+.nf
+108                                       {
+109     bool cek = false;
+110     QDir path("\&.RTUdata/module");
+111     QStringList files = path\&.entryList(QDir::Files);
+112 
+113     QString currFiles;
+114     currFiles\&.sprintf("m_%s\&.dbe", name\&.toUtf8()\&.data());
+115 
+116     for(int i = 0; i < files\&.count(); i++){
+117         if(currFiles == QString(files\&.at(i))) cek = true;
+118     }
+119 
+120 //    std::string sub = name\&.toStdString();
+121 //    ext = QString::fromStdString(sub\&.substr(index_max-3, index_max));
+122 
+123 //    if(ext == "\&.dbe") return true;
+124 //    else return false;
+125 
+126     return cek;
+127 }
+.fi
+.SS "QString checkModule (QString address)"
+
+.PP
+checkModule 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIaddress\fP 
+.RE
+.PP
+\fBMengembalikan:\fP
+.RS 4
+.RE
+.PP
+
+.PP
+.nf
+61                                           {
+62     struct t_module tModule;
+63 
+64     mod\&.read_module(&tModule, address);
+65 
+66     QString modules;
+67     modules\&.sprintf("m_%s\&.dbe", tModule\&.module_name);
+68     return modules;
+69 }
+.fi
+.SS "void CompressDir (QString ZipFile, QString Directory)"
+
+.PP
+CompressDir\&. 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIZipFile\fP 
+.br
+\fIDirectory\fP 
+.RE
+.PP
+
+.SS "void CompressFiles (QString ZipFile, QStringList Files)"
+
+.PP
+CompressFiles\&. 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIZipFile\fP 
+.br
+\fIFiles\fP 
+.RE
+.PP
+
+.SS "void DecompressDir (QString ZipFile, QString Directory)"
+
+.PP
+DecompressDir\&. 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIZipFile\fP 
+.br
+\fIDirectory\fP 
+.RE
+.PP
+
+.SS "void DecompressFiles (QString ZipFile, QStringList Files, QString Directory)"
+
+.PP
+DecompressFiles\&. 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIZipFile\fP 
+.br
+\fIFiles\fP 
+.br
+\fIDirectory\fP 
+.RE
+.PP
+
+.SS "void delay (int ms)"
+
+.PP
+.nf
+166 {
+167     QTime dieTime = QTime::currentTime()\&.addMSecs(ms);
+168     while (QTime::currentTime() < dieTime) {
+169         QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+170     }
+171 }
+.fi
+.SS "QString editModule (QStandardItemModel * tree, QTreeView * treeView, QString title)"
+
+.PP
+editModule 
+.PP
+\fBParameter:\fP
+.RS 4
+\fItree\fP 
+.br
+\fItreeView\fP 
+.br
+\fItitle\fP 
+.RE
+.PP
+\fBMengembalikan:\fP
+.RS 4
+.RE
+.PP
+
+.PP
+.nf
+24                                                                                       {
+25     struct t_module tModule;
+26     QString address;
+27 
+28     address\&.sprintf("\&.RTUdata/module/m_%s\&.dbe", title\&.toUtf8()\&.data());
+29 
+30     mod\&.read_module(&tModule, address);
+31 
+32     QString modules;
+33     modules\&.sprintf("%s", tModule\&.module_name);
+34 //    modules\&.sprintf("m_%s\&.dbe", tModule\&.module_name);
+35     mTree\&.appendItem(tree, treeView, modules);
+36 
+37     return modules;
+38 }
+.fi
+.SS "QStringList ListContents (QString ZipFile)"
+
+.PP
+ListContents\&. 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIZipFile\fP 
+.RE
+.PP
+\fBMengembalikan:\fP
+.RS 4
+.RE
+.PP
+
+.SS "QString loadModule (QStandardItemModel * tree, QTreeView * treeView, QString address, QString NewName)"
+
+.PP
+loadModule 
+.PP
+\fBParameter:\fP
+.RS 4
+\fItree\fP 
+.br
+\fItreeView\fP 
+.br
+\fIaddress\fP 
+.br
+\fINewName\fP 
+.RE
+.PP
+\fBMengembalikan:\fP
+.RS 4
+.RE
+.PP
+
+.PP
+.nf
+40                                                                                                          {
+41     struct t_module tModule;
+42 
+43     mod\&.read_module(&tModule, address);
+44 
+45     tModule\&.flag_active = 1;
+46 
+47     if (!NewName\&.isEmpty()) {
+48         strcpy(tModule\&.module_name, NewName\&.toLatin1());
+49     }
+50     mod\&.write_module(&tModule);
+51     cryp code; code\&.encryp(address);
+52 
+53     QString modules;
+54     modules\&.sprintf("%s [%s]", tModule\&.module_name, tModule\&.serial_number);
+55 //    modules\&.sprintf("m_%s\&.dbe", tModule\&.module_name);
+56     mTree\&.appendItem(tree, treeView, modules);
+57 
+58     return modules;
+59 }
+.fi
+.SS "QString newModule (QStandardItemModel * tree, QTreeView * treeView, QString title)"
+
+.PP
+newModule 
+.PP
+\fBParameter:\fP
+.RS 4
+\fItree\fP 
+.br
+\fItreeView\fP 
+.br
+\fItitle\fP 
+.RE
+.PP
+\fBMengembalikan:\fP
+.RS 4
+.RE
+.PP
+
+.PP
+.nf
+8                                                                                      {
+9     struct t_module tModule;
+10     QString address;
+11 
+12     address\&.sprintf("\&.RTUdata/module/m_%s\&.dbe", title\&.toUtf8()\&.data());
+13 
+14     mod\&.read_module(&tModule, address);
+15 
+16     QString modules;
+17     modules\&.sprintf("%s [%s]", tModule\&.module_name, tModule\&.serial_number);
+18 //    modules\&.sprintf("m_%s\&.dbe", tModule\&.module_name);
+19     mTree\&.appendItem(tree, treeView, modules);
+20 
+21     return modules;
+22 }
+.fi
+.SS "bool read_FinishRead ()"
+
+.PP
+read_FinishRead 
+.PP
+\fBMengembalikan:\fP
+.RS 4
+
+.RE
+.PP
+
+.PP
+.nf
+214 {
+215     QString pth;
+216     pth = PATH_SERIAL_PARSING;
+217     cryp code; code\&.decryp(pth);
+218     QSettings sett(pth, QSettings::IniFormat);
+219 
+220     bool FinishRead = sett\&.value("FINISH_READ")\&.toBool();
+221 
+222     code\&.encryp(pth);
+223     return FinishRead;
+224 }
+.fi
+.SS "int read_flagERR ()"
+
+.PP
+read_flagERR 
+.PP
+\fBMengembalikan:\fP
+.RS 4
+
+.RE
+.PP
+
+.PP
+.nf
+227 {
+228     QString pth;
+229     pth = PATH_SERIAL_PARSING;
+230     cryp code; code\&.decryp(pth);
+231     QSettings sett(pth, QSettings::IniFormat);
+232 
+233     int flagERR = sett\&.value("ERROR_FLAG")\&.toInt();
+234 
+235     code\&.encryp(pth);
+236     return flagERR;
+237 }
+.fi
+.SS "QString read_strERR ()"
+
+.PP
+read_strERR 
+.PP
+\fBMengembalikan:\fP
+.RS 4
+
+.RE
+.PP
+
+.PP
+.nf
+240 {
+241     QString pth;
+242     pth = PATH_SERIAL_PARSING;
+243     cryp code; code\&.decryp(pth);
+244     QSettings sett(pth, QSettings::IniFormat);
+245 
+246     QString strERR = sett\&.value("ERROR_STRING")\&.toString();
+247 
+248     code\&.encryp(pth);
+249     return strERR;
+250 }
+.fi
+.SS "bool Request_ENV (QSerialPort * Serial_Com, bool timeout = \fCfalse\fP)"
+
+.PP
+Request_ENV\&. 
+.PP
+\fBParameter:\fP
+.RS 4
+\fISerial_Com\fP 
+.br
+\fItimeout\fP 
+.RE
+.PP
+\fBMengembalikan:\fP
+.RS 4
+.RE
+.PP
+
+.PP
+.nf
+151 {
+152 //    QString Request = "hmi_cek_env\r\n";
+153     QString Request = "0000";
+154     QString Desc = "Request Environment \&.\&.";
+155     serial_write(Serial_Com, Request, WAIT_WRITE);
+156 //    Serial_Com->write(Request\&.toUtf8()\&.data(), qstrlen(Request\&.toUtf8()\&.data()));
+157 //    Serial_Com->waitForBytesWritten(WAIT_WRITE);
+158     if (!timeout) {timeout = this->waiting_set(timeout);}
+159     this->writeLogFile(Request, this->read_flagERR(), this->read_strERR(), timeout);
+160     if (timeout) {return timeout;}
+161 
+162     return timeout;
+163 }
+.fi
+.SS "void serial_write (QSerialPort * Serial_Com, QString data, int d_c)"
+
+.PP
+serial_write 
+.PP
+\fBParameter:\fP
+.RS 4
+\fISerial_Com\fP 
+.br
+\fIdata\fP 
+.br
+\fId_c\fP 
+.RE
+.PP
+
+.PP
+.nf
+174 {
+175     QString temp;
+176     data\&.remove("\r\n");
+177     for (int i = 0; i < data\&.length(); i++) {
+178         temp = QChar(data\&.at(i));
+179         Serial_Com->write(temp\&.toUtf8()\&.data());
+180         delay(d_c);
+181     }
+182     Serial_Com->write("\n");
+183 }
+.fi
+.SS "void showModule (QWidget * parent, QMdiArea * mdiArea, QString module, QSerialPort * SerialPort)"
+
+.PP
+showModule 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIparent\fP 
+.br
+\fImdiArea\fP 
+.br
+\fImodule\fP 
+.br
+\fISerialPort\fP 
+.RE
+.PP
+
+.PP
+.nf
+86                                                                                                   {
+87     struct t_module tModule;
+88     QString address;
+89 
+90     address\&.sprintf("\&.RTUdata/module/m_%s\&.dbe", module\&.toUtf8()\&.data());
+91     mod\&.read_module(&tModule, address);
+92 
+93 
+94     formModule *fModule;
+95 
+96     fModule = new formModule(parent, address, SerialPort);
+97     fModule->setModal(true);
+98     fModule->setWindowTitle(tModule\&.module_name);
+99 //    fModule->setFixedWidth(800);
+100 //    fModule->setFixedHeight(600);
+101     fModule->setMaximumSize(mdiArea->maximumSize());
+102 
+103     mdiArea->addSubWindow(fModule, 0);
+104     fModule->exec();
+105 
+106 }
+.fi
+.SS "bool state_of_module (int num, QString newModule, QString * existModule)"
+
+.PP
+state_of_module 
+.PP
+\fBParameter:\fP
+.RS 4
+\fInum\fP 
+.br
+\fInewModule\fP 
+.br
+\fIexistModule\fP 
+.RE
+.PP
+\fBMengembalikan:\fP
+.RS 4
+.RE
+.PP
+
+.PP
+.nf
+129                                                                             {
+130     bool cek;
+131     int  ceknt = num+1;
+132 //    QString currModule;
+133     existModule->prepend("m_")\&.append("\&.dbe");
+134 
+135     for(int n = 0; n < ceknt; n++){
+136 //        currModule = existModule->at(n);
+137 //        currModule\&.prepend("m_")\&.append("\&.dbe");
+138         if(newModule != existModule[n]){
+139             cek = true;
+140         }
+141         else{
+142             cek = false;
+143             return cek;
+144         }
+145     }
+146 
+147     return cek;
+148 }
+.fi
+.SS "bool waiting_set (bool timeout = \fCfalse\fP)"
+
+.PP
+waiting_set 
+.PP
+\fBParameter:\fP
+.RS 4
+\fItimeout\fP 
+.RE
+.PP
+\fBMengembalikan:\fP
+.RS 4
+.RE
+.PP
+
+.PP
+.nf
+186 {
+187     QTime dieTime = QTime::currentTime()\&.addMSecs(TIMEOUT);
+188     while (!this->read_FinishRead()) {
+189         QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+190         if (this->read_flagERR() == 1 && !timeout) {
+191             timeout = false;
+192             break;
+193         }
+194         if (QTime::currentTime() >= dieTime && !timeout) {
+195             timeout = true;
+196             break;
+197         }
+198     }
+199     return timeout;
+200 }
+.fi
+.SS "void write_FinishRead (bool FinishRead, int cekErr, QString strErr)"
+
+.PP
+write_FinishRead 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIFinishRead\fP 
+.br
+\fIcekErr\fP 
+.br
+\fIstrErr\fP 
+.RE
+.PP
+
+.PP
+.nf
+203 {
+204     QString pth;
+205     pth = PATH_SERIAL_PARSING;
+206     QSettings sett(pth, QSettings::IniFormat);
+207 
+208     sett\&.setValue("FINISH_READ", FinishRead);
+209     sett\&.setValue("ERROR_FLAG", cekErr);
+210     sett\&.setValue("ERROR_STRING", strErr);
+211 }
+.fi
+.SS "void writeLogFile (QString log, int flagERR, QString strERR, bool timeout)"
+
+.PP
+writeLogFile 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIlog\fP 
+.br
+\fIflagERR\fP 
+.br
+\fIstrERR\fP 
+.br
+\fItimeout\fP 
+.RE
+.PP
+
+.PP
+.nf
+253 {
+254     /* Try and open a file for output */
+255     QString outputFilename = PATH_LOG;
+256     QFile outputFile(outputFilename);
+257     outputFile\&.open(QIODevice::Append | QIODevice::Text);
+258 
+259     /* Check it opened OK */
+260     if(!outputFile\&.isOpen()){
+261         qDebug() << "- Error, unable to open" << outputFilename << "for output";
+262     } else {
+263         log\&.remove("\r")\&.remove("\n");
+264         if (log\&.length() < 100) {
+265             for (int i = log\&.length(); i < 100; i++) {
+266                 log\&.append(" ");
+267             }
+268         }
+269         log\&.append("|");
+270 
+271         QString Flag;
+272         if      (flagERR == 1) {Flag = "ERROR|";}
+273         else if (flagERR == 0) {Flag = "OK   |";}
+274         else                   {Flag = "     |";}
+275 
+276         QString TimeOut;
+277         if      (timeout) {TimeOut = "TIMEOUT|";}
+278         else              {TimeOut = "       |";}
+279 
+280         /* Point a QTextStream object at the file */
+281         QTextStream outStream(&outputFile);
+282 
+283         /* Write the line to the file */
+284         outStream << QTime::currentTime()\&.toString("hh:mm:ss\&.zzz") << " | " << log << Flag << TimeOut << strERR<< "\r\n";
+285 
+286         /* Close the file */
+287         outputFile\&.close();
+288     }
+289     this->write_FinishRead(false,2,"");
+290     cryp code; code\&.encryp(PATH_SERIAL_PARSING);
+291 }
+.fi
+.SH "Dokumentasi Variabel"
+.PP 
+.SS "\fBmodule\fP mod"
+
+.PP
+mod 
+.SS "\fBmTreeview\fP mTree"
+
+.PP
+mTree 
+.SS "\fBserial\fP* Serial"
+
+.PP
+Serial\&. 
+
+.SH "Penulis"
+.PP 
+Dibangkitkan secara otomatis oleh Doxygen untuk Sarasvati dari kode sumber\&.

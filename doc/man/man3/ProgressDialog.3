@@ -1,0 +1,1436 @@
+.TH "ProgressDialog" 3 "Rabu 8 Februari 2017" "Version 1.0.2-4" "Sarasvati" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ProgressDialog \- The \fBProgressDialog\fP class\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <progressdialog\&.h>\fP
+.PP
+Mewarisi QDialog\&.
+.SS "Fungsi Anggota Publik"
+.SS "Variabel Data"
+.SS "Slot Privat"
+.SS "Atribut Privat"
+.SH "Keterangan Lengkap"
+.PP 
+The \fBProgressDialog\fP class\&. 
+.SH "Dokumentasi Konstruktor & Destruktor"
+.PP 
+.SS "\fBProgressDialog\fP (QWidget * parent = \fC0\fP)\fC [explicit]\fP"
+
+.PP
+\fBProgressDialog\fP\&. 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIparent\fP 
+.RE
+.PP
+
+.PP
+.nf
+4                                               :
+5     QDialog(parent),
+6     ui(new Ui::ProgressDialog)
+7 {
+8     ui->setupUi(this);
+9     cnt_try = 0;
+10 }
+.fi
+.SS "~\fBProgressDialog\fP ()"
+
+.PP
+.nf
+13 {
+14     cancel = true;
+15     delete ui;
+16 }
+.fi
+.SH "Dokumentasi Anggota: Fungsi"
+.PP 
+.SS "void delay (int ms)"
+
+.PP
+delay 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIms\fP 
+.RE
+.PP
+
+.PP
+.nf
+836 {
+837     QTime dieTime = QTime::currentTime()\&.addMSecs(ms);
+838     while (QTime::currentTime() < dieTime) {
+839         QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+840     }
+841 }
+.fi
+.SS "void Get_Data (struct \fBt_module\fP * tModule, QStringList data)"
+
+.PP
+Get_Data\&. 
+.PP
+\fBParameter:\fP
+.RS 4
+\fItModule\fP 
+.br
+\fIdata\fP 
+.RE
+.PP
+
+.PP
+.nf
+472 {
+473     tModule->data\&.clear();
+474     tModule->jml_data = 0;
+475     for (int i = 0; i < data\&.length(); i++) {
+476         if (data\&.at(i) != "") {
+477             tModule->data\&.insert(tModule->jml_data, data\&.at(i));
+478             tModule->jml_data++;
+479         }
+480     }
+481 }
+.fi
+.SS "void Get_ENV (struct \fBt_module\fP * tModule, QStringList data)"
+
+.PP
+Get_ENV\&. 
+.PP
+\fBParameter:\fP
+.RS 4
+\fItModule\fP 
+.br
+\fIdata\fP 
+.RE
+.PP
+
+.PP
+.nf
+189 {
+190     temp = data\&.at(0);
+191     strcpy(tModule->module_name, temp\&.toUtf8()\&.data());
+192     temp = data\&.at(1);
+193     strcpy(tModule->serial_number, temp\&.toUtf8()\&.data());
+194     temp = data\&.at(2);
+195     strcpy(tModule->ip_address, temp\&.toUtf8()\&.data());
+196     temp = data\&.at(3);
+197     strcpy(tModule->server_address, temp\&.toUtf8()\&.data());
+198     temp = data\&.at(4);
+199     strcpy(tModule->file_address, temp\&.toUtf8()\&.data());
+200     temp = data\&.at(5);
+201     tModule->flag_webclient = temp\&.toInt();
+202     if (temp == "1") {
+203         temp = "ACTIVE";
+204         strcpy(tModule->status_webclient, temp\&.toUtf8()\&.data());
+205     } else if (temp == "0") {
+206         temp = "NOT ACTIVE";
+207         strcpy(tModule->status_webclient, temp\&.toUtf8()\&.data());
+208     }
+209     temp = data\&.at(7);
+210     tModule->interval_relay = temp\&.toInt()+3;
+211     temp = data\&.at(8);
+212     tModule->interval_data = temp\&.toInt()+3;
+213     temp = data\&.at(9);
+214     tModule->flag_mode_http = temp\&.toInt();
+215     if (temp == "1") {
+216         temp = "POST";
+217         strcpy(tModule->mode_http, temp\&.toUtf8()\&.data());
+218     } else if (temp == "0") {
+219         temp = "GET";
+220         strcpy(tModule->mode_http, temp\&.toUtf8()\&.data());
+221     }
+222     temp = data\&.at(10);
+223     tModule->port = temp\&.toInt();
+224     temp = data\&.at(11);
+225     tModule->utc = temp\&.toInt();
+226 }
+.fi
+.SS "void Get_Input (struct \fBt_module\fP * tModule, QStringList data)"
+
+.PP
+Get_Input\&. 
+.PP
+\fBParameter:\fP
+.RS 4
+\fItModule\fP 
+.br
+\fIdata\fP 
+.RE
+.PP
+
+.PP
+.nf
+405 {
+406     tModule->Input\&.clear();
+407     int index = 0;
+408     for (int i = 0; i < data\&.length(); i++) {
+409         temp = data\&.at(i);
+410         if (temp\&.mid(0,1) == "D" || temp\&.mid(0,1) == "A") {
+411             tModule->Input\&.insert(index, data\&.at(i));
+412             index++;
+413         }
+414     }
+415     tModule->jml_input_digital = 0;
+416     tModule->jml_input_analog = 0;
+417     for (int i = 0; i < tModule->Input\&.length(); i++) {
+418         temp = tModule->Input\&.at(i);
+419         if (temp\&.mid(0,1) == "D") {
+420             tModule->jml_input_digital++;
+421         } else if (temp\&.mid(0,1) == "A") {
+422             tModule->jml_input_analog++;
+423         }
+424     }
+425     QStringList list; QStringList list2;
+426     tModule->InputName\&.clear();
+427     for (int i = 0; i < tModule->Input\&.length(); i++) {
+428         temp = tModule->Input\&.at(i);
+429         list = temp\&.split(';');
+430         for (int j = 0; j < tModule->data\&.length(); j++) {
+431             temp = tModule->data\&.at(j);
+432             list2 = temp\&.split(';');
+433             if (list\&.at(1) == list2\&.at(0)) {
+434                 tModule->InputName\&.insert(i, list2\&.at(2));
+435                 break;
+436             }
+437         }
+438     }
+439 }
+.fi
+.SS "void Get_Output (struct \fBt_module\fP * tModule, QStringList data)"
+
+.PP
+Get_Output\&. 
+.PP
+\fBParameter:\fP
+.RS 4
+\fItModule\fP 
+.br
+\fIdata\fP 
+.RE
+.PP
+
+.PP
+.nf
+442 {
+443     tModule->Output\&.clear();
+444     int index = 0;
+445     for (int i = 0; i < data\&.length(); i++) {
+446         temp = data\&.at(i);
+447         if (temp\&.mid(0,1) == "R") {
+448             tModule->Output\&.insert(index, data\&.at(i));
+449             index++;
+450         }
+451     }
+452     tModule->jml_output = tModule->Output\&.length();
+453     tModule->OutputName\&.clear();
+454     for (int i = 0; i < tModule->Output\&.length(); i++) {
+455         tModule->OutputName\&.insert(i, "");
+456     }
+457 }
+.fi
+.SS "void Get_SIM (struct \fBt_module\fP * tModule, QStringList data)"
+
+.PP
+Get_SIM\&. 
+.PP
+\fBParameter:\fP
+.RS 4
+\fItModule\fP 
+.br
+\fIdata\fP 
+.RE
+.PP
+MODULE
+.PP
+GSM_1
+.PP
+GSM_2 
+.PP
+.nf
+229 {
+230     str = data\&.at(0);
+231     list1 = str\&.split(";");
+232     str = data\&.at(1);
+233     list2 = str\&.split(";");
+234 
+236     tModule->flag_active = 1;
+237     if (list2\&.at(3) != "-") {tModule->flag_dual_gsm = 1;}
+238     else {tModule->flag_dual_gsm = 0;}
+239 
+241     temp = list1\&.at(1);
+242     if (temp == "-") {strcpy(tModule->device_name_gsm_1, "");}
+243     else {strcpy(tModule->device_name_gsm_1, temp\&.toUtf8()\&.data());}
+244 
+245     temp = list1\&.at(2);
+246     if (temp == "-") {
+247         strcpy(tModule->name_gsm_1, "");
+248         tModule->flag_gsm_1 = 0;
+249     } else {
+250         strcpy(tModule->name_gsm_1, temp\&.toUtf8()\&.data());
+251         if (temp == "TELKOMSEL") {tModule->flag_gsm_1 = 0;}
+252         else if (temp == "INDOSAT") {tModule->flag_gsm_1 = 1;}
+253         else if (temp == "XL") {tModule->flag_gsm_1 = 2;
+254         } else if (temp == "3") {
+255             tModule->flag_gsm_1 = 3;
+256         }
+257     }
+258     temp = list1\&.at(3);
+259     if (temp == "-") {
+260         strcpy(tModule->number_gsm_1, "");
+261     } else {
+262         strcpy(tModule->number_gsm_1, temp\&.toUtf8()\&.data());
+263     }
+264     temp = list1\&.at(4);
+265     if (temp == "0") {
+266         tModule->flag_status_active_gsm_1 = temp\&.toInt();
+267         temp = "NOT ACTIVE";
+268         strcpy(tModule->status_gsm_1, temp\&.toUtf8()\&.data());
+269     } else if (temp == "1") {
+270         tModule->flag_status_active_gsm_1 = temp\&.toInt();
+271         temp = "ACTIVE";
+272         strcpy(tModule->status_gsm_1, temp\&.toUtf8()\&.data());
+273     }
+274     temp = list1\&.at(8);
+275     if (temp == "GSM") {
+276 //        temp = "SMS";
+277         strcpy(tModule->com_gsm_1, temp\&.toUtf8()\&.data());
+278         tModule->flag_com_gsm_1 = 0;
+279     } else if (temp == "GPRS") {
+280         strcpy(tModule->com_gsm_1, temp\&.toUtf8()\&.data());
+281         tModule->flag_com_gsm_1 = 1;
+282     } else {
+283         strcpy(tModule->com_gsm_1, "");
+284         tModule->flag_com_gsm_1 = 0;
+285     }
+286     if (tModule->flag_com_gsm_1 == 0) {
+287         temp = "";
+288         strcpy(tModule->apn_gsm_1, temp\&.toUtf8()\&.data());
+289         strcpy(tModule->user_gsm_1, temp\&.toUtf8()\&.data());
+290         strcpy(tModule->passwd_gsm_1, temp\&.toUtf8()\&.data());
+291     } else if (tModule->flag_com_gsm_1 == 1) {
+292         temp = list1\&.at(5);
+293         if (temp == "-") {
+294             strcpy(tModule->apn_gsm_1, "");
+295         } else {
+296             strcpy(tModule->apn_gsm_1, temp\&.toUtf8()\&.data());
+297         }
+298         temp = list1\&.at(6);
+299         if (temp == "-") {
+300             strcpy(tModule->user_gsm_1, "");
+301         } else {
+302             strcpy(tModule->user_gsm_1, temp\&.toUtf8()\&.data());
+303         }
+304         temp = list1\&.at(7);
+305         if (temp == "-") {
+306             strcpy(tModule->passwd_gsm_1, "");
+307         } else {
+308             strcpy(tModule->passwd_gsm_1, temp\&.toUtf8()\&.data());
+309         }
+310     }
+311 
+313     if (tModule->flag_dual_gsm == 0) {
+314         strcpy(tModule->device_name_gsm_2, "");
+315         strcpy(tModule->name_gsm_2, "");
+316         tModule->flag_gsm_2 = 0;
+317         strcpy(tModule->number_gsm_2, "");
+318         tModule->flag_status_active_gsm_2 = 0;
+319         strcpy(tModule->status_gsm_2, "");
+320         strcpy(tModule->com_gsm_2, "");
+321         tModule->flag_com_gsm_2 = 0;
+322         strcpy(tModule->apn_gsm_2, "");
+323         strcpy(tModule->user_gsm_2, "");
+324         strcpy(tModule->passwd_gsm_2, "");
+325     } else if (tModule->flag_dual_gsm == 1) {
+326         temp = list2\&.at(1);
+327         if (temp == "-") {
+328             strcpy(tModule->device_name_gsm_2, "");
+329         } else {
+330             strcpy(tModule->device_name_gsm_2, temp\&.toUtf8()\&.data());
+331         }
+332         temp = list2\&.at(2);
+333         if (temp == "-") {
+334             strcpy(tModule->name_gsm_2, "");
+335             tModule->flag_gsm_2 = 0;
+336         } else {
+337             strcpy(tModule->name_gsm_2, temp\&.toUtf8()\&.data());
+338             if (temp == "TELKOMSEL") {
+339                 tModule->flag_gsm_2 = 0;
+340             } else if (temp == "INDOSAT") {
+341                 tModule->flag_gsm_2 = 1;
+342             } else if (temp == "XL") {
+343                 tModule->flag_gsm_2 = 2;
+344             } else if (temp == "3") {
+345                 tModule->flag_gsm_2 = 3;
+346             }
+347         }
+348         temp = list2\&.at(3);
+349         if (temp == "-") {
+350             strcpy(tModule->number_gsm_2, "");
+351         } else {
+352             strcpy(tModule->number_gsm_2, temp\&.toUtf8()\&.data());
+353         }
+354         temp = list2\&.at(4);
+355         if (temp == "0") {
+356             tModule->flag_status_active_gsm_2 = temp\&.toInt();
+357             temp = "NOT ACTIVE";
+358             strcpy(tModule->status_gsm_2, temp\&.toUtf8()\&.data());
+359         } else if (temp == "1") {
+360             tModule->flag_status_active_gsm_2 = temp\&.toInt();
+361             temp = "ACTIVE";
+362             strcpy(tModule->status_gsm_2, temp\&.toUtf8()\&.data());
+363         }
+364         temp = list2\&.at(8);
+365         if (temp == "GSM") {
+366 //            temp = "SMS";
+367             strcpy(tModule->com_gsm_2, temp\&.toUtf8()\&.data());
+368             tModule->flag_com_gsm_2 = 0;
+369         } else if (temp == "GPRS") {
+370             strcpy(tModule->com_gsm_2, temp\&.toUtf8()\&.data());
+371             tModule->flag_com_gsm_2 = 1;
+372         } else {
+373             strcpy(tModule->com_gsm_2, "");
+374             tModule->flag_com_gsm_2 = 0;
+375         }
+376         if (tModule->flag_com_gsm_2 == 0) {
+377             temp = "";
+378             strcpy(tModule->apn_gsm_2, temp\&.toUtf8()\&.data());
+379             strcpy(tModule->user_gsm_2, temp\&.toUtf8()\&.data());
+380             strcpy(tModule->passwd_gsm_2, temp\&.toUtf8()\&.data());
+381         } else if (tModule->flag_com_gsm_2 == 1) {
+382             temp = list2\&.at(5);
+383             if (temp == "-") {
+384                 strcpy(tModule->apn_gsm_2, "");
+385             } else {
+386                 strcpy(tModule->apn_gsm_2, temp\&.toUtf8()\&.data());
+387             }
+388             temp = list2\&.at(6);
+389             if (temp == "-") {
+390                 strcpy(tModule->user_gsm_2, "");
+391             } else {
+392                 strcpy(tModule->user_gsm_2, temp\&.toUtf8()\&.data());
+393             }
+394             temp = list2\&.at(7);
+395             if (temp == "-") {
+396                 strcpy(tModule->passwd_gsm_2, "");
+397             } else {
+398                 strcpy(tModule->passwd_gsm_2, temp\&.toUtf8()\&.data());
+399             }
+400         }
+401     }
+402 }
+.fi
+.SS "void Get_Sumber (struct \fBt_module\fP * tModule, QStringList data)"
+
+.PP
+Get_Sumber\&. 
+.PP
+\fBParameter:\fP
+.RS 4
+\fItModule\fP 
+.br
+\fIdata\fP 
+.RE
+.PP
+
+.PP
+.nf
+460 {
+461     tModule->sumber\&.clear();
+462     tModule->jml_sumber = 0;
+463     for (int i = 0; i < data\&.length(); i++) {
+464         if (data\&.at(i) != "") {
+465             tModule->sumber\&.insert(tModule->jml_sumber, data\&.at(i));
+466             tModule->jml_sumber++;
+467         }
+468     }
+469 }
+.fi
+.SS "void on_pbCancel_clicked ()\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+on_pbCancel_clicked 
+.PP
+.nf
+936 {
+937     cancel = true;
+938 }
+.fi
+.SS "void on_pbDetail_clicked ()\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+on_pbDetail_clicked 
+.PP
+.nf
+925 {
+926     if (ui->Description->isHidden()) {
+927         ui->pbDetail->setText("Hide Detail");
+928         ui->Description->setHidden(false);
+929     } else {
+930         ui->pbDetail->setText("Show Detail");
+931         ui->Description->setHidden(true);
+932     }
+933 }
+.fi
+.SS "void Processing (QSerialPort * SerialPort = \fC0\fP, QString address = \fC0\fP, QString mode = \fC0\fP, QString index = \fC0\fP)"
+
+.PP
+Processing\&. 
+.PP
+\fBParameter:\fP
+.RS 4
+\fISerialPort\fP 
+.br
+\fIaddress\fP 
+.br
+\fImode\fP 
+.br
+\fIindex\fP 
+.RE
+.PP
+
+.PP
+.PP
+.PP
+.PP
+.PP
+
+.PP
+.nf
+19 {
+20     struct t_module tModule; struct t_serial_settings tSerial;
+21     mod->read_module(&tModule, address);
+22     Serial_Com = SerialPort;
+23     timeout = false; flagERR = 2; strERR = "";
+24     cancel = false; finish = false;
+25     progressVal = 0;
+26     ui->progressBar->reset();
+27     /*if (index\&.isEmpty()) */ui->Description->clear();
+28     QStringList list_mode = mode\&.split(';');
+29     QStringList list_index = index\&.split(';');
+31     for (int i = 0; i < list_mode\&.length(); i++) {
+32         if (list_mode\&.at(i) == MODE_GET_ENV) {
+33             Request_ENV(false);
+34         } if (list_mode\&.at(i) == MODE_GET_SIM) {
+35             Request_SIM(false);
+36         } if (list_mode\&.at(i) == MODE_GET_I0) {
+37             Request_IO(false);
+38         } if (list_mode\&.at(i) == MODE_GET_SRC) {
+39             Request_Sumber(false);
+40         } if (list_mode\&.at(i) == MODE_GET_DAT) {
+41             Request_Data(false);
+42         } if (list_mode\&.at(i) == MODE_SET_ENV) {
+43             Set_ENV(false, &tModule);
+44         } if (list_mode\&.at(i) == MODE_SET_SIM) {
+45             Set_SIM(false, &tModule);
+46         } if (list_mode\&.at(i) == MODE_SET_KNL) {
+47             if (index\&.isEmpty()) {Set_Input(false, &tModule);}
+48             else {Set_Input(false, &tModule, list_index\&.at(i));}
+49         } if (list_mode\&.at(i) == MODE_SET_RLY) {
+50             if (index\&.isEmpty()) {Set_Output(false, &tModule);}
+51             else {Set_Output(false, &tModule, list_index\&.at(i));}
+52         } if (list_mode\&.at(i) == MODE_SET_SRC) {
+53             if (index\&.isEmpty()) {Set_Sumber(false, &tModule);}
+54             else {Set_Sumber(false, &tModule, list_index\&.at(i));}
+55         } if (list_mode\&.at(i) == MODE_SET_DAT) {
+56             if (index\&.isEmpty()) {Set_Data(false, &tModule);}
+57             else {Set_Data(false, &tModule, list_index\&.at(i));}
+58         }
+59     }
+61     ui->progressBar->setRange(0,progressVal);
+62     progressVal = 0;
+63     for (int i = 0; i < list_mode\&.length(); i++) {
+64         if (list_mode\&.at(i) == MODE_GET_ENV) {
+65             Request_ENV(true);
+66             Serial->read_parsing(&tSerial);
+67             list1 = tSerial\&.str_data_env\&.split(";");
+68             Get_ENV(&tModule, list1);
+69         } if (list_mode\&.at(i) == MODE_GET_SIM) {
+70             Request_SIM(true);
+71             Serial->read_parsing(&tSerial);
+72             list1 = tSerial\&.str_data_sim\&.split("*");
+73             Get_SIM(&tModule, list1);
+74         } if (list_mode\&.at(i) == MODE_GET_I0) {
+75             Request_IO(true);
+76             Serial->read_parsing(&tSerial);
+77             list1 = tSerial\&.str_data_io\&.split("*");
+78             Get_Input(&tModule, list1);
+79             Get_Output(&tModule, list1);
+80         } if (list_mode\&.at(i) == MODE_GET_SRC) {
+81             Request_Sumber(true);
+82             Serial->read_parsing(&tSerial);
+83             list1 = tSerial\&.str_data_src\&.split("*");
+84             Get_Sumber(&tModule, list1);
+85         } if (list_mode\&.at(i) == MODE_GET_DAT) {
+86             Request_Data(true);
+87             Serial->read_parsing(&tSerial);
+88             list1 = tSerial\&.str_data_dat\&.split("*");
+89             Get_Data(&tModule, list1);
+90         } if (list_mode\&.at(i) == MODE_SET_ENV) {
+91             Set_ENV(true, &tModule);
+92         } if (list_mode\&.at(i) == MODE_SET_SIM) {
+93             Set_SIM(true, &tModule);
+94         } if (list_mode\&.at(i) == MODE_SET_KNL) {
+95             if (index\&.isEmpty()) {
+96                 Set_Input(true, &tModule);
+97             } else {
+98                 Set_Input(true, &tModule, list_index\&.at(i));
+99             }
+100         } if (list_mode\&.at(i) == MODE_SET_RLY) {
+101             if (index\&.isEmpty()) {
+102                 Set_Output(true, &tModule);
+103             } else {
+104                 Set_Output(true, &tModule, list_index\&.at(i));
+105             }
+106         } if (list_mode\&.at(i) == MODE_SET_SRC) {
+107             if (index\&.isEmpty()) {
+108                 Set_Sumber(true, &tModule);
+109             } else {
+110                 Set_Sumber(true, &tModule, list_index\&.at(i));
+111             }
+112         } if (list_mode\&.at(i) == MODE_SET_DAT) {
+113             if (index\&.isEmpty()) {
+114                 Set_Data(true, &tModule);
+115             } else {
+116                 Set_Data(true, &tModule, list_index\&.at(i));
+117             }
+118         }
+119         if (cancel) break;
+120     }
+122     strcpy(tModule\&.module_name, address\&.mid(18,address\&.length()-22)\&.toLatin1()\&.data());
+123     mod->write_module(&tModule);
+124     cryp code; code\&.encryp(address);
+125     finish = true;
+126 }
+.fi
+.SS "bool read_FinishRead ()"
+
+.PP
+read_FinishRead 
+.PP
+\fBMengembalikan:\fP
+.RS 4
+
+.RE
+.PP
+
+.PP
+.nf
+800 {
+801     pth = PATH_SERIAL_PARSING;
+802     cryp code; code\&.decryp(pth);
+803     QSettings sett(pth, QSettings::IniFormat);
+804 
+805     bool FinishRead = sett\&.value("FINISH_READ")\&.toBool();
+806 
+807     code\&.encryp(pth);
+808     return FinishRead;
+809 }
+.fi
+.SS "int read_flagERR ()"
+
+.PP
+.nf
+812 {
+813     pth = PATH_SERIAL_PARSING;
+814     cryp code; code\&.decryp(pth);
+815     QSettings sett(pth, QSettings::IniFormat);
+816 
+817     int flagERR = sett\&.value("ERROR_FLAG")\&.toInt();
+818 
+819     code\&.encryp(pth);
+820     return flagERR;
+821 }
+.fi
+.SS "QString read_strERR ()"
+
+.PP
+.nf
+824 {
+825     pth = PATH_SERIAL_PARSING;
+826     cryp code; code\&.decryp(pth);
+827     QSettings sett(pth, QSettings::IniFormat);
+828 
+829     QString strERR = sett\&.value("ERROR_STRING")\&.toString();
+830 
+831     code\&.encryp(pth);
+832     return strERR;
+833 }
+.fi
+.SS "void Request_Data (bool stat)"
+
+.PP
+Request_Data\&. 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIstat\fP 
+.RE
+.PP
+
+.PP
+.nf
+179 {
+180     if (stat) {
+181         Request = QString::fromUtf8(MODE_GET_DAT) + "\r\n";
+182         Desc = "Request Data \&.\&.";
+183         serial_write(Desc, Request, WAIT_WRITE);
+184         ui->progressBar->setValue(progressVal++);
+185     } else {progressVal++;}
+186 }
+.fi
+.SS "void Request_ENV (bool stat)"
+
+.PP
+Request_ENV\&. 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIstat\fP 
+.RE
+.PP
+
+.PP
+.nf
+129 {
+130     if (stat) {
+131         Request = QString::fromUtf8(MODE_GET_ENV) + "\r\n";
+132         Desc = "Request Environment \&.\&.";
+133         serial_write(Desc, Request, WAIT_WRITE);
+134         ui->progressBar->setValue(progressVal++);
+135     } else {progressVal++;}
+136 }
+.fi
+.SS "void Request_IO (bool stat)"
+
+.PP
+Request_IO\&. 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIstat\fP 
+.RE
+.PP
+
+.PP
+.nf
+149 {
+150     if (stat) {
+151         Request = QString::fromUtf8(MODE_GET_I0) + "\r\n";
+152         Desc = "Request I/O \&.\&.";
+153         serial_write(Desc, Request, WAIT_WRITE);
+154         ui->progressBar->setValue(progressVal++);
+155     } else {progressVal++;}
+156 }
+.fi
+.SS "void Request_Signal (bool stat)"
+
+.PP
+Request_Signal\&. 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIstat\fP 
+.RE
+.PP
+
+.PP
+.nf
+159 {
+160     if (stat) {
+161         Request = "0003\r\n";
+162         Desc = "Request Signal \&.\&.";
+163         serial_write(Desc, Request, WAIT_WRITE);
+164         ui->progressBar->setValue(progressVal++);
+165     } else {progressVal++;}
+166 }
+.fi
+.SS "void Request_SIM (bool stat)"
+
+.PP
+Request_SIM\&. 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIstat\fP 
+.RE
+.PP
+
+.PP
+.nf
+139 {
+140     if (stat) {
+141         Request = QString::fromUtf8(MODE_GET_SIM) + "\r\n";
+142         Desc = "Request SIM Configuration \&.\&.";
+143         serial_write(Desc, Request, WAIT_WRITE);
+144         ui->progressBar->setValue(progressVal++);
+145     } else {progressVal++;}
+146 }
+.fi
+.SS "void Request_Sumber (bool stat)"
+
+.PP
+Request_Sumber\&. 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIstat\fP 
+.RE
+.PP
+
+.PP
+.nf
+169 {
+170     if (stat) {
+171         Request = QString::fromUtf8(MODE_GET_SRC) + "\r\n";
+172         Desc = "Request Sources \&.\&.";
+173         serial_write(Desc, Request, WAIT_WRITE);
+174         ui->progressBar->setValue(progressVal++);
+175     } else {progressVal++;}
+176 }
+.fi
+.SS "void Reset_Board (bool stat)"
+
+.PP
+Reset_Board\&. 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIstat\fP 
+.RE
+.PP
+
+.PP
+.nf
+780 {
+781     Request = "reset\r\n";
+782     Desc = "Reset Board \&.\&.";
+783     if (stat) {
+784         serial_write(Desc, Request, WAIT_WRITE);
+785         ui->progressBar->setValue(progressVal++);
+786     } else {progressVal++;}
+787 }
+.fi
+.SS "void serial_write (QString desc, QString data, int delay_char)"
+
+.PP
+serial_write 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIdesc\fP 
+.br
+\fIdata\fP 
+.br
+\fIdelay_char\fP 
+.RE
+.PP
+
+.PP
+.nf
+844 {
+845     ui->Description->append(desc);
+846     QString tmp;
+847     data\&.remove("\r\n");
+848     for (int i = 0; i < data\&.length(); i++) {
+849         tmp = QChar(data\&.at(i));
+850         Serial_Com->write(tmp\&.toUtf8()\&.data());
+851         delay(delay_char);
+852     }
+853     Serial_Com->write("\r\n");
+854     waiting_set();
+855     flagERR = read_flagERR();
+856     strERR = read_strERR();
+857 //    if (timeout) {QMessageBox::information(this, "Serial Communication", STR_TIMEOUT, 0, 0);}
+858 //    if (flagERR == 1) {QMessageBox::information(this, "Serial Communication", "ERROR !!\r\n" + strERR, 0, 0);}
+859     if (timeout) {ui->Description->append("TIMEOUT\r\n");}
+860     else if (flagERR == 1) {ui->Description->append("ERROR !! : " + strERR + "\r\n");}
+861     else {ui->Description->append("OK\r\n");}
+862     writeLogFile(data,flagERR,strERR,timeout);
+863     timeout = false; flagERR = 2; strERR = "";
+864 
+865     this->write_FinishRead(timeout,flagERR,strERR);
+866     cryp code; code\&.encryp(PATH_SERIAL_PARSING);
+867 }
+.fi
+.SS "void Set_Data (bool stat, struct \fBt_module\fP * tModule, QString index = \fC0\fP)"
+
+.PP
+Set_Data\&. 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIstat\fP 
+.br
+\fItModule\fP 
+.br
+\fIindex\fP 
+.RE
+.PP
+
+.PP
+.nf
+716 {
+717 //    qDebug() << "-----------------------------------";
+718     if (index\&.length() == 0) {
+719         for (int i = 0; i < tModule->data\&.length(); i++) {
+720             int validation = 0;
+721             if (i == 0) validation = 2;
+722             if (i == tModule->data\&.length()-1) validation = 1;
+723             temp = tModule->data\&.at(i);
+724             list1 = temp\&.split(";");
+725 
+726             Request = QString::fromUtf8(MODE_SET_DAT) + " " + list1\&.at(0) + " " + list1\&.at(1) + " " +
+727                       list1\&.at(2) + " " + list1\&.at(4) + " " + list1\&.at(5) + " " +
+728                       list1\&.at(6) + " " + list1\&.at(7) + " " + list1\&.at(8) + " " +
+729                       list1\&.at(9) + " " + list1\&.at(10) + " " + list1\&.at(11) + " " +
+730                       QString::number(validation) + "\r\n";
+731 //            qDebug() << Request;
+732             Desc = "Set Data " + list1\&.at(0) + " \&.\&.";
+733             if (stat) {
+734                 serial_write(Desc, Request, WAIT_WRITE);
+735                 ui->progressBar->setValue(progressVal++);
+736             } else {progressVal++;}
+737             if (cancel) break;
+738         }
+739     } else {
+740 //        if (index\&.length() > 1) {
+741 //            for (int i = 0; i < index\&.length(); i++) {
+742 //                int validation = 0;
+743 //                if (i == 0) validation = 2;
+744 //                if (i == index\&.length()-1) validation = 1;
+745 //                temp = tModule->data\&.at(index\&.at(i)\&.toInt());
+746 //                list1 = temp\&.split(";");
+747 
+748 //                Request = "0105 " + list1\&.at(0) + " " + list1\&.at(1) + " " +
+749 //                          list1\&.at(2) + " " + list1\&.at(4) + " " + list1\&.at(5) + " " +
+750 //                          list1\&.at(6) + " " + list1\&.at(7) + " " + list1\&.at(8) + " " +
+751 //                          list1\&.at(9) + " " + list1\&.at(10) + " " + list1\&.at(11) + " " +
+752 //                          QString::number(validation) + "\r\n";
+753 //                Desc = "Set Data " + list1\&.at(0)  + " \&.\&.";
+754 //                qDebug() << Request;
+755 //                if (stat) {
+756 //                    serial_write(Desc, Request, WAIT_WRITE);
+757 //                    ui->progressBar->setValue(progressVal++);
+758 //                } else {progressVal++;}
+759 //            }
+760 //        } else {
+761             temp = tModule->data\&.at(index\&.toInt());
+762             list1 = temp\&.split(";");
+763 
+764             Request = QString::fromUtf8(MODE_SET_DAT) + " " + list1\&.at(0) + " " + list1\&.at(1) + " " +
+765                       list1\&.at(2) + " " + list1\&.at(4) + " " + list1\&.at(5) + " " +
+766                       list1\&.at(6) + " " + list1\&.at(7) + " " + list1\&.at(8) + " " +
+767                       list1\&.at(9) + " " + list1\&.at(10) + " " + list1\&.at(11) + " 3\r\n";
+768             Desc = "Set Data " + list1\&.at(0)  + " \&.\&.";
+769 //            qDebug() << Request;
+770             if (stat) {
+771                 serial_write(Desc, Request, WAIT_WRITE);
+772                 ui->progressBar->setValue(progressVal++);
+773             } else {progressVal++;}
+774 //        }
+775     }
+776 //    qDebug() << "-----------------------------------";
+777 }
+.fi
+.SS "void Set_ENV (bool stat, struct \fBt_module\fP * tModule)"
+
+.PP
+Set_ENV\&. 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIstat\fP 
+.br
+\fItModule\fP 
+.RE
+.PP
+SET ENVIRONTMENT 
+.PP
+.nf
+484 {
+486     Request\&.sprintf("%s %s %s %s %s %d %d %d %d %d %d\r\n"
+487                     , MODE_SET_ENV
+488                     , tModule->module_name
+489                     , tModule->serial_number
+490                     , tModule->server_address
+491                     , tModule->file_address
+492                     , tModule->flag_webclient
+493                     , tModule->interval_relay-3
+494                     , tModule->interval_data-3
+495                     , tModule->flag_mode_http
+496                     , tModule->port
+497                     , tModule->utc);
+498     Desc\&.sprintf("Set Environtment \"%s \" \&.\&.", tModule->module_name);
+499 //    0100 RTU-PDAM_Ciburial PKP1-280616-001-RJN1R 119\&.18\&.154\&.235 /api/loket 1 10 30 0 1337 7
+500     if (stat) {
+501         serial_write(Desc, Request, WAIT_WRITE);
+502         ui->progressBar->setValue(progressVal++);
+503     } else {progressVal++;}
+504 }
+.fi
+.SS "void Set_Input (bool stat, struct \fBt_module\fP * tModule, QString index = \fC0\fP)"
+
+.PP
+Set_Input\&. 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIstat\fP 
+.br
+\fItModule\fP 
+.br
+\fIindex\fP 
+.RE
+.PP
+SET INPUT DIGITAL 
+.PP
+.nf
+544 {
+546     if (index\&.isEmpty()) {
+547         for (int i = 0; i < tModule->Input\&.length(); i++) {
+548             int validation = 0;
+549             if (i == 0) validation = 2;
+550             if (i == tModule->Input\&.length()-1) validation = 1;
+551             temp = tModule->Input\&.at(i);
+552             list1 = temp\&.split(';');
+553 
+554             Request = QString::fromUtf8(MODE_SET_KNL) + " " + list1\&.at(1) + " " + list1\&.at(2) + " " + list1\&.at(3) + " " + list1\&.at(4) + " " + QString::number(validation) + "\r\n";
+555             Desc = "Set Input Channel " + list1\&.at(1) + " \&.\&.";
+556             if (stat) {
+557                 serial_write(Desc, Request, WAIT_WRITE);
+558                 ui->progressBar->setValue(progressVal++);
+559             } else {progressVal++;}
+560             if (cancel) break;
+561         }
+562 
+563         for (int i = 0; i < tModule->Input\&.length(); i++) {
+564             int validation = 0;
+565             if (i == 0) validation = 2;
+566             if (i == tModule->data\&.length()-1) validation = 1;
+567             temp = tModule->data\&.at(i);
+568             list1 = temp\&.split(";");
+569 
+570             Request = QString::fromUtf8(MODE_SET_DAT) + " " + list1\&.at(0) + " " + list1\&.at(1) + " " +
+571                       list1\&.at(2) + " " + list1\&.at(4) + " " + list1\&.at(5) + " " +
+572                       list1\&.at(6) + " " + list1\&.at(7) + " " + list1\&.at(8) + " " +
+573                       list1\&.at(9) + " " + list1\&.at(10) + " " + list1\&.at(11) + " " +
+574                       QString::number(validation) + "\r\n";
+575 //            qDebug() << Request;
+576             Desc = "Set Data " + list1\&.at(0) + " \&.\&.";
+577             if (stat) {
+578                 serial_write(Desc, Request, WAIT_WRITE);
+579                 ui->progressBar->setValue(progressVal++);
+580             } else {progressVal++;}
+581             if (cancel) break;
+582         }
+583     } else {
+584         temp = tModule->Input\&.at(index\&.toInt());
+585         list1 = temp\&.split(';');
+586 //        0102 12 250 10\&.000 0\&.000 3
+587         Request = QString::fromUtf8(MODE_SET_KNL) + " " + list1\&.at(1) + " " + list1\&.at(2) + " " + list1\&.at(3) + " " + list1\&.at(4) + " 3\r\n";
+588         Desc = "Set Input Channel " + list1\&.at(1) + " \&.\&.";
+589         if (stat) {
+590             serial_write(Desc, Request, WAIT_WRITE);
+591             ui->progressBar->setValue(progressVal++);
+592         } else {progressVal++;}
+593     }
+594 }
+.fi
+.SS "void Set_Output (bool stat, struct \fBt_module\fP * tModule, QString index = \fC0\fP)"
+
+.PP
+Set_Output\&. 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIstat\fP 
+.br
+\fItModule\fP 
+.br
+\fIindex\fP 
+.RE
+.PP
+SET OUTPUT RELAY 
+.PP
+.nf
+597 {
+598     if (index\&.isEmpty()) {
+600         for (int i = 0; i < tModule->Output\&.length(); i++) {
+601             temp = tModule->Output\&.at(i);
+602             list1 = temp\&.split(';');
+603             Request = QString::fromUtf8(MODE_SET_RLY) + " " + list1\&.at(1) + " " + list1\&.at(2) + " " + list1\&.at(4) + "\r\n";
+604             Desc = "Set Output Channel " + list1\&.at(1) + " \&.\&.";
+605             if (stat) {
+606                 serial_write(Desc, Request, WAIT_WRITE);
+607                 ui->progressBar->setValue(progressVal++);
+608             } else {progressVal++;}
+609             if (cancel) break;
+610         }
+611     } else {
+612         temp = tModule->Output\&.at(index\&.toInt());
+613         list1 = temp\&.split(';');
+614         Request = QString::fromUtf8(MODE_SET_RLY) + " " + list1\&.at(1) + " " + list1\&.at(2) + " " + list1\&.at(4) + "\r\n";
+615         Desc = "Set Output Channel " + list1\&.at(1) + " \&.\&.";
+616         if (stat) {
+617             serial_write(Desc, Request, WAIT_WRITE);
+618             ui->progressBar->setValue(progressVal++);
+619         } else {progressVal++;}
+620     }
+621 }
+.fi
+.SS "void Set_SIM (bool stat, struct \fBt_module\fP * tModule)"
+
+.PP
+Set_SIM\&. 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIstat\fP 
+.br
+\fItModule\fP 
+.RE
+.PP
+SET SIM 1
+.PP
+SET SIM 2 
+.PP
+.nf
+507 {
+509     Request\&.sprintf("%s 1 %s %s %s %d %s %s %s %s"
+510                     , MODE_SET_SIM
+511                     , tModule->device_name_gsm_1
+512                     , tModule->name_gsm_1
+513                     , tModule->number_gsm_1
+514                     , tModule->flag_status_active_gsm_1
+515                     , tModule->apn_gsm_1
+516                     , tModule->user_gsm_1
+517                     , tModule->passwd_gsm_1
+518                     , tModule->com_gsm_1);
+519     Desc\&.sprintf("Set SIM 1 Configuration (\"%s\") \&.\&.", tModule->device_name_gsm_1);
+520     if (stat) {
+521         serial_write(Desc, Request, WAIT_WRITE);
+522         ui->progressBar->setValue(progressVal++);
+523     } else {progressVal++;}
+524 
+526     Request\&.sprintf("%s 2 %s %s %s %d %s %s %s %s"
+527                     , MODE_SET_SIM
+528                     , tModule->device_name_gsm_2
+529                     , tModule->name_gsm_2
+530                     , tModule->number_gsm_2
+531                     , tModule->flag_status_active_gsm_2
+532                     , tModule->apn_gsm_2
+533                     , tModule->user_gsm_2
+534                     , tModule->passwd_gsm_2
+535                     , tModule->com_gsm_2);
+536     Desc\&.sprintf("Set SIM 2 Configuration (\"%s\") \&.\&.", tModule->device_name_gsm_2);
+537     if (stat) {
+538         serial_write(Desc, Request, WAIT_WRITE);
+539         ui->progressBar->setValue(progressVal++);
+540     } else {progressVal++;}
+541 }
+.fi
+.SS "void Set_Sumber (bool stat, struct \fBt_module\fP * tModule, QString index = \fC0\fP)"
+
+.PP
+Set_Sumber\&. 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIstat\fP 
+.br
+\fItModule\fP 
+.br
+\fIindex\fP 
+.RE
+.PP
+
+.PP
+.nf
+624 {
+625     if (index\&.isEmpty()) {
+626         for (int i = 0; i < tModule->sumber\&.length(); i++) {
+627             int validation = 0;
+628             if (i == 0) validation = 2;
+629             if (i == tModule->sumber\&.length()-1) validation = 1;
+630             temp = tModule->sumber\&.at(i);
+631             list1 = temp\&.split(";");
+632 
+633             Request = QString::fromUtf8(MODE_SET_SRC) + " " + list1\&.at(0) + " " + list1\&.at(1) + " " +
+634                       list1\&.at(2) + " " + list1\&.at(3) + " " + list1\&.at(4) + " " +
+635                       list1\&.at(5) + ";" + list1\&.at(6) + ";" + list1\&.at(7) + ";" +
+636                       list1\&.at(8) + ";" + list1\&.at(9) + ";" +
+637                       list1\&.at(10) + ";" + list1\&.at(11) + " " +
+638                       QString::number(validation) + "\r\n";
+639             Desc = "Set Sources " + list1\&.at(0) + " : \"" + list1\&.at(1) + "\" \&.\&.";
+640             if (stat) {
+641                 serial_write(Desc, Request, WAIT_WRITE);
+642                 ui->progressBar->setValue(progressVal++);
+643             } else {progressVal++;}
+644 
+645 //            if (list1\&.at(5) != "0" && list1\&.at(11) != "") {
+646 //                temp = list1\&.at(11);
+647 //                for (int k = 0; k < tModule->data\&.length(); k++) {
+648 //                    str = tModule->data\&.at(k);
+649 //                    list2 = str\&.split(';');
+650 //                    if (temp == list2\&.at(1)) {
+651 //                        str = list2\&.at(0);
+652 //                        break;
+653 //                    }
+654 //                }
+655 //                temp = list1\&.at(10);
+656 //                for (int j = 0; j < temp\&.toInt()/2; j++) {
+657 //                    Request = "set_data " + QString::number(str\&.toInt()+j) +
+658 //                              " status " + list1\&.at(4);
+659 //                    if (list1\&.at(4) == "1") {
+660 //                        Desc = "Set Data " + QString::number(str\&.toInt()+j) + " with status : ACTIVE \&.\&.";
+661 //                    } else {
+662 //                        Desc = "Set Data " + QString::number(str\&.toInt()+j) + " with status : NOT ACTIVE \&.\&.";
+663 //                    }
+664 //                    if (stat) {
+665 //                        serial_write(Desc, Request, WAIT_WRITE);
+666 //                        ui->progressBar->setValue(progressVal++);
+667 //                    } else {progressVal++;}
+668 //                }
+669 //            }
+670             if (cancel) break;
+671         }
+672     } else {
+673         temp = tModule->sumber\&.at(index\&.toInt());
+674         list1 = temp\&.split(";");
+675 
+676         Request = QString::fromUtf8(MODE_SET_SRC) + " " + list1\&.at(0) + " " + list1\&.at(1) + " " +
+677                   list1\&.at(2) + " " + list1\&.at(3) + " " + list1\&.at(4) + " " +
+678                   list1\&.at(5) + ";" + list1\&.at(6) + ";" + list1\&.at(7) + ";" +
+679                   list1\&.at(8) + ";" + list1\&.at(9) + ";" +
+680                   list1\&.at(10) + ";" + list1\&.at(11) + " 3\r\n";
+681         Desc = "Set Sources " + list1\&.at(0) + " : \"" + list1\&.at(1) + "\" \&.\&.";
+682         if (stat) {
+683             serial_write(Desc, Request, WAIT_WRITE);
+684             ui->progressBar->setValue(progressVal++);
+685         } else {progressVal++;}
+686 
+687 //        if (list1\&.at(5) != "0" && list1\&.at(11) != "") {
+688 //            temp = list1\&.at(11);
+689 //            for (int k = 0; k < tModule->data\&.length(); k++) {
+690 //                str = tModule->data\&.at(k);
+691 //                list2 = str\&.split(';');
+692 //                if (temp == list2\&.at(1)) {
+693 //                    str = list2\&.at(0);
+694 //                    break;
+695 //                }
+696 //            }
+697 //            temp = list1\&.at(10);
+698 //            for (int j = 0; j < temp\&.toInt()/2; j++) {
+699 //                Request = "set_data " + QString::number(str\&.toInt()+j) +
+700 //                          " status " + list1\&.at(4);
+701 //                if (list1\&.at(4) == "1") {
+702 //                    Desc = "Set Data " + QString::number(str\&.toInt()+j) + " with status : ACTIVE \&.\&.";
+703 //                } else {
+704 //                    Desc = "Set Data " + QString::number(str\&.toInt()+j) + " with status : NOT ACTIVE \&.\&.";
+705 //                }
+706 //                if (stat) {
+707 //                    serial_write(Desc, Request, WAIT_WRITE);
+708 //                    ui->progressBar->setValue(progressVal++);
+709 //                } else {progressVal++;}
+710 //            }
+711 //        }
+712     }
+713 }
+.fi
+.SS "void waiting_set ()"
+
+.PP
+waiting_set 
+.PP
+.nf
+870 {
+871     QTime dieTime = QTime::currentTime()\&.addMSecs(TIMEOUT);
+872     while (!this->read_FinishRead()) {
+873         QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+874         if (this->read_flagERR() == 1 && !timeout) {
+875             timeout = false;
+876             break;
+877         }
+878         if (QTime::currentTime() >= dieTime && !timeout) {
+879             timeout = true;
+880             break;
+881         }
+882     }
+883 }
+.fi
+.SS "void write_FinishRead (bool FinishRead, int cekErr, QString strErr)"
+
+.PP
+write_FinishRead 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIFinishRead\fP 
+.br
+\fIcekErr\fP 
+.br
+\fIstrErr\fP 
+.RE
+.PP
+
+.PP
+.nf
+790 {
+791     pth = PATH_SERIAL_PARSING;
+792     QSettings sett(pth, QSettings::IniFormat);
+793 
+794     sett\&.setValue("FINISH_READ", FinishRead);
+795     sett\&.setValue("ERROR_FLAG", cekErr);
+796     sett\&.setValue("ERROR_STRING", strErr);
+797 }
+.fi
+.SS "void writeLogFile (QString log, int flagERR, QString strERR, bool timeout)"
+
+.PP
+writeLogFile 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIlog\fP 
+.br
+\fIflagERR\fP 
+.br
+\fIstrERR\fP 
+.br
+\fItimeout\fP 
+.RE
+.PP
+
+.PP
+.nf
+886 {
+887     /* Try and open a file for output */
+888     QString outputFilename = PATH_LOG;
+889     QFile outputFile(outputFilename);
+890     outputFile\&.open(QIODevice::Append | QIODevice::Text);
+891 
+892     /* Check it opened OK */
+893     if(!outputFile\&.isOpen()){
+894         qDebug() << "- Error, unable to open" << outputFilename << "for output";
+895     } else {
+896         log\&.remove("\r")\&.remove("\n");
+897         if (log\&.length() < 100) {
+898             for (int i = log\&.length(); i < 100; i++) {
+899                 log\&.append(" ");
+900             }
+901         }
+902         log\&.append("|");
+903 
+904         QString Flag;
+905         if      (flagERR == 1) {Flag = "ERROR|";}
+906         else if (flagERR == 0) {Flag = "OK   |";}
+907         else                   {Flag = "     |";}
+908 
+909         QString TimeOut;
+910         if      (timeout) {TimeOut = "TIMEOUT|";}
+911         else              {TimeOut = "       |";}
+912 
+913         /* Point a QTextStream object at the file */
+914         QTextStream outStream(&outputFile);
+915 
+916         /* Write the line to the file */
+917         outStream << QTime::currentTime()\&.toString("hh:mm:ss\&.zzz") << " | " << log << Flag << TimeOut << strERR<< "\r\n";
+918 
+919         /* Close the file */
+920         outputFile\&.close();
+921     }
+922 }
+.fi
+.SH "Dokumentasi Variabel"
+.PP 
+.SS "bool cancel"
+
+.PP
+cancel 
+.SS "int cnt_try"
+
+.PP
+cnt_try 
+.SS "QString Desc"
+
+.PP
+Desc\&. 
+.SS "bool finish"
+
+.PP
+finish 
+.SS "int flagERR"
+
+.PP
+flagERR 
+.SS "QStringList list1"
+
+.PP
+list1 
+.SS "QStringList list2"
+
+.PP
+list2 
+.SS "QStringList list3"
+
+.PP
+list3 
+.SS "\fBmodule\fP* mod"
+
+.PP
+mod 
+.SS "int progressVal"
+
+.PP
+progressVal 
+.SS "QString pth"
+
+.PP
+pth 
+.SS "QString Request"
+
+.PP
+Request\&. 
+.SS "\fBserial\fP* Serial"
+
+.PP
+Serial\&. 
+.SS "QSerialPort* Serial_Com"
+
+.PP
+Serial_Com\&. 
+.SS "QString str"
+
+.PP
+str 
+.SS "QString strERR"
+
+.PP
+strERR 
+.SS "QString temp"
+
+.PP
+temp 
+.SS "QString temp2"
+
+.PP
+temp2 
+.SS "bool timeout"
+
+.PP
+timeout 
+.SS "Ui::ProgressDialog* ui\fC [private]\fP"
+
+.PP
+ui 
+
+.SH "Penulis"
+.PP 
+Dibangkitkan secara otomatis oleh Doxygen untuk Sarasvati dari kode sumber\&.

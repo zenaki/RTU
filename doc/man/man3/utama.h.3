@@ -1,0 +1,281 @@
+.TH "util/utama.h" 3 "Rabu 8 Februari 2017" "Version 1.0.2-4" "Sarasvati" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+util/utama.h
+.SH SYNOPSIS
+.br
+.PP
+.SS "Struktur Data"
+
+.in +1c
+.ti -1c
+.RI "struct \fBdata_port\fP"
+.br
+.RI "STRUCT\&. "
+.ti -1c
+.RI "struct \fBt_module\fP"
+.br
+.ti -1c
+.RI "struct \fBt_serial_settings\fP"
+.br
+.in -1c
+.SH "Dokumentasi Tipe Data"
+.PP 
+.SH "struct data_port"
+.PP 
+STRUCT\&. 
+.PP
+\fBVariabel Data:\fP
+.RS 4
+float \fIcalib_m\fP 
+.br
+.PP
+float \fIcalib_x\fP 
+.br
+.PP
+int \fIcontrol\fP 
+.br
+.PP
+char \fInama_input[64]\fP 
+.br
+.PP
+char \fInama_output[64]\fP 
+.br
+.PP
+int \fIreg_output\fP 
+.br
+.PP
+int \fIstatus_input\fP 
+.br
+.PP
+int \fIstatus_output\fP 
+.br
+.PP
+int \fItype_input\fP 
+.br
+.PP
+char \fItype_output[32]\fP 
+.br
+.PP
+.RE
+.PP
+.SH "struct t_module"
+.PP 
+\fBVariabel Data:\fP
+.RS 4
+QStringList \fIalarm\fP 
+.br
+.PP
+char \fIapn_gsm_1[16]\fP 
+.br
+.PP
+char \fIapn_gsm_2[16]\fP 
+.br
+.PP
+char \fIcom_gsm_1[32]\fP 
+.br
+.PP
+char \fIcom_gsm_2[32]\fP 
+.br
+.PP
+struct \fBdata_port\fP \fId_port[16]\fP 
+.br
+.PP
+QStringList \fIdata\fP 
+.br
+.PP
+char \fIdevice_name_gsm_1[64]\fP 
+.br
+.PP
+char \fIdevice_name_gsm_2[64]\fP 
+.br
+.PP
+char \fIfile_address[32]\fP 
+.br
+.PP
+int \fIflag_active\fP 
+.br
+.PP
+int \fIflag_com_gsm_1\fP 
+.br
+.PP
+int \fIflag_com_gsm_2\fP 
+.br
+.PP
+int \fIflag_dual_gsm\fP 
+.br
+.PP
+int \fIflag_gsm_1\fP 
+.br
+.PP
+int \fIflag_gsm_2\fP 
+.br
+.PP
+int \fIflag_mode_http\fP 
+.br
+.PP
+int \fIflag_status_active_gsm_1\fP 
+.br
+.PP
+int \fIflag_status_active_gsm_2\fP 
+.br
+.PP
+int \fIflag_webclient\fP 
+.br
+.PP
+QStringList \fIInput\fP 
+.br
+.PP
+QStringList \fIInputName\fP 
+.br
+.PP
+int \fIinterval_data\fP 
+.br
+.PP
+int \fIinterval_relay\fP 
+.br
+.PP
+char \fIip_address[32]\fP 
+.br
+.PP
+int \fIjml_alarm\fP 
+.br
+.PP
+int \fIjml_data\fP 
+.br
+.PP
+int \fIjml_input_analog\fP 
+.br
+.PP
+int \fIjml_input_digital\fP 
+.br
+.PP
+int \fIjml_output\fP 
+.br
+.PP
+int \fIjml_sumber\fP 
+.br
+.PP
+int \fIlast_signal\fP 
+.br
+.PP
+char \fImode_http[32]\fP 
+.br
+.PP
+char \fImodule_name[32]\fP 
+.br
+.PP
+char \fIname_gsm_1[32]\fP 
+.br
+.PP
+char \fIname_gsm_2[32]\fP 
+.br
+.PP
+char \fInumber_gsm_1[16]\fP 
+.br
+.PP
+char \fInumber_gsm_2[16]\fP 
+.br
+.PP
+QStringList \fIOutput\fP 
+.br
+.PP
+QStringList \fIOutputName\fP 
+.br
+.PP
+char \fIpasswd_gsm_1[16]\fP 
+.br
+.PP
+char \fIpasswd_gsm_2[16]\fP 
+.br
+.PP
+int \fIport\fP 
+.br
+.PP
+char \fIserial_number[32]\fP 
+.br
+.PP
+char \fIserver_address[32]\fP 
+.br
+.PP
+char \fIstatus_gsm_1[32]\fP 
+.br
+.PP
+char \fIstatus_gsm_2[32]\fP 
+.br
+.PP
+char \fIstatus_webclient[32]\fP 
+.br
+.PP
+QStringList \fIsumber\fP 
+.br
+.PP
+char \fIuser_gsm_1[16]\fP 
+.br
+.PP
+char \fIuser_gsm_2[16]\fP 
+.br
+.PP
+int \fIutc\fP 
+.br
+.PP
+.RE
+.PP
+.SH "struct t_serial_settings"
+.PP 
+\fBVariabel Data:\fP
+.RS 4
+qint32 \fIbaudRate\fP 
+.br
+.PP
+DataBits \fIdataBits\fP 
+.br
+.PP
+FlowControl \fIflowControl\fP 
+.br
+.PP
+QString \fIname\fP 
+.br
+.PP
+Parity \fIparity\fP 
+.br
+.PP
+StopBits \fIstopBits\fP 
+.br
+.PP
+QString \fIstr_data_dat\fP 
+.br
+.PP
+QString \fIstr_data_env\fP 
+.br
+.PP
+QString \fIstr_data_io\fP 
+.br
+.PP
+QString \fIstr_data_sim\fP 
+.br
+.PP
+QString \fIstr_data_src\fP 
+.br
+.PP
+QString \fIstringBaudRate\fP 
+.br
+.PP
+QString \fIstringDataBits\fP 
+.br
+.PP
+QString \fIstringFlowControl\fP 
+.br
+.PP
+QString \fIstringParity\fP 
+.br
+.PP
+QString \fIstringStopBits\fP 
+.br
+.PP
+.RE
+.PP
+.SH "Penulis"
+.PP 
+Dibangkitkan secara otomatis oleh Doxygen untuk Sarasvati dari kode sumber\&.

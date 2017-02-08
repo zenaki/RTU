@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.14">
+  <compounddef id="d5/d40/a00672" kind="class" language="C++" prot="public">
+    <compoundname>gsm</compoundname>
+    <includes refid="db/db2/a00020" local="no">gsm.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="d5/d40/a00672_1add4799f3b69d7c6e43ef715eefeae0f0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>gsm</definition>
+        <argsstring>()</argsstring>
+        <name>gsm</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="model/communication/gsm.h" line="8" column="1" bodyfile="model/communication/gsm.cpp" bodystart="3" bodyend="6"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="29">
+        <label>gsm</label>
+        <link refid="d5/d40/a00672"/>
+      </node>
+    </collaborationgraph>
+    <location file="model/communication/gsm.h" line="6" column="1" bodyfile="model/communication/gsm.h" bodystart="5" bodyend="9"/>
+    <listofallmembers>
+      <member refid="d5/d40/a00672_1add4799f3b69d7c6e43ef715eefeae0f0" prot="public" virt="non-virtual"><scope>gsm</scope><name>gsm</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

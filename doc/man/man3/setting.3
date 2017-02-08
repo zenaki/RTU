@@ -1,0 +1,146 @@
+.TH "setting" 3 "Rabu 8 Februari 2017" "Version 1.0.2-4" "Sarasvati" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+setting
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <setting\&.h>\fP
+.SS "Fungsi Anggota Publik"
+.SH "Keterangan Lengkap"
+.PP 
+.SH "Dokumentasi Konstruktor & Destruktor"
+.PP 
+.SS "\fBsetting\fP ()"
+
+.PP
+.nf
+4 {
+5 
+6 }
+.fi
+.SH "Dokumentasi Anggota: Fungsi"
+.PP 
+.SS "bool checkSetting ()"
+
+.PP
+.nf
+99                           {
+100     bool cek = false;
+101     QDir path("\&.RTUdata/config");
+102     QStringList files = path\&.entryList(QDir::Files);
+103 
+104     QString currFiles = "serial_setting\&.cfg";
+105 
+106     for(int i = 0; i < files\&.count(); i++){
+107         if(currFiles == QString(files\&.at(i))) cek = true;
+108     }
+109 
+110     return cek;
+111 }
+.fi
+.SS "void read_setting (struct \fBt_serial_settings\fP * tSerial)"
+
+.PP
+.nf
+58 {
+59     QString pth;
+60     pth = PATH_SERIAL_SETTING;
+61     cryp code; code\&.decryp(pth);
+62     QSettings sett(pth, QSettings::IniFormat);
+63     QString val;
+64 
+65     tSerial->name = sett\&.value("SERIAL_CONFIGURATION/NAME")\&.toString()\&.toUtf8();
+66     tSerial->baudRate = sett\&.value("SERIAL_CONFIGURATION/BAUDRATE", 0)\&.toInt();
+67     tSerial->stringBaudRate = sett\&.value("SERIAL_CONFIGURATION/STR_BAUDRATE", "")\&.toString()\&.toUtf8();
+68 
+69     val = sett\&.value("SERIAL_CONFIGURATION/DATA_BITS")\&.toString();
+70     if (val == "8") { tSerial->dataBits = static_cast<QSerialPort::DataBits>(QSerialPort::Data8); }
+71     else if (val == "7") { tSerial->dataBits = static_cast<QSerialPort::DataBits>(QSerialPort::Data7); }
+72     else if (val == "6") { tSerial->dataBits = static_cast<QSerialPort::DataBits>(QSerialPort::Data6); }
+73     else if (val == "5") { tSerial->dataBits = static_cast<QSerialPort::DataBits>(QSerialPort::Data5); }
+74     tSerial->stringDataBits = sett\&.value("SERIAL_CONFIGURATION/STR_DATA_BITS")\&.toString();
+75 
+76     val = sett\&.value("SERIAL_CONFIGURATION/PARITY")\&.toString();
+77     if (val == "0") { tSerial->parity = static_cast<QSerialPort::Parity>(QSerialPort::NoParity); }
+78     else if (val == "2") { tSerial->parity = static_cast<QSerialPort::Parity>(QSerialPort::EvenParity); }
+79     else if (val == "3") { tSerial->parity = static_cast<QSerialPort::Parity>(QSerialPort::OddParity); }
+80     else if (val == "5") { tSerial->parity = static_cast<QSerialPort::Parity>(QSerialPort::MarkParity); }
+81     else if (val == "4") { tSerial->parity = static_cast<QSerialPort::Parity>(QSerialPort::SpaceParity); }
+82     tSerial->stringParity = sett\&.value("SERIAL_CONFIGURATION/STR_PARITY")\&.toString();
+83 
+84     val = sett\&.value("SERIAL_CONFIGURATION/STOP_BITS")\&.toString();
+85     if (val == "1") { tSerial->stopBits = static_cast<QSerialPort::StopBits>(QSerialPort::OneStop); }
+86     else { tSerial->stopBits = static_cast<QSerialPort::StopBits>(QSerialPort::TwoStop); }
+87     tSerial->stringStopBits = sett\&.value("SERIAL_CONFIGURATION/STR_STOP_BITS")\&.toString();
+88 
+89     val = sett\&.value("SERIAL_CONFIGURATION/FLOW_CONTROL")\&.toString();
+90     if (val == "0") { tSerial->flowControl = static_cast<QSerialPort::FlowControl>(QSerialPort::NoFlowControl); }
+91     else if (val == "1") { tSerial->flowControl = static_cast<QSerialPort::FlowControl>(QSerialPort::HardwareControl); }
+92     else if (val == "2") { tSerial->flowControl = static_cast<QSerialPort::FlowControl>(QSerialPort::SoftwareControl); }
+93     tSerial->stringFlowControl = sett\&.value("SERIAL_CONFIGURATION/STR_FLOW_CONTROL")\&.toString();
+94     sett\&.endGroup();
+95 
+96     code\&.encryp(pth);
+97 }
+.fi
+.SS "void write_setting (\fBSettingsDialog\fP * s_d, struct \fBt_serial_settings\fP * tSerial)"
+
+.PP
+.nf
+8                                                                                  {
+9     tSerial->name = s_d->ui->serialPortInfoListBox->currentText();
+10 
+11     if (s_d->ui->baudRateBox->currentIndex() == 4) {
+12         tSerial->baudRate = s_d->ui->baudRateBox->currentText()\&.toInt();
+13     } else {
+14         tSerial->baudRate = static_cast<QSerialPort::BaudRate>(
+15                     s_d->ui->baudRateBox->itemData(s_d->ui->baudRateBox->currentIndex())\&.toInt());
+16     }
+17     tSerial->stringBaudRate = QString::number(tSerial->baudRate);
+18 
+19     tSerial->dataBits = static_cast<QSerialPort::DataBits>(
+20                 s_d->ui->dataBitsBox->itemData(s_d->ui->dataBitsBox->currentIndex())\&.toInt());
+21     tSerial->stringDataBits = s_d->ui->dataBitsBox->currentText();
+22 
+23     tSerial->parity = static_cast<QSerialPort::Parity>(
+24                 s_d->ui->parityBox->itemData(s_d->ui->parityBox->currentIndex())\&.toInt());
+25     tSerial->stringParity = s_d->ui->parityBox->currentText();
+26 
+27     tSerial->stopBits = static_cast<QSerialPort::StopBits>(
+28                 s_d->ui->stopBitsBox->itemData(s_d->ui->stopBitsBox->currentIndex())\&.toInt());
+29     tSerial->stringStopBits = s_d->ui->stopBitsBox->currentText();
+30 
+31     tSerial->flowControl = static_cast<QSerialPort::FlowControl>(
+32                 s_d->ui->flowControlBox->itemData(s_d->ui->flowControlBox->currentIndex())\&.toInt());
+33     tSerial->stringFlowControl = s_d->ui->flowControlBox->currentText();
+34 
+35     QString pth;
+36     pth = PATH_SERIAL_SETTING;
+37     cryp code; code\&.decryp(PATH_SERIAL_SETTING);
+38     QSettings sett(pth, QSettings::IniFormat);
+39 
+40     sett\&.beginGroup( "SERIAL_CONFIGURATION" );
+41     sett\&.setValue("NAME", tSerial->name);
+42     sett\&.setValue("BAUDRATE", tSerial->baudRate);
+43     sett\&.setValue("STR_BAUDRATE", tSerial->stringBaudRate);
+44     sett\&.setValue("DATA_BITS", tSerial->dataBits);
+45     sett\&.setValue("STR_DATA_BITS", tSerial->stringDataBits);
+46     sett\&.setValue("PARITY", tSerial->parity);
+47     sett\&.setValue("STR_PARITY", tSerial->stringParity);
+48     sett\&.setValue("STOP_BITS", tSerial->stopBits);
+49     sett\&.setValue("STR_STOP_BITS", tSerial->stringStopBits);
+50     sett\&.setValue("FLOW_CONTROL", tSerial->flowControl);
+51     sett\&.setValue("STR_FLOW_CONTROL", tSerial->stringFlowControl);
+52     sett\&.endGroup();
+53 
+54     code\&.encryp(PATH_SERIAL_SETTING);
+55 }
+.fi
+
+
+.SH "Penulis"
+.PP 
+Dibangkitkan secara otomatis oleh Doxygen untuk Sarasvati dari kode sumber\&.

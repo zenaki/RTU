@@ -1,7 +1,7 @@
-<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node2" href="$classform__add_module.html" title="The form_addModule class. " alt="" coords="123,5,242,32"/>
-<area shape="rect" id="node3" href="$classform_module.html" title="The formModule class. " alt="" coords="137,56,228,83"/>
-<area shape="rect" id="node4" href="$classlogin_form.html" title="The loginForm class. " alt="" coords="143,107,222,133"/>
-<area shape="rect" id="node5" href="$class_progress_dialog.html" title="The ProgressDialog class. " alt="" coords="127,157,238,184"/>
-<area shape="rect" id="node6" href="$class_settings_dialog.html" title="The SettingsDialog class. " alt="" coords="129,208,236,235"/>
+<map id="Hierarki Kelas Secara Grafis" name="Hierarki Kelas Secara Grafis">
+<area shape="rect" id="node2" href="$dc/d14/a00720.html" title="The form_addModule class. " alt="" coords="123,5,242,32"/>
+<area shape="rect" id="node3" href="$d0/d72/a00724.html" title="The formModule class. " alt="" coords="137,56,228,83"/>
+<area shape="rect" id="node4" href="$df/d3b/a00728.html" title="The loginForm class. " alt="" coords="143,107,222,133"/>
+<area shape="rect" id="node5" href="$dc/d85/a00736.html" title="The ProgressDialog class. " alt="" coords="127,157,238,184"/>
+<area shape="rect" id="node6" href="$dc/dce/a00740.html" title="The SettingsDialog class. " alt="" coords="129,208,236,235"/>
 </map>

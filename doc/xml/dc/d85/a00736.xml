@@ -1,0 +1,1386 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.14">
+  <compounddef id="dc/d85/a00736" kind="class" language="C++" prot="public">
+    <compoundname>ProgressDialog</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">QDialog</basecompoundref>
+    <includes refid="d0/dc2/a00104" local="no">progressdialog.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="dc/d85/a00736_1a01244a6495823614725fbf3f1a34422a" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int progressVal</definition>
+        <argsstring></argsstring>
+        <name>progressVal</name>
+        <briefdescription>
+<para>progressVal </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="57" column="1" bodyfile="view/progressdialog.h" bodystart="57" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="dc/d85/a00736_1aafad695f91953cdb1d29100842ce5009" prot="public" static="no" mutable="no">
+        <type><ref refid="d5/d39/a00676" kindref="compound">serial</ref>*</type>
+        <definition>serial* Serial</definition>
+        <argsstring></argsstring>
+        <name>Serial</name>
+        <briefdescription>
+<para>Serial. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="61" column="1" bodyfile="view/progressdialog.h" bodystart="61" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="dc/d85/a00736_1a38f884defdc7a5543ba1ab05e85f7709" prot="public" static="no" mutable="no">
+        <type>QSerialPort*</type>
+        <definition>QSerialPort* Serial_Com</definition>
+        <argsstring></argsstring>
+        <name>Serial_Com</name>
+        <briefdescription>
+<para>Serial_Com. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="65" column="1" bodyfile="view/progressdialog.h" bodystart="65" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="dc/d85/a00736_1afba88394bb520c3b692e3354b4c9b026" prot="public" static="no" mutable="no">
+        <type><ref refid="df/d7d/a00696" kindref="compound">module</ref>*</type>
+        <definition>module* mod</definition>
+        <argsstring></argsstring>
+        <name>mod</name>
+        <briefdescription>
+<para>mod </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="139" column="1" bodyfile="view/progressdialog.h" bodystart="139" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="dc/d85/a00736_1a219d789cfe5fd0839493002866c3c6c0" prot="public" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString Request</definition>
+        <argsstring></argsstring>
+        <name>Request</name>
+        <briefdescription>
+<para>Request. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="143" column="1" bodyfile="view/progressdialog.h" bodystart="143" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="dc/d85/a00736_1a70c73c055f163c6481b6463b4e0ef19a" prot="public" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString Desc</definition>
+        <argsstring></argsstring>
+        <name>Desc</name>
+        <briefdescription>
+<para>Desc. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="147" column="1" bodyfile="view/progressdialog.h" bodystart="147" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="dc/d85/a00736_1a288b834f8b483958be715bc77558bf46" prot="public" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString str</definition>
+        <argsstring></argsstring>
+        <name>str</name>
+        <briefdescription>
+<para>str </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="151" column="1" bodyfile="view/progressdialog.h" bodystart="151" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="dc/d85/a00736_1a2ee627880b1369c3d67452145367c081" prot="public" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString temp</definition>
+        <argsstring></argsstring>
+        <name>temp</name>
+        <briefdescription>
+<para>temp </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="155" column="1" bodyfile="view/progressdialog.h" bodystart="155" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="dc/d85/a00736_1a6e74b52322bd6ddf341c004ffe45b534" prot="public" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString temp2</definition>
+        <argsstring></argsstring>
+        <name>temp2</name>
+        <briefdescription>
+<para>temp2 </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="159" column="1" bodyfile="view/progressdialog.h" bodystart="159" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="dc/d85/a00736_1aafc7244e6232f42fe2b8e6722d69ac8f" prot="public" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString pth</definition>
+        <argsstring></argsstring>
+        <name>pth</name>
+        <briefdescription>
+<para>pth </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="163" column="1" bodyfile="view/progressdialog.h" bodystart="163" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="dc/d85/a00736_1a4645a4b0adfc55170305b568baf1c61f" prot="public" static="no" mutable="no">
+        <type>QStringList</type>
+        <definition>QStringList list1</definition>
+        <argsstring></argsstring>
+        <name>list1</name>
+        <briefdescription>
+<para>list1 </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="167" column="1" bodyfile="view/progressdialog.h" bodystart="167" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="dc/d85/a00736_1a87bc89f6ad394ede668ae6c27550ae7a" prot="public" static="no" mutable="no">
+        <type>QStringList</type>
+        <definition>QStringList list2</definition>
+        <argsstring></argsstring>
+        <name>list2</name>
+        <briefdescription>
+<para>list2 </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="171" column="1" bodyfile="view/progressdialog.h" bodystart="171" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="dc/d85/a00736_1a5e9368b08357db01d0127f013c7c7b07" prot="public" static="no" mutable="no">
+        <type>QStringList</type>
+        <definition>QStringList list3</definition>
+        <argsstring></argsstring>
+        <name>list3</name>
+        <briefdescription>
+<para>list3 </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="175" column="1" bodyfile="view/progressdialog.h" bodystart="175" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="dc/d85/a00736_1aac87a1d12529cca1679913bd7deba0fe" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool timeout</definition>
+        <argsstring></argsstring>
+        <name>timeout</name>
+        <briefdescription>
+<para>timeout </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="180" column="1" bodyfile="view/progressdialog.h" bodystart="180" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="dc/d85/a00736_1aac151338b4e9b9fc67a097168192b4d2" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int flagERR</definition>
+        <argsstring></argsstring>
+        <name>flagERR</name>
+        <briefdescription>
+<para>flagERR </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="184" column="1" bodyfile="view/progressdialog.h" bodystart="184" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="dc/d85/a00736_1af7b4446e14ffd3390a4fb4cdce9c1b35" prot="public" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString strERR</definition>
+        <argsstring></argsstring>
+        <name>strERR</name>
+        <briefdescription>
+<para>strERR </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="188" column="1" bodyfile="view/progressdialog.h" bodystart="188" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="dc/d85/a00736_1af287bc8596383f162b2b900a54c7ee4a" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool cancel</definition>
+        <argsstring></argsstring>
+        <name>cancel</name>
+        <briefdescription>
+<para>cancel </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="193" column="1" bodyfile="view/progressdialog.h" bodystart="193" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="dc/d85/a00736_1ad24ebffc3b7cd5e04988c49fdcb80293" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool finish</definition>
+        <argsstring></argsstring>
+        <name>finish</name>
+        <briefdescription>
+<para>finish </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="197" column="1" bodyfile="view/progressdialog.h" bodystart="197" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="dc/d85/a00736_1a63c3d44db22caf67b533b95717d53c24" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int cnt_try</definition>
+        <argsstring></argsstring>
+        <name>cnt_try</name>
+        <briefdescription>
+<para>cnt_try </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="201" column="1" bodyfile="view/progressdialog.h" bodystart="201" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="dc/d85/a00736_1a09f8dfea028c23fa008ef20da1131af2" prot="private" static="no" mutable="no">
+        <type>Ui::ProgressDialog*</type>
+        <definition>Ui::ProgressDialog* ui</definition>
+        <argsstring></argsstring>
+        <name>ui</name>
+        <briefdescription>
+<para>ui </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="304" column="1" bodyfile="view/progressdialog.h" bodystart="304" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="dc/d85/a00736_1a88666607b9f47cbe6f965f73b118d4e4" prot="public" static="no" const="no" explicit="yes" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>ProgressDialog</definition>
+        <argsstring>(QWidget *parent = 0)</argsstring>
+        <name>ProgressDialog</name>
+        <param>
+          <type>QWidget *</type>
+          <declname>parent</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+<para><ref refid="dc/d85/a00736" kindref="compound">ProgressDialog</ref>. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>parent</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="43" column="1" bodyfile="view/progressdialog.cpp" bodystart="4" bodyend="10"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d85/a00736_1aa93aeada39567933b76e0267addcb88d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>~ProgressDialog</definition>
+        <argsstring>()</argsstring>
+        <name>~ProgressDialog</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="44" column="1" bodyfile="view/progressdialog.cpp" bodystart="12" bodyend="16"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d85/a00736_1a3b2dd2a063f21c8abd9fcb97c349c79d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Processing</definition>
+        <argsstring>(QSerialPort *SerialPort = 0, QString address = 0, QString mode = 0, QString index = 0)</argsstring>
+        <name>Processing</name>
+        <param>
+          <type>QSerialPort *</type>
+          <declname>SerialPort</declname>
+          <defval>0</defval>
+        </param>
+        <param>
+          <type>QString</type>
+          <declname>address</declname>
+          <defval>0</defval>
+        </param>
+        <param>
+          <type>QString</type>
+          <declname>mode</declname>
+          <defval>0</defval>
+        </param>
+        <param>
+          <type>QString</type>
+          <declname>index</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+<para>Processing. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>SerialPort</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>address</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>mode</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>index</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+<para><hruler/>
+</para><para><hruler/>
+</para><para><hruler/>
+ </para>        </inbodydescription>
+        <location file="view/progressdialog.h" line="53" column="1" bodyfile="view/progressdialog.cpp" bodystart="18" bodyend="126"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d85/a00736_1a55c02bd48b327410afabb19fb5a260db" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Request_ENV</definition>
+        <argsstring>(bool stat)</argsstring>
+        <name>Request_ENV</name>
+        <param>
+          <type>bool</type>
+          <declname>stat</declname>
+        </param>
+        <briefdescription>
+<para>Request_ENV. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>stat</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="71" column="1" bodyfile="view/progressdialog.cpp" bodystart="128" bodyend="136"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d85/a00736_1a69071b1f8addb1bfe7460c85b5feab79" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Request_SIM</definition>
+        <argsstring>(bool stat)</argsstring>
+        <name>Request_SIM</name>
+        <param>
+          <type>bool</type>
+          <declname>stat</declname>
+        </param>
+        <briefdescription>
+<para>Request_SIM. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>stat</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="76" column="1" bodyfile="view/progressdialog.cpp" bodystart="138" bodyend="146"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d85/a00736_1ae8307b88c4271210041b154e13bebb58" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Request_IO</definition>
+        <argsstring>(bool stat)</argsstring>
+        <name>Request_IO</name>
+        <param>
+          <type>bool</type>
+          <declname>stat</declname>
+        </param>
+        <briefdescription>
+<para>Request_IO. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>stat</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="81" column="1" bodyfile="view/progressdialog.cpp" bodystart="148" bodyend="156"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d85/a00736_1a81272bb08988754a397221ad5a22df6c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Request_Signal</definition>
+        <argsstring>(bool stat)</argsstring>
+        <name>Request_Signal</name>
+        <param>
+          <type>bool</type>
+          <declname>stat</declname>
+        </param>
+        <briefdescription>
+<para>Request_Signal. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>stat</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="86" column="1" bodyfile="view/progressdialog.cpp" bodystart="158" bodyend="166"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d85/a00736_1ad7363404b9185e208bd68a4b760a2e63" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Request_Sumber</definition>
+        <argsstring>(bool stat)</argsstring>
+        <name>Request_Sumber</name>
+        <param>
+          <type>bool</type>
+          <declname>stat</declname>
+        </param>
+        <briefdescription>
+<para>Request_Sumber. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>stat</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="91" column="1" bodyfile="view/progressdialog.cpp" bodystart="168" bodyend="176"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d85/a00736_1a862e296dd14df71086b6ab5d35580361" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Request_Data</definition>
+        <argsstring>(bool stat)</argsstring>
+        <name>Request_Data</name>
+        <param>
+          <type>bool</type>
+          <declname>stat</declname>
+        </param>
+        <briefdescription>
+<para>Request_Data. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>stat</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="96" column="1" bodyfile="view/progressdialog.cpp" bodystart="178" bodyend="186"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d85/a00736_1acc68d9b9e6a8282859a3f318b4a97448" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Get_ENV</definition>
+        <argsstring>(struct t_module *tModule, QStringList data)</argsstring>
+        <name>Get_ENV</name>
+        <param>
+          <type>struct <ref refid="d3/dda/a00712" kindref="compound">t_module</ref> *</type>
+          <declname>tModule</declname>
+        </param>
+        <param>
+          <type>QStringList</type>
+          <declname>data</declname>
+        </param>
+        <briefdescription>
+<para>Get_ENV. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>tModule</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>data</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="103" column="1" bodyfile="view/progressdialog.cpp" bodystart="188" bodyend="226"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d85/a00736_1aed17c8da4505df1a4a5f8c19b5eba2dd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Get_SIM</definition>
+        <argsstring>(struct t_module *tModule, QStringList data)</argsstring>
+        <name>Get_SIM</name>
+        <param>
+          <type>struct <ref refid="d3/dda/a00712" kindref="compound">t_module</ref> *</type>
+          <declname>tModule</declname>
+        </param>
+        <param>
+          <type>QStringList</type>
+          <declname>data</declname>
+        </param>
+        <briefdescription>
+<para>Get_SIM. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>tModule</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>data</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+<para>MODULE</para><para>GSM_1</para><para>GSM_2 </para>        </inbodydescription>
+        <location file="view/progressdialog.h" line="109" column="1" bodyfile="view/progressdialog.cpp" bodystart="228" bodyend="402"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d85/a00736_1a858e535bd29b6da4ee31568c736ca51d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Get_Input</definition>
+        <argsstring>(struct t_module *tModule, QStringList data)</argsstring>
+        <name>Get_Input</name>
+        <param>
+          <type>struct <ref refid="d3/dda/a00712" kindref="compound">t_module</ref> *</type>
+          <declname>tModule</declname>
+        </param>
+        <param>
+          <type>QStringList</type>
+          <declname>data</declname>
+        </param>
+        <briefdescription>
+<para>Get_Input. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>tModule</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>data</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="115" column="1" bodyfile="view/progressdialog.cpp" bodystart="404" bodyend="439"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d85/a00736_1ad690a78703b3bddacf9a575c953eeeca" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Get_Output</definition>
+        <argsstring>(struct t_module *tModule, QStringList data)</argsstring>
+        <name>Get_Output</name>
+        <param>
+          <type>struct <ref refid="d3/dda/a00712" kindref="compound">t_module</ref> *</type>
+          <declname>tModule</declname>
+        </param>
+        <param>
+          <type>QStringList</type>
+          <declname>data</declname>
+        </param>
+        <briefdescription>
+<para>Get_Output. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>tModule</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>data</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="121" column="1" bodyfile="view/progressdialog.cpp" bodystart="441" bodyend="457"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d85/a00736_1a27faca0e428256b578fdd1b2d975c773" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Get_Sumber</definition>
+        <argsstring>(struct t_module *tModule, QStringList data)</argsstring>
+        <name>Get_Sumber</name>
+        <param>
+          <type>struct <ref refid="d3/dda/a00712" kindref="compound">t_module</ref> *</type>
+          <declname>tModule</declname>
+        </param>
+        <param>
+          <type>QStringList</type>
+          <declname>data</declname>
+        </param>
+        <briefdescription>
+<para>Get_Sumber. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>tModule</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>data</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="128" column="1" bodyfile="view/progressdialog.cpp" bodystart="459" bodyend="469"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d85/a00736_1a3b95c8b7141ce2e47b1b386992c5aeb8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Get_Data</definition>
+        <argsstring>(struct t_module *tModule, QStringList data)</argsstring>
+        <name>Get_Data</name>
+        <param>
+          <type>struct <ref refid="d3/dda/a00712" kindref="compound">t_module</ref> *</type>
+          <declname>tModule</declname>
+        </param>
+        <param>
+          <type>QStringList</type>
+          <declname>data</declname>
+        </param>
+        <briefdescription>
+<para>Get_Data. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>tModule</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>data</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="134" column="1" bodyfile="view/progressdialog.cpp" bodystart="471" bodyend="481"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d85/a00736_1a7c66beda365152ff81e34b69383e7ec5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Set_ENV</definition>
+        <argsstring>(bool stat, struct t_module *tModule)</argsstring>
+        <name>Set_ENV</name>
+        <param>
+          <type>bool</type>
+          <declname>stat</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="d3/dda/a00712" kindref="compound">t_module</ref> *</type>
+          <declname>tModule</declname>
+        </param>
+        <briefdescription>
+<para>Set_ENV. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>stat</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>tModule</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+<para>SET ENVIRONTMENT </para>        </inbodydescription>
+        <location file="view/progressdialog.h" line="208" column="1" bodyfile="view/progressdialog.cpp" bodystart="483" bodyend="504"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d85/a00736_1ad53cbbde3e1c8d6703aa2a4be90b6459" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Set_SIM</definition>
+        <argsstring>(bool stat, struct t_module *tModule)</argsstring>
+        <name>Set_SIM</name>
+        <param>
+          <type>bool</type>
+          <declname>stat</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="d3/dda/a00712" kindref="compound">t_module</ref> *</type>
+          <declname>tModule</declname>
+        </param>
+        <briefdescription>
+<para>Set_SIM. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>stat</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>tModule</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+<para>SET SIM 1</para><para>SET SIM 2 </para>        </inbodydescription>
+        <location file="view/progressdialog.h" line="214" column="1" bodyfile="view/progressdialog.cpp" bodystart="506" bodyend="541"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d85/a00736_1a66d72be8b9d8caeeb3e09258109d615c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Set_Input</definition>
+        <argsstring>(bool stat, struct t_module *tModule, QString index = 0)</argsstring>
+        <name>Set_Input</name>
+        <param>
+          <type>bool</type>
+          <declname>stat</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="d3/dda/a00712" kindref="compound">t_module</ref> *</type>
+          <declname>tModule</declname>
+        </param>
+        <param>
+          <type>QString</type>
+          <declname>index</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+<para>Set_Input. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>stat</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>tModule</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>index</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+<para>SET INPUT DIGITAL </para>        </inbodydescription>
+        <location file="view/progressdialog.h" line="221" column="1" bodyfile="view/progressdialog.cpp" bodystart="543" bodyend="594"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d85/a00736_1a66f64400af1328e04fb1b50da5ac9dfa" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Set_Output</definition>
+        <argsstring>(bool stat, struct t_module *tModule, QString index = 0)</argsstring>
+        <name>Set_Output</name>
+        <param>
+          <type>bool</type>
+          <declname>stat</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="d3/dda/a00712" kindref="compound">t_module</ref> *</type>
+          <declname>tModule</declname>
+        </param>
+        <param>
+          <type>QString</type>
+          <declname>index</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+<para>Set_Output. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>stat</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>tModule</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>index</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+<para>SET OUTPUT RELAY </para>        </inbodydescription>
+        <location file="view/progressdialog.h" line="228" column="1" bodyfile="view/progressdialog.cpp" bodystart="596" bodyend="621"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d85/a00736_1a07beb59908edaa67b19fc3324c06b9c1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Set_Sumber</definition>
+        <argsstring>(bool stat, struct t_module *tModule, QString index = 0)</argsstring>
+        <name>Set_Sumber</name>
+        <param>
+          <type>bool</type>
+          <declname>stat</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="d3/dda/a00712" kindref="compound">t_module</ref> *</type>
+          <declname>tModule</declname>
+        </param>
+        <param>
+          <type>QString</type>
+          <declname>index</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+<para>Set_Sumber. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>stat</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>tModule</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>index</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="235" column="1" bodyfile="view/progressdialog.cpp" bodystart="623" bodyend="713"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d85/a00736_1afaec795a4f2845baf63c559a0f6efb5d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Set_Data</definition>
+        <argsstring>(bool stat, struct t_module *tModule, QString index = 0)</argsstring>
+        <name>Set_Data</name>
+        <param>
+          <type>bool</type>
+          <declname>stat</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="d3/dda/a00712" kindref="compound">t_module</ref> *</type>
+          <declname>tModule</declname>
+        </param>
+        <param>
+          <type>QString</type>
+          <declname>index</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+<para>Set_Data. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>stat</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>tModule</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>index</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="242" column="1" bodyfile="view/progressdialog.cpp" bodystart="715" bodyend="777"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d85/a00736_1a177ea17e457c4a39feaddabbee68a1a1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Reset_Board</definition>
+        <argsstring>(bool stat)</argsstring>
+        <name>Reset_Board</name>
+        <param>
+          <type>bool</type>
+          <declname>stat</declname>
+        </param>
+        <briefdescription>
+<para>Reset_Board. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>stat</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="247" column="1" bodyfile="view/progressdialog.cpp" bodystart="779" bodyend="787"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d85/a00736_1a9af02f45723486b4dba4801633840a5d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void write_FinishRead</definition>
+        <argsstring>(bool FinishRead, int cekErr, QString strErr)</argsstring>
+        <name>write_FinishRead</name>
+        <param>
+          <type>bool</type>
+          <declname>FinishRead</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>cekErr</declname>
+        </param>
+        <param>
+          <type>QString</type>
+          <declname>strErr</declname>
+        </param>
+        <briefdescription>
+<para>write_FinishRead </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>FinishRead</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>cekErr</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>strErr</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="255" column="1" bodyfile="view/progressdialog.cpp" bodystart="789" bodyend="797"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d85/a00736_1aeb73e147971ca322895a53d574bc043b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool read_FinishRead</definition>
+        <argsstring>()</argsstring>
+        <name>read_FinishRead</name>
+        <briefdescription>
+<para>read_FinishRead </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para></para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="260" column="1" bodyfile="view/progressdialog.cpp" bodystart="799" bodyend="809"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d85/a00736_1abafa5deaf1c8e63cbffeb4bc3d07695b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int read_flagERR</definition>
+        <argsstring>()</argsstring>
+        <name>read_flagERR</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="260" column="1" bodyfile="view/progressdialog.cpp" bodystart="811" bodyend="821"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d85/a00736_1a104d21de6e310be9324ad641b5860df4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>QString</type>
+        <definition>QString read_strERR</definition>
+        <argsstring>()</argsstring>
+        <name>read_strERR</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="260" column="1" bodyfile="view/progressdialog.cpp" bodystart="823" bodyend="833"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d85/a00736_1aadc4540eac008b25ebb9ca83a91fe94d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void delay</definition>
+        <argsstring>(int ms)</argsstring>
+        <name>delay</name>
+        <param>
+          <type>int</type>
+          <declname>ms</declname>
+        </param>
+        <briefdescription>
+<para>delay </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>ms</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="267" column="1" bodyfile="view/progressdialog.cpp" bodystart="835" bodyend="841"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d85/a00736_1a62d34a7d6d661518f0d20559c58ce37e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void serial_write</definition>
+        <argsstring>(QString desc, QString data, int delay_char)</argsstring>
+        <name>serial_write</name>
+        <param>
+          <type>QString</type>
+          <declname>desc</declname>
+        </param>
+        <param>
+          <type>QString</type>
+          <declname>data</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>delay_char</declname>
+        </param>
+        <briefdescription>
+<para>serial_write </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>desc</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>data</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>delay_char</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="274" column="1" bodyfile="view/progressdialog.cpp" bodystart="843" bodyend="867"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d85/a00736_1a378cf14b2591856c81fd9d731a977d78" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void waiting_set</definition>
+        <argsstring>()</argsstring>
+        <name>waiting_set</name>
+        <briefdescription>
+<para>waiting_set </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="278" column="1" bodyfile="view/progressdialog.cpp" bodystart="869" bodyend="883"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d85/a00736_1a0c6fa18fbb76a7a242d8c43e9ba44690" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void writeLogFile</definition>
+        <argsstring>(QString log, int flagERR, QString strERR, bool timeout)</argsstring>
+        <name>writeLogFile</name>
+        <param>
+          <type>QString</type>
+          <declname>log</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>flagERR</declname>
+        </param>
+        <param>
+          <type>QString</type>
+          <declname>strERR</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>timeout</declname>
+        </param>
+        <briefdescription>
+<para>writeLogFile </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>log</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>flagERR</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>strERR</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>timeout</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="287" column="1" bodyfile="view/progressdialog.cpp" bodystart="885" bodyend="922"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-slot">
+      <memberdef kind="slot" id="dc/d85/a00736_1a08102781c588c8ccc8948250d4bbcfd6" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void on_pbDetail_clicked</definition>
+        <argsstring>()</argsstring>
+        <name>on_pbDetail_clicked</name>
+        <briefdescription>
+<para>on_pbDetail_clicked </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="293" column="1" bodyfile="view/progressdialog.cpp" bodystart="924" bodyend="933"/>
+      </memberdef>
+      <memberdef kind="slot" id="dc/d85/a00736_1a2e2271a2fb825088c621e5dcde373e36" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void on_pbCancel_clicked</definition>
+        <argsstring>()</argsstring>
+        <name>on_pbCancel_clicked</name>
+        <briefdescription>
+<para>on_pbCancel_clicked </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/progressdialog.h" line="298" column="1" bodyfile="view/progressdialog.cpp" bodystart="935" bodyend="938"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>The <ref refid="dc/d85/a00736" kindref="compound">ProgressDialog</ref> class. </para>    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="52">
+        <label>ProgressDialog</label>
+        <link refid="dc/d85/a00736"/>
+        <childnode refid="53" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="53">
+        <label>QDialog</label>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="57">
+        <label>module</label>
+        <link refid="df/d7d/a00696"/>
+      </node>
+      <node id="54">
+        <label>ProgressDialog</label>
+        <link refid="dc/d85/a00736"/>
+        <childnode refid="55" relation="public-inheritance">
+        </childnode>
+        <childnode refid="56" relation="usage">
+          <edgelabel>+Serial</edgelabel>
+        </childnode>
+        <childnode refid="57" relation="usage">
+          <edgelabel>+mod</edgelabel>
+        </childnode>
+      </node>
+      <node id="55">
+        <label>QDialog</label>
+      </node>
+      <node id="56">
+        <label>serial</label>
+        <link refid="d5/d39/a00676"/>
+      </node>
+    </collaborationgraph>
+    <location file="view/progressdialog.h" line="35" column="1" bodyfile="view/progressdialog.h" bodystart="34" bodyend="305"/>
+    <listofallmembers>
+      <member refid="dc/d85/a00736_1af287bc8596383f162b2b900a54c7ee4a" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>cancel</name></member>
+      <member refid="dc/d85/a00736_1a63c3d44db22caf67b533b95717d53c24" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>cnt_try</name></member>
+      <member refid="dc/d85/a00736_1aadc4540eac008b25ebb9ca83a91fe94d" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>delay</name></member>
+      <member refid="dc/d85/a00736_1a70c73c055f163c6481b6463b4e0ef19a" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>Desc</name></member>
+      <member refid="dc/d85/a00736_1ad24ebffc3b7cd5e04988c49fdcb80293" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>finish</name></member>
+      <member refid="dc/d85/a00736_1aac151338b4e9b9fc67a097168192b4d2" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>flagERR</name></member>
+      <member refid="dc/d85/a00736_1a3b95c8b7141ce2e47b1b386992c5aeb8" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>Get_Data</name></member>
+      <member refid="dc/d85/a00736_1acc68d9b9e6a8282859a3f318b4a97448" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>Get_ENV</name></member>
+      <member refid="dc/d85/a00736_1a858e535bd29b6da4ee31568c736ca51d" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>Get_Input</name></member>
+      <member refid="dc/d85/a00736_1ad690a78703b3bddacf9a575c953eeeca" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>Get_Output</name></member>
+      <member refid="dc/d85/a00736_1aed17c8da4505df1a4a5f8c19b5eba2dd" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>Get_SIM</name></member>
+      <member refid="dc/d85/a00736_1a27faca0e428256b578fdd1b2d975c773" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>Get_Sumber</name></member>
+      <member refid="dc/d85/a00736_1a4645a4b0adfc55170305b568baf1c61f" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>list1</name></member>
+      <member refid="dc/d85/a00736_1a87bc89f6ad394ede668ae6c27550ae7a" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>list2</name></member>
+      <member refid="dc/d85/a00736_1a5e9368b08357db01d0127f013c7c7b07" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>list3</name></member>
+      <member refid="dc/d85/a00736_1afba88394bb520c3b692e3354b4c9b026" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>mod</name></member>
+      <member refid="dc/d85/a00736_1a2e2271a2fb825088c621e5dcde373e36" prot="private" virt="non-virtual"><scope>ProgressDialog</scope><name>on_pbCancel_clicked</name></member>
+      <member refid="dc/d85/a00736_1a08102781c588c8ccc8948250d4bbcfd6" prot="private" virt="non-virtual"><scope>ProgressDialog</scope><name>on_pbDetail_clicked</name></member>
+      <member refid="dc/d85/a00736_1a3b2dd2a063f21c8abd9fcb97c349c79d" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>Processing</name></member>
+      <member refid="dc/d85/a00736_1a88666607b9f47cbe6f965f73b118d4e4" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>ProgressDialog</name></member>
+      <member refid="dc/d85/a00736_1a01244a6495823614725fbf3f1a34422a" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>progressVal</name></member>
+      <member refid="dc/d85/a00736_1aafc7244e6232f42fe2b8e6722d69ac8f" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>pth</name></member>
+      <member refid="dc/d85/a00736_1aeb73e147971ca322895a53d574bc043b" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>read_FinishRead</name></member>
+      <member refid="dc/d85/a00736_1abafa5deaf1c8e63cbffeb4bc3d07695b" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>read_flagERR</name></member>
+      <member refid="dc/d85/a00736_1a104d21de6e310be9324ad641b5860df4" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>read_strERR</name></member>
+      <member refid="dc/d85/a00736_1a219d789cfe5fd0839493002866c3c6c0" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>Request</name></member>
+      <member refid="dc/d85/a00736_1a862e296dd14df71086b6ab5d35580361" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>Request_Data</name></member>
+      <member refid="dc/d85/a00736_1a55c02bd48b327410afabb19fb5a260db" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>Request_ENV</name></member>
+      <member refid="dc/d85/a00736_1ae8307b88c4271210041b154e13bebb58" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>Request_IO</name></member>
+      <member refid="dc/d85/a00736_1a81272bb08988754a397221ad5a22df6c" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>Request_Signal</name></member>
+      <member refid="dc/d85/a00736_1a69071b1f8addb1bfe7460c85b5feab79" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>Request_SIM</name></member>
+      <member refid="dc/d85/a00736_1ad7363404b9185e208bd68a4b760a2e63" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>Request_Sumber</name></member>
+      <member refid="dc/d85/a00736_1a177ea17e457c4a39feaddabbee68a1a1" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>Reset_Board</name></member>
+      <member refid="dc/d85/a00736_1aafad695f91953cdb1d29100842ce5009" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>Serial</name></member>
+      <member refid="dc/d85/a00736_1a38f884defdc7a5543ba1ab05e85f7709" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>Serial_Com</name></member>
+      <member refid="dc/d85/a00736_1a62d34a7d6d661518f0d20559c58ce37e" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>serial_write</name></member>
+      <member refid="dc/d85/a00736_1afaec795a4f2845baf63c559a0f6efb5d" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>Set_Data</name></member>
+      <member refid="dc/d85/a00736_1a7c66beda365152ff81e34b69383e7ec5" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>Set_ENV</name></member>
+      <member refid="dc/d85/a00736_1a66d72be8b9d8caeeb3e09258109d615c" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>Set_Input</name></member>
+      <member refid="dc/d85/a00736_1a66f64400af1328e04fb1b50da5ac9dfa" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>Set_Output</name></member>
+      <member refid="dc/d85/a00736_1ad53cbbde3e1c8d6703aa2a4be90b6459" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>Set_SIM</name></member>
+      <member refid="dc/d85/a00736_1a07beb59908edaa67b19fc3324c06b9c1" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>Set_Sumber</name></member>
+      <member refid="dc/d85/a00736_1a288b834f8b483958be715bc77558bf46" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>str</name></member>
+      <member refid="dc/d85/a00736_1af7b4446e14ffd3390a4fb4cdce9c1b35" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>strERR</name></member>
+      <member refid="dc/d85/a00736_1a2ee627880b1369c3d67452145367c081" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>temp</name></member>
+      <member refid="dc/d85/a00736_1a6e74b52322bd6ddf341c004ffe45b534" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>temp2</name></member>
+      <member refid="dc/d85/a00736_1aac87a1d12529cca1679913bd7deba0fe" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>timeout</name></member>
+      <member refid="dc/d85/a00736_1a09f8dfea028c23fa008ef20da1131af2" prot="private" virt="non-virtual"><scope>ProgressDialog</scope><name>ui</name></member>
+      <member refid="dc/d85/a00736_1a378cf14b2591856c81fd9d731a977d78" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>waiting_set</name></member>
+      <member refid="dc/d85/a00736_1a9af02f45723486b4dba4801633840a5d" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>write_FinishRead</name></member>
+      <member refid="dc/d85/a00736_1a0c6fa18fbb76a7a242d8c43e9ba44690" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>writeLogFile</name></member>
+      <member refid="dc/d85/a00736_1aa93aeada39567933b76e0267addcb88d" prot="public" virt="non-virtual"><scope>ProgressDialog</scope><name>~ProgressDialog</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

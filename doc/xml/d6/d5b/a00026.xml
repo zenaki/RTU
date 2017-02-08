@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.14">
+  <compounddef id="d6/d5b/a00026" kind="file" language="C++">
+    <compoundname>serial.h</compoundname>
+    <innerclass refid="d5/d39/a00676" prot="public">serial</innerclass>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>SERIAL_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SERIAL_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="df/da5/a00912" kindref="compound">util/utama.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="d4/d81/a00110" kindref="compound">view/settingsdialog.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;QMessageBox&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;QObject&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;QTimer&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;QDebug&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;QtSerialPort/QSerialPort&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;QtSerialPort/QSerialPortInfo&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="dc/dce/a00740" kindref="compound">SettingsDialog</ref>;</highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight></codeline>
+<codeline lineno="19" refid="d5/d39/a00676" refkind="compound"><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="d5/d39/a00676" kindref="compound">serial</ref></highlight></codeline>
+<codeline lineno="20"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="d5/d39/a00676_1a20d848af138f92c4604f0bcecce267e2" kindref="member">serial</ref>();</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"></highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/>int<sp/>serial_set;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/>int<sp/>serial_connect;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/>QString<sp/>str_data;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/>QStringList<sp/>val_data;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d5/d39/a00676_1aa63099330a47cf7e95966b6237043222" kindref="member">open_serial</ref>(QSerialPort<sp/>*SerialPort,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="d2/d94/a00716" kindref="compound">t_serial_settings</ref><sp/>*tSerial);</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d5/d39/a00676_1aad0cc20ddf875e131e4167b6cde088d3" kindref="member">close_serial</ref>(QSerialPort<sp/>*SerialPort);</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d5/d39/a00676_1a63b5f23e9319a9e5dbcd9fc46de9bbbc" kindref="member">write_data</ref>(QSerialPort<sp/>*port,<sp/>QByteArray<sp/>data);</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d5/d39/a00676_1aa01e3ceb6c7fa0a9a3c809c1120a4b50" kindref="member">write_parsing_env</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="d2/d94/a00716" kindref="compound">t_serial_settings</ref><sp/>*tSerial);</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d5/d39/a00676_1ad249d0dc623c51fb96bb3aa6485c1a6e" kindref="member">write_parsing_io</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="d2/d94/a00716" kindref="compound">t_serial_settings</ref><sp/>*tSerial);</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d5/d39/a00676_1aa686800c343de737a8554f3555a32e79" kindref="member">write_parsing_sim</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="d2/d94/a00716" kindref="compound">t_serial_settings</ref><sp/>*tSerial);</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d5/d39/a00676_1a4a2b34be15bb3819c4af87d519d4d5fd" kindref="member">write_parsing_src</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="d2/d94/a00716" kindref="compound">t_serial_settings</ref><sp/>*tSerial);</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d5/d39/a00676_1a7e798d571c1b22bc0f9b67a438dcd1b1" kindref="member">write_parsing_dat</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="d2/d94/a00716" kindref="compound">t_serial_settings</ref><sp/>*tSerial);</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d5/d39/a00676_1aff0f1e9759eab9e12020018b454a760a" kindref="member">read_parsing</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="d2/d94/a00716" kindref="compound">t_serial_settings</ref><sp/>*tSerial);</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/>slots:</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d5/d39/a00676_1a87972004eade6c0d400087ebc6cfee3c" kindref="member">read_data</ref>(QString<sp/>str_data,<sp/>QStringList<sp/>val_data);</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/>void<sp/>handleError(QSerialPort::SerialPortError<sp/>error);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight><highlight class="comment">//private<sp/>slots:</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/>void<sp/>handleBytesWritten(qint64<sp/>bytes);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/>void<sp/>handleTimeout();</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/>void<sp/>handleError(QSerialPort::SerialPortError<sp/>error);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight><highlight class="keyword">private</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="100" refid="d5/d39/a00676_1a340a620b6a94e5140ea9b572f7d07ec9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>QByteArray<sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d5/d39/a00676_1a340a620b6a94e5140ea9b572f7d07ec9" kindref="member">m_writeData</ref>;</highlight></codeline>
+<codeline lineno="104" refid="d5/d39/a00676_1ac1097dafd4f97ad36275e9031ca1c156" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>QTextStream<sp/><sp/><sp/><sp/><sp/><ref refid="d5/d39/a00676_1ac1097dafd4f97ad36275e9031ca1c156" kindref="member">m_standardOutput</ref>;</highlight></codeline>
+<codeline lineno="108" refid="d5/d39/a00676_1a891b39b669acd03bf2044ba85d2feda8" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>qint64<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d5/d39/a00676_1a891b39b669acd03bf2044ba85d2feda8" kindref="member">m_bytesWritten</ref>;</highlight></codeline>
+<codeline lineno="112" refid="d5/d39/a00676_1a35d5e61f4986106a994025d3e7c4b9ef" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>QTimer<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d5/d39/a00676_1a35d5e61f4986106a994025d3e7c4b9ef" kindref="member">m_timer</ref>;</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"></highlight></codeline>
+<codeline lineno="114"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"></highlight></codeline>
+<codeline lineno="116"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/>//<sp/>SERIAL_H</highlight></codeline>
+    </programlisting>
+    <location file="model/communication/serial.h"/>
+  </compounddef>
+</doxygen>

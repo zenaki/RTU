@@ -1,0 +1,305 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.14">
+  <compounddef id="d7/d46/a00002" kind="file" language="C++">
+    <compoundname>worker.cpp</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#include<sp/>&quot;<ref refid="dd/dad/a00005" kindref="compound">worker.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight></codeline>
+<codeline lineno="3" refid="df/d46/a00664_1a75e82634a8701d46c3f32c15de055316" refkind="member"><highlight class="normal"><ref refid="df/d46/a00664_1a75e82634a8701d46c3f32c15de055316" kindref="member">worker::worker</ref>()</highlight></codeline>
+<codeline lineno="4"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/>cancelSetting<sp/>=<sp/>false;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8" refid="df/d46/a00664_1a675d3c448211cf4d16256f545da1192d" refkind="member"><highlight class="normal">QString<sp/><ref refid="df/d46/a00664_1a675d3c448211cf4d16256f545da1192d" kindref="member">worker::newModule</ref>(QStandardItemModel<sp/>*tree,<sp/>QTreeView<sp/>*treeView,<sp/>QString<sp/>title){</highlight></codeline>
+<codeline lineno="9"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="d3/dda/a00712" kindref="compound">t_module</ref><sp/>tModule;</highlight></codeline>
+<codeline lineno="10"><highlight class="normal"><sp/><sp/><sp/><sp/>QString<sp/>address;</highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"><sp/><sp/><sp/><sp/>address.sprintf(</highlight><highlight class="stringliteral">&quot;.RTUdata/module/m_%s.dbe&quot;</highlight><highlight class="normal">,<sp/>title.toUtf8().data());</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="df/d46/a00664_1ad311e6c11f36ec0be84c8f0081f581d6" kindref="member">mod</ref>.<ref refid="df/d7d/a00696_1abf93b635dfcbab36f45776fd9a065210" kindref="member">read_module</ref>(&amp;tModule,<sp/>address);</highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"><sp/><sp/><sp/><sp/>QString<sp/>modules;</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"><sp/><sp/><sp/><sp/>modules.sprintf(</highlight><highlight class="stringliteral">&quot;%s<sp/>[%s]&quot;</highlight><highlight class="normal">,<sp/>tModule.<ref refid="d3/dda/a00712_1a1a3a1f08db562e61771132bfa57b5560" kindref="member">module_name</ref>,<sp/>tModule.<ref refid="d3/dda/a00712_1a222e0352868ece4123231625b754b683" kindref="member">serial_number</ref>);</highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/>modules.sprintf(&quot;m_%s.dbe&quot;,<sp/>tModule.module_name);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="df/d46/a00664_1a90fd00b359cb3a3ca156e506e1392766" kindref="member">mTree</ref>.<ref refid="d6/dd3/a00688_1a9745e117b078f81fca168e8b30301f5b" kindref="member">appendItem</ref>(tree,<sp/>treeView,<sp/>modules);</highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight></codeline>
+<codeline lineno="21"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>modules;</highlight></codeline>
+<codeline lineno="22"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="24" refid="df/d46/a00664_1a146b3f72d09d3c4a5cc7b528d64a7300" refkind="member"><highlight class="normal">QString<sp/><ref refid="df/d46/a00664_1a146b3f72d09d3c4a5cc7b528d64a7300" kindref="member">worker::editModule</ref>(QStandardItemModel<sp/>*tree,<sp/>QTreeView<sp/>*treeView,<sp/>QString<sp/>title){</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="d3/dda/a00712" kindref="compound">t_module</ref><sp/>tModule;</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"><sp/><sp/><sp/><sp/>QString<sp/>address;</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"><sp/><sp/><sp/><sp/>address.sprintf(</highlight><highlight class="stringliteral">&quot;.RTUdata/module/m_%s.dbe&quot;</highlight><highlight class="normal">,<sp/>title.toUtf8().data());</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="df/d46/a00664_1ad311e6c11f36ec0be84c8f0081f581d6" kindref="member">mod</ref>.<ref refid="df/d7d/a00696_1abf93b635dfcbab36f45776fd9a065210" kindref="member">read_module</ref>(&amp;tModule,<sp/>address);</highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"><sp/><sp/><sp/><sp/>QString<sp/>modules;</highlight></codeline>
+<codeline lineno="33"><highlight class="normal"><sp/><sp/><sp/><sp/>modules.sprintf(</highlight><highlight class="stringliteral">&quot;%s&quot;</highlight><highlight class="normal">,<sp/>tModule.<ref refid="d3/dda/a00712_1a1a3a1f08db562e61771132bfa57b5560" kindref="member">module_name</ref>);</highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/>modules.sprintf(&quot;m_%s.dbe&quot;,<sp/>tModule.module_name);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="df/d46/a00664_1a90fd00b359cb3a3ca156e506e1392766" kindref="member">mTree</ref>.<ref refid="d6/dd3/a00688_1a9745e117b078f81fca168e8b30301f5b" kindref="member">appendItem</ref>(tree,<sp/>treeView,<sp/>modules);</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>modules;</highlight></codeline>
+<codeline lineno="38"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40" refid="df/d46/a00664_1ab0caf92a819a0b75ddf5e5a4115bed4c" refkind="member"><highlight class="normal">QString<sp/><ref refid="df/d46/a00664_1ab0caf92a819a0b75ddf5e5a4115bed4c" kindref="member">worker::loadModule</ref>(QStandardItemModel<sp/>*tree,<sp/>QTreeView<sp/>*treeView,<sp/>QString<sp/>address,<sp/>QString<sp/>NewName){</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="d3/dda/a00712" kindref="compound">t_module</ref><sp/>tModule;</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="df/d46/a00664_1ad311e6c11f36ec0be84c8f0081f581d6" kindref="member">mod</ref>.<ref refid="df/d7d/a00696_1abf93b635dfcbab36f45776fd9a065210" kindref="member">read_module</ref>(&amp;tModule,<sp/>address);</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/><sp/><sp/>tModule.<ref refid="d3/dda/a00712_1ae7e4ee9efb22215cdfe2a6a0dbb91fa9" kindref="member">flag_active</ref><sp/>=<sp/>1;</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!NewName.isEmpty())<sp/>{</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>strcpy(tModule.<ref refid="d3/dda/a00712_1a1a3a1f08db562e61771132bfa57b5560" kindref="member">module_name</ref>,<sp/>NewName.toLatin1());</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="df/d46/a00664_1ad311e6c11f36ec0be84c8f0081f581d6" kindref="member">mod</ref>.<ref refid="df/d7d/a00696_1a479713e817258f4cba3f0b5ea7800c11" kindref="member">write_module</ref>(&amp;tModule);</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="d3/db4/a00684" kindref="compound">cryp</ref><sp/>code;<sp/>code.<ref refid="d3/db4/a00684_1a7b21ef461100447ea7953cf5fc4b1fac" kindref="member">encryp</ref>(address);</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/>QString<sp/>modules;</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/>modules.sprintf(</highlight><highlight class="stringliteral">&quot;%s<sp/>[%s]&quot;</highlight><highlight class="normal">,<sp/>tModule.<ref refid="d3/dda/a00712_1a1a3a1f08db562e61771132bfa57b5560" kindref="member">module_name</ref>,<sp/>tModule.<ref refid="d3/dda/a00712_1a222e0352868ece4123231625b754b683" kindref="member">serial_number</ref>);</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/>modules.sprintf(&quot;m_%s.dbe&quot;,<sp/>tModule.module_name);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="df/d46/a00664_1a90fd00b359cb3a3ca156e506e1392766" kindref="member">mTree</ref>.<ref refid="d6/dd3/a00688_1a9745e117b078f81fca168e8b30301f5b" kindref="member">appendItem</ref>(tree,<sp/>treeView,<sp/>modules);</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>modules;</highlight></codeline>
+<codeline lineno="59"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight></codeline>
+<codeline lineno="61" refid="df/d46/a00664_1ad39143a4d442da14e8603326426dc6ed" refkind="member"><highlight class="normal">QString<sp/><ref refid="df/d46/a00664_1ad39143a4d442da14e8603326426dc6ed" kindref="member">worker::checkModule</ref>(QString<sp/>address){</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="d3/dda/a00712" kindref="compound">t_module</ref><sp/>tModule;</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="df/d46/a00664_1ad311e6c11f36ec0be84c8f0081f581d6" kindref="member">mod</ref>.<ref refid="df/d7d/a00696_1abf93b635dfcbab36f45776fd9a065210" kindref="member">read_module</ref>(&amp;tModule,<sp/>address);</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/>QString<sp/>modules;</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/>modules.sprintf(</highlight><highlight class="stringliteral">&quot;m_%s.dbe&quot;</highlight><highlight class="normal">,<sp/>tModule.<ref refid="d3/dda/a00712_1a1a3a1f08db562e61771132bfa57b5560" kindref="member">module_name</ref>);</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>modules;</highlight></codeline>
+<codeline lineno="69"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight></codeline>
+<codeline lineno="71" refid="df/d46/a00664_1aabf3d0d56253242035a6bb1de88bd1a4" refkind="member"><highlight class="normal">QString<sp/><ref refid="df/d46/a00664_1aabf3d0d56253242035a6bb1de88bd1a4" kindref="member">worker::check_statusModule</ref>(QString<sp/>address){</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="d3/dda/a00712" kindref="compound">t_module</ref><sp/>tModule;</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><sp/><sp/>address.sprintf(</highlight><highlight class="stringliteral">&quot;.RTUdata/module/%s&quot;</highlight><highlight class="normal">,<sp/>address.toUtf8().data());</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="df/d46/a00664_1ad311e6c11f36ec0be84c8f0081f581d6" kindref="member">mod</ref>.<ref refid="df/d7d/a00696_1abf93b635dfcbab36f45776fd9a065210" kindref="member">read_module</ref>(&amp;tModule,<sp/>address);</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/>QString<sp/>modules;</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(tModule.<ref refid="d3/dda/a00712_1ae7e4ee9efb22215cdfe2a6a0dbb91fa9" kindref="member">flag_active</ref>){</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>modules.sprintf(</highlight><highlight class="stringliteral">&quot;m_%s.dbe&quot;</highlight><highlight class="normal">,<sp/>tModule.<ref refid="d3/dda/a00712_1a1a3a1f08db562e61771132bfa57b5560" kindref="member">module_name</ref>);</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>modules;</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;none&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="84"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight></codeline>
+<codeline lineno="86" refid="df/d46/a00664_1a3eea44b485336779cd517c3e248ad2dd" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="df/d46/a00664_1a3eea44b485336779cd517c3e248ad2dd" kindref="member">worker::showModule</ref>(QWidget<sp/>*parent,<sp/>QMdiArea<sp/>*mdiArea,<sp/>QString<sp/><ref refid="df/d7d/a00696" kindref="compound">module</ref>,<sp/>QSerialPort<sp/>*SerialPort){</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="d3/dda/a00712" kindref="compound">t_module</ref><sp/>tModule;</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><sp/><sp/>QString<sp/>address;</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/>address.sprintf(</highlight><highlight class="stringliteral">&quot;.RTUdata/module/m_%s.dbe&quot;</highlight><highlight class="normal">,<sp/>module.toUtf8().data());</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="df/d46/a00664_1ad311e6c11f36ec0be84c8f0081f581d6" kindref="member">mod</ref>.<ref refid="df/d7d/a00696_1abf93b635dfcbab36f45776fd9a065210" kindref="member">read_module</ref>(&amp;tModule,<sp/>address);</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="d0/d72/a00724" kindref="compound">formModule</ref><sp/>*fModule;</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/><sp/><sp/>fModule<sp/>=<sp/></highlight><highlight class="keyword">new</highlight><highlight class="normal"><sp/><ref refid="d0/d72/a00724" kindref="compound">formModule</ref>(parent,<sp/>address,<sp/>SerialPort);</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><sp/><sp/>fModule-&gt;setModal(</highlight><highlight class="keyword">true</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/><sp/><sp/>fModule-&gt;setWindowTitle(tModule.<ref refid="d3/dda/a00712_1a1a3a1f08db562e61771132bfa57b5560" kindref="member">module_name</ref>);</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/>fModule-&gt;setFixedWidth(800);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/>fModule-&gt;setFixedHeight(600);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/><sp/><sp/>fModule-&gt;setMaximumSize(mdiArea-&gt;maximumSize());</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"></highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/><sp/><sp/>mdiArea-&gt;addSubWindow(fModule,<sp/>0);</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/>fModule-&gt;exec();</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"></highlight></codeline>
+<codeline lineno="108" refid="df/d46/a00664_1ab2c91c147f68ccb7c2e868e93b6d6b17" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="df/d46/a00664_1ab2c91c147f68ccb7c2e868e93b6d6b17" kindref="member">worker::checkIfmodule</ref>(QString<sp/>name){</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>cek<sp/>=<sp/></highlight><highlight class="keyword">false</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/>QDir<sp/>path(</highlight><highlight class="stringliteral">&quot;.RTUdata/module&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/>QStringList<sp/>files<sp/>=<sp/>path.entryList(QDir::Files);</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"></highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/><sp/><sp/>QString<sp/>currFiles;</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/><sp/><sp/>currFiles.sprintf(</highlight><highlight class="stringliteral">&quot;m_%s.dbe&quot;</highlight><highlight class="normal">,<sp/>name.toUtf8().data());</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"></highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>i<sp/>=<sp/>0;<sp/>i<sp/>&lt;<sp/>files.count();<sp/>i++){</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(currFiles<sp/>==<sp/>QString(files.at(i)))<sp/>cek<sp/>=<sp/></highlight><highlight class="keyword">true</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"></highlight></codeline>
+<codeline lineno="120"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/>std::string<sp/>sub<sp/>=<sp/>name.toStdString();</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="121"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/>ext<sp/>=<sp/>QString::fromStdString(sub.substr(index_max-3,<sp/>index_max));</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"></highlight></codeline>
+<codeline lineno="123"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/>if(ext<sp/>==<sp/>&quot;.dbe&quot;)<sp/>return<sp/>true;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="124"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/>else<sp/>return<sp/>false;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="125"><highlight class="normal"></highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>cek;</highlight></codeline>
+<codeline lineno="127"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"></highlight></codeline>
+<codeline lineno="129" refid="df/d46/a00664_1a5c7b858b7b6cdc0fa6c214a2f4185649" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="df/d46/a00664_1a5c7b858b7b6cdc0fa6c214a2f4185649" kindref="member">worker::state_of_module</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>num,<sp/>QString<sp/><ref refid="df/d46/a00664_1a675d3c448211cf4d16256f545da1192d" kindref="member">newModule</ref>,<sp/>QString<sp/>*existModule){</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>cek;</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/>ceknt<sp/>=<sp/>num+1;</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/>QString<sp/>currModule;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="133"><highlight class="normal"><sp/><sp/><sp/><sp/>existModule-&gt;prepend(</highlight><highlight class="stringliteral">&quot;m_&quot;</highlight><highlight class="normal">).append(</highlight><highlight class="stringliteral">&quot;.dbe&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="134"><highlight class="normal"></highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>n<sp/>=<sp/>0;<sp/>n<sp/>&lt;<sp/>ceknt;<sp/>n++){</highlight></codeline>
+<codeline lineno="136"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>currModule<sp/>=<sp/>existModule-&gt;at(n);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="137"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>currModule.prepend(&quot;m_&quot;).append(&quot;.dbe&quot;);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(newModule<sp/>!=<sp/>existModule[n]){</highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>cek<sp/>=<sp/></highlight><highlight class="keyword">true</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>cek<sp/>=<sp/></highlight><highlight class="keyword">false</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>cek;</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="146"><highlight class="normal"></highlight></codeline>
+<codeline lineno="147"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>cek;</highlight></codeline>
+<codeline lineno="148"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="149"><highlight class="normal"></highlight></codeline>
+<codeline lineno="150" refid="df/d46/a00664_1abc9292de322bb9e2785bf6be5ed2ed66" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="df/d46/a00664_1abc9292de322bb9e2785bf6be5ed2ed66" kindref="member">worker::Request_ENV</ref>(QSerialPort<sp/>*Serial_Com,<sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>timeout)</highlight></codeline>
+<codeline lineno="151"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="152"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/>QString<sp/>Request<sp/>=<sp/>&quot;hmi_cek_env\r\n&quot;;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="153"><highlight class="normal"><sp/><sp/><sp/><sp/>QString<sp/>Request<sp/>=<sp/></highlight><highlight class="stringliteral">&quot;0000&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="154"><highlight class="normal"><sp/><sp/><sp/><sp/>QString<sp/>Desc<sp/>=<sp/></highlight><highlight class="stringliteral">&quot;Request<sp/>Environment<sp/>..&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="155"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="df/d46/a00664_1aa5975c9c48bf0b3afe4fab7a8b87804b" kindref="member">serial_write</ref>(Serial_Com,<sp/>Request,<sp/>WAIT_WRITE);</highlight></codeline>
+<codeline lineno="156"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/>Serial_Com-&gt;write(Request.toUtf8().data(),<sp/>qstrlen(Request.toUtf8().data()));</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="157"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/>Serial_Com-&gt;waitForBytesWritten(WAIT_WRITE);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="158"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!timeout)<sp/>{timeout<sp/>=<sp/>this-&gt;<ref refid="df/d46/a00664_1aa9884649459db4de99c406e41e540731" kindref="member">waiting_set</ref>(timeout);}</highlight></codeline>
+<codeline lineno="159"><highlight class="normal"><sp/><sp/><sp/><sp/>this-&gt;<ref refid="df/d46/a00664_1a0c6fa18fbb76a7a242d8c43e9ba44690" kindref="member">writeLogFile</ref>(Request,<sp/>this-&gt;<ref refid="df/d46/a00664_1abafa5deaf1c8e63cbffeb4bc3d07695b" kindref="member">read_flagERR</ref>(),<sp/>this-&gt;<ref refid="df/d46/a00664_1a104d21de6e310be9324ad641b5860df4" kindref="member">read_strERR</ref>(),<sp/>timeout);</highlight></codeline>
+<codeline lineno="160"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(timeout)<sp/>{</highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>timeout;}</highlight></codeline>
+<codeline lineno="161"><highlight class="normal"></highlight></codeline>
+<codeline lineno="162"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>timeout;</highlight></codeline>
+<codeline lineno="163"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"></highlight></codeline>
+<codeline lineno="165" refid="df/d46/a00664_1aadc4540eac008b25ebb9ca83a91fe94d" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="df/d46/a00664_1aadc4540eac008b25ebb9ca83a91fe94d" kindref="member">worker::delay</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>ms)</highlight></codeline>
+<codeline lineno="166"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="167"><highlight class="normal"><sp/><sp/><sp/><sp/>QTime<sp/>dieTime<sp/>=<sp/>QTime::currentTime().addMSecs(ms);</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>(QTime::currentTime()<sp/>&lt;<sp/>dieTime)<sp/>{</highlight></codeline>
+<codeline lineno="169"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>QCoreApplication::processEvents(QEventLoop::AllEvents,<sp/>100);</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="171"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="172"><highlight class="normal"></highlight></codeline>
+<codeline lineno="173" refid="df/d46/a00664_1aa5975c9c48bf0b3afe4fab7a8b87804b" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="df/d46/a00664_1aa5975c9c48bf0b3afe4fab7a8b87804b" kindref="member">worker::serial_write</ref>(QSerialPort<sp/>*Serial_Com,<sp/>QString<sp/><ref refid="d3/dda/a00712_1a70b1059107816ee3dbe8f1032e949401" kindref="member">data</ref>,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>d_c)</highlight></codeline>
+<codeline lineno="174"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="175"><highlight class="normal"><sp/><sp/><sp/><sp/>QString<sp/>temp;</highlight></codeline>
+<codeline lineno="176"><highlight class="normal"><sp/><sp/><sp/><sp/>data.remove(</highlight><highlight class="stringliteral">&quot;\r\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="177"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>i<sp/>=<sp/>0;<sp/>i<sp/>&lt;<sp/>data.length();<sp/>i++)<sp/>{</highlight></codeline>
+<codeline lineno="178"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>temp<sp/>=<sp/>QChar(data.at(i));</highlight></codeline>
+<codeline lineno="179"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>Serial_Com-&gt;write(temp.toUtf8().data());</highlight></codeline>
+<codeline lineno="180"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="df/d46/a00664_1aadc4540eac008b25ebb9ca83a91fe94d" kindref="member">delay</ref>(d_c);</highlight></codeline>
+<codeline lineno="181"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="182"><highlight class="normal"><sp/><sp/><sp/><sp/>Serial_Com-&gt;write(</highlight><highlight class="stringliteral">&quot;\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="183"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="184"><highlight class="normal"></highlight></codeline>
+<codeline lineno="185" refid="df/d46/a00664_1aa9884649459db4de99c406e41e540731" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="df/d46/a00664_1aa9884649459db4de99c406e41e540731" kindref="member">worker::waiting_set</ref>(</highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>timeout)</highlight></codeline>
+<codeline lineno="186"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="187"><highlight class="normal"><sp/><sp/><sp/><sp/>QTime<sp/>dieTime<sp/>=<sp/>QTime::currentTime().addMSecs(TIMEOUT);</highlight></codeline>
+<codeline lineno="188"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>(!this-&gt;<ref refid="df/d46/a00664_1aeb73e147971ca322895a53d574bc043b" kindref="member">read_FinishRead</ref>())<sp/>{</highlight></codeline>
+<codeline lineno="189"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>QCoreApplication::processEvents(QEventLoop::AllEvents,<sp/>100);</highlight></codeline>
+<codeline lineno="190"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(this-&gt;<ref refid="df/d46/a00664_1abafa5deaf1c8e63cbffeb4bc3d07695b" kindref="member">read_flagERR</ref>()<sp/>==<sp/>1<sp/>&amp;&amp;<sp/>!timeout)<sp/>{</highlight></codeline>
+<codeline lineno="191"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>timeout<sp/>=<sp/></highlight><highlight class="keyword">false</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="192"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="194"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(QTime::currentTime()<sp/>&gt;=<sp/>dieTime<sp/>&amp;&amp;<sp/>!timeout)<sp/>{</highlight></codeline>
+<codeline lineno="195"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>timeout<sp/>=<sp/></highlight><highlight class="keyword">true</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="196"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="197"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="198"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="199"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>timeout;</highlight></codeline>
+<codeline lineno="200"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="201"><highlight class="normal"></highlight></codeline>
+<codeline lineno="202" refid="df/d46/a00664_1a9af02f45723486b4dba4801633840a5d" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="df/d46/a00664_1a9af02f45723486b4dba4801633840a5d" kindref="member">worker::write_FinishRead</ref>(</highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>FinishRead,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>cekErr,<sp/>QString<sp/>strErr)</highlight></codeline>
+<codeline lineno="203"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="204"><highlight class="normal"><sp/><sp/><sp/><sp/>QString<sp/>pth;</highlight></codeline>
+<codeline lineno="205"><highlight class="normal"><sp/><sp/><sp/><sp/>pth<sp/>=<sp/>PATH_SERIAL_PARSING;</highlight></codeline>
+<codeline lineno="206"><highlight class="normal"><sp/><sp/><sp/><sp/>QSettings<sp/>sett(pth,<sp/>QSettings::IniFormat);</highlight></codeline>
+<codeline lineno="207"><highlight class="normal"></highlight></codeline>
+<codeline lineno="208"><highlight class="normal"><sp/><sp/><sp/><sp/>sett.setValue(</highlight><highlight class="stringliteral">&quot;FINISH_READ&quot;</highlight><highlight class="normal">,<sp/>FinishRead);</highlight></codeline>
+<codeline lineno="209"><highlight class="normal"><sp/><sp/><sp/><sp/>sett.setValue(</highlight><highlight class="stringliteral">&quot;ERROR_FLAG&quot;</highlight><highlight class="normal">,<sp/>cekErr);</highlight></codeline>
+<codeline lineno="210"><highlight class="normal"><sp/><sp/><sp/><sp/>sett.setValue(</highlight><highlight class="stringliteral">&quot;ERROR_STRING&quot;</highlight><highlight class="normal">,<sp/>strErr);</highlight></codeline>
+<codeline lineno="211"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="212"><highlight class="normal"></highlight></codeline>
+<codeline lineno="213" refid="df/d46/a00664_1aeb73e147971ca322895a53d574bc043b" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="df/d46/a00664_1aeb73e147971ca322895a53d574bc043b" kindref="member">worker::read_FinishRead</ref>()</highlight></codeline>
+<codeline lineno="214"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="215"><highlight class="normal"><sp/><sp/><sp/><sp/>QString<sp/>pth;</highlight></codeline>
+<codeline lineno="216"><highlight class="normal"><sp/><sp/><sp/><sp/>pth<sp/>=<sp/>PATH_SERIAL_PARSING;</highlight></codeline>
+<codeline lineno="217"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="d3/db4/a00684" kindref="compound">cryp</ref><sp/>code;<sp/>code.<ref refid="d3/db4/a00684_1a1016e41af566fdaf416506089cd1f5c1" kindref="member">decryp</ref>(pth);</highlight></codeline>
+<codeline lineno="218"><highlight class="normal"><sp/><sp/><sp/><sp/>QSettings<sp/>sett(pth,<sp/>QSettings::IniFormat);</highlight></codeline>
+<codeline lineno="219"><highlight class="normal"></highlight></codeline>
+<codeline lineno="220"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>FinishRead<sp/>=<sp/>sett.value(</highlight><highlight class="stringliteral">&quot;FINISH_READ&quot;</highlight><highlight class="normal">).toBool();</highlight></codeline>
+<codeline lineno="221"><highlight class="normal"></highlight></codeline>
+<codeline lineno="222"><highlight class="normal"><sp/><sp/><sp/><sp/>code.<ref refid="d3/db4/a00684_1a7b21ef461100447ea7953cf5fc4b1fac" kindref="member">encryp</ref>(pth);</highlight></codeline>
+<codeline lineno="223"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>FinishRead;</highlight></codeline>
+<codeline lineno="224"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="225"><highlight class="normal"></highlight></codeline>
+<codeline lineno="226" refid="df/d46/a00664_1abafa5deaf1c8e63cbffeb4bc3d07695b" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="df/d46/a00664_1abafa5deaf1c8e63cbffeb4bc3d07695b" kindref="member">worker::read_flagERR</ref>()</highlight></codeline>
+<codeline lineno="227"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="228"><highlight class="normal"><sp/><sp/><sp/><sp/>QString<sp/>pth;</highlight></codeline>
+<codeline lineno="229"><highlight class="normal"><sp/><sp/><sp/><sp/>pth<sp/>=<sp/>PATH_SERIAL_PARSING;</highlight></codeline>
+<codeline lineno="230"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="d3/db4/a00684" kindref="compound">cryp</ref><sp/>code;<sp/>code.<ref refid="d3/db4/a00684_1a1016e41af566fdaf416506089cd1f5c1" kindref="member">decryp</ref>(pth);</highlight></codeline>
+<codeline lineno="231"><highlight class="normal"><sp/><sp/><sp/><sp/>QSettings<sp/>sett(pth,<sp/>QSettings::IniFormat);</highlight></codeline>
+<codeline lineno="232"><highlight class="normal"></highlight></codeline>
+<codeline lineno="233"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>flagERR<sp/>=<sp/>sett.value(</highlight><highlight class="stringliteral">&quot;ERROR_FLAG&quot;</highlight><highlight class="normal">).toInt();</highlight></codeline>
+<codeline lineno="234"><highlight class="normal"></highlight></codeline>
+<codeline lineno="235"><highlight class="normal"><sp/><sp/><sp/><sp/>code.<ref refid="d3/db4/a00684_1a7b21ef461100447ea7953cf5fc4b1fac" kindref="member">encryp</ref>(pth);</highlight></codeline>
+<codeline lineno="236"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>flagERR;</highlight></codeline>
+<codeline lineno="237"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="238"><highlight class="normal"></highlight></codeline>
+<codeline lineno="239" refid="df/d46/a00664_1a104d21de6e310be9324ad641b5860df4" refkind="member"><highlight class="normal">QString<sp/><ref refid="df/d46/a00664_1a104d21de6e310be9324ad641b5860df4" kindref="member">worker::read_strERR</ref>()</highlight></codeline>
+<codeline lineno="240"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="241"><highlight class="normal"><sp/><sp/><sp/><sp/>QString<sp/>pth;</highlight></codeline>
+<codeline lineno="242"><highlight class="normal"><sp/><sp/><sp/><sp/>pth<sp/>=<sp/>PATH_SERIAL_PARSING;</highlight></codeline>
+<codeline lineno="243"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="d3/db4/a00684" kindref="compound">cryp</ref><sp/>code;<sp/>code.<ref refid="d3/db4/a00684_1a1016e41af566fdaf416506089cd1f5c1" kindref="member">decryp</ref>(pth);</highlight></codeline>
+<codeline lineno="244"><highlight class="normal"><sp/><sp/><sp/><sp/>QSettings<sp/>sett(pth,<sp/>QSettings::IniFormat);</highlight></codeline>
+<codeline lineno="245"><highlight class="normal"></highlight></codeline>
+<codeline lineno="246"><highlight class="normal"><sp/><sp/><sp/><sp/>QString<sp/>strERR<sp/>=<sp/>sett.value(</highlight><highlight class="stringliteral">&quot;ERROR_STRING&quot;</highlight><highlight class="normal">).toString();</highlight></codeline>
+<codeline lineno="247"><highlight class="normal"></highlight></codeline>
+<codeline lineno="248"><highlight class="normal"><sp/><sp/><sp/><sp/>code.<ref refid="d3/db4/a00684_1a7b21ef461100447ea7953cf5fc4b1fac" kindref="member">encryp</ref>(pth);</highlight></codeline>
+<codeline lineno="249"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>strERR;</highlight></codeline>
+<codeline lineno="250"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="251"><highlight class="normal"></highlight></codeline>
+<codeline lineno="252" refid="df/d46/a00664_1a0c6fa18fbb76a7a242d8c43e9ba44690" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="df/d46/a00664_1a0c6fa18fbb76a7a242d8c43e9ba44690" kindref="member">worker::writeLogFile</ref>(QString<sp/>log,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>flagERR,<sp/>QString<sp/>strERR,<sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>timeout)</highlight></codeline>
+<codeline lineno="253"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="254"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Try<sp/>and<sp/>open<sp/>a<sp/>file<sp/>for<sp/>output<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="255"><highlight class="normal"><sp/><sp/><sp/><sp/>QString<sp/>outputFilename<sp/>=<sp/>PATH_LOG;</highlight></codeline>
+<codeline lineno="256"><highlight class="normal"><sp/><sp/><sp/><sp/>QFile<sp/>outputFile(outputFilename);</highlight></codeline>
+<codeline lineno="257"><highlight class="normal"><sp/><sp/><sp/><sp/>outputFile.open(QIODevice::Append<sp/>|<sp/>QIODevice::Text);</highlight></codeline>
+<codeline lineno="258"><highlight class="normal"></highlight></codeline>
+<codeline lineno="259"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Check<sp/>it<sp/>opened<sp/>OK<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="260"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(!outputFile.isOpen()){</highlight></codeline>
+<codeline lineno="261"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>qDebug()<sp/>&lt;&lt;<sp/></highlight><highlight class="stringliteral">&quot;-<sp/>Error,<sp/>unable<sp/>to<sp/>open&quot;</highlight><highlight class="normal"><sp/>&lt;&lt;<sp/>outputFilename<sp/>&lt;&lt;<sp/></highlight><highlight class="stringliteral">&quot;for<sp/>output&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="262"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="263"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>log.remove(</highlight><highlight class="stringliteral">&quot;\r&quot;</highlight><highlight class="normal">).remove(</highlight><highlight class="stringliteral">&quot;\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="264"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(log.length()<sp/>&lt;<sp/>100)<sp/>{</highlight></codeline>
+<codeline lineno="265"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>i<sp/>=<sp/>log.length();<sp/>i<sp/>&lt;<sp/>100;<sp/>i++)<sp/>{</highlight></codeline>
+<codeline lineno="266"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>log.append(</highlight><highlight class="stringliteral">&quot;<sp/>&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="267"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="268"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="269"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>log.append(</highlight><highlight class="stringliteral">&quot;|&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="270"><highlight class="normal"></highlight></codeline>
+<codeline lineno="271"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>QString<sp/>Flag;</highlight></codeline>
+<codeline lineno="272"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>(flagERR<sp/>==<sp/>1)<sp/>{Flag<sp/>=<sp/></highlight><highlight class="stringliteral">&quot;ERROR|&quot;</highlight><highlight class="normal">;}</highlight></codeline>
+<codeline lineno="273"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(flagERR<sp/>==<sp/>0)<sp/>{Flag<sp/>=<sp/></highlight><highlight class="stringliteral">&quot;OK<sp/><sp/><sp/>|&quot;</highlight><highlight class="normal">;}</highlight></codeline>
+<codeline lineno="274"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{Flag<sp/>=<sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/><sp/><sp/><sp/>|&quot;</highlight><highlight class="normal">;}</highlight></codeline>
+<codeline lineno="275"><highlight class="normal"></highlight></codeline>
+<codeline lineno="276"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>QString<sp/>TimeOut;</highlight></codeline>
+<codeline lineno="277"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>(timeout)<sp/>{TimeOut<sp/>=<sp/></highlight><highlight class="stringliteral">&quot;TIMEOUT|&quot;</highlight><highlight class="normal">;}</highlight></codeline>
+<codeline lineno="278"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{TimeOut<sp/>=<sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/><sp/><sp/><sp/><sp/><sp/>|&quot;</highlight><highlight class="normal">;}</highlight></codeline>
+<codeline lineno="279"><highlight class="normal"></highlight></codeline>
+<codeline lineno="280"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Point<sp/>a<sp/>QTextStream<sp/>object<sp/>at<sp/>the<sp/>file<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="281"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>QTextStream<sp/>outStream(&amp;outputFile);</highlight></codeline>
+<codeline lineno="282"><highlight class="normal"></highlight></codeline>
+<codeline lineno="283"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Write<sp/>the<sp/>line<sp/>to<sp/>the<sp/>file<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="284"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>outStream<sp/>&lt;&lt;<sp/>QTime::currentTime().toString(</highlight><highlight class="stringliteral">&quot;hh:mm:ss.zzz&quot;</highlight><highlight class="normal">)<sp/>&lt;&lt;<sp/></highlight><highlight class="stringliteral">&quot;<sp/>|<sp/>&quot;</highlight><highlight class="normal"><sp/>&lt;&lt;<sp/>log<sp/>&lt;&lt;<sp/>Flag<sp/>&lt;&lt;<sp/>TimeOut<sp/>&lt;&lt;<sp/>strERR&lt;&lt;<sp/></highlight><highlight class="stringliteral">&quot;\r\n&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="285"><highlight class="normal"></highlight></codeline>
+<codeline lineno="286"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Close<sp/>the<sp/>file<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="287"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>outputFile.close();</highlight></codeline>
+<codeline lineno="288"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="289"><highlight class="normal"><sp/><sp/><sp/><sp/>this-&gt;<ref refid="df/d46/a00664_1a9af02f45723486b4dba4801633840a5d" kindref="member">write_FinishRead</ref>(</highlight><highlight class="keyword">false</highlight><highlight class="normal">,2,</highlight><highlight class="stringliteral">&quot;&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="290"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="d3/db4/a00684" kindref="compound">cryp</ref><sp/>code;<sp/>code.<ref refid="d3/db4/a00684_1a7b21ef461100447ea7953cf5fc4b1fac" kindref="member">encryp</ref>(PATH_SERIAL_PARSING);</highlight></codeline>
+<codeline lineno="291"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="292"><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="controller/worker.cpp"/>
+  </compounddef>
+</doxygen>

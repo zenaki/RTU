@@ -1,0 +1,189 @@
+.TH "QLightBoxWidget" 3 "Rabu 8 Februari 2017" "Version 1.0.2-4" "Sarasvati" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+QLightBoxWidget \- overlap class  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <qlightboxwidget\&.h>\fP
+.PP
+Mewarisi QWidget\&.
+.SS "Fungsi Anggota Publik"
+.SS "Fungsi Anggota Diproteksi"
+.SS "Fungsi Anggota Privat"
+.SS "Atribut Privat"
+.SH "Keterangan Lengkap"
+.PP 
+overlap class 
+.SH "Dokumentasi Konstruktor & Destruktor"
+.PP 
+.SS "\fBQLightBoxWidget\fP (QWidget* _parent, bool _folowToHeadWidget = \fCfalse\fP)\fC [explicit]\fP"
+
+.PP
+.nf
+9                                                                           :
+10     QWidget(_parent),
+11     m_isInUpdateSelf(false)
+12 {
+13     //
+14     // The parent widget has to be necessarily installed
+15     //
+16     Q_ASSERT_X(_parent, "", Q_FUNC_INFO);
+17 
+18     //
+19     // If necessary, parents do the most "senior" widget
+20     //
+21     if (_folowToHeadWidget) {
+22         while (_parent->parentWidget() != 0) {
+23             _parent = _parent->parentWidget();
+24         }
+25         setParent(_parent);
+26     }
+27 
+28     //
+29     // Follow the events of the parent of the widget to
+30     // be able to redraw it, when you change the size, etc\&.
+31     //
+32     _parent->installEventFilter(this);
+33 
+34     //
+35     // hide the widget
+36     //
+37     setVisible(false);
+38 }
+.fi
+.SH "Dokumentasi Anggota: Fungsi"
+.PP 
+.SS "bool eventFilter (QObject* _object, QEvent* _event)\fC [protected]\fP"
+
+.PP
+It is overridden to track parent widget events\&. 
+.PP
+.nf
+41 {
+42     //
+43     // Widgets should always be the last child,
+44     // to overlap the rest of widgets when displayed
+45     //
+46     if (_event->type() == QEvent::ChildAdded) {
+47         QChildEvent* childEvent = dynamic_cast<QChildEvent*>(_event);
+48         if (childEvent->child() != this) {
+49             QWidget* parent = parentWidget();
+50 //          setParent(0);
+51             setParent(parent);
+52         }
+53     }
+54 
+55     //
+56     // If you change the size of the parent widget,
+57     // you must repaint itself
+58     //
+59     if (isVisible()
+60         && _event->type() == QEvent::Resize) {
+61         updateSelf();
+62     }
+63     return QWidget::eventFilter(_object, _event);
+64 }
+.fi
+.SS "QPixmap grabParentWidgetPixmap () const\fC [private]\fP"
+
+.PP
+Reload background image\&. 
+.PP
+.nf
+119 {
+120     QPixmap parentWidgetPixmap;
+121 
+122 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+123     parentWidgetPixmap = parentWidget()->grab();
+124 #else
+125     parentWidgetPixmap = QPixmap::grabWidget(parentWidget());
+126 #endif
+127 
+128     return parentWidgetPixmap;
+129 }
+.fi
+.SS "void paintEvent (QPaintEvent* _event)\fC [protected]\fP"
+
+.PP
+Redefined in order to simulate the effect of overlap\&. 
+.PP
+.nf
+67 {
+68     //
+69     // draw background
+70     //
+71     QPainter p;
+72     p\&.begin(this);
+73     // \&.\&.\&. photo parent widget
+74     p\&.drawPixmap(0, 0, width(), height(), m_parentWidgetPixmap);
+75     // \&.\&.\&. impose darkened area
+76     p\&.setBrush(QBrush(QColor(0, 0, 0, 220)));
+77     p\&.drawRect(0, 0, width(), height());
+78     p\&.end();
+79 
+80     //
+81     // Draw everything else
+82     //
+83     QWidget::paintEvent(_event);
+84 }
+.fi
+.SS "void showEvent (QShowEvent* _event)\fC [protected]\fP"
+
+.PP
+It is overridden to before displaying customize the appearance\&. 
+.PP
+.nf
+87 {
+88     //
+89     // refresh yourself
+90     //
+91     updateSelf();
+92 
+93     //
+94     // display
+95     //
+96     QWidget::showEvent(_event);
+97 }
+.fi
+.SS "void updateSelf ()\fC [private]\fP"
+
+.PP
+Reload size and background image\&. 
+.PP
+.nf
+100 {
+101     if (!m_isInUpdateSelf) {
+102         m_isInUpdateSelf = true;
+103 
+104         {
+105             //
+106             // updating map
+107             //
+108             hide();
+109             resize(parentWidget()->size());
+110             m_parentWidgetPixmap = grabParentWidgetPixmap();
+111             show();
+112         }
+113 
+114         m_isInUpdateSelf = false;
+115     }
+116 }
+.fi
+.SH "Dokumentasi Variabel"
+.PP 
+.SS "bool m_isInUpdateSelf\fC [private]\fP"
+
+.PP
+Resolve conflicts recursive updates\&. 
+.SS "QPixmap m_parentWidgetPixmap\fC [private]\fP"
+
+.PP
+background Image 
+
+.SH "Penulis"
+.PP 
+Dibangkitkan secara otomatis oleh Doxygen untuk Sarasvati dari kode sumber\&.

@@ -1,0 +1,33 @@
+.TH "qrc_image.cpp" 3 "Rabu 8 Februari 2017" "Version 1.0.2-4" "Sarasvati" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+qrc_image.cpp
+.SH SYNOPSIS
+.br
+.PP
+.SH "Dokumentasi Fungsi"
+.PP 
+.SS "int QT_RCC_MANGLE_NAMESPACE() qCleanupResources_image ()"
+
+.PP
+.nf
+28153 {
+28154     QT_RCC_PREPEND_NAMESPACE(qUnregisterResourceData)
+28155        (0x01, qt_resource_struct, qt_resource_name, qt_resource_data);
+28156     return 1;
+28157 }
+.fi
+.SS "int QT_RCC_MANGLE_NAMESPACE() qInitResources_image ()"
+
+.PP
+.nf
+28145 {
+28146     QT_RCC_PREPEND_NAMESPACE(qRegisterResourceData)
+28147         (0x01, qt_resource_struct, qt_resource_name, qt_resource_data);
+28148     return 1;
+28149 }
+.fi
+.SH "Penulis"
+.PP 
+Dibangkitkan secara otomatis oleh Doxygen untuk Sarasvati dari kode sumber\&.

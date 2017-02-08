@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.14">
+  <compounddef id="d5/de0/a00050" kind="file" language="C++">
+    <compoundname>mtreeview.h</compoundname>
+    <innerclass refid="d6/dd3/a00688" prot="public">mTreeview</innerclass>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>MTREEVIEW_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MTREEVIEW_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="df/da5/a00912" kindref="compound">util/utama.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight></codeline>
+<codeline lineno="9" refid="d6/dd3/a00688" refkind="compound"><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="d6/dd3/a00688" kindref="compound">mTreeview</ref></highlight></codeline>
+<codeline lineno="10"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="15"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="d6/dd3/a00688_1a8c3e00ce63f8bcb1d5ca6252f78a8344" kindref="member">mTreeview</ref>();</highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d6/dd3/a00688_1ab19bf23184a2332ad6c23829c4c6007c" kindref="member">add_firstItem</ref>(QStandardItemModel<sp/>*tree,<sp/>QTreeView<sp/>*treeView,<sp/>QString<sp/>name);</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d6/dd3/a00688_1a9745e117b078f81fca168e8b30301f5b" kindref="member">appendItem</ref>(QStandardItemModel<sp/>*tree,<sp/>QTreeView<sp/>*treeView,<sp/>QString<sp/>name);</highlight></codeline>
+<codeline lineno="31"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/>//<sp/>MTREEVIEW_H</highlight></codeline>
+    </programlisting>
+    <location file="model/interface_manipulator/mtreeview.h"/>
+  </compounddef>
+</doxygen>

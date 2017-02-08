@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.14">
+  <compounddef id="dir_5e6a652e39fd95acbd20d9ddbcdd9da4" kind="dir">
+    <compoundname>model/interface_manipulator</compoundname>
+    <innerfile refid="d6/d2d/a00047">mtreeview.cpp</innerfile>
+    <innerfile refid="d5/de0/a00050">mtreeview.h</innerfile>
+    <innerfile refid="dc/dee/a00053">qlightboxwidget.cpp</innerfile>
+    <innerfile refid="d9/d2e/a00056">qlightboxwidget.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="model/interface_manipulator/"/>
+  </compounddef>
+</doxygen>

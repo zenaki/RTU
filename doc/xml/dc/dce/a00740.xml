@@ -1,0 +1,416 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.14">
+  <compounddef id="dc/dce/a00740" kind="class" language="C++" prot="public">
+    <compoundname>SettingsDialog</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">QDialog</basecompoundref>
+    <includes refid="d4/d81/a00110" local="no">settingsdialog.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="dc/dce/a00740_1a662be939d9ce9597f42519f982f68665" prot="public" static="no" mutable="no">
+        <type>Ui::SettingsDialog*</type>
+        <definition>Ui::SettingsDialog* ui</definition>
+        <argsstring></argsstring>
+        <name>ui</name>
+        <briefdescription>
+<para>ui </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/settingsdialog.h" line="46" column="1" bodyfile="view/settingsdialog.h" bodystart="46" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="dc/dce/a00740_1aafad695f91953cdb1d29100842ce5009" prot="public" static="no" mutable="no">
+        <type><ref refid="d5/d39/a00676" kindref="compound">serial</ref>*</type>
+        <definition>serial* Serial</definition>
+        <argsstring></argsstring>
+        <name>Serial</name>
+        <briefdescription>
+<para>Serial. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/settingsdialog.h" line="51" column="1" bodyfile="view/settingsdialog.h" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="dc/dce/a00740_1a898cbe894bba4c03fc02c998a80a4396" prot="public" static="no" mutable="no">
+        <type><ref refid="d0/d15/a00700" kindref="compound">setting</ref>*</type>
+        <definition>setting* Setting</definition>
+        <argsstring></argsstring>
+        <name>Setting</name>
+        <briefdescription>
+<para>Setting. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/settingsdialog.h" line="55" column="1" bodyfile="view/settingsdialog.h" bodystart="55" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="dc/dce/a00740_1a4de9739e415b4655cd96b34a912a150a" prot="public" static="no" mutable="no">
+        <type><ref refid="d4/db8/a00732" kindref="compound">MainWindow</ref>*</type>
+        <definition>MainWindow* Main</definition>
+        <argsstring></argsstring>
+        <name>Main</name>
+        <briefdescription>
+<para>Main. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/settingsdialog.h" line="59" column="1" bodyfile="view/settingsdialog.h" bodystart="59" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="dc/dce/a00740_1ae4afa7869a432783e69de23bc8bb5872" prot="private" static="no" mutable="no">
+        <type>QIntValidator*</type>
+        <definition>QIntValidator* intValidator</definition>
+        <argsstring></argsstring>
+        <name>intValidator</name>
+        <briefdescription>
+<para>intValidator </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/settingsdialog.h" line="108" column="1" bodyfile="view/settingsdialog.h" bodystart="108" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="dc/dce/a00740_1a6400ed675742b62997bc4edb32106025" prot="public" static="no" const="no" explicit="yes" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>SettingsDialog</definition>
+        <argsstring>(QWidget *parent = 0)</argsstring>
+        <name>SettingsDialog</name>
+        <param>
+          <type>QWidget *</type>
+          <declname>parent</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+<para><ref refid="dc/dce/a00740" kindref="compound">SettingsDialog</ref>. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>parent</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/settingsdialog.h" line="40" column="1" bodyfile="view/settingsdialog.cpp" bodystart="12" bodyend="35"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dce/a00740_1a3d4bc0f365c396bf0435b34310066206" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>~SettingsDialog</definition>
+        <argsstring>()</argsstring>
+        <name>~SettingsDialog</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/settingsdialog.h" line="41" column="1" bodyfile="view/settingsdialog.cpp" bodystart="37" bodyend="42"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-slot">
+      <memberdef kind="slot" id="dc/dce/a00740_1a1f7cab6e1bf192ca7aea7ea8d770a2ee" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void showPortInfo</definition>
+        <argsstring>(int idx)</argsstring>
+        <name>showPortInfo</name>
+        <param>
+          <type>int</type>
+          <declname>idx</declname>
+        </param>
+        <briefdescription>
+<para>showPortInfo </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>idx</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/settingsdialog.h" line="66" column="1" bodyfile="view/settingsdialog.cpp" bodystart="49" bodyend="61"/>
+      </memberdef>
+      <memberdef kind="slot" id="dc/dce/a00740_1a95067243b72a23863ec07c821797455c" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void apply</definition>
+        <argsstring>()</argsstring>
+        <name>apply</name>
+        <briefdescription>
+<para>apply </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/settingsdialog.h" line="70" column="1" bodyfile="view/settingsdialog.cpp" bodystart="63" bodyend="74"/>
+      </memberdef>
+      <memberdef kind="slot" id="dc/dce/a00740_1a4177cad69bdf587dcbeca7bc0380a256" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void checkCustomBaudRatePolicy</definition>
+        <argsstring>(int idx)</argsstring>
+        <name>checkCustomBaudRatePolicy</name>
+        <param>
+          <type>int</type>
+          <declname>idx</declname>
+        </param>
+        <briefdescription>
+<para>checkCustomBaudRatePolicy </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>idx</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/settingsdialog.h" line="76" column="1" bodyfile="view/settingsdialog.cpp" bodystart="76" bodyend="85"/>
+      </memberdef>
+      <memberdef kind="slot" id="dc/dce/a00740_1a22a7683a51fb880025ef4c8d1ca9beb5" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void checkCustomDevicePathPolicy</definition>
+        <argsstring>(int idx)</argsstring>
+        <name>checkCustomDevicePathPolicy</name>
+        <param>
+          <type>int</type>
+          <declname>idx</declname>
+        </param>
+        <briefdescription>
+<para>checkCustomDevicePathPolicy </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>idx</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/settingsdialog.h" line="81" column="1" bodyfile="view/settingsdialog.cpp" bodystart="87" bodyend="93"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="dc/dce/a00740_1a7a67a4de3b2ac14a361c4242ff76ea11" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void fillPortsParameters</definition>
+        <argsstring>()</argsstring>
+        <name>fillPortsParameters</name>
+        <briefdescription>
+<para>fillPortsParameters </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/settingsdialog.h" line="87" column="1" bodyfile="view/settingsdialog.cpp" bodystart="95" bodyend="136"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dce/a00740_1aef3ecd6e3c59fee4ffacebe2e0dc7fff" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void fillPortsInfo</definition>
+        <argsstring>()</argsstring>
+        <name>fillPortsInfo</name>
+        <briefdescription>
+<para>fillPortsInfo </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/settingsdialog.h" line="91" column="1" bodyfile="view/settingsdialog.cpp" bodystart="138" bodyend="161"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dce/a00740_1a5ee96d10c28df2fac78cc7d14be8966c" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void fillSettings</definition>
+        <argsstring>()</argsstring>
+        <name>fillSettings</name>
+        <briefdescription>
+<para>fillSettings </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/settingsdialog.h" line="96" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dce/a00740_1ae29843e937035a626ca83e89c0dc78ee" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void updateSettings</definition>
+        <argsstring>(struct t_serial_settings *tSerial)</argsstring>
+        <name>updateSettings</name>
+        <param>
+          <type>struct <ref refid="d2/d94/a00716" kindref="compound">t_serial_settings</ref> *</type>
+          <declname>tSerial</declname>
+        </param>
+        <briefdescription>
+<para>updateSettings </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>tSerial</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/settingsdialog.h" line="101" column="1" bodyfile="view/settingsdialog.cpp" bodystart="163" bodyend="171"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>The <ref refid="dc/dce/a00740" kindref="compound">SettingsDialog</ref> class. </para>    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="67">
+        <label>QDialog</label>
+      </node>
+      <node id="66">
+        <label>SettingsDialog</label>
+        <link refid="dc/dce/a00740"/>
+        <childnode refid="67" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="76">
+        <label>loginForm</label>
+        <link refid="df/d3b/a00728"/>
+        <childnode refid="69" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="73">
+        <label>QMainWindow</label>
+      </node>
+      <node id="72">
+        <label>MainWindow</label>
+        <link refid="d4/db8/a00732"/>
+        <childnode refid="73" relation="public-inheritance">
+        </childnode>
+        <childnode refid="71" relation="usage">
+          <edgelabel>-Serial</edgelabel>
+        </childnode>
+        <childnode refid="74" relation="usage">
+          <edgelabel>-faddModule</edgelabel>
+        </childnode>
+        <childnode refid="76" relation="usage">
+          <edgelabel>-LoginForm</edgelabel>
+        </childnode>
+        <childnode refid="77" relation="usage">
+          <edgelabel>-mTree</edgelabel>
+        </childnode>
+        <childnode refid="75" relation="usage">
+          <edgelabel>-mod</edgelabel>
+        </childnode>
+        <childnode refid="78" relation="usage">
+          <edgelabel>-progress_dialog</edgelabel>
+        </childnode>
+        <childnode refid="79" relation="usage">
+          <edgelabel>-work</edgelabel>
+        </childnode>
+        <childnode refid="68" relation="usage">
+          <edgelabel>-settings_dialog</edgelabel>
+        </childnode>
+      </node>
+      <node id="75">
+        <label>module</label>
+        <link refid="df/d7d/a00696"/>
+      </node>
+      <node id="78">
+        <label>ProgressDialog</label>
+        <link refid="dc/d85/a00736"/>
+        <childnode refid="69" relation="public-inheritance">
+        </childnode>
+        <childnode refid="71" relation="usage">
+          <edgelabel>+Serial</edgelabel>
+        </childnode>
+        <childnode refid="75" relation="usage">
+          <edgelabel>+mod</edgelabel>
+        </childnode>
+      </node>
+      <node id="74">
+        <label>form_addModule</label>
+        <link refid="dc/d14/a00720"/>
+        <childnode refid="69" relation="public-inheritance">
+        </childnode>
+        <childnode refid="75" relation="usage">
+          <edgelabel>-mod</edgelabel>
+        </childnode>
+      </node>
+      <node id="77">
+        <label>mTreeview</label>
+        <link refid="d6/dd3/a00688"/>
+      </node>
+      <node id="69">
+        <label>QDialog</label>
+      </node>
+      <node id="79">
+        <label>worker</label>
+        <link refid="df/d46/a00664"/>
+        <childnode refid="71" relation="usage">
+          <edgelabel>+Serial</edgelabel>
+        </childnode>
+        <childnode refid="77" relation="usage">
+          <edgelabel>+mTree</edgelabel>
+        </childnode>
+        <childnode refid="75" relation="usage">
+          <edgelabel>+mod</edgelabel>
+        </childnode>
+      </node>
+      <node id="71">
+        <label>serial</label>
+        <link refid="d5/d39/a00676"/>
+      </node>
+      <node id="68">
+        <label>SettingsDialog</label>
+        <link refid="dc/dce/a00740"/>
+        <childnode refid="69" relation="public-inheritance">
+        </childnode>
+        <childnode refid="70" relation="usage">
+          <edgelabel>+Setting</edgelabel>
+        </childnode>
+        <childnode refid="71" relation="usage">
+          <edgelabel>+Serial</edgelabel>
+        </childnode>
+        <childnode refid="72" relation="usage">
+          <edgelabel>+Main</edgelabel>
+        </childnode>
+      </node>
+      <node id="70">
+        <label>setting</label>
+        <link refid="d0/d15/a00700"/>
+      </node>
+    </collaborationgraph>
+    <location file="view/settingsdialog.h" line="32" column="1" bodyfile="view/settingsdialog.h" bodystart="31" bodyend="109"/>
+    <listofallmembers>
+      <member refid="dc/dce/a00740_1a95067243b72a23863ec07c821797455c" prot="private" virt="non-virtual"><scope>SettingsDialog</scope><name>apply</name></member>
+      <member refid="dc/dce/a00740_1a4177cad69bdf587dcbeca7bc0380a256" prot="private" virt="non-virtual"><scope>SettingsDialog</scope><name>checkCustomBaudRatePolicy</name></member>
+      <member refid="dc/dce/a00740_1a22a7683a51fb880025ef4c8d1ca9beb5" prot="private" virt="non-virtual"><scope>SettingsDialog</scope><name>checkCustomDevicePathPolicy</name></member>
+      <member refid="dc/dce/a00740_1aef3ecd6e3c59fee4ffacebe2e0dc7fff" prot="private" virt="non-virtual"><scope>SettingsDialog</scope><name>fillPortsInfo</name></member>
+      <member refid="dc/dce/a00740_1a7a67a4de3b2ac14a361c4242ff76ea11" prot="private" virt="non-virtual"><scope>SettingsDialog</scope><name>fillPortsParameters</name></member>
+      <member refid="dc/dce/a00740_1a5ee96d10c28df2fac78cc7d14be8966c" prot="private" virt="non-virtual"><scope>SettingsDialog</scope><name>fillSettings</name></member>
+      <member refid="dc/dce/a00740_1ae4afa7869a432783e69de23bc8bb5872" prot="private" virt="non-virtual"><scope>SettingsDialog</scope><name>intValidator</name></member>
+      <member refid="dc/dce/a00740_1a4de9739e415b4655cd96b34a912a150a" prot="public" virt="non-virtual"><scope>SettingsDialog</scope><name>Main</name></member>
+      <member refid="dc/dce/a00740_1aafad695f91953cdb1d29100842ce5009" prot="public" virt="non-virtual"><scope>SettingsDialog</scope><name>Serial</name></member>
+      <member refid="dc/dce/a00740_1a898cbe894bba4c03fc02c998a80a4396" prot="public" virt="non-virtual"><scope>SettingsDialog</scope><name>Setting</name></member>
+      <member refid="dc/dce/a00740_1a6400ed675742b62997bc4edb32106025" prot="public" virt="non-virtual"><scope>SettingsDialog</scope><name>SettingsDialog</name></member>
+      <member refid="dc/dce/a00740_1a1f7cab6e1bf192ca7aea7ea8d770a2ee" prot="private" virt="non-virtual"><scope>SettingsDialog</scope><name>showPortInfo</name></member>
+      <member refid="dc/dce/a00740_1a662be939d9ce9597f42519f982f68665" prot="public" virt="non-virtual"><scope>SettingsDialog</scope><name>ui</name></member>
+      <member refid="dc/dce/a00740_1ae29843e937035a626ca83e89c0dc78ee" prot="private" virt="non-virtual"><scope>SettingsDialog</scope><name>updateSettings</name></member>
+      <member refid="dc/dce/a00740_1a3d4bc0f365c396bf0435b34310066206" prot="public" virt="non-virtual"><scope>SettingsDialog</scope><name>~SettingsDialog</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,201 @@
+.TH "loginForm" 3 "Rabu 8 Februari 2017" "Version 1.0.2-4" "Sarasvati" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+loginForm \- The \fBloginForm\fP class\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <loginform\&.h>\fP
+.PP
+Mewarisi QDialog\&.
+.SS "Fungsi Anggota Publik"
+.SS "Variabel Data"
+.SS "Slot Privat"
+.SS "Atribut Privat"
+.SH "Keterangan Lengkap"
+.PP 
+The \fBloginForm\fP class\&. 
+.SH "Dokumentasi Konstruktor & Destruktor"
+.PP 
+.SS "\fBloginForm\fP (QWidget * parent = \fC0\fP, QString mode = \fC0\fP)\fC [explicit]\fP"
+
+.PP
+\fBloginForm\fP 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIparent\fP 
+.br
+\fImode\fP 
+.RE
+.PP
+
+.PP
+.nf
+4                                                   :
+5     QDialog(parent),
+6     ui(new Ui::loginForm)
+7 {
+8     ui->setupUi(this);
+9 
+10     formMode = mode;
+11     if (formMode == "CREATE") {
+12         ui->label_4->setHidden(true);
+13         ui->loginButton->setText("Create User");
+14     } else if (formMode == "EDIT") {
+15         ui->editUser->setText(this->readUser());
+16         ui->editPass->setText(this->readPass());
+17         ui->label_4->setHidden(true);
+18         ui->loginButton->setText("Edit User");
+19     } else {
+20         ui->label_4->setHidden(false);
+21         loginForm::setWindowTitle("Log In");
+22         ui->loginButton->setText("Login");
+23     }
+24 
+25     ui->editPass->setEchoMode(QLineEdit::Password);
+26 }
+.fi
+.SS "~\fBloginForm\fP ()"
+
+.PP
+.nf
+29 {
+30     delete ui;
+31 }
+.fi
+.SH "Dokumentasi Anggota: Fungsi"
+.PP 
+.SS "int loginSuccess ()"
+
+.PP
+loginSuccess 
+.PP
+\fBMengembalikan:\fP
+.RS 4
+
+.RE
+.PP
+
+.PP
+.nf
+33                            {
+34     QString user = ui->editUser->text();
+35     QString pass = ui->editPass->text();
+36 
+37     QFile usr(PATH_USER_ACCESS);
+38     if (usr\&.exists()) {
+39         if (user == this->readUser() && pass == this->readPass()) return 1;
+40         else return 0;
+41     } else {
+42         if((user == DEFAULT_USERNAME && pass == DEFAULT_PASSWORD)) return 1;
+43 //        else if (user == "" && pass == "") return 1;
+44         else return 0;
+45     }
+46 }
+.fi
+.SS "void on_loginButton_clicked ()\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+on_loginButton_clicked 
+.PP
+.nf
+74 {
+75     if (formMode == "CREATE" || formMode == "EDIT") {
+76         this->writeUserAccess(ui->editUser->text(), ui->editPass->text());
+77         cryp code; code\&.encryp(PATH_USER_ACCESS);
+78         this->hide();
+79     } else {
+80         if(loginSuccess()){
+81             MainWindow *mWindow;
+82             mWindow = new MainWindow(this);
+83             mWindow->showMaximized();
+84 
+85             this->hide();
+86         } else {
+87             QMessageBox::warning(this, "Warning!!", "Username & Password Not Match!", 0, 0);
+88             return;
+89         }
+90     }
+91 }
+.fi
+.SS "QString readPass ()"
+
+.PP
+readPass 
+.PP
+\fBMengembalikan:\fP
+.RS 4
+
+.RE
+.PP
+
+.PP
+.nf
+65 {
+66     cryp code; code\&.decryp(PATH_USER_ACCESS);
+67     QSettings sett(PATH_USER_ACCESS, QSettings::IniFormat);
+68     QString pass = sett\&.value("PASSWORD")\&.toString();
+69     code\&.encryp(PATH_USER_ACCESS);
+70     return pass;
+71 }
+.fi
+.SS "QString readUser ()"
+
+.PP
+readUser 
+.PP
+\fBMengembalikan:\fP
+.RS 4
+
+.RE
+.PP
+
+.PP
+.nf
+56 {
+57     cryp code; code\&.decryp(PATH_USER_ACCESS);
+58     QSettings sett(PATH_USER_ACCESS, QSettings::IniFormat);
+59     QString user = sett\&.value("USER")\&.toString();
+60     code\&.encryp(PATH_USER_ACCESS);
+61     return user;
+62 }
+.fi
+.SS "void writeUserAccess (QString user, QString pass)"
+
+.PP
+writeUserAccess 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIuser\fP 
+.br
+\fIpass\fP 
+.RE
+.PP
+
+.PP
+.nf
+49 {
+50     QSettings sett(PATH_USER_ACCESS, QSettings::IniFormat);
+51     sett\&.setValue("USER", user\&.toUtf8());
+52     sett\&.setValue("PASSWORD", pass\&.toUtf8());
+53 }
+.fi
+.SH "Dokumentasi Variabel"
+.PP 
+.SS "QString formMode"
+
+.PP
+formMode 
+.SS "Ui::loginForm* ui\fC [private]\fP"
+
+.PP
+ui 
+
+.SH "Penulis"
+.PP 
+Dibangkitkan secara otomatis oleh Doxygen untuk Sarasvati dari kode sumber\&.

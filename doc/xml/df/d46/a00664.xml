@@ -1,0 +1,919 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.14">
+  <compounddef id="df/d46/a00664" kind="class" language="C++" prot="public">
+    <compoundname>worker</compoundname>
+    <includes refid="dd/dad/a00005" local="no">worker.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="df/d46/a00664_1ad311e6c11f36ec0be84c8f0081f581d6" prot="public" static="no" mutable="no">
+        <type><ref refid="df/d7d/a00696" kindref="compound">module</ref></type>
+        <definition>module mod</definition>
+        <argsstring></argsstring>
+        <name>mod</name>
+        <briefdescription>
+<para>mod </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="controller/worker.h" line="47" column="1" bodyfile="controller/worker.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="df/d46/a00664_1a90fd00b359cb3a3ca156e506e1392766" prot="public" static="no" mutable="no">
+        <type><ref refid="d6/dd3/a00688" kindref="compound">mTreeview</ref></type>
+        <definition>mTreeview mTree</definition>
+        <argsstring></argsstring>
+        <name>mTree</name>
+        <briefdescription>
+<para>mTree </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="controller/worker.h" line="51" column="1" bodyfile="controller/worker.h" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="df/d46/a00664_1aafad695f91953cdb1d29100842ce5009" prot="public" static="no" mutable="no">
+        <type><ref refid="d5/d39/a00676" kindref="compound">serial</ref>*</type>
+        <definition>serial* Serial</definition>
+        <argsstring></argsstring>
+        <name>Serial</name>
+        <briefdescription>
+<para>Serial. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="controller/worker.h" line="55" column="1" bodyfile="controller/worker.h" bodystart="55" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="df/d46/a00664_1a75e82634a8701d46c3f32c15de055316" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>worker</definition>
+        <argsstring>()</argsstring>
+        <name>worker</name>
+        <briefdescription>
+<para>worker </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="controller/worker.h" line="43" column="1" bodyfile="controller/worker.cpp" bodystart="3" bodyend="6"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d46/a00664_1a675d3c448211cf4d16256f545da1192d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>QString</type>
+        <definition>QString newModule</definition>
+        <argsstring>(QStandardItemModel *tree, QTreeView *treeView, QString title)</argsstring>
+        <name>newModule</name>
+        <param>
+          <type>QStandardItemModel *</type>
+          <declname>tree</declname>
+        </param>
+        <param>
+          <type>QTreeView *</type>
+          <declname>treeView</declname>
+        </param>
+        <param>
+          <type>QString</type>
+          <declname>title</declname>
+        </param>
+        <briefdescription>
+<para>newModule </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>tree</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>treeView</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>title</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para></para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="controller/worker.h" line="64" column="1" bodyfile="controller/worker.cpp" bodystart="8" bodyend="22"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d46/a00664_1a146b3f72d09d3c4a5cc7b528d64a7300" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>QString</type>
+        <definition>QString editModule</definition>
+        <argsstring>(QStandardItemModel *tree, QTreeView *treeView, QString title)</argsstring>
+        <name>editModule</name>
+        <param>
+          <type>QStandardItemModel *</type>
+          <declname>tree</declname>
+        </param>
+        <param>
+          <type>QTreeView *</type>
+          <declname>treeView</declname>
+        </param>
+        <param>
+          <type>QString</type>
+          <declname>title</declname>
+        </param>
+        <briefdescription>
+<para>editModule </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>tree</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>treeView</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>title</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para></para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="controller/worker.h" line="72" column="1" bodyfile="controller/worker.cpp" bodystart="24" bodyend="38"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d46/a00664_1ab0caf92a819a0b75ddf5e5a4115bed4c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>QString</type>
+        <definition>QString loadModule</definition>
+        <argsstring>(QStandardItemModel *tree, QTreeView *treeView, QString address, QString NewName)</argsstring>
+        <name>loadModule</name>
+        <param>
+          <type>QStandardItemModel *</type>
+          <declname>tree</declname>
+        </param>
+        <param>
+          <type>QTreeView *</type>
+          <declname>treeView</declname>
+        </param>
+        <param>
+          <type>QString</type>
+          <declname>address</declname>
+        </param>
+        <param>
+          <type>QString</type>
+          <declname>NewName</declname>
+        </param>
+        <briefdescription>
+<para>loadModule </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>tree</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>treeView</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>address</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>NewName</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para></para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="controller/worker.h" line="81" column="1" bodyfile="controller/worker.cpp" bodystart="40" bodyend="59"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d46/a00664_1ad39143a4d442da14e8603326426dc6ed" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>QString</type>
+        <definition>QString checkModule</definition>
+        <argsstring>(QString address)</argsstring>
+        <name>checkModule</name>
+        <param>
+          <type>QString</type>
+          <declname>address</declname>
+        </param>
+        <briefdescription>
+<para>checkModule </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>address</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para></para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="controller/worker.h" line="87" column="1" bodyfile="controller/worker.cpp" bodystart="61" bodyend="69"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d46/a00664_1aabf3d0d56253242035a6bb1de88bd1a4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>QString</type>
+        <definition>QString check_statusModule</definition>
+        <argsstring>(QString address)</argsstring>
+        <name>check_statusModule</name>
+        <param>
+          <type>QString</type>
+          <declname>address</declname>
+        </param>
+        <briefdescription>
+<para>check_statusModule </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>address</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para></para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="controller/worker.h" line="93" column="1" bodyfile="controller/worker.cpp" bodystart="71" bodyend="84"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d46/a00664_1a3eea44b485336779cd517c3e248ad2dd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void showModule</definition>
+        <argsstring>(QWidget *parent, QMdiArea *mdiArea, QString module, QSerialPort *SerialPort)</argsstring>
+        <name>showModule</name>
+        <param>
+          <type>QWidget *</type>
+          <declname>parent</declname>
+        </param>
+        <param>
+          <type>QMdiArea *</type>
+          <declname>mdiArea</declname>
+        </param>
+        <param>
+          <type>QString</type>
+          <declname>module</declname>
+        </param>
+        <param>
+          <type>QSerialPort *</type>
+          <declname>SerialPort</declname>
+        </param>
+        <briefdescription>
+<para>showModule </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>parent</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>mdiArea</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>module</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>SerialPort</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="controller/worker.h" line="102" column="1" bodyfile="controller/worker.cpp" bodystart="86" bodyend="106"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d46/a00664_1ab2c91c147f68ccb7c2e868e93b6d6b17" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool checkIfmodule</definition>
+        <argsstring>(QString name)</argsstring>
+        <name>checkIfmodule</name>
+        <param>
+          <type>QString</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+<para>checkIfmodule </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>name</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para></para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="controller/worker.h" line="109" column="1" bodyfile="controller/worker.cpp" bodystart="108" bodyend="127"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d46/a00664_1a5c7b858b7b6cdc0fa6c214a2f4185649" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool state_of_module</definition>
+        <argsstring>(int num, QString newModule, QString *existModule)</argsstring>
+        <name>state_of_module</name>
+        <param>
+          <type>int</type>
+          <declname>num</declname>
+        </param>
+        <param>
+          <type>QString</type>
+          <declname>newModule</declname>
+        </param>
+        <param>
+          <type>QString *</type>
+          <declname>existModule</declname>
+        </param>
+        <briefdescription>
+<para>state_of_module </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>num</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>newModule</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>existModule</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para></para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="controller/worker.h" line="117" column="1" bodyfile="controller/worker.cpp" bodystart="129" bodyend="148"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d46/a00664_1abc9292de322bb9e2785bf6be5ed2ed66" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool Request_ENV</definition>
+        <argsstring>(QSerialPort *Serial_Com, bool timeout = false)</argsstring>
+        <name>Request_ENV</name>
+        <param>
+          <type>QSerialPort *</type>
+          <declname>Serial_Com</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>timeout</declname>
+          <defval>false</defval>
+        </param>
+        <briefdescription>
+<para>Request_ENV. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>Serial_Com</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>timeout</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para></para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="controller/worker.h" line="125" column="1" bodyfile="controller/worker.cpp" bodystart="150" bodyend="163"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d46/a00664_1a9af02f45723486b4dba4801633840a5d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void write_FinishRead</definition>
+        <argsstring>(bool FinishRead, int cekErr, QString strErr)</argsstring>
+        <name>write_FinishRead</name>
+        <param>
+          <type>bool</type>
+          <declname>FinishRead</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>cekErr</declname>
+        </param>
+        <param>
+          <type>QString</type>
+          <declname>strErr</declname>
+        </param>
+        <briefdescription>
+<para>write_FinishRead </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>FinishRead</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>cekErr</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>strErr</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="controller/worker.h" line="133" column="1" bodyfile="controller/worker.cpp" bodystart="202" bodyend="211"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d46/a00664_1aeb73e147971ca322895a53d574bc043b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool read_FinishRead</definition>
+        <argsstring>()</argsstring>
+        <name>read_FinishRead</name>
+        <briefdescription>
+<para>read_FinishRead </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para></para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="controller/worker.h" line="138" column="1" bodyfile="controller/worker.cpp" bodystart="213" bodyend="224"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d46/a00664_1abafa5deaf1c8e63cbffeb4bc3d07695b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int read_flagERR</definition>
+        <argsstring>()</argsstring>
+        <name>read_flagERR</name>
+        <briefdescription>
+<para>read_flagERR </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para></para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="controller/worker.h" line="143" column="1" bodyfile="controller/worker.cpp" bodystart="226" bodyend="237"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d46/a00664_1a104d21de6e310be9324ad641b5860df4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>QString</type>
+        <definition>QString read_strERR</definition>
+        <argsstring>()</argsstring>
+        <name>read_strERR</name>
+        <briefdescription>
+<para>read_strERR </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para></para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="controller/worker.h" line="148" column="1" bodyfile="controller/worker.cpp" bodystart="239" bodyend="250"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d46/a00664_1aadc4540eac008b25ebb9ca83a91fe94d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void delay</definition>
+        <argsstring>(int ms)</argsstring>
+        <name>delay</name>
+        <param>
+          <type>int</type>
+          <declname>ms</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="controller/worker.h" line="150" column="1" bodyfile="controller/worker.cpp" bodystart="165" bodyend="171"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d46/a00664_1aa5975c9c48bf0b3afe4fab7a8b87804b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void serial_write</definition>
+        <argsstring>(QSerialPort * Serial_Com, QString data, int d_c)</argsstring>
+        <name>serial_write</name>
+        <param>
+          <type>QSerialPort *</type>
+          <declname>Serial_Com</declname>
+        </param>
+        <param>
+          <type>QString</type>
+          <declname>data</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>d_c</declname>
+        </param>
+        <briefdescription>
+<para>serial_write </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>Serial_Com</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>data</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>d_c</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="controller/worker.h" line="157" column="1" bodyfile="controller/worker.cpp" bodystart="173" bodyend="183"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d46/a00664_1aa9884649459db4de99c406e41e540731" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool waiting_set</definition>
+        <argsstring>(bool timeout = false)</argsstring>
+        <name>waiting_set</name>
+        <param>
+          <type>bool</type>
+          <declname>timeout</declname>
+          <defval>false</defval>
+        </param>
+        <briefdescription>
+<para>waiting_set </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>timeout</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para></para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="controller/worker.h" line="163" column="1" bodyfile="controller/worker.cpp" bodystart="185" bodyend="200"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d46/a00664_1a0c6fa18fbb76a7a242d8c43e9ba44690" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void writeLogFile</definition>
+        <argsstring>(QString log, int flagERR, QString strERR, bool timeout)</argsstring>
+        <name>writeLogFile</name>
+        <param>
+          <type>QString</type>
+          <declname>log</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>flagERR</declname>
+        </param>
+        <param>
+          <type>QString</type>
+          <declname>strERR</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>timeout</declname>
+        </param>
+        <briefdescription>
+<para>writeLogFile </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>log</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>flagERR</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>strERR</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>timeout</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="controller/worker.h" line="172" column="1" bodyfile="controller/worker.cpp" bodystart="252" bodyend="291"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d46/a00664_1acac499db5b15edc380ad41b3335e1178" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void CompressDir</definition>
+        <argsstring>(QString ZipFile, QString Directory)</argsstring>
+        <name>CompressDir</name>
+        <param>
+          <type>QString</type>
+          <declname>ZipFile</declname>
+        </param>
+        <param>
+          <type>QString</type>
+          <declname>Directory</declname>
+        </param>
+        <briefdescription>
+<para>CompressDir. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>ZipFile</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>Directory</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="controller/worker.h" line="179" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d46/a00664_1a6d78020986767be3a19953fae336bd33" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void DecompressDir</definition>
+        <argsstring>(QString ZipFile, QString Directory)</argsstring>
+        <name>DecompressDir</name>
+        <param>
+          <type>QString</type>
+          <declname>ZipFile</declname>
+        </param>
+        <param>
+          <type>QString</type>
+          <declname>Directory</declname>
+        </param>
+        <briefdescription>
+<para>DecompressDir. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>ZipFile</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>Directory</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="controller/worker.h" line="185" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d46/a00664_1af1532dd86135693eefc852b876993ae9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void CompressFiles</definition>
+        <argsstring>(QString ZipFile, QStringList Files)</argsstring>
+        <name>CompressFiles</name>
+        <param>
+          <type>QString</type>
+          <declname>ZipFile</declname>
+        </param>
+        <param>
+          <type>QStringList</type>
+          <declname>Files</declname>
+        </param>
+        <briefdescription>
+<para>CompressFiles. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>ZipFile</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>Files</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="controller/worker.h" line="191" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d46/a00664_1a587b756099d1586f94a15e7f5eb3e72b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void DecompressFiles</definition>
+        <argsstring>(QString ZipFile, QStringList Files, QString Directory)</argsstring>
+        <name>DecompressFiles</name>
+        <param>
+          <type>QString</type>
+          <declname>ZipFile</declname>
+        </param>
+        <param>
+          <type>QStringList</type>
+          <declname>Files</declname>
+        </param>
+        <param>
+          <type>QString</type>
+          <declname>Directory</declname>
+        </param>
+        <briefdescription>
+<para>DecompressFiles. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>ZipFile</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>Files</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>Directory</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="controller/worker.h" line="198" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d46/a00664_1aa4b9cceda9a6ddf1a9622c9009cf99f8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>QStringList</type>
+        <definition>QStringList ListContents</definition>
+        <argsstring>(QString ZipFile)</argsstring>
+        <name>ListContents</name>
+        <param>
+          <type>QString</type>
+          <declname>ZipFile</declname>
+        </param>
+        <briefdescription>
+<para>ListContents. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>ZipFile</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para></para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="controller/worker.h" line="204" column="1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>Class worker. </para>    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="89">
+        <label>module</label>
+        <link refid="df/d7d/a00696"/>
+      </node>
+      <node id="88">
+        <label>mTreeview</label>
+        <link refid="d6/dd3/a00688"/>
+      </node>
+      <node id="86">
+        <label>worker</label>
+        <link refid="df/d46/a00664"/>
+        <childnode refid="87" relation="usage">
+          <edgelabel>+Serial</edgelabel>
+        </childnode>
+        <childnode refid="88" relation="usage">
+          <edgelabel>+mTree</edgelabel>
+        </childnode>
+        <childnode refid="89" relation="usage">
+          <edgelabel>+mod</edgelabel>
+        </childnode>
+      </node>
+      <node id="87">
+        <label>serial</label>
+        <link refid="d5/d39/a00676"/>
+      </node>
+    </collaborationgraph>
+    <location file="controller/worker.h" line="37" column="1" bodyfile="controller/worker.h" bodystart="36" bodyend="210"/>
+    <listofallmembers>
+      <member refid="df/d46/a00664_1aabf3d0d56253242035a6bb1de88bd1a4" prot="public" virt="non-virtual"><scope>worker</scope><name>check_statusModule</name></member>
+      <member refid="df/d46/a00664_1ab2c91c147f68ccb7c2e868e93b6d6b17" prot="public" virt="non-virtual"><scope>worker</scope><name>checkIfmodule</name></member>
+      <member refid="df/d46/a00664_1ad39143a4d442da14e8603326426dc6ed" prot="public" virt="non-virtual"><scope>worker</scope><name>checkModule</name></member>
+      <member refid="df/d46/a00664_1acac499db5b15edc380ad41b3335e1178" prot="public" virt="non-virtual"><scope>worker</scope><name>CompressDir</name></member>
+      <member refid="df/d46/a00664_1af1532dd86135693eefc852b876993ae9" prot="public" virt="non-virtual"><scope>worker</scope><name>CompressFiles</name></member>
+      <member refid="df/d46/a00664_1a6d78020986767be3a19953fae336bd33" prot="public" virt="non-virtual"><scope>worker</scope><name>DecompressDir</name></member>
+      <member refid="df/d46/a00664_1a587b756099d1586f94a15e7f5eb3e72b" prot="public" virt="non-virtual"><scope>worker</scope><name>DecompressFiles</name></member>
+      <member refid="df/d46/a00664_1aadc4540eac008b25ebb9ca83a91fe94d" prot="public" virt="non-virtual"><scope>worker</scope><name>delay</name></member>
+      <member refid="df/d46/a00664_1a146b3f72d09d3c4a5cc7b528d64a7300" prot="public" virt="non-virtual"><scope>worker</scope><name>editModule</name></member>
+      <member refid="df/d46/a00664_1aa4b9cceda9a6ddf1a9622c9009cf99f8" prot="public" virt="non-virtual"><scope>worker</scope><name>ListContents</name></member>
+      <member refid="df/d46/a00664_1ab0caf92a819a0b75ddf5e5a4115bed4c" prot="public" virt="non-virtual"><scope>worker</scope><name>loadModule</name></member>
+      <member refid="df/d46/a00664_1ad311e6c11f36ec0be84c8f0081f581d6" prot="public" virt="non-virtual"><scope>worker</scope><name>mod</name></member>
+      <member refid="df/d46/a00664_1a90fd00b359cb3a3ca156e506e1392766" prot="public" virt="non-virtual"><scope>worker</scope><name>mTree</name></member>
+      <member refid="df/d46/a00664_1a675d3c448211cf4d16256f545da1192d" prot="public" virt="non-virtual"><scope>worker</scope><name>newModule</name></member>
+      <member refid="df/d46/a00664_1aeb73e147971ca322895a53d574bc043b" prot="public" virt="non-virtual"><scope>worker</scope><name>read_FinishRead</name></member>
+      <member refid="df/d46/a00664_1abafa5deaf1c8e63cbffeb4bc3d07695b" prot="public" virt="non-virtual"><scope>worker</scope><name>read_flagERR</name></member>
+      <member refid="df/d46/a00664_1a104d21de6e310be9324ad641b5860df4" prot="public" virt="non-virtual"><scope>worker</scope><name>read_strERR</name></member>
+      <member refid="df/d46/a00664_1abc9292de322bb9e2785bf6be5ed2ed66" prot="public" virt="non-virtual"><scope>worker</scope><name>Request_ENV</name></member>
+      <member refid="df/d46/a00664_1aafad695f91953cdb1d29100842ce5009" prot="public" virt="non-virtual"><scope>worker</scope><name>Serial</name></member>
+      <member refid="df/d46/a00664_1aa5975c9c48bf0b3afe4fab7a8b87804b" prot="public" virt="non-virtual"><scope>worker</scope><name>serial_write</name></member>
+      <member refid="df/d46/a00664_1a3eea44b485336779cd517c3e248ad2dd" prot="public" virt="non-virtual"><scope>worker</scope><name>showModule</name></member>
+      <member refid="df/d46/a00664_1a5c7b858b7b6cdc0fa6c214a2f4185649" prot="public" virt="non-virtual"><scope>worker</scope><name>state_of_module</name></member>
+      <member refid="df/d46/a00664_1aa9884649459db4de99c406e41e540731" prot="public" virt="non-virtual"><scope>worker</scope><name>waiting_set</name></member>
+      <member refid="df/d46/a00664_1a75e82634a8701d46c3f32c15de055316" prot="public" virt="non-virtual"><scope>worker</scope><name>worker</name></member>
+      <member refid="df/d46/a00664_1a9af02f45723486b4dba4801633840a5d" prot="public" virt="non-virtual"><scope>worker</scope><name>write_FinishRead</name></member>
+      <member refid="df/d46/a00664_1a0c6fa18fbb76a7a242d8c43e9ba44690" prot="public" virt="non-virtual"><scope>worker</scope><name>writeLogFile</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

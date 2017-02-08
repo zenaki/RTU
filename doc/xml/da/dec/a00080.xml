@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.14">
+  <compounddef id="da/dec/a00080" kind="file" language="C++">
+    <compoundname>form_addmodule.h</compoundname>
+    <innerclass refid="dc/d14/a00720" prot="public">form_addModule</innerclass>
+    <innernamespace refid="d4/d3e/a00116">Ui</innernamespace>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>FORM_ADDMODULE_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FORM_ADDMODULE_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;QDialog&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;QRect&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="df/d03/a00062" kindref="compound">model/module.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="d8/d41/a00038" kindref="compound">model/cryp.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="d3/db4/a00684" kindref="compound">cryp</ref>;</highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight></codeline>
+<codeline lineno="11" refid="d4/d3e/a00116" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal"><ref refid="d4/d3e/a00116" kindref="compound">Ui</ref><sp/>{</highlight></codeline>
+<codeline lineno="12"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="dc/d14/a00720" kindref="compound">form_addModule</ref>;</highlight></codeline>
+<codeline lineno="13"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="df/d46/a00664" kindref="compound">worker</ref>;</highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight></codeline>
+<codeline lineno="20" refid="dc/d14/a00720" refkind="compound"><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="dc/d14/a00720" kindref="compound">form_addModule</ref><sp/>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/>QDialog</highlight></codeline>
+<codeline lineno="21"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/><sp/><sp/>Q_OBJECT</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="24"><highlight class="normal"></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="28" refid="dc/d14/a00720_1a5898fdb8661138948b224bf07d8fb1b2" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>Ui::form_addModule<sp/>*<ref refid="dc/d14/a00720_1a5898fdb8661138948b224bf07d8fb1b2" kindref="member">ui</ref>;</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">explicit</highlight><highlight class="normal"><sp/><ref refid="dc/d14/a00720" kindref="compound">form_addModule</ref>(QWidget<sp/>*parent<sp/>=<sp/>0,<sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>create<sp/>=<sp/></highlight><highlight class="keyword">true</highlight><highlight class="normal">,<sp/>QString<sp/>address<sp/>=<sp/>0,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>index<sp/>=<sp/>0);</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/><sp/><sp/>~<ref refid="dc/d14/a00720" kindref="compound">form_addModule</ref>();</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43" refid="dc/d14/a00720_1adfdac3a8bec9af03243e16cc76c5f4e2" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="dc/d14/a00720_1adfdac3a8bec9af03243e16cc76c5f4e2" kindref="member">edit</ref>;</highlight></codeline>
+<codeline lineno="47" refid="dc/d14/a00720_1a1d3b9dfdf01d4cd2ea84d191b55e8bff" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="dc/d14/a00720_1a1d3b9dfdf01d4cd2ea84d191b55e8bff" kindref="member">accept</ref>;</highlight></codeline>
+<codeline lineno="51" refid="dc/d14/a00720_1a27a75e9f146a4bb7845cd7520c8ab374" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="dc/d14/a00720_1a27a75e9f146a4bb7845cd7520c8ab374" kindref="member">flag_gsm_2_active</ref>;</highlight></codeline>
+<codeline lineno="55" refid="dc/d14/a00720_1aa7be515b4acdd48d7aca5e500b25c3e3" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>QString<sp/><ref refid="dc/d14/a00720_1aa7be515b4acdd48d7aca5e500b25c3e3" kindref="member">currentFile</ref>;</highlight></codeline>
+<codeline lineno="59" refid="dc/d14/a00720_1a7ab2b62fd8d152497b902f9c9244e204" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>QString<sp/><ref refid="dc/d14/a00720_1a7ab2b62fd8d152497b902f9c9244e204" kindref="member">currentName</ref>;</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight><highlight class="keyword">private</highlight><highlight class="normal"><sp/>slots:</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>on_buttonBox_accepted();</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>on_buttonBox_rejected();</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>on_ck_flag_active_gsm_2_clicked(</highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>checked);</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>on_cb_com_1_currentIndexChanged(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>index);</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>on_cb_com_2_currentIndexChanged(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>index);</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>enabledButton();</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>on_spin_interval_relay_d_valueChanged(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>arg1);</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>on_spin_interval_relay_h_valueChanged(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>arg1);</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"></highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>on_spin_interval_relay_m_valueChanged(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>arg1);</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"></highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>on_spin_interval_data_d_valueChanged(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>arg1);</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>on_spin_interval_data_h_valueChanged(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>arg1);</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"></highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>on_spin_interval_data_m_valueChanged(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>arg1);</highlight></codeline>
+<codeline lineno="129"><highlight class="normal"></highlight></codeline>
+<codeline lineno="130"><highlight class="normal"></highlight><highlight class="keyword">private</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="134" refid="dc/d14/a00720_1a457799b6676119949ee5941f0f587a39" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="dc/d14/a00720_1a457799b6676119949ee5941f0f587a39" kindref="member">active_button</ref>;</highlight></codeline>
+<codeline lineno="138" refid="dc/d14/a00720_1ad311e6c11f36ec0be84c8f0081f581d6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="df/d7d/a00696" kindref="compound">module</ref><sp/><ref refid="dc/d14/a00720_1ad311e6c11f36ec0be84c8f0081f581d6" kindref="member">mod</ref>;</highlight></codeline>
+<codeline lineno="139"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"></highlight></codeline>
+<codeline lineno="141"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/>//<sp/>FORM_ADDMODULE_H</highlight></codeline>
+    </programlisting>
+    <location file="view/form_addmodule.h"/>
+  </compounddef>
+</doxygen>

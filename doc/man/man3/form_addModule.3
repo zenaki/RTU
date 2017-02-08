@@ -1,0 +1,834 @@
+.TH "form_addModule" 3 "Rabu 8 Februari 2017" "Version 1.0.2-4" "Sarasvati" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+form_addModule \- The \fBform_addModule\fP class\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <form_addmodule\&.h>\fP
+.PP
+Mewarisi QDialog\&.
+.SS "Fungsi Anggota Publik"
+.SS "Variabel Data"
+.SS "Slot Privat"
+.SS "Atribut Privat"
+.SH "Keterangan Lengkap"
+.PP 
+The \fBform_addModule\fP class\&. 
+.SH "Dokumentasi Konstruktor & Destruktor"
+.PP 
+.SS "\fBform_addModule\fP (QWidget * parent = \fC0\fP, bool create = \fCtrue\fP, QString address = \fC0\fP, int index = \fC0\fP)\fC [explicit]\fP"
+
+.PP
+\fBform_addModule\fP 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIparent\fP 
+.br
+\fIcreate\fP 
+.br
+\fIaddress\fP 
+.br
+\fIindex\fP 
+.RE
+.PP
+COMMUNICATION AND ENVIRONTMENT
+.PP
+COMMUNICATION
+.PP
+ENVIRONTMENT 
+.PP
+.nf
+4                                                                                        :
+5     QDialog(parent),
+6     ui(new Ui::form_addModule)
+7 {
+8     ui->setupUi(this);
+9 
+10     this->ui->edit_module_name->setValidator(new QRegExpValidator(QRegExp("^\\S{1,50}$"),this));
+11     this->ui->edit_sn->setValidator(new QRegExpValidator(QRegExp("^\\S{1,21}$"),this));
+12     this->ui->edit_server_address->setInputMask("000\&.000\&.000\&.000");
+13     this->ui->edit_file_address->setValidator(new QRegExpValidator(QRegExp("^\\S{1,20}$"),this));
+14 
+15     this->ui->edit_devicename_1->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
+16     this->ui->edit_devicename_2->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
+17     this->ui->edit_number_1->setValidator(new QRegExpValidator(QRegExp("^\\d{1,15}$"),this));
+18     this->ui->edit_number_2->setValidator(new QRegExpValidator(QRegExp("^\\d{1,15}$"),this));
+19     this->ui->edit_apn_1->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
+20     this->ui->edit_apn_2->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
+21     this->ui->edit_user_1->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
+22     this->ui->edit_user_2->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
+23     this->ui->edit_passwd_1->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
+24     this->ui->edit_passwd_2->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
+25 
+26     edit = !create;
+27     accept = 0;
+28 
+29     if (edit) {
+30         struct t_module tModule;
+31         mod\&.read_module(&tModule, address);
+32         currentFile = address;
+33         QString modules;
+34 
+35         this->on_ck_flag_active_gsm_2_clicked(tModule\&.flag_dual_gsm);
+36         this->on_cb_com_1_currentIndexChanged(tModule\&.flag_com_gsm_1);
+37         this->on_cb_com_2_currentIndexChanged(tModule\&.flag_com_gsm_2);
+38 
+39 //        this->ui->edit_module_name->setEnabled(false);
+40         modules\&.sprintf("%s", tModule\&.module_name);
+41         this->ui->edit_module_name->setText(modules);
+42         currentName = modules;
+43         modules\&.sprintf("%s", tModule\&.serial_number);
+44         this->ui->edit_sn->setText(modules);
+45         if (tModule\&.flag_dual_gsm == 1) {
+46             this->ui->ck_flag_active_gsm_2->setChecked(true);
+47         }
+48 //        modules\&.sprintf("%s", tModule\&.ip_address);
+49 //        this->ui->edit_ip_address->setText(modules);
+50         modules\&.sprintf("%s", tModule\&.server_address);
+51         this->ui->edit_server_address->setText(modules);
+52         modules\&.sprintf("%s", tModule\&.file_address);
+53         this->ui->edit_file_address->setText(modules);
+54         this->ui->cb_webclient->setCurrentIndex(tModule\&.flag_webclient);
+55         int s = 0; int m = 0; int h = 0; int d = 0;
+56         if (tModule\&.interval_relay <= 60) {
+57             this->ui->spin_interval_relay_s->setValue(tModule\&.interval_relay);
+58         } else {
+59             s = tModule\&.interval_relay;
+60             m = s / 60;
+61             for (int i = 0; i < m; i++) s = s - 60;
+62             if (m > 60) {
+63                 h = m / 60;
+64                 for (int i = 0; i < h; i++) m = m - 60;
+65                 if (h > 24) {
+66                     d = h / 24;
+67                     for (int i = 0; i < d; i++) h = h - 24;
+68                 }
+69             }
+70             this->ui->spin_interval_relay_s->setValue(s);
+71             this->ui->spin_interval_relay_m->setValue(m);
+72             this->ui->spin_interval_relay_h->setValue(h);
+73             this->ui->spin_interval_relay_d->setValue(d);
+74         }
+75         s = 0; m = 0; h = 0; d = 0;
+76         if (tModule\&.interval_data <= 60) {
+77             this->ui->spin_interval_data_s->setValue(tModule\&.interval_data);
+78         } else {
+79             s = tModule\&.interval_data;
+80             m = s / 60;
+81             for (int i = 0; i < m; i++) s = s - 60;
+82             if (m > 60) {
+83                 h = m / 60;
+84                 for (int i = 0; i < h; i++) m = m - 60;
+85                 if (h > 24) {
+86                     d = h / 24;
+87                     for (int i = 0; i < d; i++) h = h - 24;
+88                 }
+89             }
+90             this->ui->spin_interval_data_s->setValue(s);
+91             this->ui->spin_interval_data_m->setValue(m);
+92             this->ui->spin_interval_data_h->setValue(h);
+93             this->ui->spin_interval_data_d->setValue(d);
+94         }
+95         this->ui->cb_mode_http->setCurrentIndex(tModule\&.flag_mode_http);
+96         this->ui->spin_port->setValue(tModule\&.port);
+97         this->ui->spin_utc->setValue(tModule\&.utc);
+98 
+99         this->ui->cb_operator_1->setCurrentIndex(tModule\&.flag_gsm_1);
+100         modules\&.sprintf("%s", tModule\&.device_name_gsm_1);
+101         this->ui->edit_devicename_1->setText(modules);
+102         this->ui->cb_status_1->setCurrentIndex(tModule\&.flag_status_active_gsm_1);
+103         this->ui->cb_com_1->setCurrentIndex(tModule\&.flag_com_gsm_1);
+104         modules\&.sprintf("%s", tModule\&.number_gsm_1);
+105         this->ui->edit_number_1->setText(modules);
+106         modules\&.sprintf("%s", tModule\&.apn_gsm_1);
+107         this->ui->edit_apn_1->setText(modules);
+108         modules\&.sprintf("%s", tModule\&.user_gsm_1);
+109         this->ui->edit_user_1->setText(modules);
+110         modules\&.sprintf("%s", tModule\&.passwd_gsm_1);
+111         this->ui->edit_passwd_1->setText(modules);
+112 
+113         this->ui->cb_operator_2->setCurrentIndex(tModule\&.flag_gsm_2);
+114         modules\&.sprintf("%s", tModule\&.device_name_gsm_2);
+115         this->ui->edit_devicename_2->setText(modules);
+116         this->ui->cb_status_2->setCurrentIndex(tModule\&.flag_status_active_gsm_2);
+117         this->ui->cb_com_2->setCurrentIndex(tModule\&.flag_com_gsm_2);
+118         modules\&.sprintf("%s", tModule\&.number_gsm_2);
+119         this->ui->edit_number_2->setText(modules);
+120         modules\&.sprintf("%s", tModule\&.apn_gsm_2);
+121         this->ui->edit_apn_2->setText(modules);
+122         modules\&.sprintf("%s", tModule\&.user_gsm_2);
+123         this->ui->edit_user_2->setText(modules);
+124         modules\&.sprintf("%s", tModule\&.passwd_gsm_2);
+125         this->ui->edit_passwd_2->setText(modules);
+126 
+127         if (index == 1) {
+129             this->ui->edit_module_name->setEnabled(true);
+130             this->ui->edit_sn->setEnabled(true);
+131             this->ui->ck_flag_active_gsm_2->setHidden(false);
+132 
+133             this->setFixedWidth(640);
+134             this->setFixedHeight(765);
+135 
+136             this->ui->gbCom->setHidden(false);
+137             this->ui->gbEnv->setHidden(false);
+138         } else if (index == 2) {
+140             this->ui->edit_module_name->setEnabled(false);
+141             this->ui->edit_sn->setEnabled(false);
+142             this->ui->ck_flag_active_gsm_2->setHidden(false);
+143 
+144             this->setFixedWidth(640);
+145             this->setFixedHeight(445);
+146             this->ui->gbCom->setGeometry(20,70,601,331);
+147             this->ui->buttonBox->setGeometry(14,405,601,27);
+148             this->ui->gbCom->setHidden(false);
+149             this->ui->gbEnv->setHidden(true);
+150         } else if (index == 3) {
+152             this->ui->edit_module_name->setEnabled(true);
+153             this->ui->edit_sn->setEnabled(true);
+154             this->ui->ck_flag_active_gsm_2->setHidden(true);
+155             this->ui->gbCom->setHidden(true);
+156 
+157             this->ui->gbEnv->setGeometry(20,70,420,324);
+158             this->ui->buttonBox->setGeometry(10,398,430,27);
+159             this->setFixedWidth(459);
+160             this->setFixedHeight(433);
+161 
+162             this->ui->gbEnv->setHidden(false);
+163         }
+164     } else {
+165         this->ui->edit_module_name->setEnabled(true);
+166         this->ui->edit_sn->setEnabled(true);
+167         this->ui->ck_flag_active_gsm_2->setHidden(false);
+168 
+169         this->setFixedWidth(640);
+170         this->setFixedHeight(765);
+171 
+172         this->ui->gbCom->setHidden(false);
+173         this->ui->gbEnv->setHidden(false);
+174     }
+175     this->enabledButton();
+176     connect(ui->edit_module_name,SIGNAL(textChanged(const QString &)),this,SLOT(enabledButton()));
+177     connect(ui->edit_sn,SIGNAL(textChanged(const QString &)),this,SLOT(enabledButton()));
+178 
+179     connect(ui->edit_devicename_1,SIGNAL(textChanged(const QString &)),this,SLOT(enabledButton()));
+180     connect(ui->edit_number_1,SIGNAL(textChanged(const QString &)),this,SLOT(enabledButton()));
+181 
+182     connect(ui->edit_devicename_2,SIGNAL(textChanged(const QString &)),this,SLOT(enabledButton()));
+183     connect(ui->edit_number_2,SIGNAL(textChanged(const QString &)),this,SLOT(enabledButton()));
+184 
+185     if (ui->spin_interval_relay_d->value() > 0) {
+186         ui->spin_interval_relay_s->setRange(0, 60);
+187     } else {
+188         if (ui->spin_interval_relay_h->value() > 0) {
+189             ui->spin_interval_relay_s->setRange(0, 60);
+190         } else {
+191             if (ui->spin_interval_relay_m->value() > 0) {
+192                 ui->spin_interval_relay_s->setRange(0, 60);
+193             } else {
+194                 if (ui->spin_interval_relay_s->value() < 6) {
+195                     ui->spin_interval_relay_s->setValue(6);
+196                 }
+197                 ui->spin_interval_relay_s->setRange(6, 60);
+198             }
+199         }
+200     }
+201 
+202     if (ui->spin_interval_data_d->value() > 0) {
+203         ui->spin_interval_data_s->setRange(0, 60);
+204     } else {
+205         if (ui->spin_interval_data_h->value() > 0) {
+206             ui->spin_interval_data_s->setRange(0, 60);
+207         } else {
+208             if (ui->spin_interval_data_m->value() > 0) {
+209                 ui->spin_interval_data_s->setRange(0, 60);
+210             } else {
+211                 if (ui->spin_interval_data_s->value() < 6) {
+212                     ui->spin_interval_data_s->setValue(6);
+213                 }
+214                 ui->spin_interval_data_s->setRange(6, 60);
+215             }
+216         }
+217     }
+218 }
+.fi
+.SS "~\fBform_addModule\fP ()"
+
+.PP
+.nf
+221 {
+222     accept = 0;
+223     delete ui;
+224 }
+.fi
+.SH "Dokumentasi Anggota: Fungsi"
+.PP 
+.SS "void enabledButton ()\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+enabledButton 
+.PP
+.nf
+485 {
+486     if (!ui->edit_module_name->text()\&.isEmpty() &&
+487             !ui->edit_sn->text()\&.isEmpty() &&
+488             !ui->edit_devicename_1->text()\&.isEmpty() &&
+489             !ui->edit_number_1->text()\&.isEmpty()) {
+490         if (ui->ck_flag_active_gsm_2->isChecked()) {
+491             if (!ui->edit_devicename_2->text()\&.isEmpty() &&
+492                     !ui->edit_number_2->text()\&.isEmpty()) {
+493                 active_button = true;
+494             } else {
+495                 active_button = false;
+496             }
+497         } else {
+498             active_button = true;
+499         }
+500     } else {
+501         active_button = false;
+502     }
+503 }
+.fi
+.SS "void on_buttonBox_accepted ()\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+on_buttonBox_accepted GSM_1
+.PP
+GSM_2
+.PP
+----------------------------- WRITE ----------------------------
+.PP
+INPUT
+.PP
+OUTPUT
+.PP
+SOURCES
+.PP
+DATA 
+.PP
+.nf
+227 {
+228     if (!active_button) {
+229         QMessageBox::critical(this, tr("Form Critical!"), tr("Please complete this form !!", 0,0));
+230         return;
+231     }
+232     struct t_module tModule;
+233     QString newFiles;
+234     mod\&.read_module(&tModule, currentFile);
+235     strcpy(tModule\&.module_name, this->ui->edit_module_name->text()\&.toLatin1());
+236     newFiles\&.sprintf("m_%s\&.dbe", tModule\&.module_name);
+237 
+238     tModule\&.flag_active = 1;
+239     strcpy(tModule\&.module_name, this->ui->edit_module_name->text()\&.toLatin1());
+240     strcpy(tModule\&.serial_number, this->ui->edit_sn->text()\&.toLatin1());
+241 
+242 //    strcpy(tModule\&.ip_address, this->ui->edit_ip_address->text()\&.toLatin1());
+243     strcpy(tModule\&.server_address, this->ui->edit_server_address->text()\&.toLatin1());
+244     strcpy(tModule\&.file_address, this->ui->edit_file_address->text()\&.toLatin1());
+245     tModule\&.flag_webclient = this->ui->cb_webclient->currentIndex();
+246     strcpy(tModule\&.status_webclient, this->ui->cb_webclient->currentText()\&.toLatin1());
+247     tModule\&.interval_relay = this->ui->spin_interval_relay_s->value() + (this->ui->spin_interval_relay_m->value() * 60) + ((this->ui->spin_interval_relay_h->value() * 60) * 60) + (((this->ui->spin_interval_relay_d->value() * 24) * 60) * 60);
+248     tModule\&.interval_data = this->ui->spin_interval_data_s->value() + (this->ui->spin_interval_data_m->value() * 60) + ((this->ui->spin_interval_data_h->value() * 60) * 60) + (((this->ui->spin_interval_data_d->value() * 24) * 60) * 60);
+249     tModule\&.flag_mode_http = this->ui->cb_mode_http->currentIndex();
+250     strcpy(tModule\&.mode_http, this->ui->cb_mode_http->currentText()\&.toLatin1());
+251     tModule\&.port = this->ui->spin_port->value();
+252     tModule\&.utc = this->ui->spin_utc->value();
+253 
+254     if(this->ui->ck_flag_active_gsm_2->isChecked()) tModule\&.flag_dual_gsm = 1;
+255     else tModule\&.flag_dual_gsm = 0;
+256 
+258     tModule\&.flag_gsm_1 = this->ui->cb_operator_1->currentIndex();
+259     strcpy(tModule\&.name_gsm_1, this->ui->cb_operator_1->currentText()\&.toLatin1());
+260 
+261     strcpy(tModule\&.device_name_gsm_1, this->ui->edit_devicename_1->text()\&.toLatin1());
+262 
+263     tModule\&.flag_status_active_gsm_1 = this->ui->cb_status_1->currentIndex();
+264     strcpy(tModule\&.status_gsm_1, this->ui->cb_status_1->currentText()\&.toLatin1());
+265 
+266     tModule\&.flag_com_gsm_1 = this->ui->cb_com_1->currentIndex();
+267     strcpy(tModule\&.com_gsm_1, this->ui->cb_com_1->currentText()\&.toLatin1());
+268 
+269     strcpy(tModule\&.number_gsm_1, this->ui->edit_number_1->text()\&.toLatin1());
+270     if (tModule\&.flag_com_gsm_1 == 0)
+271     {
+272         strcpy(tModule\&.user_gsm_1, "-");
+273         strcpy(tModule\&.apn_gsm_1, "-");
+274         strcpy(tModule\&.passwd_gsm_1, "-");
+275     } else if (tModule\&.flag_com_gsm_1 == 1)
+276     {
+277         strcpy(tModule\&.user_gsm_1, this->ui->edit_user_1->text()\&.toLatin1());
+278         strcpy(tModule\&.apn_gsm_1, this->ui->edit_apn_1->text()\&.toLatin1());
+279         strcpy(tModule\&.passwd_gsm_1, this->ui->edit_passwd_1->text()\&.toLatin1());
+280     }
+281 
+283     if (tModule\&.flag_dual_gsm == 1) {
+284         tModule\&.flag_gsm_2 = this->ui->cb_operator_2->currentIndex();
+285         strcpy(tModule\&.name_gsm_2, this->ui->cb_operator_2->currentText()\&.toLatin1());
+286 
+287         strcpy(tModule\&.device_name_gsm_2, this->ui->edit_devicename_2->text()\&.toLatin1());
+288 
+289         tModule\&.flag_status_active_gsm_2 = this->ui->cb_status_2->currentIndex();
+290         strcpy(tModule\&.status_gsm_2, this->ui->cb_status_2->currentText()\&.toLatin1());
+291 
+292         tModule\&.flag_com_gsm_2 = this->ui->cb_com_2->currentIndex();
+293         strcpy(tModule\&.com_gsm_2, this->ui->cb_com_2->currentText()\&.toLatin1());
+294 
+295         strcpy(tModule\&.number_gsm_2, this->ui->edit_number_2->text()\&.toLatin1());
+296         if (tModule\&.flag_com_gsm_2 == 0) {
+297             strcpy(tModule\&.user_gsm_2, "-");
+298             strcpy(tModule\&.apn_gsm_2, "-");
+299             strcpy(tModule\&.passwd_gsm_2, "-");
+300         } else if (tModule\&.flag_com_gsm_2 == 1) {
+301             strcpy(tModule\&.user_gsm_2, this->ui->edit_user_2->text()\&.toLatin1());
+302             strcpy(tModule\&.apn_gsm_2, this->ui->edit_apn_2->text()\&.toLatin1());
+303             strcpy(tModule\&.passwd_gsm_2, this->ui->edit_passwd_2->text()\&.toLatin1());
+304         }
+305     } else {
+306         tModule\&.flag_gsm_2 = 0;
+307         strcpy(tModule\&.name_gsm_2,"-");
+308         strcpy(tModule\&.device_name_gsm_2,"-");
+309         tModule\&.flag_status_active_gsm_2 = 0;
+310         strcpy(tModule\&.status_gsm_2,"NOT ACTIVE");
+311         tModule\&.flag_com_gsm_2 = 0;
+312         strcpy(tModule\&.com_gsm_2,"GSM");
+313         strcpy(tModule\&.number_gsm_2,"-");
+314         strcpy(tModule\&.user_gsm_2, "-");
+315         strcpy(tModule\&.apn_gsm_2, "-");
+316         strcpy(tModule\&.passwd_gsm_2, "-");
+317     }
+318 
+320     bool cek = false;
+321     QDir path("\&.RTUdata/module");
+322     QStringList files = path\&.entryList(QDir::Files);
+323 
+324     newFiles\&.sprintf("m_%s\&.dbe", tModule\&.module_name);
+325 
+326     if (newFiles\&.indexOf(" ") > 0) {
+327         accept = 0;
+328         QMessageBox::information(this, tr("Form Information"), tr("Should not use spaces \&.\&.", 0,0));
+329         return;
+330     }
+331 
+332     /* cek apakah nama module sudah dipakai atau belum */
+333     for(int i = 0; i < files\&.count(); i++){
+334         if(newFiles == QString(files\&.at(i))) {
+335             cek = true;
+336             break;
+337         } else {
+338             cek = false;
+339         }
+340     }
+341     if (newFiles == currentName\&.prepend("m_")\&.append("\&.dbe")) cek = false;
+342 
+343     if (cek) {
+344         accept = 0;
+345         QMessageBox::information(this, tr("Form Information"), tr("Module name already in use \&.\&.", 0,0));
+346         return;
+347     } else {
+348         if (edit) {
+349             QFile CurrFile(currentFile);
+350             CurrFile\&.remove();
+351             QString CurrNameFile = CurrFile\&.fileName();
+352             CurrFile\&.rename(CurrNameFile, newFiles);
+353 //            CurrFile\&.close();
+354 
+355             mod\&.write_module(&tModule);
+356             QString pth; pth\&.sprintf("\&.RTUdata/module/m_%s\&.dbe",tModule\&.module_name);
+357             cryp code; code\&.encryp(pth);
+358 
+359 //            mod\&.update_module(&tModule, newFiles\&.prepend("\&.RTUdata/module/"));
+360 //            mod\&.update_communication(&tModule, newFiles\&.prepend("\&.RTUdata/module/"));
+361             accept = 1;
+362             currentFile = newFiles\&.prepend("\&.RTUdata/module/");
+363             close();
+364         } else {
+365             QString temp; int j = 0;
+367             tModule\&.Input\&.clear(); tModule\&.InputName\&.clear();
+368             tModule\&.jml_input_digital = 0; tModule\&.jml_input_analog = 0;
+369             for (int i = 1; i <= PIN_DIGITAL+PIN_ANALOG; i++) {
+370                 if (i <= PIN_DIGITAL) {
+371                     temp\&.sprintf("D;%d;0;0\&.000;0\&.000", i);
+372                     tModule\&.Input\&.insert(j, temp);
+373                     tModule\&.InputName\&.insert(j, "");
+374                     j++;
+375                     tModule\&.jml_input_digital++;
+376                 } else if (i > PIN_DIGITAL && i <= PIN_DIGITAL+PIN_ANALOG) {
+377                     temp\&.sprintf("A;%d;0;0\&.000;0\&.000", i);
+378                     tModule\&.Input\&.insert(j, temp);
+379                     tModule\&.InputName\&.insert(j, "");
+380                     j++;
+381                     tModule\&.jml_input_analog++;
+382                 }
+383             }
+384 
+386             tModule\&.Output\&.clear(); tModule\&.OutputName\&.clear();
+387             tModule\&.jml_output = 0;
+388             for (int i = 1; i <= PIN_OUTPUT; i++) {
+389                 temp\&.sprintf("R;%d;0;0\&.000;0\&.000", i);
+390                 tModule\&.Output\&.insert(i-1, temp);
+391                 tModule\&.OutputName\&.insert(i-1, "");
+392                 tModule\&.jml_output++;
+393             }
+394 
+396             for (int i = 0; i < DATA_PERIOD-4; i++) {
+397                 temp\&.sprintf("%d;;;0;0;0;;;0;0;0;", i+1);
+398                 tModule\&.sumber\&.insert(i, temp);
+399                 tModule\&.jml_sumber++;
+400             }
+401 
+403             for (int i = 0; i < DATA_PERIOD*6; i++) {
+404                 if (i <= PIN_DIGITAL) {
+405                     temp\&.sprintf("%d;%d;;0;-;-50;0;10;500;800;1000;%d", i+1, 1000+i+1, 1);
+406                     tModule\&.data\&.insert(i, temp);
+407                     tModule\&.jml_data++;
+408                 } else if (i > PIN_DIGITAL && i < PIN_DIGITAL+PIN_ANALOG) {
+409                     temp\&.sprintf("%d;%d;;0;-;-50;0;10;500;800;1000;%d", i+1, 1000+i+1, 1);
+410                     tModule\&.data\&.insert(i, temp);
+411                     tModule\&.jml_data++;
+412                 } else {
+413                     temp\&.sprintf("%d;%d;;0;-;-50;0;10;500;800;1000;%d", i+1, 1000+i+1, 0);
+414                     tModule\&.data\&.insert(i, temp);
+415                     tModule\&.jml_data++;
+416                 }
+417             }
+418 
+419             mod\&.write_module(&tModule);
+420             QString pth; pth\&.sprintf("\&.RTUdata/module/m_%s\&.dbe",tModule\&.module_name);
+421             cryp code; code\&.encryp(pth);
+422 
+423             accept = 1;
+424 
+425             close();
+426         }
+427     }
+428 }
+.fi
+.SS "void on_buttonBox_rejected ()\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+on_buttonBox_rejected 
+.PP
+.nf
+431 {
+432     accept = 0;
+433     close();
+434 }
+.fi
+.SS "void on_cb_com_1_currentIndexChanged (int index)\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+on_cb_com_1_currentIndexChanged 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIindex\fP 
+.RE
+.PP
+
+.PP
+.nf
+459 {
+460     if (index == 0) {
+461         this->ui->edit_user_1->setEnabled(false);
+462         this->ui->edit_apn_1->setEnabled(false);
+463         this->ui->edit_passwd_1->setEnabled(false);
+464     } else if (index == 1) {
+465         this->ui->edit_user_1->setEnabled(true);
+466         this->ui->edit_apn_1->setEnabled(true);
+467         this->ui->edit_passwd_1->setEnabled(true);
+468     }
+469 }
+.fi
+.SS "void on_cb_com_2_currentIndexChanged (int index)\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+on_cb_com_2_currentIndexChanged 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIindex\fP 
+.RE
+.PP
+
+.PP
+.nf
+472 {
+473     if (index == 0) {
+474         this->ui->edit_user_2->setEnabled(false);
+475         this->ui->edit_apn_2->setEnabled(false);
+476         this->ui->edit_passwd_2->setEnabled(false);
+477     } else if (index == 1) {
+478         this->ui->edit_user_2->setEnabled(true);
+479         this->ui->edit_apn_2->setEnabled(true);
+480         this->ui->edit_passwd_2->setEnabled(true);
+481     }
+482 }
+.fi
+.SS "void on_ck_flag_active_gsm_2_clicked (bool checked)\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+on_ck_flag_active_gsm_2_clicked 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIchecked\fP 
+.RE
+.PP
+
+.PP
+.nf
+437 {
+438     if(checked) flag_gsm_2_active = 1;
+439     else flag_gsm_2_active = 0;
+440 
+441     ui->label_6->setEnabled(checked);
+442     ui->label_7->setEnabled(checked);
+443     ui->label_8->setEnabled(checked);
+444     ui->label_9->setEnabled(checked);
+445     ui->label_10->setEnabled(checked);
+446     ui->label_17->setEnabled(checked);
+447     ui->label_18->setEnabled(checked);
+448     ui->label_20->setEnabled(checked);
+449 
+450     ui->cb_operator_2->setEnabled(checked);
+451     ui->edit_devicename_2->setEnabled(checked);
+452     ui->cb_status_2->setEnabled(checked);
+453     ui->cb_com_2->setEnabled(checked);
+454     ui->cb_com_2->setCurrentIndex(0);
+455     ui->edit_number_2->setEnabled(checked);
+456 }
+.fi
+.SS "void on_spin_interval_data_d_valueChanged (int arg1)\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+on_spin_interval_data_d_valueChanged 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIarg1\fP 
+.RE
+.PP
+
+.PP
+.nf
+566 {
+567     if (arg1 > 0) {
+568         ui->spin_interval_data_s->setRange(0, 60);
+569     } else {
+570         if (ui->spin_interval_data_h->value() > 0) {
+571             ui->spin_interval_data_s->setRange(0, 60);
+572         } else {
+573             if (ui->spin_interval_data_m->value() > 0) {
+574                 ui->spin_interval_data_s->setRange(0, 60);
+575             } else {
+576                 if (ui->spin_interval_data_s->value() < 6) {
+577                     ui->spin_interval_data_s->setValue(6);
+578                 }
+579                 ui->spin_interval_data_s->setRange(6, 60);
+580             }
+581         }
+582     }
+583 }
+.fi
+.SS "void on_spin_interval_data_h_valueChanged (int arg1)\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+on_spin_interval_data_h_valueChanged 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIarg1\fP 
+.RE
+.PP
+
+.PP
+.nf
+606 {
+607     if (arg1 > 0) {
+608         ui->spin_interval_data_s->setRange(0, 60);
+609     } else {
+610         if (ui->spin_interval_data_d->value() > 0) {
+611             ui->spin_interval_data_s->setRange(0, 60);
+612         } else {
+613             if (ui->spin_interval_data_m->value() > 0) {
+614                 ui->spin_interval_data_s->setRange(0, 60);
+615             } else {
+616                 if (ui->spin_interval_data_s->value() < 6) {
+617                     ui->spin_interval_data_s->setValue(7);
+618                 }
+619                 ui->spin_interval_data_s->setRange(6, 60);
+620             }
+621         }
+622     }
+623 }
+.fi
+.SS "void on_spin_interval_data_m_valueChanged (int arg1)\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+on_spin_interval_data_m_valueChanged 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIarg1\fP 
+.RE
+.PP
+
+.PP
+.nf
+586 {
+587     if (arg1 > 0) {
+588         ui->spin_interval_data_s->setRange(0, 60);
+589     } else {
+590         if (ui->spin_interval_data_d->value() > 0) {
+591             ui->spin_interval_data_s->setRange(0, 60);
+592         } else {
+593             if (ui->spin_interval_data_h->value() > 0) {
+594                 ui->spin_interval_data_s->setRange(0, 60);
+595             } else {
+596                 if (ui->spin_interval_data_s->value() < 6) {
+597                     ui->spin_interval_data_s->setValue(6);
+598                 }
+599                 ui->spin_interval_data_s->setRange(6, 60);
+600             }
+601         }
+602     }
+603 }
+.fi
+.SS "void on_spin_interval_relay_d_valueChanged (int arg1)\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+on_spin_interval_relay_d_valueChanged 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIarg1\fP 
+.RE
+.PP
+
+.PP
+.nf
+506 {
+507     if (arg1 > 0) {
+508         ui->spin_interval_relay_s->setRange(0, 60);
+509     } else {
+510         if (ui->spin_interval_relay_h->value() > 0) {
+511             ui->spin_interval_relay_s->setRange(0, 60);
+512         } else {
+513             if (ui->spin_interval_relay_m->value() > 0) {
+514                 ui->spin_interval_relay_s->setRange(0, 60);
+515             } else {
+516                 if (ui->spin_interval_relay_s->value() < 6) {
+517                     ui->spin_interval_relay_s->setValue(6);
+518                 }
+519                 ui->spin_interval_relay_s->setRange(6, 60);
+520             }
+521         }
+522     }
+523 }
+.fi
+.SS "void on_spin_interval_relay_h_valueChanged (int arg1)\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+on_spin_interval_relay_h_valueChanged 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIarg1\fP 
+.RE
+.PP
+
+.PP
+.nf
+546 {
+547     if (arg1 > 0) {
+548         ui->spin_interval_relay_s->setRange(0, 60);
+549     } else {
+550         if (ui->spin_interval_relay_d->value() > 0) {
+551             ui->spin_interval_relay_s->setRange(0, 60);
+552         } else {
+553             if (ui->spin_interval_relay_m->value() > 0) {
+554                 ui->spin_interval_relay_s->setRange(0, 60);
+555             } else {
+556                 if (ui->spin_interval_relay_s->value() < 6) {
+557                     ui->spin_interval_relay_s->setValue(7);
+558                 }
+559                 ui->spin_interval_relay_s->setRange(6, 60);
+560             }
+561         }
+562     }
+563 }
+.fi
+.SS "void on_spin_interval_relay_m_valueChanged (int arg1)\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+on_spin_interval_relay_m_valueChanged 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIarg1\fP 
+.RE
+.PP
+
+.PP
+.nf
+526 {
+527     if (arg1 > 0) {
+528         ui->spin_interval_relay_s->setRange(0, 60);
+529     } else {
+530         if (ui->spin_interval_relay_d->value() > 0) {
+531             ui->spin_interval_relay_s->setRange(0, 60);
+532         } else {
+533             if (ui->spin_interval_relay_h->value() > 0) {
+534                 ui->spin_interval_relay_s->setRange(0, 60);
+535             } else {
+536                 if (ui->spin_interval_relay_s->value() < 6) {
+537                     ui->spin_interval_relay_s->setValue(6);
+538                 }
+539                 ui->spin_interval_relay_s->setRange(6, 60);
+540             }
+541         }
+542     }
+543 }
+.fi
+.SH "Dokumentasi Variabel"
+.PP 
+.SS "int accept"
+
+.PP
+accept 
+.SS "bool active_button\fC [private]\fP"
+
+.PP
+active_button 
+.SS "QString currentFile"
+
+.PP
+currentFile 
+.SS "QString currentName"
+
+.PP
+currentName 
+.SS "bool edit"
+
+.PP
+edit 
+.SS "int flag_gsm_2_active"
+
+.PP
+flag_gsm_2_active 
+.SS "\fBmodule\fP mod\fC [private]\fP"
+
+.PP
+mod 
+.SS "Ui::form_addModule* ui"
+
+.PP
+ui 
+
+.SH "Penulis"
+.PP 
+Dibangkitkan secara otomatis oleh Doxygen untuk Sarasvati dari kode sumber\&.

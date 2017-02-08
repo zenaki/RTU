@@ -1,0 +1,31 @@
+.TH "main.cpp" 3 "Rabu 8 Februari 2017" "Version 1.0.2-4" "Sarasvati" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+main.cpp
+.SH SYNOPSIS
+.br
+.PP
+.SH "Dokumentasi Fungsi"
+.PP 
+.SS "int main (int argc, char * argv[])"
+FOR DEPLOY 
+.PP
+.nf
+6 {
+7     QApplication a(argc, argv);
+9 
+10 //    QApplication::setLibraryPaths(QStringList("/usr/lib/x86_64-linux-gnu"));
+11 //    QString Path_Plugins = QLibraryInfo::location(QLibraryInfo::PrefixPath);
+12 //    qDebug() << "Path_Plugins = " + Path_Plugins;
+13 //    QString qt_conf_path =  QCoreApplication::applicationDirPath() + QDir::separator() + "qt\&.conf";
+15     loginForm l;
+16     //Comment Baru
+17     l\&.show();
+18 
+19     return a\&.exec();
+20 }
+.fi
+.SH "Penulis"
+.PP 
+Dibangkitkan secara otomatis oleh Doxygen untuk Sarasvati dari kode sumber\&.

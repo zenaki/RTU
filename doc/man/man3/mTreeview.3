@@ -1,0 +1,89 @@
+.TH "mTreeview" 3 "Rabu 8 Februari 2017" "Version 1.0.2-4" "Sarasvati" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+mTreeview \- The \fBmTreeview\fP class\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <mtreeview\&.h>\fP
+.SS "Fungsi Anggota Publik"
+.SH "Keterangan Lengkap"
+.PP 
+The \fBmTreeview\fP class\&. 
+.SH "Dokumentasi Konstruktor & Destruktor"
+.PP 
+.SS "\fBmTreeview\fP ()"
+
+.PP
+\fBmTreeview\fP 
+.PP
+.nf
+4 {
+5 
+6 }
+.fi
+.SH "Dokumentasi Anggota: Fungsi"
+.PP 
+.SS "void add_firstItem (QStandardItemModel * tree, QTreeView * treeView, QString name)"
+
+.PP
+add_firstItem 
+.PP
+\fBParameter:\fP
+.RS 4
+\fItree\fP 
+.br
+\fItreeView\fP 
+.br
+\fIname\fP 
+.RE
+.PP
+
+.PP
+.nf
+8                                                                                         {
+9     QStandardItem *item;
+10 
+11     item = new QStandardItem(name);
+12     tree->appendRow(item);
+13 
+14     treeView->setModel(tree);
+15 }
+.fi
+.SS "void appendItem (QStandardItemModel * tree, QTreeView * treeView, QString name)"
+
+.PP
+appendItem 
+.PP
+\fBParameter:\fP
+.RS 4
+\fItree\fP 
+.br
+\fItreeView\fP 
+.br
+\fIname\fP 
+.RE
+.PP
+
+.PP
+.nf
+17                                                                                      {
+18     QStandardItem *sd;
+19     QStandardItem *item;
+20 
+21     item = new QStandardItem(name);
+22 
+23     sd = tree->itemFromIndex(treeView->indexAt(QPoint(0,0)));
+24     sd->appendRow(item);
+25 
+26     treeView->setModel(tree);
+27 }
+.fi
+
+
+.SH "Penulis"
+.PP 
+Dibangkitkan secara otomatis oleh Doxygen untuk Sarasvati dari kode sumber\&.

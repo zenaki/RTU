@@ -1,0 +1,2108 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.14">
+  <compounddef id="d0/d72/a00724" kind="class" language="C++" prot="public">
+    <compoundname>formModule</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">QDialog</basecompoundref>
+    <includes refid="da/d2a/a00086" local="no">formmodule.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="d0/d72/a00724_1a793fea3deba97903462fb9a9be85925c" prot="public" static="no" mutable="no">
+        <type>Ui::formModule*</type>
+        <definition>Ui::formModule* ui</definition>
+        <argsstring></argsstring>
+        <name>ui</name>
+        <briefdescription>
+<para>ui </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="50" column="1" bodyfile="view/formmodule.h" bodystart="50" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1ac53e26fb1018986c8fd196e7a0f901a7" prot="public" static="no" mutable="no">
+        <type>wait_process*</type>
+        <definition>wait_process* wait</definition>
+        <argsstring></argsstring>
+        <name>wait</name>
+        <briefdescription>
+<para>wait </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="65" column="1" bodyfile="view/formmodule.h" bodystart="65" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="d0/d72/a00724_1a3454a823ee99614db3c2465683adf9e4" prot="private" static="no" mutable="no">
+        <type><ref refid="df/d46/a00664" kindref="compound">worker</ref>*</type>
+        <definition>worker* work</definition>
+        <argsstring></argsstring>
+        <name>work</name>
+        <briefdescription>
+<para>work </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="161" column="1" bodyfile="view/formmodule.h" bodystart="161" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a2206794fe463f942029e9014b4695e77" prot="private" static="no" mutable="no">
+        <type><ref refid="dc/d14/a00720" kindref="compound">form_addModule</ref>*</type>
+        <definition>form_addModule* faddModule</definition>
+        <argsstring></argsstring>
+        <name>faddModule</name>
+        <briefdescription>
+<para>faddModule </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="165" column="1" bodyfile="view/formmodule.h" bodystart="165" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a252eee4d930fd72dcaee0d1770bccf26" prot="private" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString module_name</definition>
+        <argsstring></argsstring>
+        <name>module_name</name>
+        <briefdescription>
+<para>module_name </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="169" column="1" bodyfile="view/formmodule.h" bodystart="169" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a2ec5eda86921cdd4745d0be05c3d2589" prot="private" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString Address_Module</definition>
+        <argsstring></argsstring>
+        <name>Address_Module</name>
+        <briefdescription>
+<para>Address_Module. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="174" column="1" bodyfile="view/formmodule.h" bodystart="174" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a7090f1cfcc02e692c55ccde0748d8067" prot="private" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString NoSeri</definition>
+        <argsstring></argsstring>
+        <name>NoSeri</name>
+        <briefdescription>
+<para>NoSeri. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="178" column="1" bodyfile="view/formmodule.h" bodystart="178" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1ad311e6c11f36ec0be84c8f0081f581d6" prot="private" static="no" mutable="no">
+        <type><ref refid="df/d7d/a00696" kindref="compound">module</ref></type>
+        <definition>module mod</definition>
+        <argsstring></argsstring>
+        <name>mod</name>
+        <briefdescription>
+<para>mod </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="182" column="1" bodyfile="view/formmodule.h" bodystart="182" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a38f884defdc7a5543ba1ab05e85f7709" prot="private" static="no" mutable="no">
+        <type>QSerialPort*</type>
+        <definition>QSerialPort* Serial_Com</definition>
+        <argsstring></argsstring>
+        <name>Serial_Com</name>
+        <briefdescription>
+<para>Serial_Com. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="186" column="1" bodyfile="view/formmodule.h" bodystart="186" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1af7c1508aa267dddddca8c5a8a3790e35" prot="private" static="no" mutable="no">
+        <type><ref refid="dc/d85/a00736" kindref="compound">ProgressDialog</ref>*</type>
+        <definition>ProgressDialog* progress_dialog</definition>
+        <argsstring></argsstring>
+        <name>progress_dialog</name>
+        <briefdescription>
+<para>progress_dialog </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="190" column="1" bodyfile="view/formmodule.h" bodystart="190" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a4de9739e415b4655cd96b34a912a150a" prot="private" static="no" mutable="no">
+        <type><ref refid="d4/db8/a00732" kindref="compound">MainWindow</ref>*</type>
+        <definition>MainWindow* Main</definition>
+        <argsstring></argsstring>
+        <name>Main</name>
+        <briefdescription>
+<para>Main. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="196" column="1" bodyfile="view/formmodule.h" bodystart="196" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1aafad695f91953cdb1d29100842ce5009" prot="private" static="no" mutable="no">
+        <type><ref refid="d5/d39/a00676" kindref="compound">serial</ref>*</type>
+        <definition>serial* Serial</definition>
+        <argsstring></argsstring>
+        <name>Serial</name>
+        <briefdescription>
+<para>Serial. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="200" column="1" bodyfile="view/formmodule.h" bodystart="200" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a898cbe894bba4c03fc02c998a80a4396" prot="private" static="no" mutable="no">
+        <type><ref refid="d0/d15/a00700" kindref="compound">setting</ref>*</type>
+        <definition>setting* Setting</definition>
+        <argsstring></argsstring>
+        <name>Setting</name>
+        <briefdescription>
+<para>Setting. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="204" column="1" bodyfile="view/formmodule.h" bodystart="204" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a81a2b6f0afb6b4c081bfc00b46549770" prot="private" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString Message</definition>
+        <argsstring></argsstring>
+        <name>Message</name>
+        <briefdescription>
+<para>Message. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="209" column="1" bodyfile="view/formmodule.h" bodystart="209" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a219d789cfe5fd0839493002866c3c6c0" prot="private" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString Request</definition>
+        <argsstring></argsstring>
+        <name>Request</name>
+        <briefdescription>
+<para>Request. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="213" column="1" bodyfile="view/formmodule.h" bodystart="213" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1abde5caaaeb749f8c6b484527cb0564e9" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int indx</definition>
+        <argsstring></argsstring>
+        <name>indx</name>
+        <briefdescription>
+<para>indx </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="217" column="1" bodyfile="view/formmodule.h" bodystart="217" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a65f3a8178e1f997a7a19a988bb0f4e1a" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int diff</definition>
+        <argsstring></argsstring>
+        <name>diff</name>
+        <briefdescription>
+<para>diff </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="221" column="1" bodyfile="view/formmodule.h" bodystart="221" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1adb7a760512715e86f925f8a8d4a15ba8" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int reset</definition>
+        <argsstring></argsstring>
+        <name>reset</name>
+        <briefdescription>
+<para>reset </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="225" column="1" bodyfile="view/formmodule.h" bodystart="225" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1aac87a1d12529cca1679913bd7deba0fe" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool timeout</definition>
+        <argsstring></argsstring>
+        <name>timeout</name>
+        <briefdescription>
+<para>timeout </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="229" column="1" bodyfile="view/formmodule.h" bodystart="229" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a8801db0cd597fc2471a1c16f359b45f8" prot="private" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString type</definition>
+        <argsstring></argsstring>
+        <name>type</name>
+        <briefdescription>
+<para>type </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="233" column="1" bodyfile="view/formmodule.h" bodystart="233" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1ad4e88c676dc01a2835fec63d73490777" prot="private" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString tmp</definition>
+        <argsstring></argsstring>
+        <name>tmp</name>
+        <briefdescription>
+<para>tmp </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="237" column="1" bodyfile="view/formmodule.h" bodystart="237" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1af783378857445c8dcdafe02fcfefcb67" prot="private" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString tmp2</definition>
+        <argsstring></argsstring>
+        <name>tmp2</name>
+        <briefdescription>
+<para>tmp2 </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="241" column="1" bodyfile="view/formmodule.h" bodystart="241" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a288b834f8b483958be715bc77558bf46" prot="private" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString str</definition>
+        <argsstring></argsstring>
+        <name>str</name>
+        <briefdescription>
+<para>str </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="245" column="1" bodyfile="view/formmodule.h" bodystart="245" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1afcf373fb746a3e9b3f45756b3516d3fb" prot="private" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString str2</definition>
+        <argsstring></argsstring>
+        <name>str2</name>
+        <briefdescription>
+<para>str2 </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="249" column="1" bodyfile="view/formmodule.h" bodystart="249" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1ac217dbb18b95c2561203998addb79265" prot="private" static="no" mutable="no">
+        <type>QStringList</type>
+        <definition>QStringList list</definition>
+        <argsstring></argsstring>
+        <name>list</name>
+        <briefdescription>
+<para>list </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="253" column="1" bodyfile="view/formmodule.h" bodystart="253" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a87bc89f6ad394ede668ae6c27550ae7a" prot="private" static="no" mutable="no">
+        <type>QStringList</type>
+        <definition>QStringList list2</definition>
+        <argsstring></argsstring>
+        <name>list2</name>
+        <briefdescription>
+<para>list2 </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="257" column="1" bodyfile="view/formmodule.h" bodystart="257" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a0a4001078da73398d49b9470fcccb48a" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool fail</definition>
+        <argsstring></argsstring>
+        <name>fail</name>
+        <briefdescription>
+<para>fail </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="261" column="1" bodyfile="view/formmodule.h" bodystart="261" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1af287bc8596383f162b2b900a54c7ee4a" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool cancel</definition>
+        <argsstring></argsstring>
+        <name>cancel</name>
+        <briefdescription>
+<para>cancel </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="265" column="1" bodyfile="view/formmodule.h" bodystart="265" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a1b697d6d47d2c38f3df48d6fc76b91df" prot="private" static="no" mutable="no">
+        <type>QCheckBox*</type>
+        <definition>QCheckBox* check_input[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>check_input</name>
+        <briefdescription>
+<para>check_input </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="322" column="1" bodyfile="view/formmodule.h" bodystart="322" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a754a623ea16722d1ab2ddc1c06ca9fbf" prot="private" static="no" mutable="no">
+        <type>QLineEdit*</type>
+        <definition>QLineEdit* name_input[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>name_input</name>
+        <briefdescription>
+<para>name_input </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="326" column="1" bodyfile="view/formmodule.h" bodystart="326" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a0b7c01bcb3d2e680f5b1666987e31dfe" prot="private" static="no" mutable="no">
+        <type>QComboBox*</type>
+        <definition>QComboBox* type_input[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>type_input</name>
+        <briefdescription>
+<para>type_input </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="330" column="1" bodyfile="view/formmodule.h" bodystart="330" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1aeadb38dbcaf5d566a45f26c7602f49c5" prot="private" static="no" mutable="no">
+        <type>QComboBox*</type>
+        <definition>QComboBox* state_input[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>state_input</name>
+        <briefdescription>
+<para>state_input </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="334" column="1" bodyfile="view/formmodule.h" bodystart="334" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a503c7417f3274c6a04a9b1abf11ca98e" prot="private" static="no" mutable="no">
+        <type>QDoubleSpinBox*</type>
+        <definition>QDoubleSpinBox* calib_m[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>calib_m</name>
+        <briefdescription>
+<para>calib_m </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="338" column="1" bodyfile="view/formmodule.h" bodystart="338" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a9611e5152be5201f99dfcea81cf44960" prot="private" static="no" mutable="no">
+        <type>QDoubleSpinBox*</type>
+        <definition>QDoubleSpinBox* calib_x[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>calib_x</name>
+        <briefdescription>
+<para>calib_x </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="342" column="1" bodyfile="view/formmodule.h" bodystart="342" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1ad978b76b5e66ebfea9d1b295db0e94d9" prot="private" static="no" mutable="no">
+        <type>QComboBox*</type>
+        <definition>QComboBox* reg_input[60]</definition>
+        <argsstring>[60]</argsstring>
+        <name>reg_input</name>
+        <briefdescription>
+<para>reg_input </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="346" column="1" bodyfile="view/formmodule.h" bodystart="346" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a2d39f5b838aef1f517d1fb6304fad44f" prot="private" static="no" mutable="no">
+        <type>QSignalMapper*</type>
+        <definition>QSignalMapper* SigMapReg_input</definition>
+        <argsstring></argsstring>
+        <name>SigMapReg_input</name>
+        <briefdescription>
+<para>SigMapReg_input. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="350" column="1" bodyfile="view/formmodule.h" bodystart="350" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1ae1e85dd6318532ef8ec461c73f37a1ef" prot="private" static="no" mutable="no">
+        <type>QSignalMapper*</type>
+        <definition>QSignalMapper* SigMapState_input</definition>
+        <argsstring></argsstring>
+        <name>SigMapState_input</name>
+        <briefdescription>
+<para>SigMapState_input. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="354" column="1" bodyfile="view/formmodule.h" bodystart="354" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a14bb15711cec698532f41b81dcbb7f23" prot="private" static="no" mutable="no">
+        <type>QCheckBox*</type>
+        <definition>QCheckBox* check_output[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>check_output</name>
+        <briefdescription>
+<para>check_output </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="360" column="1" bodyfile="view/formmodule.h" bodystart="360" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1abae1b4ef53dd3b43a4410940e1e9df80" prot="private" static="no" mutable="no">
+        <type>QLineEdit*</type>
+        <definition>QLineEdit* name_output[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>name_output</name>
+        <briefdescription>
+<para>name_output </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="364" column="1" bodyfile="view/formmodule.h" bodystart="364" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a99f6254212921990353b45c9c128c14d" prot="private" static="no" mutable="no">
+        <type>QLineEdit*</type>
+        <definition>QLineEdit* type_output[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>type_output</name>
+        <briefdescription>
+<para>type_output </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="368" column="1" bodyfile="view/formmodule.h" bodystart="368" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a4020c69dca4d3e22ff065a8ff885b7d7" prot="private" static="no" mutable="no">
+        <type>QComboBox*</type>
+        <definition>QComboBox* state_output[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>state_output</name>
+        <briefdescription>
+<para>state_output </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="372" column="1" bodyfile="view/formmodule.h" bodystart="372" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a70008dbf502d0a602989b01317be4de8" prot="private" static="no" mutable="no">
+        <type>QComboBox*</type>
+        <definition>QComboBox* control[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>control</name>
+        <briefdescription>
+<para>control </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="376" column="1" bodyfile="view/formmodule.h" bodystart="376" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a2f7ea774f3ea50ab8f9791bcf148bbd3" prot="private" static="no" mutable="no">
+        <type>QSpinBox*</type>
+        <definition>QSpinBox* reg_output[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>reg_output</name>
+        <briefdescription>
+<para>reg_output </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="380" column="1" bodyfile="view/formmodule.h" bodystart="380" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1afdabed0cad5b4b0a25ae1731d779f8b4" prot="private" static="no" mutable="no">
+        <type>QCheckBox*</type>
+        <definition>QCheckBox* check_source[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>check_source</name>
+        <briefdescription>
+<para>check_source </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="386" column="1" bodyfile="view/formmodule.h" bodystart="386" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a43c73cb5499951c5787dd9f591bafabb" prot="private" static="no" mutable="no">
+        <type>QPushButton*</type>
+        <definition>QPushButton* delete_source[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>delete_source</name>
+        <briefdescription>
+<para>delete_source </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="390" column="1" bodyfile="view/formmodule.h" bodystart="390" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a3a0a9f6664ead4d4c68309dfa7f46b38" prot="private" static="no" mutable="no">
+        <type>QSignalMapper*</type>
+        <definition>QSignalMapper* SigMapDel_Source</definition>
+        <argsstring></argsstring>
+        <name>SigMapDel_Source</name>
+        <briefdescription>
+<para>SigMapDel_Source. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="394" column="1" bodyfile="view/formmodule.h" bodystart="394" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a7c82e66b29c88ca7fbda2b1c15ecca77" prot="private" static="no" mutable="no">
+        <type>QLineEdit*</type>
+        <definition>QLineEdit* name_source[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>name_source</name>
+        <briefdescription>
+<para>name_source </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="398" column="1" bodyfile="view/formmodule.h" bodystart="398" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1afcc0b8468bb89aa0e1707e27a14ec853" prot="private" static="no" mutable="no">
+        <type>QLineEdit*</type>
+        <definition>QLineEdit* ip_source[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>ip_source</name>
+        <briefdescription>
+<para>ip_source </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="402" column="1" bodyfile="view/formmodule.h" bodystart="402" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a98b6c204bd11fa6148e5870b30b65fcb" prot="private" static="no" mutable="no">
+        <type>QSpinBox*</type>
+        <definition>QSpinBox* port_source[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>port_source</name>
+        <briefdescription>
+<para>port_source </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="406" column="1" bodyfile="view/formmodule.h" bodystart="406" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1acc987cc94bcad6fef20586c4b9195ce8" prot="private" static="no" mutable="no">
+        <type>QComboBox*</type>
+        <definition>QComboBox* state_source[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>state_source</name>
+        <briefdescription>
+<para>state_source </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="410" column="1" bodyfile="view/formmodule.h" bodystart="410" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a7ba1c20e754bb82415998a6d6f5685b7" prot="private" static="no" mutable="no">
+        <type>QComboBox*</type>
+        <definition>QComboBox* type_source[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>type_source</name>
+        <briefdescription>
+<para>type_source </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="414" column="1" bodyfile="view/formmodule.h" bodystart="414" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a9e8679c73989c6a4408dee2a8284b603" prot="private" static="no" mutable="no">
+        <type>QSpinBox*</type>
+        <definition>QSpinBox* id_source[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>id_source</name>
+        <briefdescription>
+<para>id_source </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="418" column="1" bodyfile="view/formmodule.h" bodystart="418" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1af7cd5904f1ce24976e466a31df73c3f2" prot="private" static="no" mutable="no">
+        <type>QSpinBox*</type>
+        <definition>QSpinBox* sensor_reg_source[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>sensor_reg_source</name>
+        <briefdescription>
+<para>sensor_reg_source </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="422" column="1" bodyfile="view/formmodule.h" bodystart="422" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a4b749e58ace7722f1fc0f281138f6045" prot="private" static="no" mutable="no">
+        <type>QComboBox*</type>
+        <definition>QComboBox* command_source[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>command_source</name>
+        <briefdescription>
+<para>command_source </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="427" column="1" bodyfile="view/formmodule.h" bodystart="427" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1ac8ecd72a8882b4ff6feadd5e34f043d4" prot="private" static="no" mutable="no">
+        <type>QComboBox*</type>
+        <definition>QComboBox* length_source[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>length_source</name>
+        <briefdescription>
+<para>length_source </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="431" column="1" bodyfile="view/formmodule.h" bodystart="431" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a3261cca8632e4dff62e5408e427ac865" prot="private" static="no" mutable="no">
+        <type>QSignalMapper*</type>
+        <definition>QSignalMapper* SigMap_length_source</definition>
+        <argsstring></argsstring>
+        <name>SigMap_length_source</name>
+        <briefdescription>
+<para>SigMap_length_source. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="435" column="1" bodyfile="view/formmodule.h" bodystart="435" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1ac7820c600ea8f37afde414081fb46131" prot="private" static="no" mutable="no">
+        <type>QComboBox*</type>
+        <definition>QComboBox* target_reg_source[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>target_reg_source</name>
+        <briefdescription>
+<para>target_reg_source </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="439" column="1" bodyfile="view/formmodule.h" bodystart="439" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a54d7deabef3178abe6e41bd6a353abc9" prot="private" static="no" mutable="no">
+        <type>QSignalMapper*</type>
+        <definition>QSignalMapper* SigMap_tReg_source</definition>
+        <argsstring></argsstring>
+        <name>SigMap_tReg_source</name>
+        <briefdescription>
+<para>SigMap_tReg_source. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="443" column="1" bodyfile="view/formmodule.h" bodystart="443" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1ac4d1ace56eef18dad4432d63507629ca" prot="private" static="no" mutable="no">
+        <type>QCheckBox*</type>
+        <definition>QCheckBox* check_alarm[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>check_alarm</name>
+        <briefdescription>
+<para>check_alarm </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="456" column="1" bodyfile="view/formmodule.h" bodystart="456" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a1ded9af07cd8dc25834fb86fc2478ad1" prot="private" static="no" mutable="no">
+        <type>QPushButton*</type>
+        <definition>QPushButton* delete_alarm[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>delete_alarm</name>
+        <briefdescription>
+<para>delete_alarm </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="460" column="1" bodyfile="view/formmodule.h" bodystart="460" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1aa3eb724184c999f4faef86b742d905a3" prot="private" static="no" mutable="no">
+        <type>QSignalMapper*</type>
+        <definition>QSignalMapper* SigMapDel_alarm</definition>
+        <argsstring></argsstring>
+        <name>SigMapDel_alarm</name>
+        <briefdescription>
+<para>SigMapDel_alarm. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="464" column="1" bodyfile="view/formmodule.h" bodystart="464" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a803f829c0405860fd27534150b00aa50" prot="private" static="no" mutable="no">
+        <type>QLineEdit*</type>
+        <definition>QLineEdit* name_alarm[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>name_alarm</name>
+        <briefdescription>
+<para>name_alarm </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="468" column="1" bodyfile="view/formmodule.h" bodystart="468" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a56fc6ae9e0813afb29a3cf596c62bd4b" prot="private" static="no" mutable="no">
+        <type>QComboBox*</type>
+        <definition>QComboBox* state_alarm[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>state_alarm</name>
+        <briefdescription>
+<para>state_alarm </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="472" column="1" bodyfile="view/formmodule.h" bodystart="472" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1aba3da9aba81fe7f2bda34dc8dafd0360" prot="private" static="no" mutable="no">
+        <type>QComboBox*</type>
+        <definition>QComboBox* input_alarm[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>input_alarm</name>
+        <briefdescription>
+<para>input_alarm </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="476" column="1" bodyfile="view/formmodule.h" bodystart="476" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a7bdf57dea543040c7a98714bd2fdde6c" prot="private" static="no" mutable="no">
+        <type>QSignalMapper*</type>
+        <definition>QSignalMapper* SigMapInput_alarm</definition>
+        <argsstring></argsstring>
+        <name>SigMapInput_alarm</name>
+        <briefdescription>
+<para>SigMapInput_alarm. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="480" column="1" bodyfile="view/formmodule.h" bodystart="480" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a0389699393c1826d1076f9f7ef66f76d" prot="private" static="no" mutable="no">
+        <type>QComboBox*</type>
+        <definition>QComboBox* output_alarm[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>output_alarm</name>
+        <briefdescription>
+<para>output_alarm </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="484" column="1" bodyfile="view/formmodule.h" bodystart="484" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1ac2dfb6ab10293960f4f7fe7f7994db54" prot="private" static="no" mutable="no">
+        <type>QLineEdit*</type>
+        <definition>QLineEdit* range_l[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>range_l</name>
+        <briefdescription>
+<para>range_l </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="488" column="1" bodyfile="view/formmodule.h" bodystart="488" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1ad3473ce3ca17aac41f20f377a8fc2045" prot="private" static="no" mutable="no">
+        <type>QLineEdit*</type>
+        <definition>QLineEdit* batas_ll[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>batas_ll</name>
+        <briefdescription>
+<para>batas_ll </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="492" column="1" bodyfile="view/formmodule.h" bodystart="492" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1ad435a7113d1b70a836fe598738262c9e" prot="private" static="no" mutable="no">
+        <type>QLineEdit*</type>
+        <definition>QLineEdit* batas_l[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>batas_l</name>
+        <briefdescription>
+<para>batas_l </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="496" column="1" bodyfile="view/formmodule.h" bodystart="496" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a454b4084bbd279abd677ed60069ef5ab" prot="private" static="no" mutable="no">
+        <type>QLineEdit*</type>
+        <definition>QLineEdit* batas_h[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>batas_h</name>
+        <briefdescription>
+<para>batas_h </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="500" column="1" bodyfile="view/formmodule.h" bodystart="500" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1ac7b282f672ada8c2b470789e23cae6ec" prot="private" static="no" mutable="no">
+        <type>QLineEdit*</type>
+        <definition>QLineEdit* batas_hh[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>batas_hh</name>
+        <briefdescription>
+<para>batas_hh </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="504" column="1" bodyfile="view/formmodule.h" bodystart="504" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1ab5c3d6a6cc5ec3c54f16a302bec84203" prot="private" static="no" mutable="no">
+        <type>QLineEdit*</type>
+        <definition>QLineEdit* range_h[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>range_h</name>
+        <briefdescription>
+<para>range_h </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="508" column="1" bodyfile="view/formmodule.h" bodystart="508" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a89194048989515b233e2f952c47b2c8e" prot="private" static="no" mutable="no">
+        <type>QCheckBox*</type>
+        <definition>QCheckBox* check_data_s[60]</definition>
+        <argsstring>[60]</argsstring>
+        <name>check_data_s</name>
+        <briefdescription>
+<para>check_data_s </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="514" column="1" bodyfile="view/formmodule.h" bodystart="514" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a3a796411454b34ab613dfa2711dc3a06" prot="private" static="no" mutable="no">
+        <type>QSpinBox*</type>
+        <definition>QSpinBox* id_data_s[60]</definition>
+        <argsstring>[60]</argsstring>
+        <name>id_data_s</name>
+        <briefdescription>
+<para>id_data_s </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="518" column="1" bodyfile="view/formmodule.h" bodystart="518" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a60ba4af775a61d5df4210c02c72d0456" prot="private" static="no" mutable="no">
+        <type>QLineEdit*</type>
+        <definition>QLineEdit* name_data_s[60]</definition>
+        <argsstring>[60]</argsstring>
+        <name>name_data_s</name>
+        <briefdescription>
+<para>name_data_s </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="522" column="1" bodyfile="view/formmodule.h" bodystart="522" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a7a66fc95de764bb4c5a9e195483c9903" prot="private" static="no" mutable="no">
+        <type>QLineEdit*</type>
+        <definition>QLineEdit* unit_data_s[60]</definition>
+        <argsstring>[60]</argsstring>
+        <name>unit_data_s</name>
+        <briefdescription>
+<para>unit_data_s </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="528" column="1" bodyfile="view/formmodule.h" bodystart="528" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1ab1431c9cfe45e389ce95a61c70fc7e7a" prot="private" static="no" mutable="no">
+        <type>QDoubleSpinBox*</type>
+        <definition>QDoubleSpinBox* range_l_data_s[60]</definition>
+        <argsstring>[60]</argsstring>
+        <name>range_l_data_s</name>
+        <briefdescription>
+<para>range_l_data_s </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="532" column="1" bodyfile="view/formmodule.h" bodystart="532" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a9a14d4b24b8a1099edcb48fb1720a2f2" prot="private" static="no" mutable="no">
+        <type>QDoubleSpinBox*</type>
+        <definition>QDoubleSpinBox* border_ll_data_s[60]</definition>
+        <argsstring>[60]</argsstring>
+        <name>border_ll_data_s</name>
+        <briefdescription>
+<para>border_ll_data_s </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="536" column="1" bodyfile="view/formmodule.h" bodystart="536" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1afe74ad8d77ed01ad29aee51e451a88cd" prot="private" static="no" mutable="no">
+        <type>QDoubleSpinBox*</type>
+        <definition>QDoubleSpinBox* border_l_data_s[60]</definition>
+        <argsstring>[60]</argsstring>
+        <name>border_l_data_s</name>
+        <briefdescription>
+<para>border_l_data_s </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="540" column="1" bodyfile="view/formmodule.h" bodystart="540" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a42bfcd02184e37e7b8ac594fb5a6010d" prot="private" static="no" mutable="no">
+        <type>QDoubleSpinBox*</type>
+        <definition>QDoubleSpinBox* border_h_data_s[60]</definition>
+        <argsstring>[60]</argsstring>
+        <name>border_h_data_s</name>
+        <briefdescription>
+<para>border_h_data_s </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="544" column="1" bodyfile="view/formmodule.h" bodystart="544" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1afce22569cbb0389dc43848d6472ac8b1" prot="private" static="no" mutable="no">
+        <type>QDoubleSpinBox*</type>
+        <definition>QDoubleSpinBox* border_hh_data_s[60]</definition>
+        <argsstring>[60]</argsstring>
+        <name>border_hh_data_s</name>
+        <briefdescription>
+<para>border_hh_data_s </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="548" column="1" bodyfile="view/formmodule.h" bodystart="548" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a9f8f3b6674bc283d1f9e7827ca5388ba" prot="private" static="no" mutable="no">
+        <type>QDoubleSpinBox*</type>
+        <definition>QDoubleSpinBox* range_h_data_s[60]</definition>
+        <argsstring>[60]</argsstring>
+        <name>range_h_data_s</name>
+        <briefdescription>
+<para>range_h_data_s </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="552" column="1" bodyfile="view/formmodule.h" bodystart="552" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1af461de5d8fbff597c7a0e53e6a6886ab" prot="private" static="no" mutable="no">
+        <type>QComboBox*</type>
+        <definition>QComboBox* state_data_s[60]</definition>
+        <argsstring>[60]</argsstring>
+        <name>state_data_s</name>
+        <briefdescription>
+<para>state_data_s </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="556" column="1" bodyfile="view/formmodule.h" bodystart="556" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1aadcdb2534acd3b6424537155a6b716d8" prot="private" static="no" mutable="no">
+        <type>QSignalMapper*</type>
+        <definition>QSignalMapper* SigMapState_data_s</definition>
+        <argsstring></argsstring>
+        <name>SigMapState_data_s</name>
+        <briefdescription>
+<para>SigMapState_data_s. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="560" column="1" bodyfile="view/formmodule.h" bodystart="560" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a80b11f92270b19b8bb2d7aa7efd081a5" prot="private" static="no" mutable="no">
+        <type>QLabel*</type>
+        <definition>QLabel* reg_data[60]</definition>
+        <argsstring>[60]</argsstring>
+        <name>reg_data</name>
+        <briefdescription>
+<para>reg_data </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="566" column="1" bodyfile="view/formmodule.h" bodystart="566" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a6c39e3ab2e585d3feebd4b4039588268" prot="private" static="no" mutable="no">
+        <type>QLabel*</type>
+        <definition>QLabel* name_data[60]</definition>
+        <argsstring>[60]</argsstring>
+        <name>name_data</name>
+        <briefdescription>
+<para>name_data </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="570" column="1" bodyfile="view/formmodule.h" bodystart="570" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1a9ce6e5611d93d3179ddd0eb55bcff9a4" prot="private" static="no" mutable="no">
+        <type>QLabel*</type>
+        <definition>QLabel* value_data[60]</definition>
+        <argsstring>[60]</argsstring>
+        <name>value_data</name>
+        <briefdescription>
+<para>value_data </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="574" column="1" bodyfile="view/formmodule.h" bodystart="574" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/d72/a00724_1ade847dc0dbb2ef8d90dcafa2d1c5fe03" prot="private" static="no" mutable="no">
+        <type>QLabel*</type>
+        <definition>QLabel* unit_data[60]</definition>
+        <argsstring>[60]</argsstring>
+        <name>unit_data</name>
+        <briefdescription>
+<para>unit_data </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="578" column="1" bodyfile="view/formmodule.h" bodystart="578" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="d0/d72/a00724_1aba79b276de235ab3ddd82813bf42d21d" prot="public" static="no" const="no" explicit="yes" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>formModule</definition>
+        <argsstring>(QWidget *parent = 0, QString address = 0, QSerialPort *SerialPort = 0)</argsstring>
+        <name>formModule</name>
+        <param>
+          <type>QWidget *</type>
+          <declname>parent</declname>
+          <defval>0</defval>
+        </param>
+        <param>
+          <type>QString</type>
+          <declname>address</declname>
+          <defval>0</defval>
+        </param>
+        <param>
+          <type>QSerialPort *</type>
+          <declname>SerialPort</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+<para><ref refid="d0/d72/a00724" kindref="compound">formModule</ref> </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>parent</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>address</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>SerialPort</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="58" column="1" bodyfile="view/formmodule.cpp" bodystart="6" bodyend="42"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d72/a00724_1a3cdb2923ed99b88fe2b9cbfa9593613c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>~formModule</definition>
+        <argsstring>()</argsstring>
+        <name>~formModule</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="59" column="1" bodyfile="view/formmodule.cpp" bodystart="44" bodyend="47"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-slot">
+      <memberdef kind="slot" id="d0/d72/a00724_1a1ba117a2a61ebe68819b8584c91e04bc" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void on_pbSetAll_clicked</definition>
+        <argsstring>()</argsstring>
+        <name>on_pbSetAll_clicked</name>
+        <briefdescription>
+<para>on_pbSetAll_clicked </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+<para>ON MODULE FILE</para><para>SET KANAL</para><para>SET RELAY</para><para>SET SUMBER</para><para>SET ALARM</para><para>SET DATA</para><para>ON BOARD </para>        </inbodydescription>
+        <location file="view/formmodule.h" line="70" column="1" bodyfile="view/formmodule.cpp" bodystart="1080" bodyend="1324"/>
+      </memberdef>
+      <memberdef kind="slot" id="d0/d72/a00724_1a2a11dd5f07b10cbf3f05f89b4287d319" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void on_pbGetAll_clicked</definition>
+        <argsstring>()</argsstring>
+        <name>on_pbGetAll_clicked</name>
+        <briefdescription>
+<para>on_pbGetAll_clicked </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="74" column="1" bodyfile="view/formmodule.cpp" bodystart="1946" bodyend="1989"/>
+      </memberdef>
+      <memberdef kind="slot" id="d0/d72/a00724_1a13d6bfb87a8bb958774c760ab5fb5a65" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void on_pbEdit_clicked</definition>
+        <argsstring>()</argsstring>
+        <name>on_pbEdit_clicked</name>
+        <briefdescription>
+<para>on_pbEdit_clicked </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="78" column="1" bodyfile="view/formmodule.cpp" bodystart="2060" bodyend="2146"/>
+      </memberdef>
+      <memberdef kind="slot" id="d0/d72/a00724_1ab9f8038fe5bdb44ca902b837a12de732" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void on_tabWidget_tabBarClicked</definition>
+        <argsstring>(int index)</argsstring>
+        <name>on_tabWidget_tabBarClicked</name>
+        <param>
+          <type>int</type>
+          <declname>index</declname>
+        </param>
+        <briefdescription>
+<para>on_tabWidget_tabBarClicked </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>index</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="84" column="1" bodyfile="view/formmodule.cpp" bodystart="1014" bodyend="1078"/>
+      </memberdef>
+      <memberdef kind="slot" id="d0/d72/a00724_1a627c3dfcde93fe02694ac086ca9102a4" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void on_pbSet_clicked</definition>
+        <argsstring>()</argsstring>
+        <name>on_pbSet_clicked</name>
+        <briefdescription>
+<para>on_pbSet_clicked </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+<para>ON MODULE FILE</para><para>SET INPUT</para><para>SET OUTPUT</para><para>SET SUMBER</para><para>SET ALARM</para><para>SET DATA</para><para>ON BOARD </para>        </inbodydescription>
+        <location file="view/formmodule.h" line="89" column="1" bodyfile="view/formmodule.cpp" bodystart="1326" bodyend="1608"/>
+      </memberdef>
+      <memberdef kind="slot" id="d0/d72/a00724_1a50d345984d397d6e5b7b6d8490ee91b0" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void on_pbGet_clicked</definition>
+        <argsstring>()</argsstring>
+        <name>on_pbGet_clicked</name>
+        <briefdescription>
+<para>on_pbGet_clicked </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="93" column="1" bodyfile="view/formmodule.cpp" bodystart="1991" bodyend="2058"/>
+      </memberdef>
+      <memberdef kind="slot" id="d0/d72/a00724_1afef0aaaf4e4c2109d36f98f32a1d0609" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void on_pbSetChk_clicked</definition>
+        <argsstring>()</argsstring>
+        <name>on_pbSetChk_clicked</name>
+        <briefdescription>
+<para>on_pbSetChk_clicked </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+<para>ON MODULE FILE</para><para>SET INPUT</para><para>SET OUTPUT</para><para>SET SUMBER</para><para>SET ALARM</para><para>SET DATA</para><para>ON BOARD </para>        </inbodydescription>
+        <location file="view/formmodule.h" line="98" column="1" bodyfile="view/formmodule.cpp" bodystart="1610" bodyend="1944"/>
+      </memberdef>
+      <memberdef kind="slot" id="d0/d72/a00724_1a78d60c336bb54fbc4e06949d444b33a8" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void writeLogFile</definition>
+        <argsstring>()</argsstring>
+        <name>writeLogFile</name>
+        <briefdescription>
+<para>writeLogFile </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="103" column="1" bodyfile="view/formmodule.cpp" bodystart="2158" bodyend="2186"/>
+      </memberdef>
+      <memberdef kind="slot" id="d0/d72/a00724_1a8a4a59b4520b9c1711bd888ee3e496fc" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void reg_kanal_changed</definition>
+        <argsstring>()</argsstring>
+        <name>reg_kanal_changed</name>
+        <briefdescription>
+<para>reg_kanal_changed </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="108" column="1" bodyfile="view/formmodule.cpp" bodystart="2498" bodyend="2527"/>
+      </memberdef>
+      <memberdef kind="slot" id="d0/d72/a00724_1a01c6a5a69faaa65a9e7fe4896628dbaf" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void on_pbAddRow_clicked</definition>
+        <argsstring>()</argsstring>
+        <name>on_pbAddRow_clicked</name>
+        <briefdescription>
+<para>on_pbAddRow_clicked </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="112" column="1" bodyfile="view/formmodule.cpp" bodystart="2188" bodyend="2214"/>
+      </memberdef>
+      <memberdef kind="slot" id="d0/d72/a00724_1a09e2b02f72f445e799bec0648ba44728" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void del_src_clicked</definition>
+        <argsstring>(int index)</argsstring>
+        <name>del_src_clicked</name>
+        <param>
+          <type>int</type>
+          <declname>index</declname>
+        </param>
+        <briefdescription>
+<para>del_src_clicked </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>index</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="117" column="1" bodyfile="view/formmodule.cpp" bodystart="2216" bodyend="2245"/>
+      </memberdef>
+      <memberdef kind="slot" id="d0/d72/a00724_1aca15c3c717146d13998f542cd7986941" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void length_src_changed</definition>
+        <argsstring>()</argsstring>
+        <name>length_src_changed</name>
+        <briefdescription>
+<para>length_src_changed </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="121" column="1" bodyfile="view/formmodule.cpp" bodystart="2247" bodyend="2288"/>
+      </memberdef>
+      <memberdef kind="slot" id="d0/d72/a00724_1aa41c2c67f4ab3827cab59ee1a876b474" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void tReg_src_changed</definition>
+        <argsstring>()</argsstring>
+        <name>tReg_src_changed</name>
+        <briefdescription>
+<para>tReg_src_changed </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="125" column="1" bodyfile="view/formmodule.cpp" bodystart="2290" bodyend="2331"/>
+      </memberdef>
+      <memberdef kind="slot" id="d0/d72/a00724_1ab049ac47c431acd6c2d2ed03847bd613" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void del_alrm_clicked</definition>
+        <argsstring>(int index)</argsstring>
+        <name>del_alrm_clicked</name>
+        <param>
+          <type>int</type>
+          <declname>index</declname>
+        </param>
+        <briefdescription>
+<para>del_alrm_clicked </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>index</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="130" column="1" bodyfile="view/formmodule.cpp" bodystart="2333" bodyend="2367"/>
+      </memberdef>
+      <memberdef kind="slot" id="d0/d72/a00724_1a0a417294fa33aa22f89c56b3349c016c" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void input_alrm_changed</definition>
+        <argsstring>(int index)</argsstring>
+        <name>input_alrm_changed</name>
+        <param>
+          <type>int</type>
+          <declname>index</declname>
+        </param>
+        <briefdescription>
+<para>input_alrm_changed </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>index</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="135" column="1" bodyfile="view/formmodule.cpp" bodystart="2369" bodyend="2409"/>
+      </memberdef>
+      <memberdef kind="slot" id="d0/d72/a00724_1a12319e7c2ec407b15f655eafe6f652f1" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void on_pbDeleteRows_clicked</definition>
+        <argsstring>()</argsstring>
+        <name>on_pbDeleteRows_clicked</name>
+        <briefdescription>
+<para>on_pbDeleteRows_clicked </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="140" column="1" bodyfile="view/formmodule.cpp" bodystart="2411" bodyend="2479"/>
+      </memberdef>
+      <memberdef kind="slot" id="d0/d72/a00724_1a53bd14336349f6747bbf435b94c3ac6e" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void on_pbRefresh_clicked</definition>
+        <argsstring>()</argsstring>
+        <name>on_pbRefresh_clicked</name>
+        <briefdescription>
+<para>on_pbRefresh_clicked </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="145" column="1" bodyfile="view/formmodule.cpp" bodystart="2481" bodyend="2486"/>
+      </memberdef>
+      <memberdef kind="slot" id="d0/d72/a00724_1a677351426f86ad399c1b03205778deb7" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void state_kanal_change</definition>
+        <argsstring>(int index)</argsstring>
+        <name>state_kanal_change</name>
+        <param>
+          <type>int</type>
+          <declname>index</declname>
+        </param>
+        <briefdescription>
+<para>state_kanal_change </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>index</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="151" column="1" bodyfile="view/formmodule.cpp" bodystart="2488" bodyend="2491"/>
+      </memberdef>
+      <memberdef kind="slot" id="d0/d72/a00724_1acd65ce1425106edf80b0d81292f28206" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void state_data_change</definition>
+        <argsstring>(int index)</argsstring>
+        <name>state_data_change</name>
+        <param>
+          <type>int</type>
+          <declname>index</declname>
+        </param>
+        <briefdescription>
+<para>state_data_change </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>index</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="156" column="1" bodyfile="view/formmodule.cpp" bodystart="2493" bodyend="2496"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="d0/d72/a00724_1a3c3af9fc8e48dd8bcdf67f25b10299aa" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void setInterface</definition>
+        <argsstring>(QString address)</argsstring>
+        <name>setInterface</name>
+        <param>
+          <type>QString</type>
+          <declname>address</declname>
+        </param>
+        <briefdescription>
+<para>setInterface </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>address</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="271" column="1" bodyfile="view/formmodule.cpp" bodystart="49" bodyend="59"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d72/a00724_1ab89dbd8e8f90204f649df34adfdc2bb9" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void setInterface_Input</definition>
+        <argsstring>(QString address)</argsstring>
+        <name>setInterface_Input</name>
+        <param>
+          <type>QString</type>
+          <declname>address</declname>
+        </param>
+        <briefdescription>
+<para>setInterface_Input </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>address</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="276" column="1" bodyfile="view/formmodule.cpp" bodystart="61" bodyend="214"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d72/a00724_1aa6ea0571756f704c906915789af7923e" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void setInterface_Output</definition>
+        <argsstring>(QString address)</argsstring>
+        <name>setInterface_Output</name>
+        <param>
+          <type>QString</type>
+          <declname>address</declname>
+        </param>
+        <briefdescription>
+<para>setInterface_Output </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>address</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="281" column="1" bodyfile="view/formmodule.cpp" bodystart="216" bodyend="283"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d72/a00724_1ab019b8d37f5ff579ad6863f7bbd56e96" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void setInterface_Communication</definition>
+        <argsstring>(QString address)</argsstring>
+        <name>setInterface_Communication</name>
+        <param>
+          <type>QString</type>
+          <declname>address</declname>
+        </param>
+        <briefdescription>
+<para>setInterface_Communication </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>address</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="286" column="1" bodyfile="view/formmodule.cpp" bodystart="285" bodyend="327"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d72/a00724_1a1fa17132444c0c9a5da35b9e61b28d4e" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void setInterface_Environtment</definition>
+        <argsstring>(QString address)</argsstring>
+        <name>setInterface_Environtment</name>
+        <param>
+          <type>QString</type>
+          <declname>address</declname>
+        </param>
+        <briefdescription>
+<para>setInterface_Environtment </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>address</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="291" column="1" bodyfile="view/formmodule.cpp" bodystart="329" bodyend="396"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d72/a00724_1a71d5e5f8cf393c57ea59cbfcc269b279" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void setInterface_Sumber</definition>
+        <argsstring>(QString address)</argsstring>
+        <name>setInterface_Sumber</name>
+        <param>
+          <type>QString</type>
+          <declname>address</declname>
+        </param>
+        <briefdescription>
+<para>setInterface_Sumber </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>address</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="296" column="1" bodyfile="view/formmodule.cpp" bodystart="398" bodyend="574"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d72/a00724_1aa07dc03b53eb45c3a3c53a7ddc3bd091" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void setInterface_Alarm</definition>
+        <argsstring>(QString address)</argsstring>
+        <name>setInterface_Alarm</name>
+        <param>
+          <type>QString</type>
+          <declname>address</declname>
+        </param>
+        <briefdescription>
+<para>setInterface_Alarm </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>address</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="301" column="1" bodyfile="view/formmodule.cpp" bodystart="576" bodyend="733"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d72/a00724_1adecfa436c1fa5b235c981877bc66e8ec" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void setInterface_Data_Settings</definition>
+        <argsstring>(QString address)</argsstring>
+        <name>setInterface_Data_Settings</name>
+        <param>
+          <type>QString</type>
+          <declname>address</declname>
+        </param>
+        <briefdescription>
+<para>setInterface_Data_Settings </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>address</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="306" column="1" bodyfile="view/formmodule.cpp" bodystart="735" bodyend="853"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d72/a00724_1a02821d796168bfe5722073bdf0f33c96" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void setInterface_Data_Monitoring</definition>
+        <argsstring>(QString address)</argsstring>
+        <name>setInterface_Data_Monitoring</name>
+        <param>
+          <type>QString</type>
+          <declname>address</declname>
+        </param>
+        <briefdescription>
+<para>setInterface_Data_Monitoring </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>address</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="311" column="1" bodyfile="view/formmodule.cpp" bodystart="855" bodyend="921"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d72/a00724_1a03a8e0d93ff57fad1fc11da0afe028a8" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void EnableButton</definition>
+        <argsstring>(bool enab)</argsstring>
+        <name>EnableButton</name>
+        <param>
+          <type>bool</type>
+          <declname>enab</declname>
+        </param>
+        <briefdescription>
+<para>EnableButton. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>enab</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="316" column="1" bodyfile="view/formmodule.cpp" bodystart="2148" bodyend="2156"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d72/a00724_1aa5fb717f85541cdbf8dd135e5d8fd8e7" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool checkFormula</definition>
+        <argsstring>(QString data)</argsstring>
+        <name>checkFormula</name>
+        <param>
+          <type>QString</type>
+          <declname>data</declname>
+        </param>
+        <briefdescription>
+<para>checkFormula </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>data</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para></para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="450" column="1" bodyfile="view/formmodule.cpp" bodystart="923" bodyend="931"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d72/a00724_1a18e2bbd4fd70f65bb64867288438a2d4" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void data_monitoring</definition>
+        <argsstring>()</argsstring>
+        <name>data_monitoring</name>
+        <briefdescription>
+<para>data_monitoring </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/formmodule.h" line="583" column="1" bodyfile="view/formmodule.cpp" bodystart="933" bodyend="1012"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>The <ref refid="d0/d72/a00724" kindref="compound">formModule</ref> class. </para>    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="12">
+        <label>QDialog</label>
+      </node>
+      <node id="11">
+        <label>formModule</label>
+        <link refid="d0/d72/a00724"/>
+        <childnode refid="12" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="22">
+        <label>loginForm</label>
+        <link refid="df/d3b/a00728"/>
+        <childnode refid="14" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>QMainWindow</label>
+      </node>
+      <node id="20">
+        <label>MainWindow</label>
+        <link refid="d4/db8/a00732"/>
+        <childnode refid="21" relation="public-inheritance">
+        </childnode>
+        <childnode refid="16" relation="usage">
+          <edgelabel>-Serial</edgelabel>
+        </childnode>
+        <childnode refid="17" relation="usage">
+          <edgelabel>-faddModule</edgelabel>
+        </childnode>
+        <childnode refid="22" relation="usage">
+          <edgelabel>-LoginForm</edgelabel>
+        </childnode>
+        <childnode refid="23" relation="usage">
+          <edgelabel>-mTree</edgelabel>
+        </childnode>
+        <childnode refid="18" relation="usage">
+          <edgelabel>-mod</edgelabel>
+        </childnode>
+        <childnode refid="19" relation="usage">
+          <edgelabel>-progress_dialog</edgelabel>
+        </childnode>
+        <childnode refid="24" relation="usage">
+          <edgelabel>-work</edgelabel>
+        </childnode>
+        <childnode refid="25" relation="usage">
+          <edgelabel>-settings_dialog</edgelabel>
+        </childnode>
+      </node>
+      <node id="18">
+        <label>module</label>
+        <link refid="df/d7d/a00696"/>
+      </node>
+      <node id="19">
+        <label>ProgressDialog</label>
+        <link refid="dc/d85/a00736"/>
+        <childnode refid="14" relation="public-inheritance">
+        </childnode>
+        <childnode refid="16" relation="usage">
+          <edgelabel>+Serial</edgelabel>
+        </childnode>
+        <childnode refid="18" relation="usage">
+          <edgelabel>+mod</edgelabel>
+        </childnode>
+      </node>
+      <node id="17">
+        <label>form_addModule</label>
+        <link refid="dc/d14/a00720"/>
+        <childnode refid="14" relation="public-inheritance">
+        </childnode>
+        <childnode refid="18" relation="usage">
+          <edgelabel>-mod</edgelabel>
+        </childnode>
+      </node>
+      <node id="23">
+        <label>mTreeview</label>
+        <link refid="d6/dd3/a00688"/>
+      </node>
+      <node id="14">
+        <label>QDialog</label>
+      </node>
+      <node id="24">
+        <label>worker</label>
+        <link refid="df/d46/a00664"/>
+        <childnode refid="16" relation="usage">
+          <edgelabel>+Serial</edgelabel>
+        </childnode>
+        <childnode refid="23" relation="usage">
+          <edgelabel>+mTree</edgelabel>
+        </childnode>
+        <childnode refid="18" relation="usage">
+          <edgelabel>+mod</edgelabel>
+        </childnode>
+      </node>
+      <node id="16">
+        <label>serial</label>
+        <link refid="d5/d39/a00676"/>
+      </node>
+      <node id="25">
+        <label>SettingsDialog</label>
+        <link refid="dc/dce/a00740"/>
+        <childnode refid="14" relation="public-inheritance">
+        </childnode>
+        <childnode refid="15" relation="usage">
+          <edgelabel>+Setting</edgelabel>
+        </childnode>
+        <childnode refid="16" relation="usage">
+          <edgelabel>+Serial</edgelabel>
+        </childnode>
+        <childnode refid="20" relation="usage">
+          <edgelabel>+Main</edgelabel>
+        </childnode>
+      </node>
+      <node id="15">
+        <label>setting</label>
+        <link refid="d0/d15/a00700"/>
+      </node>
+      <node id="13">
+        <label>formModule</label>
+        <link refid="d0/d72/a00724"/>
+        <childnode refid="14" relation="public-inheritance">
+        </childnode>
+        <childnode refid="15" relation="usage">
+          <edgelabel>-Setting</edgelabel>
+        </childnode>
+        <childnode refid="16" relation="usage">
+          <edgelabel>-Serial</edgelabel>
+        </childnode>
+        <childnode refid="17" relation="usage">
+          <edgelabel>-faddModule</edgelabel>
+        </childnode>
+        <childnode refid="19" relation="usage">
+          <edgelabel>-progress_dialog</edgelabel>
+        </childnode>
+        <childnode refid="18" relation="usage">
+          <edgelabel>-mod</edgelabel>
+        </childnode>
+        <childnode refid="20" relation="usage">
+          <edgelabel>-Main</edgelabel>
+        </childnode>
+        <childnode refid="24" relation="usage">
+          <edgelabel>-work</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="view/formmodule.h" line="43" column="1" bodyfile="view/formmodule.h" bodystart="42" bodyend="584"/>
+    <listofallmembers>
+      <member refid="d0/d72/a00724_1a2ec5eda86921cdd4745d0be05c3d2589" prot="private" virt="non-virtual"><scope>formModule</scope><name>Address_Module</name></member>
+      <member refid="d0/d72/a00724_1a454b4084bbd279abd677ed60069ef5ab" prot="private" virt="non-virtual"><scope>formModule</scope><name>batas_h</name></member>
+      <member refid="d0/d72/a00724_1ac7b282f672ada8c2b470789e23cae6ec" prot="private" virt="non-virtual"><scope>formModule</scope><name>batas_hh</name></member>
+      <member refid="d0/d72/a00724_1ad435a7113d1b70a836fe598738262c9e" prot="private" virt="non-virtual"><scope>formModule</scope><name>batas_l</name></member>
+      <member refid="d0/d72/a00724_1ad3473ce3ca17aac41f20f377a8fc2045" prot="private" virt="non-virtual"><scope>formModule</scope><name>batas_ll</name></member>
+      <member refid="d0/d72/a00724_1a42bfcd02184e37e7b8ac594fb5a6010d" prot="private" virt="non-virtual"><scope>formModule</scope><name>border_h_data_s</name></member>
+      <member refid="d0/d72/a00724_1afce22569cbb0389dc43848d6472ac8b1" prot="private" virt="non-virtual"><scope>formModule</scope><name>border_hh_data_s</name></member>
+      <member refid="d0/d72/a00724_1afe74ad8d77ed01ad29aee51e451a88cd" prot="private" virt="non-virtual"><scope>formModule</scope><name>border_l_data_s</name></member>
+      <member refid="d0/d72/a00724_1a9a14d4b24b8a1099edcb48fb1720a2f2" prot="private" virt="non-virtual"><scope>formModule</scope><name>border_ll_data_s</name></member>
+      <member refid="d0/d72/a00724_1a503c7417f3274c6a04a9b1abf11ca98e" prot="private" virt="non-virtual"><scope>formModule</scope><name>calib_m</name></member>
+      <member refid="d0/d72/a00724_1a9611e5152be5201f99dfcea81cf44960" prot="private" virt="non-virtual"><scope>formModule</scope><name>calib_x</name></member>
+      <member refid="d0/d72/a00724_1af287bc8596383f162b2b900a54c7ee4a" prot="private" virt="non-virtual"><scope>formModule</scope><name>cancel</name></member>
+      <member refid="d0/d72/a00724_1ac4d1ace56eef18dad4432d63507629ca" prot="private" virt="non-virtual"><scope>formModule</scope><name>check_alarm</name></member>
+      <member refid="d0/d72/a00724_1a89194048989515b233e2f952c47b2c8e" prot="private" virt="non-virtual"><scope>formModule</scope><name>check_data_s</name></member>
+      <member refid="d0/d72/a00724_1a1b697d6d47d2c38f3df48d6fc76b91df" prot="private" virt="non-virtual"><scope>formModule</scope><name>check_input</name></member>
+      <member refid="d0/d72/a00724_1a14bb15711cec698532f41b81dcbb7f23" prot="private" virt="non-virtual"><scope>formModule</scope><name>check_output</name></member>
+      <member refid="d0/d72/a00724_1afdabed0cad5b4b0a25ae1731d779f8b4" prot="private" virt="non-virtual"><scope>formModule</scope><name>check_source</name></member>
+      <member refid="d0/d72/a00724_1aa5fb717f85541cdbf8dd135e5d8fd8e7" prot="private" virt="non-virtual"><scope>formModule</scope><name>checkFormula</name></member>
+      <member refid="d0/d72/a00724_1a4b749e58ace7722f1fc0f281138f6045" prot="private" virt="non-virtual"><scope>formModule</scope><name>command_source</name></member>
+      <member refid="d0/d72/a00724_1a70008dbf502d0a602989b01317be4de8" prot="private" virt="non-virtual"><scope>formModule</scope><name>control</name></member>
+      <member refid="d0/d72/a00724_1a18e2bbd4fd70f65bb64867288438a2d4" prot="private" virt="non-virtual"><scope>formModule</scope><name>data_monitoring</name></member>
+      <member refid="d0/d72/a00724_1ab049ac47c431acd6c2d2ed03847bd613" prot="private" virt="non-virtual"><scope>formModule</scope><name>del_alrm_clicked</name></member>
+      <member refid="d0/d72/a00724_1a09e2b02f72f445e799bec0648ba44728" prot="private" virt="non-virtual"><scope>formModule</scope><name>del_src_clicked</name></member>
+      <member refid="d0/d72/a00724_1a1ded9af07cd8dc25834fb86fc2478ad1" prot="private" virt="non-virtual"><scope>formModule</scope><name>delete_alarm</name></member>
+      <member refid="d0/d72/a00724_1a43c73cb5499951c5787dd9f591bafabb" prot="private" virt="non-virtual"><scope>formModule</scope><name>delete_source</name></member>
+      <member refid="d0/d72/a00724_1a65f3a8178e1f997a7a19a988bb0f4e1a" prot="private" virt="non-virtual"><scope>formModule</scope><name>diff</name></member>
+      <member refid="d0/d72/a00724_1a03a8e0d93ff57fad1fc11da0afe028a8" prot="private" virt="non-virtual"><scope>formModule</scope><name>EnableButton</name></member>
+      <member refid="d0/d72/a00724_1a2206794fe463f942029e9014b4695e77" prot="private" virt="non-virtual"><scope>formModule</scope><name>faddModule</name></member>
+      <member refid="d0/d72/a00724_1a0a4001078da73398d49b9470fcccb48a" prot="private" virt="non-virtual"><scope>formModule</scope><name>fail</name></member>
+      <member refid="d0/d72/a00724_1aba79b276de235ab3ddd82813bf42d21d" prot="public" virt="non-virtual"><scope>formModule</scope><name>formModule</name></member>
+      <member refid="d0/d72/a00724_1a3a796411454b34ab613dfa2711dc3a06" prot="private" virt="non-virtual"><scope>formModule</scope><name>id_data_s</name></member>
+      <member refid="d0/d72/a00724_1a9e8679c73989c6a4408dee2a8284b603" prot="private" virt="non-virtual"><scope>formModule</scope><name>id_source</name></member>
+      <member refid="d0/d72/a00724_1abde5caaaeb749f8c6b484527cb0564e9" prot="private" virt="non-virtual"><scope>formModule</scope><name>indx</name></member>
+      <member refid="d0/d72/a00724_1aba3da9aba81fe7f2bda34dc8dafd0360" prot="private" virt="non-virtual"><scope>formModule</scope><name>input_alarm</name></member>
+      <member refid="d0/d72/a00724_1a0a417294fa33aa22f89c56b3349c016c" prot="private" virt="non-virtual"><scope>formModule</scope><name>input_alrm_changed</name></member>
+      <member refid="d0/d72/a00724_1afcc0b8468bb89aa0e1707e27a14ec853" prot="private" virt="non-virtual"><scope>formModule</scope><name>ip_source</name></member>
+      <member refid="d0/d72/a00724_1ac8ecd72a8882b4ff6feadd5e34f043d4" prot="private" virt="non-virtual"><scope>formModule</scope><name>length_source</name></member>
+      <member refid="d0/d72/a00724_1aca15c3c717146d13998f542cd7986941" prot="private" virt="non-virtual"><scope>formModule</scope><name>length_src_changed</name></member>
+      <member refid="d0/d72/a00724_1ac217dbb18b95c2561203998addb79265" prot="private" virt="non-virtual"><scope>formModule</scope><name>list</name></member>
+      <member refid="d0/d72/a00724_1a87bc89f6ad394ede668ae6c27550ae7a" prot="private" virt="non-virtual"><scope>formModule</scope><name>list2</name></member>
+      <member refid="d0/d72/a00724_1a4de9739e415b4655cd96b34a912a150a" prot="private" virt="non-virtual"><scope>formModule</scope><name>Main</name></member>
+      <member refid="d0/d72/a00724_1a81a2b6f0afb6b4c081bfc00b46549770" prot="private" virt="non-virtual"><scope>formModule</scope><name>Message</name></member>
+      <member refid="d0/d72/a00724_1ad311e6c11f36ec0be84c8f0081f581d6" prot="private" virt="non-virtual"><scope>formModule</scope><name>mod</name></member>
+      <member refid="d0/d72/a00724_1a252eee4d930fd72dcaee0d1770bccf26" prot="private" virt="non-virtual"><scope>formModule</scope><name>module_name</name></member>
+      <member refid="d0/d72/a00724_1a803f829c0405860fd27534150b00aa50" prot="private" virt="non-virtual"><scope>formModule</scope><name>name_alarm</name></member>
+      <member refid="d0/d72/a00724_1a6c39e3ab2e585d3feebd4b4039588268" prot="private" virt="non-virtual"><scope>formModule</scope><name>name_data</name></member>
+      <member refid="d0/d72/a00724_1a60ba4af775a61d5df4210c02c72d0456" prot="private" virt="non-virtual"><scope>formModule</scope><name>name_data_s</name></member>
+      <member refid="d0/d72/a00724_1a754a623ea16722d1ab2ddc1c06ca9fbf" prot="private" virt="non-virtual"><scope>formModule</scope><name>name_input</name></member>
+      <member refid="d0/d72/a00724_1abae1b4ef53dd3b43a4410940e1e9df80" prot="private" virt="non-virtual"><scope>formModule</scope><name>name_output</name></member>
+      <member refid="d0/d72/a00724_1a7c82e66b29c88ca7fbda2b1c15ecca77" prot="private" virt="non-virtual"><scope>formModule</scope><name>name_source</name></member>
+      <member refid="d0/d72/a00724_1a7090f1cfcc02e692c55ccde0748d8067" prot="private" virt="non-virtual"><scope>formModule</scope><name>NoSeri</name></member>
+      <member refid="d0/d72/a00724_1a01c6a5a69faaa65a9e7fe4896628dbaf" prot="private" virt="non-virtual"><scope>formModule</scope><name>on_pbAddRow_clicked</name></member>
+      <member refid="d0/d72/a00724_1a12319e7c2ec407b15f655eafe6f652f1" prot="private" virt="non-virtual"><scope>formModule</scope><name>on_pbDeleteRows_clicked</name></member>
+      <member refid="d0/d72/a00724_1a13d6bfb87a8bb958774c760ab5fb5a65" prot="private" virt="non-virtual"><scope>formModule</scope><name>on_pbEdit_clicked</name></member>
+      <member refid="d0/d72/a00724_1a50d345984d397d6e5b7b6d8490ee91b0" prot="private" virt="non-virtual"><scope>formModule</scope><name>on_pbGet_clicked</name></member>
+      <member refid="d0/d72/a00724_1a2a11dd5f07b10cbf3f05f89b4287d319" prot="private" virt="non-virtual"><scope>formModule</scope><name>on_pbGetAll_clicked</name></member>
+      <member refid="d0/d72/a00724_1a53bd14336349f6747bbf435b94c3ac6e" prot="private" virt="non-virtual"><scope>formModule</scope><name>on_pbRefresh_clicked</name></member>
+      <member refid="d0/d72/a00724_1a627c3dfcde93fe02694ac086ca9102a4" prot="private" virt="non-virtual"><scope>formModule</scope><name>on_pbSet_clicked</name></member>
+      <member refid="d0/d72/a00724_1a1ba117a2a61ebe68819b8584c91e04bc" prot="private" virt="non-virtual"><scope>formModule</scope><name>on_pbSetAll_clicked</name></member>
+      <member refid="d0/d72/a00724_1afef0aaaf4e4c2109d36f98f32a1d0609" prot="private" virt="non-virtual"><scope>formModule</scope><name>on_pbSetChk_clicked</name></member>
+      <member refid="d0/d72/a00724_1ab9f8038fe5bdb44ca902b837a12de732" prot="private" virt="non-virtual"><scope>formModule</scope><name>on_tabWidget_tabBarClicked</name></member>
+      <member refid="d0/d72/a00724_1a0389699393c1826d1076f9f7ef66f76d" prot="private" virt="non-virtual"><scope>formModule</scope><name>output_alarm</name></member>
+      <member refid="d0/d72/a00724_1a98b6c204bd11fa6148e5870b30b65fcb" prot="private" virt="non-virtual"><scope>formModule</scope><name>port_source</name></member>
+      <member refid="d0/d72/a00724_1af7c1508aa267dddddca8c5a8a3790e35" prot="private" virt="non-virtual"><scope>formModule</scope><name>progress_dialog</name></member>
+      <member refid="d0/d72/a00724_1ab5c3d6a6cc5ec3c54f16a302bec84203" prot="private" virt="non-virtual"><scope>formModule</scope><name>range_h</name></member>
+      <member refid="d0/d72/a00724_1a9f8f3b6674bc283d1f9e7827ca5388ba" prot="private" virt="non-virtual"><scope>formModule</scope><name>range_h_data_s</name></member>
+      <member refid="d0/d72/a00724_1ac2dfb6ab10293960f4f7fe7f7994db54" prot="private" virt="non-virtual"><scope>formModule</scope><name>range_l</name></member>
+      <member refid="d0/d72/a00724_1ab1431c9cfe45e389ce95a61c70fc7e7a" prot="private" virt="non-virtual"><scope>formModule</scope><name>range_l_data_s</name></member>
+      <member refid="d0/d72/a00724_1a80b11f92270b19b8bb2d7aa7efd081a5" prot="private" virt="non-virtual"><scope>formModule</scope><name>reg_data</name></member>
+      <member refid="d0/d72/a00724_1ad978b76b5e66ebfea9d1b295db0e94d9" prot="private" virt="non-virtual"><scope>formModule</scope><name>reg_input</name></member>
+      <member refid="d0/d72/a00724_1a8a4a59b4520b9c1711bd888ee3e496fc" prot="private" virt="non-virtual"><scope>formModule</scope><name>reg_kanal_changed</name></member>
+      <member refid="d0/d72/a00724_1a2f7ea774f3ea50ab8f9791bcf148bbd3" prot="private" virt="non-virtual"><scope>formModule</scope><name>reg_output</name></member>
+      <member refid="d0/d72/a00724_1a219d789cfe5fd0839493002866c3c6c0" prot="private" virt="non-virtual"><scope>formModule</scope><name>Request</name></member>
+      <member refid="d0/d72/a00724_1adb7a760512715e86f925f8a8d4a15ba8" prot="private" virt="non-virtual"><scope>formModule</scope><name>reset</name></member>
+      <member refid="d0/d72/a00724_1af7cd5904f1ce24976e466a31df73c3f2" prot="private" virt="non-virtual"><scope>formModule</scope><name>sensor_reg_source</name></member>
+      <member refid="d0/d72/a00724_1aafad695f91953cdb1d29100842ce5009" prot="private" virt="non-virtual"><scope>formModule</scope><name>Serial</name></member>
+      <member refid="d0/d72/a00724_1a38f884defdc7a5543ba1ab05e85f7709" prot="private" virt="non-virtual"><scope>formModule</scope><name>Serial_Com</name></member>
+      <member refid="d0/d72/a00724_1a3c3af9fc8e48dd8bcdf67f25b10299aa" prot="private" virt="non-virtual"><scope>formModule</scope><name>setInterface</name></member>
+      <member refid="d0/d72/a00724_1aa07dc03b53eb45c3a3c53a7ddc3bd091" prot="private" virt="non-virtual"><scope>formModule</scope><name>setInterface_Alarm</name></member>
+      <member refid="d0/d72/a00724_1ab019b8d37f5ff579ad6863f7bbd56e96" prot="private" virt="non-virtual"><scope>formModule</scope><name>setInterface_Communication</name></member>
+      <member refid="d0/d72/a00724_1a02821d796168bfe5722073bdf0f33c96" prot="private" virt="non-virtual"><scope>formModule</scope><name>setInterface_Data_Monitoring</name></member>
+      <member refid="d0/d72/a00724_1adecfa436c1fa5b235c981877bc66e8ec" prot="private" virt="non-virtual"><scope>formModule</scope><name>setInterface_Data_Settings</name></member>
+      <member refid="d0/d72/a00724_1a1fa17132444c0c9a5da35b9e61b28d4e" prot="private" virt="non-virtual"><scope>formModule</scope><name>setInterface_Environtment</name></member>
+      <member refid="d0/d72/a00724_1ab89dbd8e8f90204f649df34adfdc2bb9" prot="private" virt="non-virtual"><scope>formModule</scope><name>setInterface_Input</name></member>
+      <member refid="d0/d72/a00724_1aa6ea0571756f704c906915789af7923e" prot="private" virt="non-virtual"><scope>formModule</scope><name>setInterface_Output</name></member>
+      <member refid="d0/d72/a00724_1a71d5e5f8cf393c57ea59cbfcc269b279" prot="private" virt="non-virtual"><scope>formModule</scope><name>setInterface_Sumber</name></member>
+      <member refid="d0/d72/a00724_1a898cbe894bba4c03fc02c998a80a4396" prot="private" virt="non-virtual"><scope>formModule</scope><name>Setting</name></member>
+      <member refid="d0/d72/a00724_1a3261cca8632e4dff62e5408e427ac865" prot="private" virt="non-virtual"><scope>formModule</scope><name>SigMap_length_source</name></member>
+      <member refid="d0/d72/a00724_1a54d7deabef3178abe6e41bd6a353abc9" prot="private" virt="non-virtual"><scope>formModule</scope><name>SigMap_tReg_source</name></member>
+      <member refid="d0/d72/a00724_1aa3eb724184c999f4faef86b742d905a3" prot="private" virt="non-virtual"><scope>formModule</scope><name>SigMapDel_alarm</name></member>
+      <member refid="d0/d72/a00724_1a3a0a9f6664ead4d4c68309dfa7f46b38" prot="private" virt="non-virtual"><scope>formModule</scope><name>SigMapDel_Source</name></member>
+      <member refid="d0/d72/a00724_1a7bdf57dea543040c7a98714bd2fdde6c" prot="private" virt="non-virtual"><scope>formModule</scope><name>SigMapInput_alarm</name></member>
+      <member refid="d0/d72/a00724_1a2d39f5b838aef1f517d1fb6304fad44f" prot="private" virt="non-virtual"><scope>formModule</scope><name>SigMapReg_input</name></member>
+      <member refid="d0/d72/a00724_1aadcdb2534acd3b6424537155a6b716d8" prot="private" virt="non-virtual"><scope>formModule</scope><name>SigMapState_data_s</name></member>
+      <member refid="d0/d72/a00724_1ae1e85dd6318532ef8ec461c73f37a1ef" prot="private" virt="non-virtual"><scope>formModule</scope><name>SigMapState_input</name></member>
+      <member refid="d0/d72/a00724_1a56fc6ae9e0813afb29a3cf596c62bd4b" prot="private" virt="non-virtual"><scope>formModule</scope><name>state_alarm</name></member>
+      <member refid="d0/d72/a00724_1acd65ce1425106edf80b0d81292f28206" prot="private" virt="non-virtual"><scope>formModule</scope><name>state_data_change</name></member>
+      <member refid="d0/d72/a00724_1af461de5d8fbff597c7a0e53e6a6886ab" prot="private" virt="non-virtual"><scope>formModule</scope><name>state_data_s</name></member>
+      <member refid="d0/d72/a00724_1aeadb38dbcaf5d566a45f26c7602f49c5" prot="private" virt="non-virtual"><scope>formModule</scope><name>state_input</name></member>
+      <member refid="d0/d72/a00724_1a677351426f86ad399c1b03205778deb7" prot="private" virt="non-virtual"><scope>formModule</scope><name>state_kanal_change</name></member>
+      <member refid="d0/d72/a00724_1a4020c69dca4d3e22ff065a8ff885b7d7" prot="private" virt="non-virtual"><scope>formModule</scope><name>state_output</name></member>
+      <member refid="d0/d72/a00724_1acc987cc94bcad6fef20586c4b9195ce8" prot="private" virt="non-virtual"><scope>formModule</scope><name>state_source</name></member>
+      <member refid="d0/d72/a00724_1a288b834f8b483958be715bc77558bf46" prot="private" virt="non-virtual"><scope>formModule</scope><name>str</name></member>
+      <member refid="d0/d72/a00724_1afcf373fb746a3e9b3f45756b3516d3fb" prot="private" virt="non-virtual"><scope>formModule</scope><name>str2</name></member>
+      <member refid="d0/d72/a00724_1ac7820c600ea8f37afde414081fb46131" prot="private" virt="non-virtual"><scope>formModule</scope><name>target_reg_source</name></member>
+      <member refid="d0/d72/a00724_1aac87a1d12529cca1679913bd7deba0fe" prot="private" virt="non-virtual"><scope>formModule</scope><name>timeout</name></member>
+      <member refid="d0/d72/a00724_1ad4e88c676dc01a2835fec63d73490777" prot="private" virt="non-virtual"><scope>formModule</scope><name>tmp</name></member>
+      <member refid="d0/d72/a00724_1af783378857445c8dcdafe02fcfefcb67" prot="private" virt="non-virtual"><scope>formModule</scope><name>tmp2</name></member>
+      <member refid="d0/d72/a00724_1aa41c2c67f4ab3827cab59ee1a876b474" prot="private" virt="non-virtual"><scope>formModule</scope><name>tReg_src_changed</name></member>
+      <member refid="d0/d72/a00724_1a8801db0cd597fc2471a1c16f359b45f8" prot="private" virt="non-virtual"><scope>formModule</scope><name>type</name></member>
+      <member refid="d0/d72/a00724_1a0b7c01bcb3d2e680f5b1666987e31dfe" prot="private" virt="non-virtual"><scope>formModule</scope><name>type_input</name></member>
+      <member refid="d0/d72/a00724_1a99f6254212921990353b45c9c128c14d" prot="private" virt="non-virtual"><scope>formModule</scope><name>type_output</name></member>
+      <member refid="d0/d72/a00724_1a7ba1c20e754bb82415998a6d6f5685b7" prot="private" virt="non-virtual"><scope>formModule</scope><name>type_source</name></member>
+      <member refid="d0/d72/a00724_1a793fea3deba97903462fb9a9be85925c" prot="public" virt="non-virtual"><scope>formModule</scope><name>ui</name></member>
+      <member refid="d0/d72/a00724_1ade847dc0dbb2ef8d90dcafa2d1c5fe03" prot="private" virt="non-virtual"><scope>formModule</scope><name>unit_data</name></member>
+      <member refid="d0/d72/a00724_1a7a66fc95de764bb4c5a9e195483c9903" prot="private" virt="non-virtual"><scope>formModule</scope><name>unit_data_s</name></member>
+      <member refid="d0/d72/a00724_1a9ce6e5611d93d3179ddd0eb55bcff9a4" prot="private" virt="non-virtual"><scope>formModule</scope><name>value_data</name></member>
+      <member refid="d0/d72/a00724_1ac53e26fb1018986c8fd196e7a0f901a7" prot="public" virt="non-virtual"><scope>formModule</scope><name>wait</name></member>
+      <member refid="d0/d72/a00724_1a3454a823ee99614db3c2465683adf9e4" prot="private" virt="non-virtual"><scope>formModule</scope><name>work</name></member>
+      <member refid="d0/d72/a00724_1a78d60c336bb54fbc4e06949d444b33a8" prot="private" virt="non-virtual"><scope>formModule</scope><name>writeLogFile</name></member>
+      <member refid="d0/d72/a00724_1a3cdb2923ed99b88fe2b9cbfa9593613c" prot="public" virt="non-virtual"><scope>formModule</scope><name>~formModule</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

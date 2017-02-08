@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.14">
+  <compounddef id="dir_ee206427a05dbb4f60b6a890e1cc2a29" kind="dir">
+    <compoundname>model/communication</compoundname>
+    <innerfile refid="da/d45/a00011">gprs.cpp</innerfile>
+    <innerfile refid="d2/de7/a00014">gprs.h</innerfile>
+    <innerfile refid="d4/d51/a00017">gsm.cpp</innerfile>
+    <innerfile refid="db/db2/a00020">gsm.h</innerfile>
+    <innerfile refid="d3/d52/a00023">serial.cpp</innerfile>
+    <innerfile refid="d6/d5b/a00026">serial.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="model/communication/"/>
+  </compounddef>
+</doxygen>

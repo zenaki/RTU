@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.14">
+  <compounddef id="dd/dad/a00005" kind="file" language="C++">
+    <compoundname>worker.h</compoundname>
+    <innerclass refid="df/d46/a00664" prot="public">worker</innerclass>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>WORKER_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>WORKER_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;QSerialPort&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="df/da5/a00912" kindref="compound">util/utama.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="d5/de0/a00050" kindref="compound">model/interface_manipulator/mtreeview.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="df/d03/a00062" kindref="compound">model/module.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="d1/d44/a00098" kindref="compound">view/mainwindow.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="da/d2a/a00086" kindref="compound">view/formmodule.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;ui_formmodule.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="d6/d5b/a00026" kindref="compound">model/communication/serial.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;QObject&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;QtSerialPort/QSerialPort&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;QTime&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="d9/d2e/a00056" kindref="compound">model/interface_manipulator/qlightboxwidget.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;QString&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="22"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;QLabel&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;QMovie&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="24"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;QPushButton&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="25"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;QGridLayout&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="26"><highlight class="normal"></highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight><highlight class="comment">//#include<sp/>&quot;JlCompress.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="d4/db8/a00732" kindref="compound">MainWindow</ref>;</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="d0/d72/a00724" kindref="compound">formModule</ref>;</highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="d5/d39/a00676" kindref="compound">serial</ref>;</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="d0/db6/a00692" kindref="compound">QLightBoxWidget</ref>;</highlight></codeline>
+<codeline lineno="36" refid="df/d46/a00664" refkind="compound"><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="df/d46/a00664" kindref="compound">worker</ref><sp/></highlight><highlight class="comment">/*:<sp/>public<sp/>QObject*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/>Q_OBJECT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="df/d46/a00664_1a75e82634a8701d46c3f32c15de055316" kindref="member">worker</ref>();</highlight></codeline>
+<codeline lineno="47" refid="df/d46/a00664_1ad311e6c11f36ec0be84c8f0081f581d6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="df/d7d/a00696" kindref="compound">module</ref><sp/><ref refid="df/d46/a00664_1ad311e6c11f36ec0be84c8f0081f581d6" kindref="member">mod</ref>;</highlight></codeline>
+<codeline lineno="51" refid="df/d46/a00664_1a90fd00b359cb3a3ca156e506e1392766" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="d6/dd3/a00688" kindref="compound">mTreeview</ref><sp/><ref refid="df/d46/a00664_1a90fd00b359cb3a3ca156e506e1392766" kindref="member">mTree</ref>;</highlight></codeline>
+<codeline lineno="55" refid="df/d46/a00664_1aafad695f91953cdb1d29100842ce5009" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="d5/d39/a00676" kindref="compound">serial</ref><sp/>*<ref refid="df/d46/a00664_1aafad695f91953cdb1d29100842ce5009" kindref="member">Serial</ref>;</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/>QString<sp/><ref refid="df/d46/a00664_1a675d3c448211cf4d16256f545da1192d" kindref="member">newModule</ref>(QStandardItemModel<sp/>*tree,<sp/>QTreeView<sp/>*treeView,<sp/>QString<sp/>title);</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/>QString<sp/><ref refid="df/d46/a00664_1a146b3f72d09d3c4a5cc7b528d64a7300" kindref="member">editModule</ref>(QStandardItemModel<sp/>*tree,<sp/>QTreeView<sp/>*treeView,<sp/>QString<sp/>title);</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/>QString<sp/><ref refid="df/d46/a00664_1ab0caf92a819a0b75ddf5e5a4115bed4c" kindref="member">loadModule</ref>(QStandardItemModel<sp/>*tree,<sp/>QTreeView<sp/>*treeView,<sp/>QString<sp/>address,<sp/>QString<sp/>NewName);</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/>QString<sp/><ref refid="df/d46/a00664_1ad39143a4d442da14e8603326426dc6ed" kindref="member">checkModule</ref>(QString<sp/>address);</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/>QString<sp/><ref refid="df/d46/a00664_1aabf3d0d56253242035a6bb1de88bd1a4" kindref="member">check_statusModule</ref>(QString<sp/>address);</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="df/d46/a00664_1a3eea44b485336779cd517c3e248ad2dd" kindref="member">showModule</ref>(QWidget<sp/>*parent,<sp/>QMdiArea<sp/>*mdiArea,<sp/>QString<sp/><ref refid="df/d7d/a00696" kindref="compound">module</ref>,<sp/>QSerialPort<sp/>*SerialPort);</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"></highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="df/d46/a00664_1ab2c91c147f68ccb7c2e868e93b6d6b17" kindref="member">checkIfmodule</ref>(QString<sp/>name);</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="df/d46/a00664_1a5c7b858b7b6cdc0fa6c214a2f4185649" kindref="member">state_of_module</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>num,<sp/>QString<sp/><ref refid="df/d46/a00664_1a675d3c448211cf4d16256f545da1192d" kindref="member">newModule</ref>,<sp/>QString<sp/>*existModule);</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"></highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="df/d46/a00664_1abc9292de322bb9e2785bf6be5ed2ed66" kindref="member">Request_ENV</ref>(QSerialPort<sp/>*Serial_Com,<sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>timeout<sp/>=<sp/></highlight><highlight class="keyword">false</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"></highlight></codeline>
+<codeline lineno="133"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="df/d46/a00664_1a9af02f45723486b4dba4801633840a5d" kindref="member">write_FinishRead</ref>(</highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>FinishRead,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>cekErr,<sp/>QString<sp/>strErr);</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="df/d46/a00664_1aeb73e147971ca322895a53d574bc043b" kindref="member">read_FinishRead</ref>();</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="df/d46/a00664_1abafa5deaf1c8e63cbffeb4bc3d07695b" kindref="member">read_flagERR</ref>();</highlight></codeline>
+<codeline lineno="148"><highlight class="normal"><sp/><sp/><sp/><sp/>QString<sp/><ref refid="df/d46/a00664_1a104d21de6e310be9324ad641b5860df4" kindref="member">read_strERR</ref>();</highlight></codeline>
+<codeline lineno="149"><highlight class="normal"></highlight></codeline>
+<codeline lineno="150"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="df/d46/a00664_1aadc4540eac008b25ebb9ca83a91fe94d" kindref="member">delay</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>ms);</highlight></codeline>
+<codeline lineno="157"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="df/d46/a00664_1aa5975c9c48bf0b3afe4fab7a8b87804b" kindref="member">serial_write</ref>(QSerialPort<sp/>*<sp/>Serial_Com,<sp/>QString<sp/>data,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>d_c);</highlight></codeline>
+<codeline lineno="163"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="df/d46/a00664_1aa9884649459db4de99c406e41e540731" kindref="member">waiting_set</ref>(</highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>timeout<sp/>=<sp/></highlight><highlight class="keyword">false</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"></highlight></codeline>
+<codeline lineno="172"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="df/d46/a00664_1a0c6fa18fbb76a7a242d8c43e9ba44690" kindref="member">writeLogFile</ref>(QString<sp/>log,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>flagERR,<sp/>QString<sp/>strERR,<sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>timeout);</highlight></codeline>
+<codeline lineno="173"><highlight class="normal"></highlight></codeline>
+<codeline lineno="179"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="df/d46/a00664_1acac499db5b15edc380ad41b3335e1178" kindref="member">CompressDir</ref>(QString<sp/>ZipFile,<sp/>QString<sp/>Directory);</highlight></codeline>
+<codeline lineno="185"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="df/d46/a00664_1a6d78020986767be3a19953fae336bd33" kindref="member">DecompressDir</ref>(QString<sp/>ZipFile,<sp/>QString<sp/>Directory);</highlight></codeline>
+<codeline lineno="191"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="df/d46/a00664_1af1532dd86135693eefc852b876993ae9" kindref="member">CompressFiles</ref>(QString<sp/>ZipFile,<sp/>QStringList<sp/>Files);</highlight></codeline>
+<codeline lineno="198"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="df/d46/a00664_1a587b756099d1586f94a15e7f5eb3e72b" kindref="member">DecompressFiles</ref>(QString<sp/>ZipFile,<sp/>QStringList<sp/>Files,<sp/>QString<sp/>Directory);</highlight></codeline>
+<codeline lineno="204"><highlight class="normal"><sp/><sp/><sp/><sp/>QStringList<sp/><ref refid="df/d46/a00664_1aa4b9cceda9a6ddf1a9622c9009cf99f8" kindref="member">ListContents</ref>(QString<sp/>ZipFile);</highlight></codeline>
+<codeline lineno="205"><highlight class="normal"></highlight></codeline>
+<codeline lineno="206"><highlight class="normal"></highlight><highlight class="comment">//private<sp/>slots:</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="207"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/>void<sp/>CancelSetting();</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="208"><highlight class="normal"></highlight><highlight class="comment">//signals:</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="209"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/>void<sp/>TimeOut();</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="210"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="211"><highlight class="normal"></highlight></codeline>
+<codeline lineno="212"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/>//<sp/>WORKER_H</highlight></codeline>
+    </programlisting>
+    <location file="controller/worker.h"/>
+  </compounddef>
+</doxygen>

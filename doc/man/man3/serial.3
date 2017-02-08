@@ -1,0 +1,276 @@
+.TH "serial" 3 "Rabu 8 Februari 2017" "Version 1.0.2-4" "Sarasvati" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+serial \- The serial class\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <serial\&.h>\fP
+.SS "Slot Publik"
+.SS "Fungsi Anggota Publik"
+.SS "Atribut Privat"
+.SH "Keterangan Lengkap"
+.PP 
+The serial class\&. 
+.SH "Dokumentasi Konstruktor & Destruktor"
+.PP 
+.SS "\fBserial\fP ()"
+
+.PP
+serial 
+.PP
+.nf
+4 {
+5 //    connect(&m_timer, SIGNAL(timeout()), SLOT(handleTimeout()));
+6 }
+.fi
+.SH "Dokumentasi Anggota: Fungsi"
+.PP 
+.SS "void close_serial (QSerialPort * SerialPort)"
+
+.PP
+close_serial 
+.PP
+\fBParameter:\fP
+.RS 4
+\fISerialPort\fP 
+.RE
+.PP
+
+.PP
+.nf
+19 {
+20     if (SerialPort->isOpen())
+21         SerialPort->close();
+22 }
+.fi
+.SS "void open_serial (QSerialPort * SerialPort, struct \fBt_serial_settings\fP * tSerial)"
+
+.PP
+open_serial 
+.PP
+\fBParameter:\fP
+.RS 4
+\fISerialPort\fP 
+.br
+\fItSerial\fP 
+.RE
+.PP
+
+.PP
+.nf
+9 {
+10     SerialPort->setPortName(tSerial->name);
+11     SerialPort->setBaudRate(tSerial->baudRate);
+12     SerialPort->setDataBits(tSerial->dataBits);
+13     SerialPort->setParity(tSerial->parity);
+14     SerialPort->setStopBits(tSerial->stopBits);
+15     SerialPort->setFlowControl(tSerial->flowControl);
+16 }
+.fi
+.SS "void read_data (QString str_data, QStringList val_data)\fC [slot]\fP"
+
+.PP
+read_data 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIstr_data\fP 
+.br
+\fIval_data\fP 
+.RE
+.PP
+
+.SS "void read_parsing (struct \fBt_serial_settings\fP * tSerial)"
+
+.PP
+read_parsing 
+.PP
+\fBParameter:\fP
+.RS 4
+\fItSerial\fP 
+.RE
+.PP
+
+.PP
+.nf
+117 {
+118     QString pth;
+119     pth = PATH_SERIAL_PARSING;
+120     cryp code; code\&.decryp(pth);
+121     QSettings sett(pth, QSettings::IniFormat);
+122     QByteArray decode;
+123 
+124     tSerial->str_data_env = sett\&.value("STR_DATA_ENV")\&.toString();
+125     tSerial->str_data_io = sett\&.value("STR_DATA_IO")\&.toString();
+126     tSerial->str_data_sim = sett\&.value("STR_DATA_SIM")\&.toString();
+127     tSerial->str_data_src = sett\&.value("STR_DATA_SRC")\&.toString();
+128     tSerial->str_data_dat = sett\&.value("STR_DATA_DAT")\&.toString();
+129 
+130     code\&.encryp(pth);
+131 }
+.fi
+.SS "void write_data (QSerialPort * port, QByteArray data)"
+
+.PP
+write_data 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIport\fP 
+.br
+\fIdata\fP 
+.RE
+.PP
+
+.PP
+.nf
+25 {
+26 //    port->write(data\&.toUtf8()\&.data());
+27 
+28     m_writeData = data;
+29     qint64 bytesWritten = port->write(data);
+30 
+31     if (bytesWritten == -1) {
+32 //        m_standardOutput << QObject::tr("Failed to write the data to port %1, error: %2")\&.arg(port->portName())\&.arg(port->errorString()) << endl;
+33 //        QCoreApplication::exit(1);
+34         return;
+35     } else if (bytesWritten != m_writeData\&.size()) {
+36 //        m_standardOutput << QObject::tr("Failed to write all the data to port %1, error: %2")\&.arg(port->portName())\&.arg(port->errorString()) << endl;
+37 //        QCoreApplication::exit(1);
+38         return;
+39     }
+40 
+41     m_timer\&.start(10);
+42 }
+.fi
+.SS "void write_parsing_dat (struct \fBt_serial_settings\fP * tSerial)"
+
+.PP
+write_parsing_dat 
+.PP
+\fBParameter:\fP
+.RS 4
+\fItSerial\fP 
+.RE
+.PP
+
+.PP
+.nf
+108 {
+109     QString pth;
+110     pth = PATH_SERIAL_PARSING;
+111     QSettings sett(pth, QSettings::IniFormat);
+112 
+113     sett\&.setValue("STR_DATA_DAT", tSerial->str_data_dat);
+114 }
+.fi
+.SS "void write_parsing_env (struct \fBt_serial_settings\fP * tSerial)"
+
+.PP
+write_parsing_env 
+.PP
+\fBParameter:\fP
+.RS 4
+\fItSerial\fP 
+.RE
+.PP
+
+.PP
+.nf
+72 {
+73     QString pth;
+74     pth = PATH_SERIAL_PARSING;
+75     QSettings sett(pth, QSettings::IniFormat);
+76 
+77     sett\&.setValue("STR_DATA_ENV", tSerial->str_data_env);
+78 }
+.fi
+.SS "void write_parsing_io (struct \fBt_serial_settings\fP * tSerial)"
+
+.PP
+write_parsing_io 
+.PP
+\fBParameter:\fP
+.RS 4
+\fItSerial\fP 
+.RE
+.PP
+
+.PP
+.nf
+81 {
+82     QString pth;
+83     pth = PATH_SERIAL_PARSING;
+84     QSettings sett(pth, QSettings::IniFormat);
+85 
+86     sett\&.setValue("STR_DATA_IO", tSerial->str_data_io);
+87 }
+.fi
+.SS "void write_parsing_sim (struct \fBt_serial_settings\fP * tSerial)"
+
+.PP
+write_parsing_sim 
+.PP
+\fBParameter:\fP
+.RS 4
+\fItSerial\fP 
+.RE
+.PP
+
+.PP
+.nf
+90 {
+91     QString pth;
+92     pth = PATH_SERIAL_PARSING;
+93     QSettings sett(pth, QSettings::IniFormat);
+94 
+95     sett\&.setValue("STR_DATA_SIM", tSerial->str_data_sim);
+96 }
+.fi
+.SS "void write_parsing_src (struct \fBt_serial_settings\fP * tSerial)"
+
+.PP
+write_parsing_src 
+.PP
+\fBParameter:\fP
+.RS 4
+\fItSerial\fP 
+.RE
+.PP
+
+.PP
+.nf
+99 {
+100     QString pth;
+101     pth = PATH_SERIAL_PARSING;
+102     QSettings sett(pth, QSettings::IniFormat);
+103 
+104     sett\&.setValue("STR_DATA_SRC", tSerial->str_data_src);
+105 }
+.fi
+.SH "Dokumentasi Variabel"
+.PP 
+.SS "qint64 m_bytesWritten\fC [private]\fP"
+
+.PP
+m_bytesWritten 
+.SS "QTextStream m_standardOutput\fC [private]\fP"
+
+.PP
+m_standardOutput 
+.SS "QTimer m_timer\fC [private]\fP"
+
+.PP
+m_timer 
+.SS "QByteArray m_writeData\fC [private]\fP"
+
+.PP
+m_writeData 
+
+.SH "Penulis"
+.PP 
+Dibangkitkan secara otomatis oleh Doxygen untuk Sarasvati dari kode sumber\&.

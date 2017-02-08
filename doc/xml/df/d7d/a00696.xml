@@ -1,0 +1,136 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.14">
+  <compounddef id="df/d7d/a00696" kind="class" language="C++" prot="public">
+    <compoundname>module</compoundname>
+    <includes refid="df/d03/a00062" local="no">module.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="df/d7d/a00696_1a3772df9066afbc7d7f71397f3f3410be" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>module</definition>
+        <argsstring>()</argsstring>
+        <name>module</name>
+        <briefdescription>
+<para>module </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="model/module.h" line="24" column="1" bodyfile="model/module.cpp" bodystart="3" bodyend="6"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d7d/a00696_1a479713e817258f4cba3f0b5ea7800c11" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void write_module</definition>
+        <argsstring>(struct t_module *tmodule)</argsstring>
+        <name>write_module</name>
+        <param>
+          <type>struct <ref refid="d3/dda/a00712" kindref="compound">t_module</ref> *</type>
+          <declname>tmodule</declname>
+        </param>
+        <briefdescription>
+<para>write_module </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>tmodule</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="model/module.h" line="30" column="1" bodyfile="model/module.cpp" bodystart="8" bodyend="142"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d7d/a00696_1abf93b635dfcbab36f45776fd9a065210" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void read_module</definition>
+        <argsstring>(struct t_module *tmodule, QString addressModule)</argsstring>
+        <name>read_module</name>
+        <param>
+          <type>struct <ref refid="d3/dda/a00712" kindref="compound">t_module</ref> *</type>
+          <declname>tmodule</declname>
+        </param>
+        <param>
+          <type>QString</type>
+          <declname>addressModule</declname>
+        </param>
+        <briefdescription>
+<para>read_module </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>tmodule</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>addressModule</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="model/module.h" line="36" column="1" bodyfile="model/module.cpp" bodystart="144" bodyend="250"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d7d/a00696_1aaa46839b27b3978d4a4327934dcb0c02" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void save_as_module</definition>
+        <argsstring>(struct t_module *tmodule, QString address)</argsstring>
+        <name>save_as_module</name>
+        <param>
+          <type>struct <ref refid="d3/dda/a00712" kindref="compound">t_module</ref> *</type>
+          <declname>tmodule</declname>
+        </param>
+        <param>
+          <type>QString</type>
+          <declname>address</declname>
+        </param>
+        <briefdescription>
+<para>save_as_module </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>tmodule</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>address</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="model/module.h" line="42" column="1" bodyfile="model/module.cpp" bodystart="252" bodyend="366"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>The module class. </para>    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="49">
+        <label>module</label>
+        <link refid="df/d7d/a00696"/>
+      </node>
+    </collaborationgraph>
+    <location file="model/module.h" line="19" column="1" bodyfile="model/module.h" bodystart="18" bodyend="43"/>
+    <listofallmembers>
+      <member refid="df/d7d/a00696_1a3772df9066afbc7d7f71397f3f3410be" prot="public" virt="non-virtual"><scope>module</scope><name>module</name></member>
+      <member refid="df/d7d/a00696_1abf93b635dfcbab36f45776fd9a065210" prot="public" virt="non-virtual"><scope>module</scope><name>read_module</name></member>
+      <member refid="df/d7d/a00696_1aaa46839b27b3978d4a4327934dcb0c02" prot="public" virt="non-virtual"><scope>module</scope><name>save_as_module</name></member>
+      <member refid="df/d7d/a00696_1a479713e817258f4cba3f0b5ea7800c11" prot="public" virt="non-virtual"><scope>module</scope><name>write_module</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

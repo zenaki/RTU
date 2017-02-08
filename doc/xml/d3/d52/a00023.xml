@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.14">
+  <compounddef id="d3/d52/a00023" kind="file" language="C++">
+    <compoundname>serial.cpp</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#include<sp/>&quot;<ref refid="d6/d5b/a00026" kindref="compound">serial.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight></codeline>
+<codeline lineno="3" refid="d5/d39/a00676_1a20d848af138f92c4604f0bcecce267e2" refkind="member"><highlight class="normal"><ref refid="d5/d39/a00676_1a20d848af138f92c4604f0bcecce267e2" kindref="member">serial::serial</ref>()</highlight></codeline>
+<codeline lineno="4"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/>connect(&amp;m_timer,<sp/>SIGNAL(timeout()),<sp/>SLOT(handleTimeout()));</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8" refid="d5/d39/a00676_1aa63099330a47cf7e95966b6237043222" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d5/d39/a00676_1aa63099330a47cf7e95966b6237043222" kindref="member">serial::open_serial</ref>(QSerialPort<sp/>*SerialPort,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="d2/d94/a00716" kindref="compound">t_serial_settings</ref><sp/>*tSerial)</highlight></codeline>
+<codeline lineno="9"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="10"><highlight class="normal"><sp/><sp/><sp/><sp/>SerialPort-&gt;setPortName(tSerial-&gt;<ref refid="d2/d94/a00716_1abc29e461e01cc0c712944f8f47f91331" kindref="member">name</ref>);</highlight></codeline>
+<codeline lineno="11"><highlight class="normal"><sp/><sp/><sp/><sp/>SerialPort-&gt;setBaudRate(tSerial-&gt;<ref refid="d2/d94/a00716_1ae4da8c1cc1086a8440011e7a9b530ceb" kindref="member">baudRate</ref>);</highlight></codeline>
+<codeline lineno="12"><highlight class="normal"><sp/><sp/><sp/><sp/>SerialPort-&gt;setDataBits(tSerial-&gt;<ref refid="d2/d94/a00716_1a30bfcdadf644ba49462098536070ef6e" kindref="member">dataBits</ref>);</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"><sp/><sp/><sp/><sp/>SerialPort-&gt;setParity(tSerial-&gt;<ref refid="d2/d94/a00716_1aa3276e28333a211e56ff16aeaf2051a5" kindref="member">parity</ref>);</highlight></codeline>
+<codeline lineno="14"><highlight class="normal"><sp/><sp/><sp/><sp/>SerialPort-&gt;setStopBits(tSerial-&gt;<ref refid="d2/d94/a00716_1a4424bcca5efa0394657fece4faac0144" kindref="member">stopBits</ref>);</highlight></codeline>
+<codeline lineno="15"><highlight class="normal"><sp/><sp/><sp/><sp/>SerialPort-&gt;setFlowControl(tSerial-&gt;<ref refid="d2/d94/a00716_1aaaf840bbe91f7880fe67838452f34a7c" kindref="member">flowControl</ref>);</highlight></codeline>
+<codeline lineno="16"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight></codeline>
+<codeline lineno="18" refid="d5/d39/a00676_1aad0cc20ddf875e131e4167b6cde088d3" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d5/d39/a00676_1aad0cc20ddf875e131e4167b6cde088d3" kindref="member">serial::close_serial</ref>(QSerialPort<sp/>*SerialPort)</highlight></codeline>
+<codeline lineno="19"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="20"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(SerialPort-&gt;isOpen())</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>SerialPort-&gt;close();</highlight></codeline>
+<codeline lineno="22"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="24" refid="d5/d39/a00676_1a63b5f23e9319a9e5dbcd9fc46de9bbbc" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d5/d39/a00676_1a63b5f23e9319a9e5dbcd9fc46de9bbbc" kindref="member">serial::write_data</ref>(QSerialPort<sp/>*port,<sp/>QByteArray<sp/>data)</highlight></codeline>
+<codeline lineno="25"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/>port-&gt;write(data.toUtf8().data());</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="d5/d39/a00676_1a340a620b6a94e5140ea9b572f7d07ec9" kindref="member">m_writeData</ref><sp/>=<sp/>data;</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"><sp/><sp/><sp/><sp/>qint64<sp/>bytesWritten<sp/>=<sp/>port-&gt;write(data);</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(bytesWritten<sp/>==<sp/>-1)<sp/>{</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>m_standardOutput<sp/>&lt;&lt;<sp/>QObject::tr(&quot;Failed<sp/>to<sp/>write<sp/>the<sp/>data<sp/>to<sp/>port<sp/>%1,<sp/>error:<sp/>%2&quot;).arg(port-&gt;portName()).arg(port-&gt;errorString())<sp/>&lt;&lt;<sp/>endl;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>QCoreApplication::exit(1);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(bytesWritten<sp/>!=<sp/><ref refid="d5/d39/a00676_1a340a620b6a94e5140ea9b572f7d07ec9" kindref="member">m_writeData</ref>.size())<sp/>{</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>m_standardOutput<sp/>&lt;&lt;<sp/>QObject::tr(&quot;Failed<sp/>to<sp/>write<sp/>all<sp/>the<sp/>data<sp/>to<sp/>port<sp/>%1,<sp/>error:<sp/>%2&quot;).arg(port-&gt;portName()).arg(port-&gt;errorString())<sp/>&lt;&lt;<sp/>endl;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>QCoreApplication::exit(1);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="d5/d39/a00676_1a35d5e61f4986106a994025d3e7c4b9ef" kindref="member">m_timer</ref>.start(10);</highlight></codeline>
+<codeline lineno="42"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="comment">//void<sp/>serial::handleBytesWritten(qint64<sp/>bytes)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="comment">//{</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/>m_bytesWritten<sp/>+=<sp/>bytes;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/>if<sp/>(m_bytesWritten<sp/>==<sp/>m_writeData.size())<sp/>{</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>m_bytesWritten<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="51"><highlight class="comment"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>return;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/>}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight><highlight class="comment">//}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="comment">//void<sp/>serial::handleTimeout()</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight><highlight class="comment">//{</highlight></codeline>
+<codeline lineno="59"><highlight class="comment"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/>return;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight><highlight class="comment">//}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight><highlight class="comment">//void<sp/>serial::handleError(QSerialPort::SerialPortError<sp/>serialPortError)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight><highlight class="comment">//{</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/>if<sp/>(serialPortError<sp/>==<sp/>QSerialPort::WriteError)<sp/>{</highlight></codeline>
+<codeline lineno="67"><highlight class="comment"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>return;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/>}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight><highlight class="comment">//}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight></codeline>
+<codeline lineno="71" refid="d5/d39/a00676_1aa01e3ceb6c7fa0a9a3c809c1120a4b50" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d5/d39/a00676_1aa01e3ceb6c7fa0a9a3c809c1120a4b50" kindref="member">serial::write_parsing_env</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="d2/d94/a00716" kindref="compound">t_serial_settings</ref><sp/>*tSerial)</highlight></codeline>
+<codeline lineno="72"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/><sp/>QString<sp/>pth;</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><sp/><sp/>pth<sp/>=<sp/>PATH_SERIAL_PARSING;</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/>QSettings<sp/>sett(pth,<sp/>QSettings::IniFormat);</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/>sett.setValue(</highlight><highlight class="stringliteral">&quot;STR_DATA_ENV&quot;</highlight><highlight class="normal">,<sp/>tSerial-&gt;<ref refid="d2/d94/a00716_1a7a38393fcc494fcdc580f5a565fe9e1f" kindref="member">str_data_env</ref>);</highlight></codeline>
+<codeline lineno="78"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight></codeline>
+<codeline lineno="80" refid="d5/d39/a00676_1ad249d0dc623c51fb96bb3aa6485c1a6e" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d5/d39/a00676_1ad249d0dc623c51fb96bb3aa6485c1a6e" kindref="member">serial::write_parsing_io</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="d2/d94/a00716" kindref="compound">t_serial_settings</ref><sp/>*tSerial)</highlight></codeline>
+<codeline lineno="81"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/>QString<sp/>pth;</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/>pth<sp/>=<sp/>PATH_SERIAL_PARSING;</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/>QSettings<sp/>sett(pth,<sp/>QSettings::IniFormat);</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><sp/><sp/>sett.setValue(</highlight><highlight class="stringliteral">&quot;STR_DATA_IO&quot;</highlight><highlight class="normal">,<sp/>tSerial-&gt;<ref refid="d2/d94/a00716_1a98d4af4ede4c4f30d06c07b04903411a" kindref="member">str_data_io</ref>);</highlight></codeline>
+<codeline lineno="87"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight></codeline>
+<codeline lineno="89" refid="d5/d39/a00676_1aa686800c343de737a8554f3555a32e79" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d5/d39/a00676_1aa686800c343de737a8554f3555a32e79" kindref="member">serial::write_parsing_sim</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="d2/d94/a00716" kindref="compound">t_serial_settings</ref><sp/>*tSerial)</highlight></codeline>
+<codeline lineno="90"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/>QString<sp/>pth;</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/>pth<sp/>=<sp/>PATH_SERIAL_PARSING;</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/>QSettings<sp/>sett(pth,<sp/>QSettings::IniFormat);</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/>sett.setValue(</highlight><highlight class="stringliteral">&quot;STR_DATA_SIM&quot;</highlight><highlight class="normal">,<sp/>tSerial-&gt;<ref refid="d2/d94/a00716_1a3e16e74dec1c32bc9e7fd44de51278a0" kindref="member">str_data_sim</ref>);</highlight></codeline>
+<codeline lineno="96"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight></codeline>
+<codeline lineno="98" refid="d5/d39/a00676_1a4a2b34be15bb3819c4af87d519d4d5fd" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d5/d39/a00676_1a4a2b34be15bb3819c4af87d519d4d5fd" kindref="member">serial::write_parsing_src</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="d2/d94/a00716" kindref="compound">t_serial_settings</ref><sp/>*tSerial)</highlight></codeline>
+<codeline lineno="99"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/>QString<sp/>pth;</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/><sp/><sp/>pth<sp/>=<sp/>PATH_SERIAL_PARSING;</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/>QSettings<sp/>sett(pth,<sp/>QSettings::IniFormat);</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/>sett.setValue(</highlight><highlight class="stringliteral">&quot;STR_DATA_SRC&quot;</highlight><highlight class="normal">,<sp/>tSerial-&gt;<ref refid="d2/d94/a00716_1a0934c0a99a4e8443e3b36b6e208d75de" kindref="member">str_data_src</ref>);</highlight></codeline>
+<codeline lineno="105"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"></highlight></codeline>
+<codeline lineno="107" refid="d5/d39/a00676_1a7e798d571c1b22bc0f9b67a438dcd1b1" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d5/d39/a00676_1a7e798d571c1b22bc0f9b67a438dcd1b1" kindref="member">serial::write_parsing_dat</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="d2/d94/a00716" kindref="compound">t_serial_settings</ref><sp/>*tSerial)</highlight></codeline>
+<codeline lineno="108"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/>QString<sp/>pth;</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/>pth<sp/>=<sp/>PATH_SERIAL_PARSING;</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/>QSettings<sp/>sett(pth,<sp/>QSettings::IniFormat);</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"></highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/><sp/><sp/>sett.setValue(</highlight><highlight class="stringliteral">&quot;STR_DATA_DAT&quot;</highlight><highlight class="normal">,<sp/>tSerial-&gt;<ref refid="d2/d94/a00716_1a4f23a9f54e0cf93086c08d531d584db4" kindref="member">str_data_dat</ref>);</highlight></codeline>
+<codeline lineno="114"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"></highlight></codeline>
+<codeline lineno="116" refid="d5/d39/a00676_1aff0f1e9759eab9e12020018b454a760a" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d5/d39/a00676_1aff0f1e9759eab9e12020018b454a760a" kindref="member">serial::read_parsing</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="d2/d94/a00716" kindref="compound">t_serial_settings</ref><sp/>*tSerial)</highlight></codeline>
+<codeline lineno="117"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/>QString<sp/>pth;</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/>pth<sp/>=<sp/>PATH_SERIAL_PARSING;</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="d3/db4/a00684" kindref="compound">cryp</ref><sp/>code;<sp/>code.<ref refid="d3/db4/a00684_1a1016e41af566fdaf416506089cd1f5c1" kindref="member">decryp</ref>(pth);</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/>QSettings<sp/>sett(pth,<sp/>QSettings::IniFormat);</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/>QByteArray<sp/>decode;</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"></highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/>tSerial-&gt;<ref refid="d2/d94/a00716_1a7a38393fcc494fcdc580f5a565fe9e1f" kindref="member">str_data_env</ref><sp/>=<sp/>sett.value(</highlight><highlight class="stringliteral">&quot;STR_DATA_ENV&quot;</highlight><highlight class="normal">).toString();</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/>tSerial-&gt;<ref refid="d2/d94/a00716_1a98d4af4ede4c4f30d06c07b04903411a" kindref="member">str_data_io</ref><sp/>=<sp/>sett.value(</highlight><highlight class="stringliteral">&quot;STR_DATA_IO&quot;</highlight><highlight class="normal">).toString();</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><sp/><sp/>tSerial-&gt;<ref refid="d2/d94/a00716_1a3e16e74dec1c32bc9e7fd44de51278a0" kindref="member">str_data_sim</ref><sp/>=<sp/>sett.value(</highlight><highlight class="stringliteral">&quot;STR_DATA_SIM&quot;</highlight><highlight class="normal">).toString();</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/><sp/><sp/>tSerial-&gt;<ref refid="d2/d94/a00716_1a0934c0a99a4e8443e3b36b6e208d75de" kindref="member">str_data_src</ref><sp/>=<sp/>sett.value(</highlight><highlight class="stringliteral">&quot;STR_DATA_SRC&quot;</highlight><highlight class="normal">).toString();</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/>tSerial-&gt;<ref refid="d2/d94/a00716_1a4f23a9f54e0cf93086c08d531d584db4" kindref="member">str_data_dat</ref><sp/>=<sp/>sett.value(</highlight><highlight class="stringliteral">&quot;STR_DATA_DAT&quot;</highlight><highlight class="normal">).toString();</highlight></codeline>
+<codeline lineno="129"><highlight class="normal"></highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/><sp/><sp/>code.<ref refid="d3/db4/a00684_1a7b21ef461100447ea7953cf5fc4b1fac" kindref="member">encryp</ref>(pth);</highlight></codeline>
+<codeline lineno="131"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="model/communication/serial.cpp"/>
+  </compounddef>
+</doxygen>

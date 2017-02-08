@@ -1,0 +1,162 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.14">
+  <compounddef id="da/d6b/a00708" kind="struct" language="C++" prot="public">
+    <compoundname>data_port</compoundname>
+    <includes refid="df/da5/a00912" local="no">utama.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="da/d6b/a00708_1ac6a61089bdc7bb555fd2d5b5558d8c57" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char nama_input[64]</definition>
+        <argsstring>[64]</argsstring>
+        <name>nama_input</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="util/utama.h" line="86" column="1" bodyfile="util/utama.h" bodystart="86" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="da/d6b/a00708_1a03b082c37699b27e6d0688f435e794d6" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int type_input</definition>
+        <argsstring></argsstring>
+        <name>type_input</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="util/utama.h" line="87" column="1" bodyfile="util/utama.h" bodystart="87" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="da/d6b/a00708_1a5051f45f210d24ab4ec723f13f8875c3" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int status_input</definition>
+        <argsstring></argsstring>
+        <name>status_input</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="util/utama.h" line="88" column="1" bodyfile="util/utama.h" bodystart="88" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="da/d6b/a00708_1acc8ce28ad14edeb6cf9f05e5cfdcbe1b" prot="public" static="no" mutable="no">
+        <type>float</type>
+        <definition>float calib_m</definition>
+        <argsstring></argsstring>
+        <name>calib_m</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="util/utama.h" line="89" column="1" bodyfile="util/utama.h" bodystart="89" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="da/d6b/a00708_1a3d9fc7fac2023273c72b50361ad73c30" prot="public" static="no" mutable="no">
+        <type>float</type>
+        <definition>float calib_x</definition>
+        <argsstring></argsstring>
+        <name>calib_x</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="util/utama.h" line="90" column="1" bodyfile="util/utama.h" bodystart="90" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="da/d6b/a00708_1ae7a70a00843294e0e6343aa8492c2b81" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char nama_output[64]</definition>
+        <argsstring>[64]</argsstring>
+        <name>nama_output</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="util/utama.h" line="92" column="1" bodyfile="util/utama.h" bodystart="92" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="da/d6b/a00708_1a42e6b57c6164792184af5bb014038990" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char type_output[32]</definition>
+        <argsstring>[32]</argsstring>
+        <name>type_output</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="util/utama.h" line="93" column="1" bodyfile="util/utama.h" bodystart="93" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="da/d6b/a00708_1a25009e45555b1b2371b758a16637746d" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int status_output</definition>
+        <argsstring></argsstring>
+        <name>status_output</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="util/utama.h" line="94" column="1" bodyfile="util/utama.h" bodystart="94" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="da/d6b/a00708_1a38a5fff93fa70faa75b8fa0bc27d8550" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int control</definition>
+        <argsstring></argsstring>
+        <name>control</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="util/utama.h" line="95" column="1" bodyfile="util/utama.h" bodystart="95" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="da/d6b/a00708_1a4f37513b3fac261fdac94f9565654abc" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int reg_output</definition>
+        <argsstring></argsstring>
+        <name>reg_output</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="util/utama.h" line="96" column="1" bodyfile="util/utama.h" bodystart="96" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>STRUCT. </para>    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="5">
+        <label>data_port</label>
+        <link refid="da/d6b/a00708"/>
+      </node>
+    </collaborationgraph>
+    <location file="util/utama.h" line="85" column="1" bodyfile="util/utama.h" bodystart="85" bodyend="97"/>
+    <listofallmembers>
+      <member refid="da/d6b/a00708_1acc8ce28ad14edeb6cf9f05e5cfdcbe1b" prot="public" virt="non-virtual"><scope>data_port</scope><name>calib_m</name></member>
+      <member refid="da/d6b/a00708_1a3d9fc7fac2023273c72b50361ad73c30" prot="public" virt="non-virtual"><scope>data_port</scope><name>calib_x</name></member>
+      <member refid="da/d6b/a00708_1a38a5fff93fa70faa75b8fa0bc27d8550" prot="public" virt="non-virtual"><scope>data_port</scope><name>control</name></member>
+      <member refid="da/d6b/a00708_1ac6a61089bdc7bb555fd2d5b5558d8c57" prot="public" virt="non-virtual"><scope>data_port</scope><name>nama_input</name></member>
+      <member refid="da/d6b/a00708_1ae7a70a00843294e0e6343aa8492c2b81" prot="public" virt="non-virtual"><scope>data_port</scope><name>nama_output</name></member>
+      <member refid="da/d6b/a00708_1a4f37513b3fac261fdac94f9565654abc" prot="public" virt="non-virtual"><scope>data_port</scope><name>reg_output</name></member>
+      <member refid="da/d6b/a00708_1a5051f45f210d24ab4ec723f13f8875c3" prot="public" virt="non-virtual"><scope>data_port</scope><name>status_input</name></member>
+      <member refid="da/d6b/a00708_1a25009e45555b1b2371b758a16637746d" prot="public" virt="non-virtual"><scope>data_port</scope><name>status_output</name></member>
+      <member refid="da/d6b/a00708_1a03b082c37699b27e6d0688f435e794d6" prot="public" virt="non-virtual"><scope>data_port</scope><name>type_input</name></member>
+      <member refid="da/d6b/a00708_1a42e6b57c6164792184af5bb014038990" prot="public" virt="non-virtual"><scope>data_port</scope><name>type_output</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

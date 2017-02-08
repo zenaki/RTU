@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['qlightboxwidget',['QLightBoxWidget',['../class_q_light_box_widget.html',1,'']]]
+  ['qlightboxwidget',['QLightBoxWidget',['../d0/db6/a00692.html',1,'']]]
 ];

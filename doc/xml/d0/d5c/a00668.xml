@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.14">
+  <compounddef id="d0/d5c/a00668" kind="class" language="C++" prot="public">
+    <compoundname>gprs</compoundname>
+    <includes refid="d2/de7/a00014" local="no">gprs.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="d0/d5c/a00668_1a260abb5fd1fc8fcf46525310808c85f3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>gprs</definition>
+        <argsstring>()</argsstring>
+        <name>gprs</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="model/communication/gprs.h" line="8" column="1" bodyfile="model/communication/gprs.cpp" bodystart="3" bodyend="6"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="27">
+        <label>gprs</label>
+        <link refid="d0/d5c/a00668"/>
+      </node>
+    </collaborationgraph>
+    <location file="model/communication/gprs.h" line="6" column="1" bodyfile="model/communication/gprs.h" bodystart="5" bodyend="9"/>
+    <listofallmembers>
+      <member refid="d0/d5c/a00668_1a260abb5fd1fc8fcf46525310808c85f3" prot="public" virt="non-virtual"><scope>gprs</scope><name>gprs</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

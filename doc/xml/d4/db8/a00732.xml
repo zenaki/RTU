@@ -1,0 +1,908 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.14">
+  <compounddef id="d4/db8/a00732" kind="class" language="C++" prot="public">
+    <compoundname>MainWindow</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">QMainWindow</basecompoundref>
+    <includes refid="d1/d44/a00098" local="no">mainwindow.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="d4/db8/a00732_1ab198739b5cb12650ec2a6027f574184a" prot="public" static="no" mutable="no">
+        <type>Ui::MainWindow*</type>
+        <definition>Ui::MainWindow* ui</definition>
+        <argsstring></argsstring>
+        <name>ui</name>
+        <briefdescription>
+<para>ui </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="48" column="1" bodyfile="view/mainwindow.h" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d4/db8/a00732_1a75ed0e2f0962f4cca6e3245a741bc628" prot="public" static="no" mutable="no">
+        <type>QStandardItemModel*</type>
+        <definition>QStandardItemModel* modelTree</definition>
+        <argsstring></argsstring>
+        <name>modelTree</name>
+        <briefdescription>
+<para>modelTree </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="61" column="1" bodyfile="view/mainwindow.h" bodystart="61" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d4/db8/a00732_1a6dbdb898ff02e5efe410d53bcde40283" prot="public" static="no" mutable="no">
+        <type>QWidget</type>
+        <definition>QWidget ActiveWidget[]</definition>
+        <argsstring>[]</argsstring>
+        <name>ActiveWidget</name>
+        <briefdescription>
+<para>ActiveWidget. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="71" column="1" bodyfile="view/mainwindow.h" bodystart="71" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d4/db8/a00732_1aeafe054249453124724d19a576d9c17c" prot="public" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString ActiveAddress[]</definition>
+        <argsstring>[]</argsstring>
+        <name>ActiveAddress</name>
+        <briefdescription>
+<para>ActiveAddress. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="75" column="1" bodyfile="view/mainwindow.h" bodystart="75" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d4/db8/a00732_1af0a201cae1aa8efe1a17c2447922aaed" prot="public" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString GetNamaBoard</definition>
+        <argsstring></argsstring>
+        <name>GetNamaBoard</name>
+        <briefdescription>
+<para>GetNamaBoard. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="80" column="1" bodyfile="view/mainwindow.h" bodystart="80" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d4/db8/a00732_1acc2c26e7bbdcbbc4a4c16f026f31615e" prot="public" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString GetNoSeri</definition>
+        <argsstring></argsstring>
+        <name>GetNoSeri</name>
+        <briefdescription>
+<para>GetNoSeri. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="84" column="1" bodyfile="view/mainwindow.h" bodystart="84" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d4/db8/a00732_1a10cb24c16fa8668d01cf7190fa7c3d54" prot="public" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString str_data</definition>
+        <argsstring></argsstring>
+        <name>str_data</name>
+        <briefdescription>
+<para>str_data </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="89" column="1" bodyfile="view/mainwindow.h" bodystart="89" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d4/db8/a00732_1aa3152eb250d586a78d746c425b5cfa63" prot="public" static="no" mutable="no">
+        <type>QStringList</type>
+        <definition>QStringList val_data</definition>
+        <argsstring></argsstring>
+        <name>val_data</name>
+        <briefdescription>
+<para>val_data </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="93" column="1" bodyfile="view/mainwindow.h" bodystart="93" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d4/db8/a00732_1a911dccbfe560c7cc5d5a6bdf1ca8848b" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool FinishRead</definition>
+        <argsstring></argsstring>
+        <name>FinishRead</name>
+        <briefdescription>
+<para>FinishRead. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="100" column="1" bodyfile="view/mainwindow.h" bodystart="100" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d4/db8/a00732_1a9e84e75b70de518b841fdb314531fb43" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool standBy</definition>
+        <argsstring></argsstring>
+        <name>standBy</name>
+        <briefdescription>
+<para>standBy </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="104" column="1" bodyfile="view/mainwindow.h" bodystart="104" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d4/db8/a00732_1a6c1124a3f20b45b37354df5574642fe3" prot="public" static="no" mutable="no">
+        <type>QLabel*</type>
+        <definition>QLabel* bottom_message</definition>
+        <argsstring></argsstring>
+        <name>bottom_message</name>
+        <briefdescription>
+<para>bottom_message </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="113" column="1" bodyfile="view/mainwindow.h" bodystart="113" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="d4/db8/a00732_1a7090f1cfcc02e692c55ccde0748d8067" prot="private" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString NoSeri</definition>
+        <argsstring></argsstring>
+        <name>NoSeri</name>
+        <briefdescription>
+<para>NoSeri. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="203" column="1" bodyfile="view/mainwindow.h" bodystart="203" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d4/db8/a00732_1a855353d1ed5b43a8f12578f68ee742db" prot="private" static="no" mutable="no">
+        <type>QSerialPort*</type>
+        <definition>QSerialPort* SerialPort</definition>
+        <argsstring></argsstring>
+        <name>SerialPort</name>
+        <briefdescription>
+<para>SerialPort. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="207" column="1" bodyfile="view/mainwindow.h" bodystart="207" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d4/db8/a00732_1aafad695f91953cdb1d29100842ce5009" prot="private" static="no" mutable="no">
+        <type><ref refid="d5/d39/a00676" kindref="compound">serial</ref>*</type>
+        <definition>serial* Serial</definition>
+        <argsstring></argsstring>
+        <name>Serial</name>
+        <briefdescription>
+<para>Serial. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="211" column="1" bodyfile="view/mainwindow.h" bodystart="211" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d4/db8/a00732_1a89265a0cc7534001e1f3c65d826b65d5" prot="private" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString StatusMessage</definition>
+        <argsstring></argsstring>
+        <name>StatusMessage</name>
+        <briefdescription>
+<para>StatusMessage. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="216" column="1" bodyfile="view/mainwindow.h" bodystart="216" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d4/db8/a00732_1a90fd00b359cb3a3ca156e506e1392766" prot="private" static="no" mutable="no">
+        <type><ref refid="d6/dd3/a00688" kindref="compound">mTreeview</ref></type>
+        <definition>mTreeview mTree</definition>
+        <argsstring></argsstring>
+        <name>mTree</name>
+        <briefdescription>
+<para>mTree </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="221" column="1" bodyfile="view/mainwindow.h" bodystart="221" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d4/db8/a00732_1a2206794fe463f942029e9014b4695e77" prot="private" static="no" mutable="no">
+        <type><ref refid="dc/d14/a00720" kindref="compound">form_addModule</ref>*</type>
+        <definition>form_addModule* faddModule</definition>
+        <argsstring></argsstring>
+        <name>faddModule</name>
+        <briefdescription>
+<para>faddModule </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="225" column="1" bodyfile="view/mainwindow.h" bodystart="225" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d4/db8/a00732_1a0a93f26fd971656a0efc8d563195c701" prot="private" static="no" mutable="no">
+        <type><ref refid="dc/dce/a00740" kindref="compound">SettingsDialog</ref>*</type>
+        <definition>SettingsDialog* settings_dialog</definition>
+        <argsstring></argsstring>
+        <name>settings_dialog</name>
+        <briefdescription>
+<para>settings_dialog </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="229" column="1" bodyfile="view/mainwindow.h" bodystart="229" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d4/db8/a00732_1a3454a823ee99614db3c2465683adf9e4" prot="private" static="no" mutable="no">
+        <type><ref refid="df/d46/a00664" kindref="compound">worker</ref>*</type>
+        <definition>worker* work</definition>
+        <argsstring></argsstring>
+        <name>work</name>
+        <briefdescription>
+<para>work </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="233" column="1" bodyfile="view/mainwindow.h" bodystart="233" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d4/db8/a00732_1af7c1508aa267dddddca8c5a8a3790e35" prot="private" static="no" mutable="no">
+        <type><ref refid="dc/d85/a00736" kindref="compound">ProgressDialog</ref>*</type>
+        <definition>ProgressDialog* progress_dialog</definition>
+        <argsstring></argsstring>
+        <name>progress_dialog</name>
+        <briefdescription>
+<para>progress_dialog </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="237" column="1" bodyfile="view/mainwindow.h" bodystart="237" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d4/db8/a00732_1a9e650ad478ad29a9cb75499c73e91c84" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int num_window</definition>
+        <argsstring></argsstring>
+        <name>num_window</name>
+        <briefdescription>
+<para>num_window </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="242" column="1" bodyfile="view/mainwindow.h" bodystart="242" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d4/db8/a00732_1a9e5461ccc10f093488b4396f68d77dbd" prot="private" static="no" mutable="no">
+        <type>QSignalMapper*</type>
+        <definition>QSignalMapper* windowMapper</definition>
+        <argsstring></argsstring>
+        <name>windowMapper</name>
+        <briefdescription>
+<para>windowMapper </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="246" column="1" bodyfile="view/mainwindow.h" bodystart="246" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d4/db8/a00732_1aafe34c4b71e3dfc78eeefae37b3edd8e" prot="private" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString module_name[MAX_MODULE]</definition>
+        <argsstring>[MAX_MODULE]</argsstring>
+        <name>module_name</name>
+        <briefdescription>
+<para>module_name </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="251" column="1" bodyfile="view/mainwindow.h" bodystart="251" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d4/db8/a00732_1ad7488cfba022c35504589dcd09f54016" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int module_count</definition>
+        <argsstring></argsstring>
+        <name>module_count</name>
+        <briefdescription>
+<para>module_count </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="256" column="1" bodyfile="view/mainwindow.h" bodystart="256" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d4/db8/a00732_1afba88394bb520c3b692e3354b4c9b026" prot="private" static="no" mutable="no">
+        <type><ref refid="df/d7d/a00696" kindref="compound">module</ref>*</type>
+        <definition>module* mod</definition>
+        <argsstring></argsstring>
+        <name>mod</name>
+        <briefdescription>
+<para>mod </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="265" column="1" bodyfile="view/mainwindow.h" bodystart="265" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d4/db8/a00732_1a8ceb71724912c0d3c5a2244c0fe2597b" prot="private" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString module_address_sv</definition>
+        <argsstring></argsstring>
+        <name>module_address_sv</name>
+        <briefdescription>
+<para>module_address_sv </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="270" column="1" bodyfile="view/mainwindow.h" bodystart="270" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d4/db8/a00732_1a1c97ccc97c1b230e81b1a7aeda5a4e9a" prot="private" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString module_name_sv</definition>
+        <argsstring></argsstring>
+        <name>module_name_sv</name>
+        <briefdescription>
+<para>module_name_sv </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="274" column="1" bodyfile="view/mainwindow.h" bodystart="274" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d4/db8/a00732_1a38c9d13c6093dbd04a868f889cbb5a38" prot="private" static="no" mutable="no">
+        <type><ref refid="df/d3b/a00728" kindref="compound">loginForm</ref>*</type>
+        <definition>loginForm* LoginForm</definition>
+        <argsstring></argsstring>
+        <name>LoginForm</name>
+        <briefdescription>
+<para>LoginForm. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="279" column="1" bodyfile="view/mainwindow.h" bodystart="279" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="d4/db8/a00732_1aac141273b99c7880016110cae4cfdbba" prot="public" static="no" const="no" explicit="yes" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>MainWindow</definition>
+        <argsstring>(QWidget *parent = 0)</argsstring>
+        <name>MainWindow</name>
+        <param>
+          <type>QWidget *</type>
+          <declname>parent</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+<para><ref refid="d4/db8/a00732" kindref="compound">MainWindow</ref>. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>parent</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="54" column="1" bodyfile="view/mainwindow.cpp" bodystart="11" bodyend="61"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/db8/a00732_1aa33fa7d45aa34b9ede5cb69ab574a1b2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>~MainWindow</definition>
+        <argsstring>()</argsstring>
+        <name>~MainWindow</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="55" column="1" bodyfile="view/mainwindow.cpp" bodystart="63" bodyend="68"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/db8/a00732_1a365ac6b53aadf974b7de87e1c2ca24a6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Refresh_Tree</definition>
+        <argsstring>()</argsstring>
+        <name>Refresh_Tree</name>
+        <briefdescription>
+<para>Refresh_Tree. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+<para>check current module active </para>        </inbodydescription>
+        <location file="view/mainwindow.h" line="66" column="1" bodyfile="view/mainwindow.cpp" bodystart="665" bodyend="690"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/db8/a00732_1a226e0a17cf3ed8d705e18889728a0b6b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void checkRinjaniPassword</definition>
+        <argsstring>()</argsstring>
+        <name>checkRinjaniPassword</name>
+        <briefdescription>
+<para>checkRinjaniPassword </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="108" column="1" bodyfile="view/mainwindow.cpp" bodystart="692" bodyend="711"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-slot">
+      <memberdef kind="slot" id="d4/db8/a00732_1a087b25965c574887b6a3352d577a92a4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void on_actionConnect_triggered</definition>
+        <argsstring>()</argsstring>
+        <name>on_actionConnect_triggered</name>
+        <briefdescription>
+<para>on_actionConnect_triggered </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="119" column="1" bodyfile="view/mainwindow.cpp" bodystart="419" bodyend="482"/>
+      </memberdef>
+      <memberdef kind="slot" id="d4/db8/a00732_1a1dc1ee401ca51dcf43d22e68d222b556" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void on_actionDisconnect_triggered</definition>
+        <argsstring>()</argsstring>
+        <name>on_actionDisconnect_triggered</name>
+        <briefdescription>
+<para>on_actionDisconnect_triggered </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="123" column="1" bodyfile="view/mainwindow.cpp" bodystart="484" bodyend="512"/>
+      </memberdef>
+      <memberdef kind="slot" id="d4/db8/a00732_1ab1703367762abc1490e00dcd5ccb29bc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void readData</definition>
+        <argsstring>()</argsstring>
+        <name>readData</name>
+        <briefdescription>
+<para>readData </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="128" column="1" bodyfile="view/mainwindow.cpp" bodystart="514" bodyend="653"/>
+      </memberdef>
+      <memberdef kind="slot" id="d4/db8/a00732_1aced1ddebc72c0f9aa258b40fe78f0eb5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void handleError</definition>
+        <argsstring>(QSerialPort::SerialPortError error)</argsstring>
+        <name>handleError</name>
+        <param>
+          <type>QSerialPort::SerialPortError</type>
+          <declname>error</declname>
+        </param>
+        <briefdescription>
+<para>handleError </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>error</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="133" column="1" bodyfile="view/mainwindow.cpp" bodystart="718" bodyend="725"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-slot">
+      <memberdef kind="slot" id="d4/db8/a00732_1aaa4db5efcd1e535a0b4f9b23c4588b5b" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void on_actionNew_triggered</definition>
+        <argsstring>()</argsstring>
+        <name>on_actionNew_triggered</name>
+        <briefdescription>
+<para>on_actionNew_triggered </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="139" column="1" bodyfile="view/mainwindow.cpp" bodystart="101" bodyend="245"/>
+      </memberdef>
+      <memberdef kind="slot" id="d4/db8/a00732_1a2a7f022181adc8a0df929758cf2ddc62" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void update_activeWindow</definition>
+        <argsstring>()</argsstring>
+        <name>update_activeWindow</name>
+        <briefdescription>
+<para>update_activeWindow </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="143" column="1" bodyfile="view/mainwindow.cpp" bodystart="78" bodyend="93"/>
+      </memberdef>
+      <memberdef kind="slot" id="d4/db8/a00732_1a5b5163eaaa28f1c5c2b12ca200f2a382" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void setActiveSubWindow</definition>
+        <argsstring>(QWidget *window)</argsstring>
+        <name>setActiveSubWindow</name>
+        <param>
+          <type>QWidget *</type>
+          <declname>window</declname>
+        </param>
+        <briefdescription>
+<para>setActiveSubWindow </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>window</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="148" column="1" bodyfile="view/mainwindow.cpp" bodystart="95" bodyend="99"/>
+      </memberdef>
+      <memberdef kind="slot" id="d4/db8/a00732_1a98e8da251374ecdd701ec86f312226ae" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void on_actionSave_triggered</definition>
+        <argsstring>()</argsstring>
+        <name>on_actionSave_triggered</name>
+        <briefdescription>
+<para>on_actionSave_triggered </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="153" column="1" bodyfile="view/mainwindow.cpp" bodystart="247" bodyend="262"/>
+      </memberdef>
+      <memberdef kind="slot" id="d4/db8/a00732_1a542394633a1f84f54837aeb5c44102ba" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void on_actionLoad_triggered</definition>
+        <argsstring>()</argsstring>
+        <name>on_actionLoad_triggered</name>
+        <briefdescription>
+<para>on_actionLoad_triggered </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="157" column="1" bodyfile="view/mainwindow.cpp" bodystart="264" bodyend="346"/>
+      </memberdef>
+      <memberdef kind="slot" id="d4/db8/a00732_1ae88f06a1ccb1d06e0ea3154709859129" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void on_actionDelete_triggered</definition>
+        <argsstring>()</argsstring>
+        <name>on_actionDelete_triggered</name>
+        <briefdescription>
+<para>on_actionDelete_triggered </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="161" column="1" bodyfile="view/mainwindow.cpp" bodystart="348" bodyend="376"/>
+      </memberdef>
+      <memberdef kind="slot" id="d4/db8/a00732_1a36330e72782e1b1295a29d98afa75eeb" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void on_treeView_clicked</definition>
+        <argsstring>(const QModelIndex &amp;index)</argsstring>
+        <name>on_treeView_clicked</name>
+        <param>
+          <type>const QModelIndex &amp;</type>
+          <declname>index</declname>
+        </param>
+        <briefdescription>
+<para>on_treeView_clicked </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>index</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="167" column="1" bodyfile="view/mainwindow.cpp" bodystart="378" bodyend="392"/>
+      </memberdef>
+      <memberdef kind="slot" id="d4/db8/a00732_1a1db379edd753088d01ba56c715b6cdea" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void on_treeView_doubleClicked</definition>
+        <argsstring>(const QModelIndex &amp;index)</argsstring>
+        <name>on_treeView_doubleClicked</name>
+        <param>
+          <type>const QModelIndex &amp;</type>
+          <declname>index</declname>
+        </param>
+        <briefdescription>
+<para>on_treeView_doubleClicked </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>index</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="172" column="1" bodyfile="view/mainwindow.cpp" bodystart="394" bodyend="417"/>
+      </memberdef>
+      <memberdef kind="slot" id="d4/db8/a00732_1aa7c704a2069e7f0a8872b874a1e34e21" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void on_actionRefresh_triggered</definition>
+        <argsstring>()</argsstring>
+        <name>on_actionRefresh_triggered</name>
+        <briefdescription>
+<para>on_actionRefresh_triggered </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="177" column="1" bodyfile="view/mainwindow.cpp" bodystart="713" bodyend="716"/>
+      </memberdef>
+      <memberdef kind="slot" id="d4/db8/a00732_1a9e4277839d64a9a00c4e37832e6c6af0" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void on_actionConfig_triggered</definition>
+        <argsstring>()</argsstring>
+        <name>on_actionConfig_triggered</name>
+        <briefdescription>
+<para>on_actionConfig_triggered </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="181" column="1" bodyfile="view/mainwindow.cpp" bodystart="655" bodyend="663"/>
+      </memberdef>
+      <memberdef kind="slot" id="d4/db8/a00732_1ac544d5024cee3e8410305be6fdb8027c" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void on_actionCreate_User_triggered</definition>
+        <argsstring>()</argsstring>
+        <name>on_actionCreate_User_triggered</name>
+        <briefdescription>
+<para>on_actionCreate_User_triggered </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="186" column="1" bodyfile="view/mainwindow.cpp" bodystart="727" bodyend="738"/>
+      </memberdef>
+      <memberdef kind="slot" id="d4/db8/a00732_1a43c5390db786c6e3f38d7edfe2c66468" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void on_actionEdit_User_triggered</definition>
+        <argsstring>()</argsstring>
+        <name>on_actionEdit_User_triggered</name>
+        <briefdescription>
+<para>on_actionEdit_User_triggered </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="191" column="1" bodyfile="view/mainwindow.cpp" bodystart="740" bodyend="748"/>
+      </memberdef>
+      <memberdef kind="slot" id="d4/db8/a00732_1a05c30a6ad546c391b8d412cf998a6d30" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void on_actionExit_triggered</definition>
+        <argsstring>()</argsstring>
+        <name>on_actionExit_triggered</name>
+        <briefdescription>
+<para>on_actionExit_triggered </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="196" column="1" bodyfile="view/mainwindow.cpp" bodystart="750" bodyend="753"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="d4/db8/a00732_1a32b178949468d0170a6e984ad66aac05" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void init_signalSlots</definition>
+        <argsstring>()</argsstring>
+        <name>init_signalSlots</name>
+        <briefdescription>
+<para>init_signalSlots </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/mainwindow.h" line="261" column="1" bodyfile="view/mainwindow.cpp" bodystart="70" bodyend="76"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>The <ref refid="d4/db8/a00732" kindref="compound">MainWindow</ref> class. </para>    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="35">
+        <label>QMainWindow</label>
+      </node>
+      <node id="34">
+        <label>MainWindow</label>
+        <link refid="d4/db8/a00732"/>
+        <childnode refid="35" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="42">
+        <label>loginForm</label>
+        <link refid="df/d3b/a00728"/>
+        <childnode refid="40" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="37">
+        <label>QMainWindow</label>
+      </node>
+      <node id="36">
+        <label>MainWindow</label>
+        <link refid="d4/db8/a00732"/>
+        <childnode refid="37" relation="public-inheritance">
+        </childnode>
+        <childnode refid="38" relation="usage">
+          <edgelabel>-Serial</edgelabel>
+        </childnode>
+        <childnode refid="39" relation="usage">
+          <edgelabel>-faddModule</edgelabel>
+        </childnode>
+        <childnode refid="42" relation="usage">
+          <edgelabel>-LoginForm</edgelabel>
+        </childnode>
+        <childnode refid="43" relation="usage">
+          <edgelabel>-mTree</edgelabel>
+        </childnode>
+        <childnode refid="41" relation="usage">
+          <edgelabel>-mod</edgelabel>
+        </childnode>
+        <childnode refid="44" relation="usage">
+          <edgelabel>-progress_dialog</edgelabel>
+        </childnode>
+        <childnode refid="45" relation="usage">
+          <edgelabel>-work</edgelabel>
+        </childnode>
+        <childnode refid="46" relation="usage">
+          <edgelabel>-settings_dialog</edgelabel>
+        </childnode>
+      </node>
+      <node id="41">
+        <label>module</label>
+        <link refid="df/d7d/a00696"/>
+      </node>
+      <node id="44">
+        <label>ProgressDialog</label>
+        <link refid="dc/d85/a00736"/>
+        <childnode refid="40" relation="public-inheritance">
+        </childnode>
+        <childnode refid="38" relation="usage">
+          <edgelabel>+Serial</edgelabel>
+        </childnode>
+        <childnode refid="41" relation="usage">
+          <edgelabel>+mod</edgelabel>
+        </childnode>
+      </node>
+      <node id="39">
+        <label>form_addModule</label>
+        <link refid="dc/d14/a00720"/>
+        <childnode refid="40" relation="public-inheritance">
+        </childnode>
+        <childnode refid="41" relation="usage">
+          <edgelabel>-mod</edgelabel>
+        </childnode>
+      </node>
+      <node id="43">
+        <label>mTreeview</label>
+        <link refid="d6/dd3/a00688"/>
+      </node>
+      <node id="40">
+        <label>QDialog</label>
+      </node>
+      <node id="45">
+        <label>worker</label>
+        <link refid="df/d46/a00664"/>
+        <childnode refid="38" relation="usage">
+          <edgelabel>+Serial</edgelabel>
+        </childnode>
+        <childnode refid="43" relation="usage">
+          <edgelabel>+mTree</edgelabel>
+        </childnode>
+        <childnode refid="41" relation="usage">
+          <edgelabel>+mod</edgelabel>
+        </childnode>
+      </node>
+      <node id="38">
+        <label>serial</label>
+        <link refid="d5/d39/a00676"/>
+      </node>
+      <node id="46">
+        <label>SettingsDialog</label>
+        <link refid="dc/dce/a00740"/>
+        <childnode refid="40" relation="public-inheritance">
+        </childnode>
+        <childnode refid="47" relation="usage">
+          <edgelabel>+Setting</edgelabel>
+        </childnode>
+        <childnode refid="38" relation="usage">
+          <edgelabel>+Serial</edgelabel>
+        </childnode>
+        <childnode refid="36" relation="usage">
+          <edgelabel>+Main</edgelabel>
+        </childnode>
+      </node>
+      <node id="47">
+        <label>setting</label>
+        <link refid="d0/d15/a00700"/>
+      </node>
+    </collaborationgraph>
+    <location file="view/mainwindow.h" line="41" column="1" bodyfile="view/mainwindow.h" bodystart="40" bodyend="280"/>
+    <listofallmembers>
+      <member refid="d4/db8/a00732_1aeafe054249453124724d19a576d9c17c" prot="public" virt="non-virtual"><scope>MainWindow</scope><name>ActiveAddress</name></member>
+      <member refid="d4/db8/a00732_1a6dbdb898ff02e5efe410d53bcde40283" prot="public" virt="non-virtual"><scope>MainWindow</scope><name>ActiveWidget</name></member>
+      <member refid="d4/db8/a00732_1a6c1124a3f20b45b37354df5574642fe3" prot="public" virt="non-virtual"><scope>MainWindow</scope><name>bottom_message</name></member>
+      <member refid="d4/db8/a00732_1a226e0a17cf3ed8d705e18889728a0b6b" prot="public" virt="non-virtual"><scope>MainWindow</scope><name>checkRinjaniPassword</name></member>
+      <member refid="d4/db8/a00732_1a2206794fe463f942029e9014b4695e77" prot="private" virt="non-virtual"><scope>MainWindow</scope><name>faddModule</name></member>
+      <member refid="d4/db8/a00732_1a911dccbfe560c7cc5d5a6bdf1ca8848b" prot="public" virt="non-virtual"><scope>MainWindow</scope><name>FinishRead</name></member>
+      <member refid="d4/db8/a00732_1af0a201cae1aa8efe1a17c2447922aaed" prot="public" virt="non-virtual"><scope>MainWindow</scope><name>GetNamaBoard</name></member>
+      <member refid="d4/db8/a00732_1acc2c26e7bbdcbbc4a4c16f026f31615e" prot="public" virt="non-virtual"><scope>MainWindow</scope><name>GetNoSeri</name></member>
+      <member refid="d4/db8/a00732_1aced1ddebc72c0f9aa258b40fe78f0eb5" prot="public" virt="non-virtual"><scope>MainWindow</scope><name>handleError</name></member>
+      <member refid="d4/db8/a00732_1a32b178949468d0170a6e984ad66aac05" prot="private" virt="non-virtual"><scope>MainWindow</scope><name>init_signalSlots</name></member>
+      <member refid="d4/db8/a00732_1a38c9d13c6093dbd04a868f889cbb5a38" prot="private" virt="non-virtual"><scope>MainWindow</scope><name>LoginForm</name></member>
+      <member refid="d4/db8/a00732_1aac141273b99c7880016110cae4cfdbba" prot="public" virt="non-virtual"><scope>MainWindow</scope><name>MainWindow</name></member>
+      <member refid="d4/db8/a00732_1afba88394bb520c3b692e3354b4c9b026" prot="private" virt="non-virtual"><scope>MainWindow</scope><name>mod</name></member>
+      <member refid="d4/db8/a00732_1a75ed0e2f0962f4cca6e3245a741bc628" prot="public" virt="non-virtual"><scope>MainWindow</scope><name>modelTree</name></member>
+      <member refid="d4/db8/a00732_1a8ceb71724912c0d3c5a2244c0fe2597b" prot="private" virt="non-virtual"><scope>MainWindow</scope><name>module_address_sv</name></member>
+      <member refid="d4/db8/a00732_1ad7488cfba022c35504589dcd09f54016" prot="private" virt="non-virtual"><scope>MainWindow</scope><name>module_count</name></member>
+      <member refid="d4/db8/a00732_1aafe34c4b71e3dfc78eeefae37b3edd8e" prot="private" virt="non-virtual"><scope>MainWindow</scope><name>module_name</name></member>
+      <member refid="d4/db8/a00732_1a1c97ccc97c1b230e81b1a7aeda5a4e9a" prot="private" virt="non-virtual"><scope>MainWindow</scope><name>module_name_sv</name></member>
+      <member refid="d4/db8/a00732_1a90fd00b359cb3a3ca156e506e1392766" prot="private" virt="non-virtual"><scope>MainWindow</scope><name>mTree</name></member>
+      <member refid="d4/db8/a00732_1a7090f1cfcc02e692c55ccde0748d8067" prot="private" virt="non-virtual"><scope>MainWindow</scope><name>NoSeri</name></member>
+      <member refid="d4/db8/a00732_1a9e650ad478ad29a9cb75499c73e91c84" prot="private" virt="non-virtual"><scope>MainWindow</scope><name>num_window</name></member>
+      <member refid="d4/db8/a00732_1a9e4277839d64a9a00c4e37832e6c6af0" prot="private" virt="non-virtual"><scope>MainWindow</scope><name>on_actionConfig_triggered</name></member>
+      <member refid="d4/db8/a00732_1a087b25965c574887b6a3352d577a92a4" prot="public" virt="non-virtual"><scope>MainWindow</scope><name>on_actionConnect_triggered</name></member>
+      <member refid="d4/db8/a00732_1ac544d5024cee3e8410305be6fdb8027c" prot="private" virt="non-virtual"><scope>MainWindow</scope><name>on_actionCreate_User_triggered</name></member>
+      <member refid="d4/db8/a00732_1ae88f06a1ccb1d06e0ea3154709859129" prot="private" virt="non-virtual"><scope>MainWindow</scope><name>on_actionDelete_triggered</name></member>
+      <member refid="d4/db8/a00732_1a1dc1ee401ca51dcf43d22e68d222b556" prot="public" virt="non-virtual"><scope>MainWindow</scope><name>on_actionDisconnect_triggered</name></member>
+      <member refid="d4/db8/a00732_1a43c5390db786c6e3f38d7edfe2c66468" prot="private" virt="non-virtual"><scope>MainWindow</scope><name>on_actionEdit_User_triggered</name></member>
+      <member refid="d4/db8/a00732_1a05c30a6ad546c391b8d412cf998a6d30" prot="private" virt="non-virtual"><scope>MainWindow</scope><name>on_actionExit_triggered</name></member>
+      <member refid="d4/db8/a00732_1a542394633a1f84f54837aeb5c44102ba" prot="private" virt="non-virtual"><scope>MainWindow</scope><name>on_actionLoad_triggered</name></member>
+      <member refid="d4/db8/a00732_1aaa4db5efcd1e535a0b4f9b23c4588b5b" prot="private" virt="non-virtual"><scope>MainWindow</scope><name>on_actionNew_triggered</name></member>
+      <member refid="d4/db8/a00732_1aa7c704a2069e7f0a8872b874a1e34e21" prot="private" virt="non-virtual"><scope>MainWindow</scope><name>on_actionRefresh_triggered</name></member>
+      <member refid="d4/db8/a00732_1a98e8da251374ecdd701ec86f312226ae" prot="private" virt="non-virtual"><scope>MainWindow</scope><name>on_actionSave_triggered</name></member>
+      <member refid="d4/db8/a00732_1a36330e72782e1b1295a29d98afa75eeb" prot="private" virt="non-virtual"><scope>MainWindow</scope><name>on_treeView_clicked</name></member>
+      <member refid="d4/db8/a00732_1a1db379edd753088d01ba56c715b6cdea" prot="private" virt="non-virtual"><scope>MainWindow</scope><name>on_treeView_doubleClicked</name></member>
+      <member refid="d4/db8/a00732_1af7c1508aa267dddddca8c5a8a3790e35" prot="private" virt="non-virtual"><scope>MainWindow</scope><name>progress_dialog</name></member>
+      <member refid="d4/db8/a00732_1ab1703367762abc1490e00dcd5ccb29bc" prot="public" virt="non-virtual"><scope>MainWindow</scope><name>readData</name></member>
+      <member refid="d4/db8/a00732_1a365ac6b53aadf974b7de87e1c2ca24a6" prot="public" virt="non-virtual"><scope>MainWindow</scope><name>Refresh_Tree</name></member>
+      <member refid="d4/db8/a00732_1aafad695f91953cdb1d29100842ce5009" prot="private" virt="non-virtual"><scope>MainWindow</scope><name>Serial</name></member>
+      <member refid="d4/db8/a00732_1a855353d1ed5b43a8f12578f68ee742db" prot="private" virt="non-virtual"><scope>MainWindow</scope><name>SerialPort</name></member>
+      <member refid="d4/db8/a00732_1a5b5163eaaa28f1c5c2b12ca200f2a382" prot="private" virt="non-virtual"><scope>MainWindow</scope><name>setActiveSubWindow</name></member>
+      <member refid="d4/db8/a00732_1a0a93f26fd971656a0efc8d563195c701" prot="private" virt="non-virtual"><scope>MainWindow</scope><name>settings_dialog</name></member>
+      <member refid="d4/db8/a00732_1a9e84e75b70de518b841fdb314531fb43" prot="public" virt="non-virtual"><scope>MainWindow</scope><name>standBy</name></member>
+      <member refid="d4/db8/a00732_1a89265a0cc7534001e1f3c65d826b65d5" prot="private" virt="non-virtual"><scope>MainWindow</scope><name>StatusMessage</name></member>
+      <member refid="d4/db8/a00732_1a10cb24c16fa8668d01cf7190fa7c3d54" prot="public" virt="non-virtual"><scope>MainWindow</scope><name>str_data</name></member>
+      <member refid="d4/db8/a00732_1ab198739b5cb12650ec2a6027f574184a" prot="public" virt="non-virtual"><scope>MainWindow</scope><name>ui</name></member>
+      <member refid="d4/db8/a00732_1a2a7f022181adc8a0df929758cf2ddc62" prot="private" virt="non-virtual"><scope>MainWindow</scope><name>update_activeWindow</name></member>
+      <member refid="d4/db8/a00732_1aa3152eb250d586a78d746c425b5cfa63" prot="public" virt="non-virtual"><scope>MainWindow</scope><name>val_data</name></member>
+      <member refid="d4/db8/a00732_1a9e5461ccc10f093488b4396f68d77dbd" prot="private" virt="non-virtual"><scope>MainWindow</scope><name>windowMapper</name></member>
+      <member refid="d4/db8/a00732_1a3454a823ee99614db3c2465683adf9e4" prot="private" virt="non-virtual"><scope>MainWindow</scope><name>work</name></member>
+      <member refid="d4/db8/a00732_1aa33fa7d45aa34b9ede5cb69ab574a1b2" prot="public" virt="non-virtual"><scope>MainWindow</scope><name>~MainWindow</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

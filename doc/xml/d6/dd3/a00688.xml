@@ -1,0 +1,132 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.14">
+  <compounddef id="d6/dd3/a00688" kind="class" language="C++" prot="public">
+    <compoundname>mTreeview</compoundname>
+    <includes refid="d5/de0/a00050" local="no">mtreeview.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="d6/dd3/a00688_1a8c3e00ce63f8bcb1d5ca6252f78a8344" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>mTreeview</definition>
+        <argsstring>()</argsstring>
+        <name>mTreeview</name>
+        <briefdescription>
+<para><ref refid="d6/dd3/a00688" kindref="compound">mTreeview</ref> </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="model/interface_manipulator/mtreeview.h" line="15" column="1" bodyfile="model/interface_manipulator/mtreeview.cpp" bodystart="3" bodyend="6"/>
+      </memberdef>
+      <memberdef kind="function" id="d6/dd3/a00688_1ab19bf23184a2332ad6c23829c4c6007c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void add_firstItem</definition>
+        <argsstring>(QStandardItemModel *tree, QTreeView *treeView, QString name)</argsstring>
+        <name>add_firstItem</name>
+        <param>
+          <type>QStandardItemModel *</type>
+          <declname>tree</declname>
+        </param>
+        <param>
+          <type>QTreeView *</type>
+          <declname>treeView</declname>
+        </param>
+        <param>
+          <type>QString</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+<para>add_firstItem </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>tree</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>treeView</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>name</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="model/interface_manipulator/mtreeview.h" line="23" column="1" bodyfile="model/interface_manipulator/mtreeview.cpp" bodystart="8" bodyend="15"/>
+      </memberdef>
+      <memberdef kind="function" id="d6/dd3/a00688_1a9745e117b078f81fca168e8b30301f5b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void appendItem</definition>
+        <argsstring>(QStandardItemModel *tree, QTreeView *treeView, QString name)</argsstring>
+        <name>appendItem</name>
+        <param>
+          <type>QStandardItemModel *</type>
+          <declname>tree</declname>
+        </param>
+        <param>
+          <type>QTreeView *</type>
+          <declname>treeView</declname>
+        </param>
+        <param>
+          <type>QString</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+<para>appendItem </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>tree</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>treeView</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>name</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="model/interface_manipulator/mtreeview.h" line="30" column="1" bodyfile="model/interface_manipulator/mtreeview.cpp" bodystart="17" bodyend="27"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>The <ref refid="d6/dd3/a00688" kindref="compound">mTreeview</ref> class. </para>    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="51">
+        <label>mTreeview</label>
+        <link refid="d6/dd3/a00688"/>
+      </node>
+    </collaborationgraph>
+    <location file="model/interface_manipulator/mtreeview.h" line="10" column="1" bodyfile="model/interface_manipulator/mtreeview.h" bodystart="9" bodyend="31"/>
+    <listofallmembers>
+      <member refid="d6/dd3/a00688_1ab19bf23184a2332ad6c23829c4c6007c" prot="public" virt="non-virtual"><scope>mTreeview</scope><name>add_firstItem</name></member>
+      <member refid="d6/dd3/a00688_1a9745e117b078f81fca168e8b30301f5b" prot="public" virt="non-virtual"><scope>mTreeview</scope><name>appendItem</name></member>
+      <member refid="d6/dd3/a00688_1a8c3e00ce63f8bcb1d5ca6252f78a8344" prot="public" virt="non-virtual"><scope>mTreeview</scope><name>mTreeview</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

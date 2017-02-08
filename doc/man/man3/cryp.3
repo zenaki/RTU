@@ -1,0 +1,90 @@
+.TH "cryp" 3 "Rabu 8 Februari 2017" "Version 1.0.2-4" "Sarasvati" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+cryp
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <cryp\&.h>\fP
+.SS "Fungsi Anggota Publik"
+.SH "Keterangan Lengkap"
+.PP 
+.SH "Dokumentasi Konstruktor & Destruktor"
+.PP 
+.SS "\fBcryp\fP ()"
+
+.PP
+.nf
+4 {
+5 
+6 }
+.fi
+.SH "Dokumentasi Anggota: Fungsi"
+.PP 
+.SS "void decryp (QString address)"
+
+.PP
+decryp 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIaddress\fP 
+.RE
+.PP
+
+.PP
+.nf
+24 {
+25     QString fileName = address;
+26     if (!fileName\&.isEmpty()) {
+27         QFile file_in(fileName);
+28         if (!file_in\&.open(QFile::ReadOnly)) {return;}
+29         QByteArray data = file_in\&.readAll();
+30 
+31         QTextStream in(&data);
+32         in\&.setAutoDetectUnicode(false);
+33         in\&.setCodec(ENCRYP);
+34         QString textFile = in\&.readAll();
+35 
+36         QFile file_out(fileName);
+37         if (!file_out\&.open(QFile::WriteOnly | QFile::Text)) {return;}
+38         QTextStream out(&file_out);
+39         out\&.setCodec(DECRYP);
+40         out << textFile;
+41     }
+42 }
+.fi
+.SS "void encryp (QString address)"
+
+.PP
+encryp 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIaddress\fP 
+.RE
+.PP
+
+.PP
+.nf
+9 {
+10     QString fileName = address;
+11     if (!fileName\&.isEmpty()) {
+12         QFile file_in(fileName);
+13         if (!file_in\&.open(QFile::ReadOnly)) {return;}
+14         QByteArray data = file_in\&.readAll();
+15         QFile file_out(fileName);
+16         if (!file_out\&.open(QFile::WriteOnly | QFile::Text)) {return;}
+17         QTextStream out(&file_out);
+18         out\&.setCodec(ENCRYP);
+19         out << data;
+20     }
+21 }
+.fi
+
+
+.SH "Penulis"
+.PP 
+Dibangkitkan secara otomatis oleh Doxygen untuk Sarasvati dari kode sumber\&.

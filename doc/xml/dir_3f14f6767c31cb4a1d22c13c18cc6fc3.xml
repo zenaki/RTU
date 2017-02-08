@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.14">
+  <compounddef id="dir_3f14f6767c31cb4a1d22c13c18cc6fc3" kind="dir">
+    <compoundname>model</compoundname>
+    <innerdir refid="dir_ee206427a05dbb4f60b6a890e1cc2a29">model/communication</innerdir>
+    <innerdir refid="dir_5e6a652e39fd95acbd20d9ddbcdd9da4">model/interface_manipulator</innerdir>
+    <innerfile refid="d5/d16/a00029">config.cpp</innerfile>
+    <innerfile refid="dc/d87/a00032">config.h</innerfile>
+    <innerfile refid="d4/d8c/a00035">cryp.cpp</innerfile>
+    <innerfile refid="d8/d41/a00038">cryp.h</innerfile>
+    <innerfile refid="de/d01/a00897">debug.cpp</innerfile>
+    <innerfile refid="d4/d1c/a00903">debug.h</innerfile>
+    <innerfile refid="d3/d8b/a00059">module.cpp</innerfile>
+    <innerfile refid="df/d03/a00062">module.h</innerfile>
+    <innerfile refid="de/de1/a00065">setting.cpp</innerfile>
+    <innerfile refid="da/d24/a00068">setting.h</innerfile>
+    <innerfile refid="de/dc3/a00909">utama.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="model/"/>
+  </compounddef>
+</doxygen>

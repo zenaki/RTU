@@ -1,0 +1,222 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.14">
+  <compounddef id="df/d3b/a00728" kind="class" language="C++" prot="public">
+    <compoundname>loginForm</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">QDialog</basecompoundref>
+    <includes refid="d1/dc1/a00092" local="no">loginform.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="df/d3b/a00728_1a04ac25bc89501357cbd93e9086739b63" prot="public" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString formMode</definition>
+        <argsstring></argsstring>
+        <name>formMode</name>
+        <briefdescription>
+<para>formMode </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/loginform.h" line="38" column="1" bodyfile="view/loginform.h" bodystart="38" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="df/d3b/a00728_1a8977ca799d7013b92b31e62e13e683ff" prot="private" static="no" mutable="no">
+        <type>Ui::loginForm*</type>
+        <definition>Ui::loginForm* ui</definition>
+        <argsstring></argsstring>
+        <name>ui</name>
+        <briefdescription>
+<para>ui </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/loginform.h" line="66" column="1" bodyfile="view/loginform.h" bodystart="66" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="df/d3b/a00728_1aca2c7a598f16254b1a8df77c1d42647a" prot="public" static="no" const="no" explicit="yes" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>loginForm</definition>
+        <argsstring>(QWidget *parent = 0, QString mode = 0)</argsstring>
+        <name>loginForm</name>
+        <param>
+          <type>QWidget *</type>
+          <declname>parent</declname>
+          <defval>0</defval>
+        </param>
+        <param>
+          <type>QString</type>
+          <declname>mode</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+<para><ref refid="df/d3b/a00728" kindref="compound">loginForm</ref> </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>parent</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>mode</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/loginform.h" line="26" column="1" bodyfile="view/loginform.cpp" bodystart="4" bodyend="26"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d3b/a00728_1ad261854a23cad5bb88e1cb473772da24" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>~loginForm</definition>
+        <argsstring>()</argsstring>
+        <name>~loginForm</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/loginform.h" line="27" column="1" bodyfile="view/loginform.cpp" bodystart="28" bodyend="31"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d3b/a00728_1a308694c3c15b382d4af7ee3b9668867d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int loginSuccess</definition>
+        <argsstring>()</argsstring>
+        <name>loginSuccess</name>
+        <briefdescription>
+<para>loginSuccess </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para></para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/loginform.h" line="33" column="1" bodyfile="view/loginform.cpp" bodystart="33" bodyend="46"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d3b/a00728_1a57d04223d1c44c0f7ce9e62b9219a107" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void writeUserAccess</definition>
+        <argsstring>(QString user, QString pass)</argsstring>
+        <name>writeUserAccess</name>
+        <param>
+          <type>QString</type>
+          <declname>user</declname>
+        </param>
+        <param>
+          <type>QString</type>
+          <declname>pass</declname>
+        </param>
+        <briefdescription>
+<para>writeUserAccess </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>user</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>pass</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/loginform.h" line="44" column="1" bodyfile="view/loginform.cpp" bodystart="48" bodyend="53"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d3b/a00728_1a3e8fe646a791284e61320b402d368a33" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>QString</type>
+        <definition>QString readUser</definition>
+        <argsstring>()</argsstring>
+        <name>readUser</name>
+        <briefdescription>
+<para>readUser </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para></para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/loginform.h" line="49" column="1" bodyfile="view/loginform.cpp" bodystart="55" bodyend="62"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d3b/a00728_1a6a1bbfd68afbbc6fe18a73db6f61c74c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>QString</type>
+        <definition>QString readPass</definition>
+        <argsstring>()</argsstring>
+        <name>readPass</name>
+        <briefdescription>
+<para>readPass </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para></para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/loginform.h" line="54" column="1" bodyfile="view/loginform.cpp" bodystart="64" bodyend="71"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-slot">
+      <memberdef kind="slot" id="df/d3b/a00728_1a772d3821de6617205b636e4724b2ba83" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void on_loginButton_clicked</definition>
+        <argsstring>()</argsstring>
+        <name>on_loginButton_clicked</name>
+        <briefdescription>
+<para>on_loginButton_clicked </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/loginform.h" line="60" column="1" bodyfile="view/loginform.cpp" bodystart="73" bodyend="91"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>The <ref refid="df/d3b/a00728" kindref="compound">loginForm</ref> class. </para>    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="30">
+        <label>loginForm</label>
+        <link refid="df/d3b/a00728"/>
+        <childnode refid="31" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="31">
+        <label>QDialog</label>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="32">
+        <label>loginForm</label>
+        <link refid="df/d3b/a00728"/>
+        <childnode refid="33" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="33">
+        <label>QDialog</label>
+      </node>
+    </collaborationgraph>
+    <location file="view/loginform.h" line="17" column="1" bodyfile="view/loginform.h" bodystart="16" bodyend="67"/>
+    <listofallmembers>
+      <member refid="df/d3b/a00728_1a04ac25bc89501357cbd93e9086739b63" prot="public" virt="non-virtual"><scope>loginForm</scope><name>formMode</name></member>
+      <member refid="df/d3b/a00728_1aca2c7a598f16254b1a8df77c1d42647a" prot="public" virt="non-virtual"><scope>loginForm</scope><name>loginForm</name></member>
+      <member refid="df/d3b/a00728_1a308694c3c15b382d4af7ee3b9668867d" prot="public" virt="non-virtual"><scope>loginForm</scope><name>loginSuccess</name></member>
+      <member refid="df/d3b/a00728_1a772d3821de6617205b636e4724b2ba83" prot="private" virt="non-virtual"><scope>loginForm</scope><name>on_loginButton_clicked</name></member>
+      <member refid="df/d3b/a00728_1a6a1bbfd68afbbc6fe18a73db6f61c74c" prot="public" virt="non-virtual"><scope>loginForm</scope><name>readPass</name></member>
+      <member refid="df/d3b/a00728_1a3e8fe646a791284e61320b402d368a33" prot="public" virt="non-virtual"><scope>loginForm</scope><name>readUser</name></member>
+      <member refid="df/d3b/a00728_1a8977ca799d7013b92b31e62e13e683ff" prot="private" virt="non-virtual"><scope>loginForm</scope><name>ui</name></member>
+      <member refid="df/d3b/a00728_1a57d04223d1c44c0f7ce9e62b9219a107" prot="public" virt="non-virtual"><scope>loginForm</scope><name>writeUserAccess</name></member>
+      <member refid="df/d3b/a00728_1ad261854a23cad5bb88e1cb473772da24" prot="public" virt="non-virtual"><scope>loginForm</scope><name>~loginForm</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

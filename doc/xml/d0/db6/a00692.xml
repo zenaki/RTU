@@ -1,0 +1,182 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.14">
+  <compounddef id="d0/db6/a00692" kind="class" language="C++" prot="public">
+    <compoundname>QLightBoxWidget</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">QWidget</basecompoundref>
+    <includes refid="d9/d2e/a00056" local="no">qlightboxwidget.h</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="d0/db6/a00692_1a8bc2733936348929b012a07b9dc51dfe" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool m_isInUpdateSelf</definition>
+        <argsstring></argsstring>
+        <name>m_isInUpdateSelf</name>
+        <briefdescription>
+<para>Resolve conflicts recursive updates. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="model/interface_manipulator/qlightboxwidget.h" line="42" column="1" bodyfile="model/interface_manipulator/qlightboxwidget.h" bodystart="42" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d0/db6/a00692_1ada0b8679acdd7df1f342185f632d6d6d" prot="private" static="no" mutable="no">
+        <type>QPixmap</type>
+        <definition>QPixmap m_parentWidgetPixmap</definition>
+        <argsstring></argsstring>
+        <name>m_parentWidgetPixmap</name>
+        <briefdescription>
+<para>background Image </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="model/interface_manipulator/qlightboxwidget.h" line="52" column="1" bodyfile="model/interface_manipulator/qlightboxwidget.h" bodystart="52" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="d0/db6/a00692_1a68aae0c58e45b55384ea9acaaeee3926" prot="public" static="no" const="no" explicit="yes" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>QLightBoxWidget</definition>
+        <argsstring>(QWidget* _parent, bool _folowToHeadWidget = false)</argsstring>
+        <name>QLightBoxWidget</name>
+        <param>
+          <type>QWidget*</type>
+          <declname>_parent</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>_folowToHeadWidget</declname>
+          <defval>false</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="model/interface_manipulator/qlightboxwidget.h" line="15" column="1" bodyfile="model/interface_manipulator/qlightboxwidget.cpp" bodystart="9" bodyend="38"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-func">
+      <memberdef kind="function" id="d0/db6/a00692_1a133a51381d2bd10d5ef5f86b6b8ea047" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool eventFilter</definition>
+        <argsstring>(QObject* _object, QEvent* _event)</argsstring>
+        <name>eventFilter</name>
+        <param>
+          <type>QObject*</type>
+          <declname>_object</declname>
+        </param>
+        <param>
+          <type>QEvent*</type>
+          <declname>_event</declname>
+        </param>
+        <briefdescription>
+<para>It is overridden to track parent widget events. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="model/interface_manipulator/qlightboxwidget.h" line="21" column="1" bodyfile="model/interface_manipulator/qlightboxwidget.cpp" bodystart="40" bodyend="64"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/db6/a00692_1af19b53b15f5324480a6f9a5824d2bbd9" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void paintEvent</definition>
+        <argsstring>(QPaintEvent* _event)</argsstring>
+        <name>paintEvent</name>
+        <param>
+          <type>QPaintEvent*</type>
+          <declname>_event</declname>
+        </param>
+        <briefdescription>
+<para>Redefined in order to simulate the effect of overlap. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="model/interface_manipulator/qlightboxwidget.h" line="26" column="1" bodyfile="model/interface_manipulator/qlightboxwidget.cpp" bodystart="66" bodyend="84"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/db6/a00692_1a78a799411118d7ffed8e283c31de0c02" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void showEvent</definition>
+        <argsstring>(QShowEvent* _event)</argsstring>
+        <name>showEvent</name>
+        <param>
+          <type>QShowEvent*</type>
+          <declname>_event</declname>
+        </param>
+        <briefdescription>
+<para>It is overridden to before displaying customize the appearance. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="model/interface_manipulator/qlightboxwidget.h" line="31" column="1" bodyfile="model/interface_manipulator/qlightboxwidget.cpp" bodystart="86" bodyend="97"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="d0/db6/a00692_1af177c27af360b860f355d7f0ffddede0" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void updateSelf</definition>
+        <argsstring>()</argsstring>
+        <name>updateSelf</name>
+        <briefdescription>
+<para>Reload size and background image. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="model/interface_manipulator/qlightboxwidget.h" line="37" column="1" bodyfile="model/interface_manipulator/qlightboxwidget.cpp" bodystart="99" bodyend="116"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/db6/a00692_1a6805e492ed5892a71be1d11e95325538" prot="private" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>QPixmap</type>
+        <definition>QPixmap grabParentWidgetPixmap</definition>
+        <argsstring>() const </argsstring>
+        <name>grabParentWidgetPixmap</name>
+        <briefdescription>
+<para>Reload background image. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="model/interface_manipulator/qlightboxwidget.h" line="47" column="1" bodyfile="model/interface_manipulator/qlightboxwidget.cpp" bodystart="118" bodyend="129"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>overlap class </para>    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="58">
+        <label>QLightBoxWidget</label>
+        <link refid="d0/db6/a00692"/>
+        <childnode refid="59" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="59">
+        <label>QWidget</label>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="60">
+        <label>QLightBoxWidget</label>
+        <link refid="d0/db6/a00692"/>
+        <childnode refid="61" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="61">
+        <label>QWidget</label>
+      </node>
+    </collaborationgraph>
+    <location file="model/interface_manipulator/qlightboxwidget.h" line="11" column="1" bodyfile="model/interface_manipulator/qlightboxwidget.h" bodystart="10" bodyend="53"/>
+    <listofallmembers>
+      <member refid="d0/db6/a00692_1a133a51381d2bd10d5ef5f86b6b8ea047" prot="protected" virt="non-virtual"><scope>QLightBoxWidget</scope><name>eventFilter</name></member>
+      <member refid="d0/db6/a00692_1a6805e492ed5892a71be1d11e95325538" prot="private" virt="non-virtual"><scope>QLightBoxWidget</scope><name>grabParentWidgetPixmap</name></member>
+      <member refid="d0/db6/a00692_1a8bc2733936348929b012a07b9dc51dfe" prot="private" virt="non-virtual"><scope>QLightBoxWidget</scope><name>m_isInUpdateSelf</name></member>
+      <member refid="d0/db6/a00692_1ada0b8679acdd7df1f342185f632d6d6d" prot="private" virt="non-virtual"><scope>QLightBoxWidget</scope><name>m_parentWidgetPixmap</name></member>
+      <member refid="d0/db6/a00692_1af19b53b15f5324480a6f9a5824d2bbd9" prot="protected" virt="non-virtual"><scope>QLightBoxWidget</scope><name>paintEvent</name></member>
+      <member refid="d0/db6/a00692_1a68aae0c58e45b55384ea9acaaeee3926" prot="public" virt="non-virtual"><scope>QLightBoxWidget</scope><name>QLightBoxWidget</name></member>
+      <member refid="d0/db6/a00692_1a78a799411118d7ffed8e283c31de0c02" prot="protected" virt="non-virtual"><scope>QLightBoxWidget</scope><name>showEvent</name></member>
+      <member refid="d0/db6/a00692_1af177c27af360b860f355d7f0ffddede0" prot="private" virt="non-virtual"><scope>QLightBoxWidget</scope><name>updateSelf</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

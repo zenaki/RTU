@@ -1,0 +1,1027 @@
+.TH "MainWindow" 3 "Rabu 8 Februari 2017" "Version 1.0.2-4" "Sarasvati" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+MainWindow \- The \fBMainWindow\fP class\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <mainwindow\&.h>\fP
+.PP
+Mewarisi QMainWindow\&.
+.SS "Slot Publik"
+.SS "Fungsi Anggota Publik"
+.SS "Variabel Data"
+.SS "Slot Privat"
+.SS "Fungsi Anggota Privat"
+.SS "Atribut Privat"
+.SH "Keterangan Lengkap"
+.PP 
+The \fBMainWindow\fP class\&. 
+.SH "Dokumentasi Konstruktor & Destruktor"
+.PP 
+.SS "\fBMainWindow\fP (QWidget * parent = \fC0\fP)\fC [explicit]\fP"
+
+.PP
+\fBMainWindow\fP\&. 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIparent\fP 
+.RE
+.PP
+
+.PP
+.nf
+11                                       :
+12     QMainWindow(parent),
+13     ui(new Ui::MainWindow)
+14 {
+15     ui->setupUi(this);
+16 
+17     MainWindow::setWindowTitle("Sarasvati ver 1\&.0\&.2-4 - MONITA RTU Configuration");
+18     ui->treeView->header()->setHidden(true);
+19     ui->treeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+20 
+21     init_signalSlots();
+22 
+23     module_count = 0;
+24 
+25     modelTree = new QStandardItemModel();
+26     this->Refresh_Tree();
+27 
+28     bottom_message = new QLabel(this);
+29     this->ui->statusBar->addPermanentWidget(bottom_message,1);
+30     bottom_message->setStyleSheet("QLabel { color : black; }");
+31     bottom_message->setText("Not Connected");
+32 //    this->ui->statusBar->setStyleSheet("QLabel { color : black; }");
+33 //    this->ui->statusBar->showMessage("Not Connected");
+34 
+35 //    serial = new QSerialPort(this);
+36 //    SettingsDialogForm = new SettingsDialog(this);
+37 
+38 //    connect(serial, SIGNAL(error(QSerialPort::SerialPortError)), this, SLOT(handleError(QSerialPort::SerialPortError)));
+39 
+40     SerialPort = new  QSerialPort(this);
+41     Serial = new serial();
+42     connect(SerialPort, SIGNAL(readyRead()), this, SLOT(readData()));
+43     connect(SerialPort, SIGNAL(error(QSerialPort::SerialPortError)), this,SLOT(handleError(QSerialPort::SerialPortError)));
+44 
+45     this->ui->actionConnect->setEnabled(true);
+46     this->ui->actionDisconnect->setEnabled(false);
+47     this->ui->actionConfig->setEnabled(true);
+48 
+49     QFile usr(PATH_USER_ACCESS);
+50     if (usr\&.exists()) {
+51         this->ui->actionCreate_User->setEnabled(false);
+52         this->ui->actionEdit_User->setEnabled(true);
+53     } else {
+54         this->ui->actionCreate_User->setEnabled(true);
+55         this->ui->actionEdit_User->setEnabled(false);
+56     }
+57 
+58     progress_dialog = new ProgressDialog(this);
+59     progress_dialog->setModal(true);
+60     standBy = false;
+61 }
+.fi
+.SS "~\fBMainWindow\fP ()"
+
+.PP
+.nf
+64 {
+65 //    if (serial->isOpen())
+66 //        serial->close();
+67     delete ui;
+68 }
+.fi
+.SH "Dokumentasi Anggota: Fungsi"
+.PP 
+.SS "void checkRinjaniPassword ()"
+
+.PP
+checkRinjaniPassword 
+.PP
+.nf
+693 {
+694     standBy = false;
+695 //    int cnt_standBy_timeout = 0; int cnt = 0;
+696 //    while (!standBy) {
+697 //        cnt_standBy_timeout++;
+698 //        if (cnt_standBy_timeout > 50000) {
+699 //            if (SerialPort->isOpen()) {
+700 //                SerialPort->write("\r\n");
+701 //                cnt_standBy_timeout = 0; cnt++;
+702 //            } else {
+703 //                qDebug() << "Not Connected";
+704 //            }
+705 //        }
+706 //        if (standBy) break;
+707 //        if (cnt > 10) break;
+708 //    }
+709     SerialPort->write("\r\n");
+710     qDebug() << "Selesai Periksa";
+711 }
+.fi
+.SS "void handleError (QSerialPort::SerialPortError error)\fC [slot]\fP"
+
+.PP
+handleError 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIerror\fP 
+.RE
+.PP
+
+.PP
+.nf
+719 {
+720     if (error == QSerialPort::ResourceError) {
+721 //        QMessageBox::critical(this, tr("Critical Error"), SerialPort->errorString());
+722         this->on_actionDisconnect_triggered();
+723         QMessageBox::critical(this, tr("Critical Error"), "Please check your connection \&.\&.!!!");
+724     }
+725 }
+.fi
+.SS "void init_signalSlots ()\fC [private]\fP"
+
+.PP
+init_signalSlots 
+.PP
+.nf
+70                                  {
+71     num_window = 0;
+72     windowMapper = new QSignalMapper(this);
+73 
+74     QObject::connect(ui->menuActive_Window, SIGNAL(aboutToShow()), this, SLOT(update_activeWindow()));
+75     QObject::connect(windowMapper, SIGNAL(mapped(QWidget*)), this, SLOT(setActiveSubWindow(QWidget*)));
+76 }
+.fi
+.SS "void on_actionConfig_triggered ()\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+on_actionConfig_triggered 
+.PP
+.nf
+656 {
+657     int exe;
+658     settings_dialog = new SettingsDialog(this);
+659     settings_dialog->setWindowTitle("Serial Communication Setting");
+660     settings_dialog->setModal(true);
+661     exe = settings_dialog->exec();
+662     if(exe == 0) return;
+663 }
+.fi
+.SS "void on_actionConnect_triggered ()\fC [slot]\fP"
+
+.PP
+on_actionConnect_triggered 
+.PP
+.nf
+420 {
+421     struct t_serial_settings tSerial;
+422     serial Serial;
+423     setting Setting;
+424 
+425     if (!Setting\&.checkSetting()) {
+426         int exe;
+427         settings_dialog = new SettingsDialog(this);
+428         settings_dialog->setWindowTitle("Serial Communication Setting");
+429         settings_dialog->setModal(true);
+430         exe = settings_dialog->exec();
+431         if(exe == 0) return;
+432 
+433         Setting\&.read_setting(&tSerial);
+434         if (!SerialPort->isOpen())
+435             Serial\&.open_serial(SerialPort, &tSerial);
+436     } else {
+437         Setting\&.read_setting(&tSerial);
+438         if (!SerialPort->isOpen())
+439             Serial\&.open_serial(SerialPort, &tSerial);
+440     }
+441 
+442     if (SerialPort->open(QIODevice::ReadWrite)) {
+443         this->checkRinjaniPassword();
+444 //        if (standBy) {
+445             Setting\&.read_setting(&tSerial);
+446             bottom_message->setStyleSheet("QLabel { color : blue; }");
+447 //            this->ui->statusBar->setStyleSheet("QLabel { color : blue; }");
+448             StatusMessage = QString("Connected to ") + tSerial\&.name +
+449                             QString(", BR = ") + tSerial\&.stringBaudRate +
+450                             QString(", DB = ") + tSerial\&.stringDataBits +
+451                             QString(", PR = ") + tSerial\&.stringParity +
+452                             QString(", SB = ") + tSerial\&.stringStopBits +
+453                             QString(", FC = ") + tSerial\&.stringFlowControl;
+454             bottom_message->setText(StatusMessage);
+455             this->ui->statusBar->showMessage(StatusMessage);
+456             this->ui->actionConnect->setEnabled(false);
+457             this->ui->actionDisconnect->setEnabled(true);
+458             this->ui->actionConfig->setEnabled(false);
+459 //        } else {
+461 //            bottom_message->setStyleSheet("QLabel { color : red; }");
+462 //            bottom_message->setText("Connecting Fail");
+465 //            if (SerialPort->isOpen()) SerialPort->close();
+466 //            this->ui->actionConnect->setEnabled(true);
+467 //            this->ui->actionDisconnect->setEnabled(false);
+468 //            this->ui->actionConfig->setEnabled(true);
+469 //        }
+470     } else {
+471 //        QMessageBox::critical(this, tr("Error"), SerialPort->errorString());
+472         bottom_message->setStyleSheet("QLabel { color : red; }");
+473         bottom_message->setText("Connecting Fail");
+474 //        this->ui->statusBar->setStyleSheet("QLabel { color : red; }");
+475 //        this->ui->statusBar->showMessage("Connecting Fail");
+476         if (SerialPort->isOpen())
+477             SerialPort->close();
+478         this->ui->actionConnect->setEnabled(true);
+479         this->ui->actionDisconnect->setEnabled(false);
+480         this->ui->actionConfig->setEnabled(true);
+481     }
+482 }
+.fi
+.SS "void on_actionCreate_User_triggered ()\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+on_actionCreate_User_triggered 
+.PP
+.nf
+728 {
+729     int exe;
+730     LoginForm = new loginForm(this, "CREATE");
+731     LoginForm->setWindowTitle("Create User Access");
+732     LoginForm->setModal(true);
+733     exe = LoginForm->exec();
+734     if(exe != 0) return;
+735 
+736     this->ui->actionCreate_User->setEnabled(false);
+737     this->ui->actionEdit_User->setEnabled(true);
+738 }
+.fi
+.SS "void on_actionDelete_triggered ()\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+on_actionDelete_triggered 
+.PP
+.nf
+349 {
+350     QString Message;
+351     if (!module_name_sv\&.isEmpty()) {
+352         Message = "Module : " + module_name_sv\&.remove("m_")\&.remove("\&.dbe") + "\n\nAre you sure you want to delete this module";
+353         QMessageBox::StandardButton reply;
+354         reply = QMessageBox::question(this, "Attention !!", Message,
+355                                       QMessageBox::Yes|QMessageBox::No);
+356         if (reply == QMessageBox::Yes) {
+357             QList<QMdiSubWindow *> windows = ui->mdiArea->subWindowList();
+358             for (int i = 0; i < windows\&.size(); i++) {
+359                 if (module_name_sv\&.remove("m_")\&.remove("\&.dbe") == windows\&.at(i)->windowTitle()) {
+360                     windows\&.at(i)->close();
+361                 }
+362             }
+363             QFile d_m(module_address_sv);
+364             if (d_m\&.remove()) {
+365                 Message = "Module with name : " + module_name_sv + " was deleted";
+366                 QMessageBox::information(this, "Delete Successfully \&.\&.", Message, 0, 0);
+367             } else {
+368                 Message = d_m\&.errorString();
+369                 QMessageBox::information(this, "Delete Error \&.\&.", Message, 0, 0);
+370             }
+371             this->Refresh_Tree();
+372         }
+373     } else {
+374         QMessageBox::information(this, "Cannot Deleting \&.\&.", "Please Select Module Name Before Delete Module \&.\&.", 0, 0);
+375     }
+376 }
+.fi
+.SS "void on_actionDisconnect_triggered ()\fC [slot]\fP"
+
+.PP
+on_actionDisconnect_triggered 
+.PP
+.nf
+485 {
+486 //    serial Serial;
+487 //    Serial\&.close_serial(SerialPort);
+488     if (SerialPort->isOpen()) {
+489 //        if (SerialPort->open(QIODevice::ReadWrite)) {
+490 //            SerialPort->close();
+491 //        } else if (SerialPort->open(QIODevice::ReadOnly)) {
+492 //            SerialPort->close();
+493 //        }
+494         SerialPort->close();
+495         bottom_message->setStyleSheet("QLabel { color : black; }");
+496 //        this->ui->statusBar->setStyleSheet("QLabel { color : black; }");
+497         StatusMessage\&.replace("Connected to ", "Disconnected from ");
+498 //        StatusMessage = "Disconnect";
+499         bottom_message->setText(StatusMessage);
+500 //        this->ui->statusBar->showMessage(StatusMessage);
+501     } else {
+502         bottom_message->setStyleSheet("QLabel { color : black; }");
+503 //        this->ui->statusBar->setStyleSheet("QLabel { color : black; }");
+504         StatusMessage = "Disconnect";
+505         bottom_message->setText(StatusMessage);
+506 //        this->ui->statusBar->showMessage(StatusMessage);
+507     }
+508 
+509     this->ui->actionConnect->setEnabled(true);
+510     this->ui->actionDisconnect->setEnabled(false);
+511     this->ui->actionConfig->setEnabled(true);
+512 }
+.fi
+.SS "void on_actionEdit_User_triggered ()\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+on_actionEdit_User_triggered 
+.PP
+.nf
+741 {
+742     int exe;
+743     LoginForm = new loginForm(this, "EDIT");
+744     LoginForm->setWindowTitle("Edit User Access");
+745     LoginForm->setModal(true);
+746     exe = LoginForm->exec();
+747     if(exe == 0) return;
+748 }
+.fi
+.SS "void on_actionExit_triggered ()\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+on_actionExit_triggered 
+.PP
+.nf
+751 {
+752     QApplication::quit();
+753 }
+.fi
+.SS "void on_actionLoad_triggered ()\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+on_actionLoad_triggered 
+.PP
+.nf
+265 {
+266     struct t_module tModule;
+267     bool cek;
+268     QString currName;
+269     QString newName;
+270     int cpy_num = 0;
+271     QString file;
+272     QString command;
+273 
+274     QStringList fileName = QFileDialog::getOpenFileNames(this, tr("Load Module"), tr("\&.RTUdata/module/"), tr("(*\&.dbe)"));
+275 
+276     if (fileName\&.isEmpty()) return;
+277 
+278     for(int i = 0; i < fileName\&.count(); i++){
+279         mod->read_module(&tModule, fileName\&.at(i));
+280         file\&.sprintf("m_%s\&.dbe", tModule\&.module_name);
+281 //        file = work->checkModule(QString(fileName\&.at(i))\&.toUtf8()\&.data());
+282         cek = false;
+283         for (int j = 0; j < module_count; j++) {
+284             currName = module_name[j];
+285             if (currName\&.prepend("m_")\&.append("\&.dbe") == file) {
+286                 cek = true;
+287                 break;
+288             } else {
+289                 cek = false;
+290             }
+291         }
+292         if (!cek) {
+293             mod->write_module(&tModule);
+294             QString pth; pth\&.sprintf("\&.RTUdata/module/m_%s\&.dbe", tModule\&.module_name);
+295             cryp code; code\&.encryp(pth);
+296 
+297 //            QApplication::processEvents();
+298             module_name[module_count] = work->loadModule(modelTree, this->ui->treeView, pth, newName);
+299 //            module_name[module_count] = work->loadModule(modelTree, this->ui->treeView, QString(fileName\&.at(i))\&.toUtf8()\&.data(), newName);
+300             module_count++;
+301 //            this->Refresh_Tree();
+302         } else {
+303             command\&.sprintf("Module : %s\nis Exist !!\n\n", file\&.toUtf8()\&.data());
+304             command\&.append("Replace it ??");
+305             QMessageBox::StandardButton reply;
+306             reply = QMessageBox::question(this, "Attention !!", command,
+307                                           QMessageBox::Yes|QMessageBox::No);
+308             if (reply == QMessageBox::Yes) {
+309                 mod->read_module(&tModule, fileName[i]);
+310                 mod->write_module(&tModule);
+311                 QString pth; pth\&.sprintf("\&.RTUdata/module/m_%s\&.dbe", tModule\&.module_name);
+312                 cryp code; code\&.encryp(pth);
+313                 return;
+314             } else {
+315                 mod->read_module(&tModule, fileName[i]);
+316                 cek = false;
+317                 while (1) {
+318                     cpy_num++;
+319                     newName\&.sprintf("%s_%d", tModule\&.module_name, cpy_num);
+320                     for (int l = 0; l < module_count; l++) {
+321                         currName = module_name[l];
+322                         if (currName == newName) {
+323                             cek = true;
+324                             break;
+325                         } else {
+326                             cek = false;
+327                             strcpy(tModule\&.module_name, newName\&.toLatin1());
+328                         }
+329                     }
+330                     if (!cek)
+331                         break;
+332                 }
+333                 if(!cek) {
+334                     mod->write_module(&tModule);
+335                     QString pth; pth\&.sprintf("\&.RTUdata/module/m_%s\&.dbe", tModule\&.module_name);
+336                     cryp code; code\&.encryp(pth);
+337 
+338 //                    QApplication::processEvents();
+339                     module_name[module_count] = work->loadModule(modelTree, this->ui->treeView, pth, newName);
+340 //                    module_name[module_count] = work->loadModule(modelTree, this->ui->treeView, QString(fileName\&.at(i))\&.toUtf8()\&.data(), newName);
+341                     module_count++;
+342                 }
+343             }
+344         }
+345     }
+346 }
+.fi
+.SS "void on_actionNew_triggered ()\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+on_actionNew_triggered 
+.PP
+.nf
+102 {
+103     if (SerialPort->isOpen()) {
+104 //        this->checkRinjaniPassword();
+105 //        if (standBy) {
+106             bool timeout = false;
+107             timeout = work->Request_ENV(SerialPort, timeout);
+108             if (timeout) {this->on_actionDisconnect_triggered(); QMessageBox::information(this, "Serial Communication", "Please check your serial communication port \&.\&.", 0, 0); return;}
+109 
+110             struct t_module tModule;
+111             bool cek = false;
+112             QString command;
+113             QString newFiles;
+114             QDir path("\&.RTUdata/module");
+115             QStringList files = path\&.entryList(QDir::Files);
+116 
+117             newFiles = GetNamaBoard;
+118             newFiles\&.prepend("m_")\&.append("\&.dbe");
+119 
+120             /* cek apakah nama module sudah dipakai atau belum */
+121             for(int i = 0; i < files\&.count(); i++){
+122                 if(newFiles == QString(files\&.at(i))) {
+123                     cek = true;
+124                     break;
+125                 } else {
+126                     cek = false;
+127                 }
+128             }
+129 
+130             if (cek) {
+131                 command\&.sprintf("Module : %s\nis Exist !!\n\n", GetNamaBoard\&.toUtf8()\&.data());
+132                 command\&.append("Replace it ??");
+133                 QMessageBox::StandardButton reply;
+134                 reply = QMessageBox::question(this, "Attention !!", command,
+135                                               QMessageBox::Yes|QMessageBox::No);
+136                 if (reply == QMessageBox::Yes) {
+137                     QString Address = "\&.RTUdata/module/" + newFiles;
+138                     mod->read_module(&tModule, Address);
+139                     strcpy(tModule\&.serial_number, GetNoSeri\&.toLatin1());
+140 
+141                     progress_dialog->show();
+142                     progress_dialog->setWindowTitle("Get from board \&.\&.");
+143                     progress_dialog->Processing(SerialPort, Address, "0000;0001;0005;0002;0004");
+144                     progress_dialog->close();
+145 
+146                 } else {
+147                     GetNamaBoard\&.append("_new");
+148                     QString newModule = "m_" + GetNamaBoard + "\&.dbe";
+149                     strcpy(tModule\&.module_name, GetNamaBoard\&.toUtf8()\&.data());
+150                     strcpy(tModule\&.serial_number, GetNoSeri\&.toLatin1());
+151                     QString Address = "\&.RTUdata/module/" + newModule;
+152 
+153                     tModule\&.InputName\&.clear();
+154                     tModule\&.OutputName\&.clear();
+155                     tModule\&.jml_alarm = 0;
+156 
+157                     progress_dialog->show();
+158                     progress_dialog->setWindowTitle("Get from board \&.\&.");
+159                     progress_dialog->Processing(SerialPort, Address, "0000;0001;0005;0002;0004");
+160                     progress_dialog->close();
+161 
+162                     faddModule = new form_addModule(this, false, Address, 1);
+163                     faddModule->setWindowTitle("New Module");
+164                     faddModule->setModal(true);
+165 
+166                     faddModule->exec();
+167 
+168                     if (faddModule->accept == 0) {
+169                         QFile CurrFile(Address);
+170                         CurrFile\&.remove();
+171                         return;
+172                     }
+173 
+174                     Address = faddModule->currentFile;
+175                     mod->read_module(&tModule, Address);
+176 
+177                     bool fail = false;
+178 
+179                     progress_dialog->show();
+180                     progress_dialog->setWindowTitle("Set to board \&.\&.");
+181                     progress_dialog->Processing(SerialPort, Address, "0100;0101");
+182                     progress_dialog->close();
+183 
+184                     this->GetNamaBoard\&.sprintf("%s", tModule\&.module_name);
+185                     this->Refresh_Tree();
+186 
+187                     if (fail) {
+188                         this->on_actionDisconnect_triggered();
+189                         QMessageBox::information(this,
+190                                                  "Serial Communication",
+191                                                  "Please check your serial communication port \&.\&.", 0, 0);
+192                         return;
+193                     }
+194                 }
+195             } else {
+196                 QString Address = "\&.RTUdata/module/" + newFiles;
+197                 tModule\&.InputName\&.clear();
+198                 tModule\&.OutputName\&.clear();
+199                 tModule\&.jml_alarm = 0;
+200 
+201                 progress_dialog->show();
+202                 progress_dialog->setWindowTitle("Get from board \&.\&.");
+203                 progress_dialog->Processing(SerialPort, Address, "0000;0001;0005;0002;0004");
+204                 progress_dialog->close();
+205 
+206                 strcpy(tModule\&.module_name, GetNamaBoard\&.toUtf8()\&.data());
+207                 strcpy(tModule\&.serial_number, GetNoSeri\&.toLatin1());
+208 
+209                 QString title;
+210                 title\&.sprintf("%s", tModule\&.module_name);
+211 
+212                 module_name[module_count] = work->newModule(modelTree, this->ui->treeView, title);
+213                 module_count++;
+214             }
+215 //        } else {
+217 //            bottom_message->setStyleSheet("QLabel { color : red; }");
+218 //            bottom_message->setText("Connecting Fail");
+221 //            if (SerialPort->isOpen()) SerialPort->close();
+222 //            this->ui->actionConnect->setEnabled(true);
+223 //            this->ui->actionDisconnect->setEnabled(false);
+224 //            this->ui->actionConfig->setEnabled(true);
+225 //        }
+226     } else {
+227         faddModule = new form_addModule(this, true);
+228         faddModule->setWindowTitle("New Module");
+229         faddModule->setModal(true);
+230 
+231         faddModule->exec();
+232 
+233         if (faddModule->accept == 0) return;
+234 
+235         QString title;
+236         title\&.sprintf("%s [%s]", faddModule->ui->edit_module_name->text()\&.toUtf8()\&.data(), faddModule->ui->edit_sn->text()\&.toUtf8()\&.data());
+237 
+238         module_name[module_count] = work->newModule(modelTree, this->ui->treeView, title);
+239         module_count++;
+240         this->GetNamaBoard = title;
+241     }
+242     QString Message = this->GetNamaBoard;
+243     Message\&.prepend("Module with name : \n")\&.append("\nwas created \&.\&.");
+244     QMessageBox::information(this, "New Module", Message, 0, 0);
+245 }
+.fi
+.SS "void on_actionRefresh_triggered ()\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+on_actionRefresh_triggered 
+.PP
+.nf
+714 {
+715     this->Refresh_Tree();
+716 }
+.fi
+.SS "void on_actionSave_triggered ()\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+on_actionSave_triggered 
+.PP
+.nf
+248 {
+249     QString Message;
+250     if (!module_name_sv\&.isEmpty()) {
+251         struct t_module tModule;
+252         mod->read_module(&tModule, module_address_sv);
+253         QString newAddress = QFileDialog::getSaveFileName(this, tr("Save As Module"), module_address_sv, tr("(*\&.dbe)"));
+254         mod->save_as_module(&tModule, newAddress);
+255         cryp code; code\&.encryp(newAddress);
+256         Message = "Module with name : " + module_name_sv + " was saved on \n\n";
+257         Message\&.append(newAddress);
+258         QMessageBox::information(this, "Saving Successfully \&.\&.", Message, 0, 0);
+259     } else {
+260         QMessageBox::information(this, "Cannot Saving \&.\&.", "Please Select Module Name Before Save Module \&.\&.", 0, 0);
+261     }
+262 }
+.fi
+.SS "void on_treeView_clicked (const QModelIndex & index)\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+on_treeView_clicked 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIindex\fP 
+.RE
+.PP
+
+.PP
+.nf
+379 {
+380     QString name = index\&.data(Qt::DisplayRole)\&.toString();
+381     QStringList list = name\&.split(" ");
+382     name = list\&.at(0);
+383     if(work->checkIfmodule(name)) {
+384         module_name_sv = name;
+385         module_name_sv\&.prepend("m_")\&.append("\&.dbe");
+386         module_address_sv = "\&.RTUdata/module/" + module_name_sv;
+387     } else {
+388         module_name_sv = "";
+389         module_address_sv = "";
+390         return;
+391     }
+392 }
+.fi
+.SS "void on_treeView_doubleClicked (const QModelIndex & index)\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+on_treeView_doubleClicked 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIindex\fP 
+.RE
+.PP
+
+.PP
+.nf
+395 {
+396     QString name = index\&.data(Qt::DisplayRole)\&.toString();
+397     QStringList list = name\&.split(" ");
+398     name = list\&.at(0);
+399     QList<QMdiSubWindow *> windows = ui->mdiArea->subWindowList();
+400     bool cek = false;
+401     for (int i = 0; i < windows\&.size(); i++){
+402         QWidget *sublist = qobject_cast<QWidget *>(windows\&.at(i)->widget());
+403 
+404         if (name == sublist->windowTitle()) {
+405             sublist->setFocus();
+406             cek = true;
+407         }
+408     }
+409 
+410     if (cek)
+411         return;
+412 
+413     if(work->checkIfmodule(name))
+414         work->showModule(this, this->ui->mdiArea, name, SerialPort);
+415     else
+416         return;
+417 }
+.fi
+.SS "void readData ()\fC [slot]\fP"
+
+.PP
+readData 
+.PP
+.nf
+515 {
+516     QCoreApplication::processEvents();
+517     struct t_serial_settings tSerial;
+518     str_data\&.append(SerialPort->readAll());
+519     if (str_data\&.indexOf("<ENV") > 0 && str_data\&.indexOf("ENV>") > 0) {
+520         int a = str_data\&.indexOf("<ENV");
+521         int b = str_data\&.indexOf("ENV>");
+522         str_data = str_data\&.mid(a+4, b-a);
+523         val_data = str_data
+524                     \&.remove(" ")
+525                     \&.remove("<ENV")
+526                     \&.remove("<ENVani$")
+527                     \&.remove("ENV>")
+528                     \&.remove("Rinjani$")
+529                     \&.remove("0000")
+530                     \&.remove("hmi_cek_env")
+531                     \&.remove("\r")\&.remove("\n")\&.split(";");
+532         GetNamaBoard = val_data[0];
+533         GetNoSeri = val_data[1];
+534         tSerial\&.str_data_env = str_data;
+535         Serial->write_parsing_env(&tSerial);
+536         cryp code; code\&.encryp(PATH_SERIAL_PARSING);
+537         str_data\&.clear();
+538         FinishRead = true;
+539         progress_dialog->write_FinishRead(FinishRead, 0, "");
+540         code\&.encryp(PATH_SERIAL_PARSING);
+541     } else if (str_data\&.indexOf("<I/O") > 0 && str_data\&.indexOf("I/O>") > 0) {
+542         int a = str_data\&.indexOf("<I/O");
+543         int b = str_data\&.indexOf("I/O>");
+544         str_data = str_data\&.mid(a+4, b-a);
+545         val_data = str_data
+546                     \&.remove(" ")
+547                     \&.remove("<I/O")
+548                     \&.remove("<I/Oani$")
+549                     \&.remove("I/O>")
+550                     \&.remove("Rinjani$")
+551                     \&.remove("hmi_sync")
+552                     \&.remove("\r")\&.remove("\n")\&.remove("(X)")\&.split("*");
+553         tSerial\&.str_data_io = str_data;
+554         Serial->write_parsing_io(&tSerial);
+555         cryp code; code\&.encryp(PATH_SERIAL_PARSING);
+556         str_data\&.clear();
+557         FinishRead = true;
+558         progress_dialog->write_FinishRead(FinishRead, 0, "");
+559         code\&.encryp(PATH_SERIAL_PARSING);
+560     } else if (str_data\&.indexOf("<SIM") > 0 && str_data\&.indexOf("SIM>") > 0) {
+561         int a = str_data\&.indexOf("<SIM");
+562         int b = str_data\&.indexOf("SIM>");
+563         str_data = str_data\&.mid(a+4, b-a);
+564         val_data = str_data
+565                     \&.remove(" ")
+566                     \&.remove("<SIM")
+567                     \&.remove("<SIMani$")
+568                     \&.remove("SIM>")
+569                     \&.remove("Rinjani$")
+570                     \&.remove("0001")
+571                     \&.remove("hmi_cek_cfg_sim")
+572                     \&.remove("\r")\&.remove("\n")\&.remove("(X)")\&.split("*");
+573         tSerial\&.str_data_sim = str_data;
+574         Serial->write_parsing_sim(&tSerial);
+575         cryp code; code\&.encryp(PATH_SERIAL_PARSING);
+576         str_data\&.clear();
+577         FinishRead = true;
+578         progress_dialog->write_FinishRead(FinishRead, 0, "");
+579         code\&.encryp(PATH_SERIAL_PARSING);
+580     } else if (str_data\&.indexOf("<SRC") > 0 && str_data\&.indexOf("SRC>") > 0) {
+581         int a = str_data\&.indexOf("<SRC");
+582         int b = str_data\&.indexOf("SRC>");
+583         str_data = str_data\&.mid(a+4, b-a);
+584         val_data = str_data
+585                     \&.remove(" ")
+586                     \&.remove("<SRC")
+587                     \&.remove("<SRCani$")
+588                     \&.remove("SRC>")
+589                     \&.remove("Rinjani$")
+590                     \&.remove("0004")
+591                     \&.remove("hmi_cek_sumber")
+592                     \&.remove("\r")\&.remove("\n")\&.remove("(X)")\&.split("*");
+593         tSerial\&.str_data_src = str_data;
+594         Serial->write_parsing_src(&tSerial);
+595         cryp code; code\&.encryp(PATH_SERIAL_PARSING);
+596         str_data\&.clear();
+597         FinishRead = true;
+598         progress_dialog->write_FinishRead(FinishRead, 0, "");
+599         code\&.encryp(PATH_SERIAL_PARSING);
+600     } else if (str_data\&.indexOf("<DAT") > 0 && str_data\&.indexOf("DAT>") > 0) {
+601         int a = str_data\&.indexOf("<DAT");
+602         int b = str_data\&.indexOf("DAT>");
+603         str_data = str_data\&.mid(a+4, b-a);
+604         val_data = str_data
+605                     \&.remove(" ")
+606                     \&.remove("<DAT")
+607                     \&.remove("<DATani$")
+608                     \&.remove("DAT>")
+609                     \&.remove("Rinjani$")
+610                     \&.remove("0005")
+611                     \&.remove("hmi_cek_data")
+612                     \&.remove("\r")\&.remove("\n")\&.remove("(X)")\&.split("*");
+613         tSerial\&.str_data_dat = str_data;
+614         Serial->write_parsing_dat(&tSerial);
+615         cryp code; code\&.encryp(PATH_SERIAL_PARSING);
+616         str_data\&.clear();
+617         FinishRead = true;
+618         progress_dialog->write_FinishRead(FinishRead, 0, "");
+619         code\&.encryp(PATH_SERIAL_PARSING);
+620     } else if (str_data\&.indexOf("<OK>") > 0) {
+621         FinishRead = true;
+622         progress_dialog->write_FinishRead(FinishRead, 0, "");
+623         str_data\&.clear();
+624         cryp code; code\&.encryp(PATH_SERIAL_PARSING);
+625     } else if (str_data\&.indexOf("<OK:") > 0 && str_data\&.indexOf(":OK>") > 0) {
+626         int a = str_data\&.indexOf("<OK:");
+627         int b = str_data\&.indexOf(":OK>");
+628         str_data = str_data\&.mid(a+4, b-a-4);
+629         FinishRead = true;
+630         progress_dialog->write_FinishRead(FinishRead, 0, str_data);
+631         str_data\&.clear();
+632         cryp code; code\&.encryp(PATH_SERIAL_PARSING);
+633     } else if (str_data\&.indexOf("<ERR>") > 0) {
+634         FinishRead = true;
+635         progress_dialog->write_FinishRead(FinishRead, 1, "ERROR");
+636         cryp code; code\&.encryp(PATH_SERIAL_PARSING);
+637         str_data\&.clear();
+638     } else if (str_data\&.indexOf("<ERR:") > 0 && str_data\&.indexOf(":ERR>") > 0) {
+639         int a = str_data\&.indexOf("<ERR:");
+640         int b = str_data\&.indexOf(":ERR>");
+641         str_data = str_data\&.mid(a+5, b-a-5);
+642         FinishRead = true;
+643         progress_dialog->write_FinishRead(FinishRead, 1, str_data);
+644         cryp code; code\&.encryp(PATH_SERIAL_PARSING);
+645         str_data\&.clear();
+646     } else if (str_data\&.indexOf("Passwd salah    !") > 0 || str_data\&.indexOf("assword lock!") > 0) {
+647         SerialPort->write("monita\r\n");
+648         SerialPort->write("\r\n");
+649         str_data\&.clear();
+650     } else if (str_data\&.indexOf("injani$") > 0) {
+651         standBy = true;
+652     }
+653 }
+.fi
+.SS "void Refresh_Tree ()"
+
+.PP
+Refresh_Tree\&. check current module active 
+.PP
+.nf
+666 {
+667     modelTree->clear();
+668     module_count = 0;
+669     mTree\&.add_firstItem(modelTree, ui->treeView, "Module");
+670 
+672     QDir path("\&.RTUdata/module");
+673     QStringList files = path\&.entryList(QDir::Files);
+674 
+675     QString moduleName;
+676     QString filePath;
+677     for(int i = 0; i < files\&.count(); i++){
+678         moduleName = work->check_statusModule(QString(files\&.at(i)));
+679 
+680         if(moduleName != "none"){
+681             filePath\&.sprintf("\&.RTUdata/module/%s", moduleName\&.toUtf8()\&.data());
+682 
+683             module_name[module_count] = work->loadModule(modelTree, this->ui->treeView, filePath, "");
+684             module_count++;
+685         }
+686     }
+687 
+688 //    mTree\&.add_firstItem(modelTree, ui->treeView, "Text");
+689     //    mTree\&.add_firstItem(modelTree, ui->treeView, "Configuration");
+690 }
+.fi
+.SS "void setActiveSubWindow (QWidget * window)\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+setActiveSubWindow 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIwindow\fP 
+.RE
+.PP
+
+.PP
+.nf
+96 {
+97     if (!window) return;
+98     ui->mdiArea->setActiveSubWindow(qobject_cast<QMdiSubWindow *>(window));
+99 }
+.fi
+.SS "void update_activeWindow ()\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+update_activeWindow 
+.PP
+.nf
+78                                     {
+79     ui->menuActive_Window->clear();
+80 
+81     QList<QMdiSubWindow *> windows = ui->mdiArea->subWindowList();
+82 
+83     for (int i = 0; i < windows\&.size(); i++){
+84         QWidget *sublist = qobject_cast<QWidget *>(windows\&.at(i)->widget());
+85 
+86         QString text;
+87         text = tr("%1 / %2")\&.arg(i+1)\&.arg(sublist->windowTitle());
+88 
+89         QAction *action  = this->ui->menuActive_Window->addAction(text);
+90         QObject::connect(action, SIGNAL(triggered(bool)), windowMapper, SLOT(map()));
+91         windowMapper->setMapping(action, windows\&.at(i));
+92     }
+93 }
+.fi
+.SH "Dokumentasi Variabel"
+.PP 
+.SS "QString ActiveAddress[]"
+
+.PP
+ActiveAddress\&. 
+.SS "QWidget ActiveWidget[]"
+
+.PP
+ActiveWidget\&. 
+.SS "QLabel* bottom_message"
+
+.PP
+bottom_message 
+.SS "\fBform_addModule\fP* faddModule\fC [private]\fP"
+
+.PP
+faddModule 
+.SS "bool FinishRead"
+
+.PP
+FinishRead\&. 
+.SS "QString GetNamaBoard"
+
+.PP
+GetNamaBoard\&. 
+.SS "QString GetNoSeri"
+
+.PP
+GetNoSeri\&. 
+.SS "\fBloginForm\fP* LoginForm\fC [private]\fP"
+
+.PP
+LoginForm\&. 
+.SS "\fBmodule\fP* mod\fC [private]\fP"
+
+.PP
+mod 
+.SS "QStandardItemModel* modelTree"
+
+.PP
+modelTree 
+.SS "QString module_address_sv\fC [private]\fP"
+
+.PP
+module_address_sv 
+.SS "int module_count\fC [private]\fP"
+
+.PP
+module_count 
+.SS "QString module_name[MAX_MODULE]\fC [private]\fP"
+
+.PP
+module_name 
+.SS "QString module_name_sv\fC [private]\fP"
+
+.PP
+module_name_sv 
+.SS "\fBmTreeview\fP mTree\fC [private]\fP"
+
+.PP
+mTree 
+.SS "QString NoSeri\fC [private]\fP"
+
+.PP
+NoSeri\&. 
+.SS "int num_window\fC [private]\fP"
+
+.PP
+num_window 
+.SS "\fBProgressDialog\fP* progress_dialog\fC [private]\fP"
+
+.PP
+progress_dialog 
+.SS "\fBserial\fP* Serial\fC [private]\fP"
+
+.PP
+Serial\&. 
+.SS "QSerialPort* SerialPort\fC [private]\fP"
+
+.PP
+SerialPort\&. 
+.SS "\fBSettingsDialog\fP* settings_dialog\fC [private]\fP"
+
+.PP
+settings_dialog 
+.SS "bool standBy"
+
+.PP
+standBy 
+.SS "QString StatusMessage\fC [private]\fP"
+
+.PP
+StatusMessage\&. 
+.SS "QString str_data"
+
+.PP
+str_data 
+.SS "Ui::MainWindow* ui"
+
+.PP
+ui 
+.SS "QStringList val_data"
+
+.PP
+val_data 
+.SS "QSignalMapper* windowMapper\fC [private]\fP"
+
+.PP
+windowMapper 
+.SS "\fBworker\fP* work\fC [private]\fP"
+
+.PP
+work 
+
+.SH "Penulis"
+.PP 
+Dibangkitkan secara otomatis oleh Doxygen untuk Sarasvati dari kode sumber\&.

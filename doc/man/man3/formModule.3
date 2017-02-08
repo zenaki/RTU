@@ -1,0 +1,3220 @@
+.TH "formModule" 3 "Rabu 8 Februari 2017" "Version 1.0.2-4" "Sarasvati" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+formModule \- The \fBformModule\fP class\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <formmodule\&.h>\fP
+.PP
+Mewarisi QDialog\&.
+.SS "Fungsi Anggota Publik"
+.SS "Variabel Data"
+.SS "Slot Privat"
+.SS "Fungsi Anggota Privat"
+.SS "Atribut Privat"
+.SH "Keterangan Lengkap"
+.PP 
+The \fBformModule\fP class\&. 
+.SH "Dokumentasi Konstruktor & Destruktor"
+.PP 
+.SS "\fBformModule\fP (QWidget * parent = \fC0\fP, QString address = \fC0\fP, QSerialPort * SerialPort = \fC0\fP)\fC [explicit]\fP"
+
+.PP
+\fBformModule\fP 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIparent\fP 
+.br
+\fIaddress\fP 
+.br
+\fISerialPort\fP 
+.RE
+.PP
+
+.PP
+.nf
+6                                                                                 :
+7     QDialog(parent),
+8     ui(new Ui::formModule)
+9 {
+10     ui->setupUi(this);
+11     this->ui->tabWidget->setCurrentIndex(0);
+12 
+13     Address_Module = address;
+14     struct t_module tModule;
+15     module mod;
+16     mod\&.read_module(&tModule, Address_Module);
+17     NoSeri\&.sprintf("%s", tModule\&.serial_number);
+18 
+19     Serial_Com = new QSerialPort(this);
+20     Serial_Com = SerialPort;
+21 
+22     Main = new MainWindow(this);
+23     Serial = new serial();
+24     Setting = new setting();
+25 //    busyForm = new QLightBoxWidget(parent);
+26 
+27     this->setInterface(address);
+28     this->ui->tab_alarm->setEnabled(false);
+29     this->ui->pbEdit->setHidden(true);
+30     this->ui->pbAddRow->setHidden(true);
+31     this->ui->pbDeleteRows->setHidden(true);
+32     this->ui->pbRefresh->setHidden(true);
+33 
+34     this->ui->pbSet->setText("Set All Input Settings");
+35     this->ui->pbSetChk->setText("Set Checked Input Settings");
+36     this->ui->pbGet->setText("Get All Input Settings");
+37 
+38     this->ui->tab_alarm->setHidden(true);
+39 
+40     progress_dialog = new ProgressDialog(this);
+41     progress_dialog->setModal(true);
+42 }
+.fi
+.SS "~\fBformModule\fP ()"
+
+.PP
+.nf
+45 {
+46     delete ui;
+47 }
+.fi
+.SH "Dokumentasi Anggota: Fungsi"
+.PP 
+.SS "bool checkFormula (QString data)\fC [private]\fP"
+
+.PP
+checkFormula 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIdata\fP 
+.RE
+.PP
+\fBMengembalikan:\fP
+.RS 4
+.RE
+.PP
+
+.PP
+.nf
+924 {
+925     QStringList list = data\&.split(';');
+926     if (list\&.length() > 6) {
+927         return true;
+928     } else {
+929         return false;
+930     }
+931 }
+.fi
+.SS "void data_monitoring ()\fC [private]\fP"
+
+.PP
+data_monitoring 
+.PP
+.nf
+934 {
+935     struct t_module tModule;
+936     struct t_serial_settings tSerial;
+937     QStringList val_data;
+938     module mod;
+939     Address_Module = "\&.RTUdata/module/m_" + this->windowTitle() + "\&.dbe";
+940     mod\&.read_module(&tModule, Address_Module);
+941 
+942     QString str;
+943     QString tmp;
+944     QStringList list;
+945 
+946     if (Serial_Com->isOpen()) {
+947         QString Request = "0005\r\n";
+948         bool timeout = false;
+949 //        while (!this->ui->tabWidget->currentIndex() == 6) {
+950 //            Serial_Com->write(Request\&.toUtf8()\&.data());
+951             Request\&.remove("\r\n");
+952             for (int i = 0; i < Request\&.length(); i++) {
+953                 tmp = QChar(Request\&.at(i));
+954                 Serial_Com->write(tmp\&.toUtf8()\&.data());
+955                 progress_dialog->delay(WAIT_WRITE);
+956             }
+957             Serial_Com->write("\r\n");
+958 
+959             QTime dieTime = QTime::currentTime()\&.addMSecs(TIMEOUT);
+960             while (!progress_dialog->read_FinishRead()) {
+961                 QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+962                 if (QTime::currentTime() >= dieTime && !timeout) {
+963                     timeout = true;
+964                     break;
+965                 }
+966             }
+967 //            work->delay(1000);
+968             if (!timeout) {
+969                 Serial->read_parsing(&tSerial);
+970                 val_data = tSerial\&.str_data_dat\&.split("*");
+971                 progress_dialog->Get_Data(&tModule, val_data);
+972 
+973                 QStringList data = tModule\&.data;
+974                 QStringList temp = tModule\&.data;
+975                 int data_count = 0;
+976                 tModule\&.data\&.clear();
+977                 for (int i = 0; i < data\&.length(); i++) {
+978                     str = data\&.at(i);
+979                     list =str\&.split(';');
+980                     if (list\&.length() == 12) {
+981                         if (list\&.at(11) == "1") {
+982                             tModule\&.data\&.append(str);
+983                             data_count++;
+984                         }
+985                     }
+986                 }
+987 
+988                 for (int i = 0; i < data_count; i++){
+989                     str = tModule\&.data\&.at(i);
+990                     list = str\&.split(';');
+991                     str = list[0];
+992                     reg_data[i]->setText(list[1]);
+993                     name_data[i]->setText(list[2]);
+994                     value_data[i]->setText(list[3]);
+995                     unit_data[i]->setText(list[4]);
+996 
+997                     this->ui->tabel_data_m->setItem(i,0, new QTableWidgetItem(str));
+998                     this->ui->tabel_data_m->setCellWidget(i,1, reg_data[i]);
+999                     this->ui->tabel_data_m->setCellWidget(i,2, name_data[i]);
+1000                     this->ui->tabel_data_m->setCellWidget(i,3, value_data[i]);
+1001                     this->ui->tabel_data_m->setCellWidget(i,4, unit_data[i]);
+1002                 }
+1003                 tModule\&.data = temp;
+1004                 mod\&.write_module(&tModule);
+1005                 cryp code; code\&.encryp(Address_Module);
+1006 
+1007             } else {
+1008                 timeout = false;
+1009             }
+1010 //        }
+1011     }
+1012 }
+.fi
+.SS "void del_alrm_clicked (int index)\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+del_alrm_clicked 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIindex\fP 
+.RE
+.PP
+
+.PP
+.nf
+2334 {
+2335     struct t_module tModule; module mod;
+2336     Address_Module = "\&.RTUdata/module/m_" + this->windowTitle() + "\&.dbe";
+2337     QString tmp; QStringList list1; QStringList list2;
+2338     mod\&.read_module(&tModule, Address_Module);
+2339     list1 = tModule\&.alarm;
+2340     list1[index] = "";
+2341     tModule\&.alarm\&.clear(); tModule\&.jml_alarm = 0;
+2342     for (int i = 0; i < list1\&.length(); i++) {
+2343         if (list1\&.at(i) != "") {
+2344             tmp = list1\&.at(i);
+2345             list2 = tmp\&.split(';');
+2346             tmp = QString::number(tModule\&.jml_alarm+1) + ";" +
+2347                     list2\&.at(1) + ";" +
+2348                     list2\&.at(2) + ";" +
+2349                     list2\&.at(3) + ";" +
+2350                     list2\&.at(4) + ";" +
+2351                     list2\&.at(5) + ";" +
+2352                     list2\&.at(6) + ";" +
+2353                     list2\&.at(7) + ";" +
+2354                     list2\&.at(8) + ";" +
+2355                     list2\&.at(9) + ";" +
+2356                     list2\&.at(10);
+2357             tModule\&.alarm\&.insert(tModule\&.jml_alarm,tmp);
+2358             tModule\&.jml_alarm++;
+2359         }
+2360     }
+2361     mod\&.write_module(&tModule);
+2362     cryp code; code\&.encryp(Address_Module);
+2363     for (int i = 0; i <= this->ui->tabel_alarm->rowCount(); i++) {
+2364         this->ui->tabel_alarm->removeRow(i);
+2365     }
+2366     this->setInterface_Alarm(Address_Module);
+2367 }
+.fi
+.SS "void del_src_clicked (int index)\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+del_src_clicked 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIindex\fP 
+.RE
+.PP
+
+.PP
+.nf
+2217 {
+2218     struct t_module tModule; module mod;
+2219     Address_Module = "\&.RTUdata/module/m_" + this->windowTitle() + "\&.dbe";
+2220     QString tmp; QStringList list1; QStringList list2;
+2221     mod\&.read_module(&tModule, Address_Module);
+2222     list1 = tModule\&.sumber;
+2223     list1[index] = "";
+2224     tModule\&.sumber\&.clear(); tModule\&.jml_sumber = 0;
+2225     for (int i = 0; i < list1\&.length(); i++) {
+2226         if (list1\&.at(i) != "") {
+2227             tmp = list1\&.at(i);
+2228             list2 = tmp\&.split(';');
+2229             tmp = QString::number(tModule\&.jml_sumber+1) + ";" +
+2230                     list2\&.at(1) + ";" +
+2231                     list2\&.at(2) + ";" +
+2232                     list2\&.at(3) + ";" +
+2233                     list2\&.at(4) + ";" +
+2234                     list2\&.at(5);
+2235             tModule\&.sumber\&.insert(tModule\&.jml_sumber,tmp);
+2236             tModule\&.jml_sumber++;
+2237         }
+2238     }
+2239     mod\&.write_module(&tModule);
+2240     cryp code; code\&.encryp(Address_Module);
+2241     for (int i = 0; i <= this->ui->tabel_sources->rowCount(); i++) {
+2242         this->ui->tabel_sources->removeRow(i);
+2243     }
+2244     this->setInterface_Sumber(Address_Module);
+2245 }
+.fi
+.SS "void EnableButton (bool enab)\fC [private]\fP"
+
+.PP
+EnableButton\&. 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIenab\fP 
+.RE
+.PP
+
+.PP
+.nf
+2149 {
+2150     this->ui->pbGetAll->setEnabled(enab);
+2151     this->ui->pbSetAll->setEnabled(enab);
+2152     this->ui->pbGet->setEnabled(enab);
+2153     this->ui->pbSet->setEnabled(enab);
+2154     this->ui->pbSetChk->setEnabled(enab);
+2155     this->ui->pbEdit->setEnabled(enab);
+2156 }
+.fi
+.SS "void input_alrm_changed (int index)\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+input_alrm_changed 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIindex\fP 
+.RE
+.PP
+
+.PP
+.nf
+2370 {
+2371     struct t_module tModule; module mod;
+2372     Address_Module = "\&.RTUdata/module/m_" + this->windowTitle() + "\&.dbe";
+2373     QString tmp; QString str; QStringList list;
+2374     mod\&.read_module(&tModule, Address_Module);
+2375 
+2376     for (int i = 0; i < tModule\&.jml_alarm; i++) {
+2377         for (int j = 0; j <= tModule\&.jml_input_digital + tModule\&.jml_input_analog; j++) {
+2378             qobject_cast<QStandardItemModel *>(input_alarm[i]->model())->item(j)->setEnabled(true);
+2379         }
+2380     }
+2381     for (int i = 0; i < tModule\&.jml_alarm; i++) {
+2382         for (int j = 0; j < tModule\&.jml_alarm; j++) {
+2383             tmp = input_alarm[j]->currentText();
+2384             qobject_cast<QStandardItemModel *>(input_alarm[i]->model())->item(input_alarm[i]->findText(tmp))->setEnabled(false);
+2385         }
+2386     }
+2387 
+2388     if (input_alarm[index]->currentIndex() - 1 >= 0) {
+2389         str = tModule\&.data\&.at(input_alarm[index]->currentIndex() - 1);
+2390         list = str\&.split(';');
+2391         name_alarm[index]->setText(list[2]);
+2392         state_alarm[index]->setCurrentIndex(list[11]\&.toInt());
+2393         range_l[index]->setText(list[5]);
+2394         batas_ll[index]->setText(list[6]);
+2395         batas_l[index]->setText(list[7]);
+2396         batas_h[index]->setText(list[8]);
+2397         batas_hh[index]->setText(list[9]);
+2398         range_h[index]->setText(list[10]);
+2399     } else {
+2400         name_alarm[index]->setText("");
+2401         state_alarm[index]->setCurrentIndex(0);
+2402         range_l[index]->setText("0");
+2403         batas_ll[index]->setText("0");
+2404         batas_l[index]->setText("0");
+2405         batas_h[index]->setText("0");
+2406         batas_hh[index]->setText("0");
+2407         range_h[index]->setText("0");
+2408     }
+2409 }
+.fi
+.SS "void length_src_changed ()\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+length_src_changed 
+.PP
+.nf
+2248 {
+2249     struct t_module tModule; module mod;
+2250     Address_Module = "\&.RTUdata/module/m_" + this->windowTitle() + "\&.dbe";
+2251     QString tmp; int val;
+2252     mod\&.read_module(&tModule, Address_Module);
+2253 
+2254     for (int i = 0; i < tModule\&.jml_sumber; i++) {
+2255         for (int j = 0; j <= 30; j++) {
+2256             qobject_cast<QStandardItemModel *>(length_source[i]->model())->item(j)->setEnabled(true);
+2257         }
+2258         for (int j = 0; j <= 30; j++) {
+2259             qobject_cast<QStandardItemModel *>(target_reg_source[i]->model())->item(j)->setEnabled(true);
+2260         }
+2261     }
+2262     for (int i = 0; i < tModule\&.jml_sumber; i++) {
+2263         for (int j = 0; j < tModule\&.jml_sumber; j++) {
+2264             for (int k = 0; k < length_source[i]->currentIndex(); k++) {
+2265                 qobject_cast<QStandardItemModel *>(target_reg_source[j]->model())
+2266                         ->item(target_reg_source[i]->currentIndex()+k)
+2267                         ->setEnabled(false);
+2268             }
+2269             if (target_reg_source[i]->currentIndex() == 0) {
+2270                 for (int k = 0; k <= tModule\&.data\&.length()+(DATA_PERIOD*2); k+=2) {
+2271                     qobject_cast<QStandardItemModel *>(length_source[i]->model())
+2272                             ->item(length_source[i]->findText(QString::number(k)))
+2273                             ->setEnabled(false);
+2274                 }
+2275             } else {
+2276                 val = 0;
+2277                 for (int k = 0; k < tModule\&.jml_sumber; k++) {
+2278                     val = val + length_source[k]->currentIndex();
+2279                 }
+2280                 for (int k = 0; k < val; k++) {
+2281                     qobject_cast<QStandardItemModel *>(length_source[j]->model())
+2282                             ->item((tModule\&.data\&.length()+(DATA_PERIOD*2))/2-k)
+2283                             ->setEnabled(false);
+2284                 }
+2285             }
+2286         }
+2287     }
+2288 }
+.fi
+.SS "void on_pbAddRow_clicked ()\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+on_pbAddRow_clicked 
+.PP
+.nf
+2189 {
+2190     struct t_module tModule;
+2191     module mod;
+2192     Address_Module = "\&.RTUdata/module/m_" + this->windowTitle() + "\&.dbe";
+2193     QString tmp;
+2194     mod\&.read_module(&tModule, Address_Module);
+2195     if (this->ui->tabWidget->currentIndex() == 4) {
+2196         if (tModule\&.jml_sumber < 6) {
+2197             tModule\&.jml_sumber++;
+2198             tmp = QString::number(tModule\&.jml_sumber) + ";;;0;0;-";
+2199             tModule\&.sumber\&.insert(tModule\&.jml_sumber-1, tmp);
+2200             mod\&.write_module(&tModule);
+2201             cryp code; code\&.encryp(Address_Module);
+2202             this->setInterface_Sumber(Address_Module);
+2203         } else {
+2204             QMessageBox::information(this, "Sources Configuration", "Max 6 Rows \&.\&.", 0, 0);
+2205         }
+2206     } else if (this->ui->tabWidget->currentIndex() == 5) {
+2207         tModule\&.jml_alarm++;
+2208         tmp = QString::number(tModule\&.jml_alarm) + ";;0;0;0;0;0;0;0;0;0";
+2209         tModule\&.alarm\&.insert(tModule\&.jml_alarm-1, tmp);
+2210         mod\&.write_module(&tModule);
+2211         cryp code; code\&.encryp(Address_Module);
+2212         this->setInterface_Alarm(Address_Module);
+2213     }
+2214 }
+.fi
+.SS "void on_pbDeleteRows_clicked ()\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+on_pbDeleteRows_clicked 
+.PP
+.nf
+2412 {
+2413     struct t_module tModule; module mod;
+2414     Address_Module = "\&.RTUdata/module/m_" + this->windowTitle() + "\&.dbe";
+2415     QString tmp; QStringList list1; QStringList list2;
+2416     mod\&.read_module(&tModule, Address_Module);
+2417     if (this->ui->tabWidget->currentIndex() == 4) {
+2418         list1 = tModule\&.sumber;
+2419         for (int i = 0; i < tModule\&.jml_sumber; i++) {
+2420             if (check_source[i]->isChecked()) {
+2421                 list1[i] = "";
+2422             }
+2423         }
+2424         tModule\&.sumber\&.clear(); tModule\&.jml_sumber = 0;
+2425         for (int i = 0; i < list1\&.length(); i++) {
+2426             if (list1\&.at(i) != "") {
+2427               tmp = list1\&.at(i);
+2428                 list2 = tmp\&.split(';');
+2429                 tmp = QString::number(tModule\&.jml_sumber+1) + ";" +
+2430                         list2\&.at(1) + ";" +
+2431                         list2\&.at(2) + ";" +
+2432                         list2\&.at(3) + ";" +
+2433                         list2\&.at(4) + ";" +
+2434                         list2\&.at(5);
+2435                 tModule\&.sumber\&.insert(tModule\&.jml_sumber,tmp);
+2436                 tModule\&.jml_sumber++;
+2437             }
+2438         }
+2439         mod\&.write_module(&tModule);
+2440         cryp code; code\&.encryp(Address_Module);
+2441         for (int i = 0; i <= this->ui->tabel_sources->rowCount(); i++) {
+2442             this->ui->tabel_sources->removeRow(i);
+2443         }
+2444         this->setInterface_Sumber(Address_Module);
+2445     } else if (this->ui->tabWidget->currentIndex() == 5) {
+2446         list1 = tModule\&.alarm;
+2447         for (int i = 0; i < tModule\&.jml_alarm; i++) {
+2448             if (check_alarm[i]->isChecked()) {
+2449                 list1[i] = "";
+2450             }
+2451         }
+2452         tModule\&.alarm\&.clear(); tModule\&.jml_alarm = 0;
+2453         for (int i = 0; i < list1\&.length(); i++) {
+2454             if (list1\&.at(i) != "") {
+2455                 tmp = list1\&.at(i);
+2456                 list2 = tmp\&.split(';');
+2457                 tmp = QString::number(tModule\&.jml_alarm+1) + ";" +
+2458                         list2\&.at(1) + ";" +
+2459                         list2\&.at(2) + ";" +
+2460                         list2\&.at(3) + ";" +
+2461                         list2\&.at(4) + ";" +
+2462                         list2\&.at(5) + ";" +
+2463                         list2\&.at(6) + ";" +
+2464                         list2\&.at(7) + ";" +
+2465                         list2\&.at(8) + ";" +
+2466                         list2\&.at(9) + ";" +
+2467                         list2\&.at(10);
+2468                 tModule\&.alarm\&.insert(tModule\&.jml_alarm,tmp);
+2469                 tModule\&.jml_alarm++;
+2470             }
+2471         }
+2472         mod\&.write_module(&tModule);
+2473         cryp code; code\&.encryp(Address_Module);
+2474         for (int i = 0; i <= this->ui->tabel_alarm->rowCount(); i++) {
+2475             this->ui->tabel_alarm->removeRow(i);
+2476         }
+2477         this->setInterface_Alarm(Address_Module);
+2478     }
+2479 }
+.fi
+.SS "void on_pbEdit_clicked ()\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+on_pbEdit_clicked 
+.PP
+.nf
+2061 {
+2062     bool fail = false; QString message;
+2063     if (this->ui->tabWidget->currentIndex() == 2) {
+2064         faddModule = new form_addModule(this, false, Address_Module, this->ui->tabWidget->currentIndex());
+2065         faddModule->setWindowTitle("Edit Communications");
+2066         faddModule->setModal(true);
+2067         message = "SIM Configuration On-Local";
+2068     } else if (this->ui->tabWidget->currentIndex() == 3) {
+2069         faddModule = new form_addModule(this, false, Address_Module, this->ui->tabWidget->currentIndex());
+2070         faddModule->setWindowTitle("Edit Environtments");
+2071         faddModule->setModal(true);
+2072         message = "Environtment On-Local";
+2073     }
+2074     faddModule->exec();
+2075 
+2076     if (faddModule->accept == 0) return;
+2077 
+2078     Address_Module = faddModule->currentFile;
+2079     this->setInterface(Address_Module);
+2080     this->setWindowTitle(
+2081                 Address_Module\&.mid(Address_Module\&.indexOf("m_")+2,
+2082                                    Address_Module\&.indexOf("\&.dbe"))\&.remove("\&.dbe"));
+2083     struct t_module tModule;
+2084     struct t_serial_settings tSerial;
+2085     QStringList val_data;
+2086 
+2087     mod\&.read_module(&tModule, Address_Module);
+2088     if (Serial_Com->isOpen()) {
+2089         this->writeLogFile();
+2090         this->EnableButton(false);
+2091 
+2092         if (this->ui->tabWidget->currentIndex() == 2) {
+2093 //            timeout = work->Set_SIM(this, busyForm, Serial_Com, &tModule, false);
+2094 //            if (timeout) {fail = true;} else {fail = false;}// return;};
+2095 
+2096 //            timeout = work->Request_SIM(this, busyForm, Serial_Com, false);
+2097 //            if (timeout) {fail = true;} else {
+2098 //                Serial->read_parsing(&tSerial);
+2099 //                val_data = tSerial\&.str_data_sim\&.split("*");
+2100 //                work->Get_SIM(&tModule, val_data);
+2101 //            }
+2102 
+2103             progress_dialog->show();
+2104             progress_dialog->setWindowTitle("Set SIM Configuration to board \&.\&.");
+2105             progress_dialog->Processing(Serial_Com, Address_Module, "0101;0001");
+2106             progress_dialog->close();
+2107             mod\&.read_module(&tModule, Address_Module);
+2108 
+2109             this->setInterface_Communication(Address_Module);
+2110             message = "SIM Configuration On-Board";
+2111         } else if (this->ui->tabWidget->currentIndex() == 3) {
+2112 //            timeout = work->Set_ENV(this, busyForm, Serial_Com, &tModule, false);
+2113 //            if (timeout) {fail = true;} else {fail = false;}// return;};
+2114 
+2115 //            timeout = work->Request_ENV(this, busyForm, Serial_Com, false);
+2116 //            if (timeout) {fail = true;} else {
+2117 //                Serial->read_parsing(&tSerial);
+2118 //                val_data = tSerial\&.str_data_env\&.split(";");
+2119 //                work->Get_ENV(&tModule, val_data);
+2120 //            }
+2121 
+2122             progress_dialog->show();
+2123             progress_dialog->setWindowTitle("Set Environtment to board \&.\&.");
+2124             progress_dialog->Processing(Serial_Com, Address_Module, "0100;0000");
+2125             progress_dialog->close();
+2126             mod\&.read_module(&tModule, Address_Module);
+2127 
+2128             this->setInterface_Environtment(Address_Module);
+2129             message = "Environtment On-Board";
+2130         }
+2131 
+2132         if (!fail) {
+2133             message\&.prepend("Setting ")\&.append(" Success \&.\&.");
+2134             QMessageBox::information(this, "Syncronization Board !!", message, 0, 0);
+2135         } else {
+2136             QMessageBox::information(this, "Serial Communication", STR_TIMEOUT, 0, 0);
+2137         }
+2138 
+2139         this->EnableButton(true);
+2140     } else {
+2141         message\&.prepend("Setting ")\&.append(" Success \&.\&.");
+2142         QMessageBox::information(this, "Syncronization Board !!", message, 0, 0);
+2143     }
+2144 
+2145     NoSeri = tModule\&.serial_number;
+2146 }
+.fi
+.SS "void on_pbGet_clicked ()\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+on_pbGet_clicked 
+.PP
+.nf
+1992 {
+1993     struct t_module tModule;
+1994     struct t_serial_settings tSerial;
+1995     QStringList val_data;
+1996     QString Message;
+1997     bool timeout = false;
+1998     bool fail = false;
+1999     QString Request;
+2000 
+2001     this->EnableButton(false);
+2002     if (!Serial_Com->isOpen()) {
+2003         QMessageBox::warning(this, "Serial Comunication", "Protocol is not open \&.\&.!!", 0, 0);
+2004         this->EnableButton(true);
+2005     } else {
+2006         this->writeLogFile();
+2007         timeout = work->Request_ENV(Serial_Com, false);
+2008         if (timeout) {fail = true;} else {
+2009             Serial->read_parsing(&tSerial);
+2010             val_data = tSerial\&.str_data_env\&.split(";");
+2011             if (NoSeri == val_data\&.at(1)) {
+2012                 module mod;
+2013                 mod\&.read_module(&tModule, Address_Module);
+2014 
+2015                 if (this->ui->tabWidget->currentIndex() <= 1) {
+2016                     Message = "I/O ";
+2017                     Request = "0005;0002";
+2018                 } else if (this->ui->tabWidget->currentIndex() == 2) {
+2019                     Message = "SIM Configuration ";
+2020                     Request = "0001";
+2021                 } else if (this->ui->tabWidget->currentIndex() == 3) {
+2022                     Message = "Environtment ";
+2023                     Request = "0000";
+2024                 } else if (this->ui->tabWidget->currentIndex() == 4) {
+2025                     Message = "Sources ";
+2026                     Request = "0004";
+2027                 } else if (this->ui->tabWidget->currentIndex() == 5) {
+2028 
+2029                     Message = "Alarm ";
+2030                 } else if (this->ui->tabWidget->currentIndex() == 6) {
+2031                     Message = "Data ";
+2032                     Request = "0005";
+2033                 }
+2034 
+2035                 progress_dialog->show();
+2036                 progress_dialog->setWindowTitle("Get " + Message + "from board");
+2037                 progress_dialog->Processing(Serial_Com, Address_Module, Request);
+2038                 progress_dialog->close();
+2039                 mod\&.read_module(&tModule, Address_Module);
+2040 
+2041                 this->setInterface(Address_Module);
+2042 
+2043                 Message\&.append(" Setting is Syncronized \&.\&.");
+2044                 if (!fail) {
+2045                     QMessageBox::information(this, "Syncronization Board", Message, 0, 0);
+2046                 } else {
+2047                     QMessageBox::information(this, "Serial Communication", STR_TIMEOUT, 0, 0);
+2048                 }
+2049                 this->EnableButton(true);
+2050             } else {
+2051                 if (!fail) {
+2052                     QMessageBox::warning(this, "Serial Comunication", "Serial Number is not syncronize \&.\&.!!", 0, 0);
+2053                 }
+2054                 this->EnableButton(true);
+2055             }
+2056         }
+2057     }
+2058 }
+.fi
+.SS "void on_pbGetAll_clicked ()\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+on_pbGetAll_clicked 
+.PP
+.nf
+1947 {
+1948     struct t_module tModule;
+1949     struct t_serial_settings tSerial;
+1950     QStringList val_data;
+1951     bool timeout = false;
+1952     bool fail = false;
+1953 
+1954     this->EnableButton(false);
+1955     if (!Serial_Com->isOpen()) {
+1956         QMessageBox::warning(this, "Serial Comunication", "Protocol is not open \&.\&.!!", 0, 0);
+1957         this->EnableButton(true);
+1958     } else {
+1959         this->writeLogFile();
+1960         timeout = work->Request_ENV(Serial_Com, false);
+1961         if (timeout) {fail = true;} else {
+1962             Serial->read_parsing(&tSerial);
+1963             val_data = tSerial\&.str_data_env\&.split(";");
+1964             if (NoSeri == val_data\&.at(1)) {
+1965                 module mod;
+1966                 mod\&.read_module(&tModule, Address_Module);
+1967 
+1968                 progress_dialog->show();
+1969                 progress_dialog->setWindowTitle("Get All Configuration from board");
+1970                 progress_dialog->Processing(Serial_Com, Address_Module, "0005;0002;0001;0004");
+1971                 progress_dialog->close();
+1972                 mod\&.read_module(&tModule, Address_Module);
+1973 
+1974                 this->setInterface(Address_Module);
+1975                 if (!fail) {
+1976                     QMessageBox::information(this, "Syncronization Board", "All Setting is Syncronized \&.\&.", 0, 0);
+1977                 } else {
+1978                     QMessageBox::information(this, "Serial Communication", STR_TIMEOUT, 0, 0);
+1979                 }
+1980                 this->EnableButton(true);
+1981             } else {
+1982                 if (!fail) {
+1983                     QMessageBox::warning(this, "Serial Comunication", "Serial Number is not syncronize \&.\&.!!", 0, 0);
+1984                 }
+1985                 this->EnableButton(true);
+1986             }
+1987         }
+1988     }
+1989 }
+.fi
+.SS "void on_pbRefresh_clicked ()\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+on_pbRefresh_clicked 
+.PP
+.nf
+2482 {
+2483     this->ui->pbRefresh->setEnabled(false);
+2484     this->data_monitoring();
+2485     this->ui->pbRefresh->setEnabled(true);
+2486 }
+.fi
+.SS "void on_pbSet_clicked ()\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+on_pbSet_clicked ON MODULE FILE
+.PP
+SET INPUT
+.PP
+SET OUTPUT
+.PP
+SET SUMBER
+.PP
+SET ALARM
+.PP
+SET DATA
+.PP
+ON BOARD 
+.PP
+.nf
+1327 {
+1328     struct t_module tModule;
+1329     QString data[60];
+1330     indx = 0;
+1331     diff = 0;
+1332     reset = 0;
+1333     timeout = false;
+1334     fail = false;
+1335 
+1336     module mod;
+1337     mod\&.read_module(&tModule, Address_Module);
+1338 
+1340     if (this->ui->tabWidget->currentIndex() == 0) {
+1342         for (int i = 0; i < ui->tabel_input->rowCount(); i++)
+1343         {
+1344             tModule\&.d_port[i]\&.calib_m = calib_m[i]->value();
+1345             tModule\&.d_port[i]\&.calib_x = calib_x[i]->value();
+1346 
+1347             if (i >= 6) {
+1348                 if (type_input[i]->currentIndex() == 0) {indx = 250;}
+1349                 if (type_input[i]->currentIndex() == 1) {indx = 230;}
+1350                 tModule\&.d_port[i]\&.type_input = indx;
+1351 
+1352                 data[i]\&.sprintf("A;%d;%d;%\&.3f;%\&.3f", i+1
+1353                                 , indx
+1354                                 , tModule\&.d_port[i]\&.calib_m
+1355                                 , tModule\&.d_port[i]\&.calib_x);
+1356             } else {
+1357                 if (type_input[i]->currentIndex() == 0) {indx = 1;}
+1358                 if (type_input[i]->currentIndex() == 1) {indx = 2;}
+1359                 if (type_input[i]->currentIndex() == 2) {indx = 6;}
+1360                 if (type_input[i]->currentIndex() == 3) {indx = 7;}
+1361                 if (type_input[i]->currentIndex() == 4) {indx = 9;}
+1362                 tModule\&.d_port[i]\&.type_input = indx;
+1363 
+1364                 data[i]\&.sprintf("D;%d;%d;%\&.3f;%\&.3f", i+1
+1365                                 , indx
+1366                                 , tModule\&.d_port[i]\&.calib_m
+1367                                 , tModule\&.d_port[i]\&.calib_x);
+1368             }
+1369             tModule\&.Input[i] = data[i];
+1370             tModule\&.InputName[i] = name_input[i]->text();
+1371 
+1372             data[i] = tModule\&.data\&.at(i);
+1373             list = data[i]\&.split(';');
+1374             list[1] = reg_input[i]->currentText();
+1375             list[2] = name_input[i]->text();
+1376             list[11] = QString::number(state_input[i]->currentIndex());
+1377             data[i]\&.clear();
+1378             data[i] = list[0];
+1379             for (int j = 1; j < 12; j++) {
+1380                 data[i]\&.append(";")\&.append(list[j]);
+1381             }
+1382             tModule\&.data[i] = data[i];
+1383         }
+1384     } else if (this->ui->tabWidget->currentIndex() == 1) {
+1386         for (int i = 0; i < ui->tabel_output->rowCount(); i++)
+1387         {
+1388             tModule\&.d_port[i]\&.status_output = state_output[i]->currentIndex();
+1389             tModule\&.d_port[i]\&.control = control[i]->currentIndex();
+1390             tModule\&.d_port[i]\&.reg_output = reg_output[i]->value();
+1391 
+1392             data[i]\&.sprintf("R;%d;%d;%d;%d", i+1
+1393                          , tModule\&.d_port[i]\&.status_output
+1394                          , tModule\&.d_port[i]\&.control
+1395                          , tModule\&.d_port[i]\&.reg_output);
+1396 
+1397             tModule\&.Output[i] = data[i];
+1398 //            tModule\&.OutputName[i] = name_output[i]->text();
+1399         }
+1400     } else if (this->ui->tabWidget->currentIndex() == 4) {
+1402         for (int i = 0; i < ui->tabel_sources->rowCount(); i++) {
+1403             data[i] = QString::number(i+1) + ";" +
+1404                       name_source[i]->text() + ";" +
+1405                       ip_source[i]->text() + ";" +
+1406                       QString::number(port_source[i]->value()) + ";" +
+1407                       QString::number(state_source[i]->currentIndex()) + ";" +
+1408                       QString::number(type_source[i]->currentIndex()) + ";" +
+1409                       QString::number(id_source[i]->value()) + ";" +
+1410                       QString::number(sensor_reg_source[i]->value()) + ";" +
+1411 //                      QString::number(OffsetBase_source[i]->currentIndex()) + ";" +
+1412                       "0;" +
+1413                       QString::number(command_source[i]->currentIndex()) + ";" +
+1414                       length_source[i]->currentText() + ";" +
+1415                       target_reg_source[i]->currentText();
+1416 
+1417             tModule\&.sumber[i] = data[i];
+1418         }
+1419     } else if (this->ui->tabWidget->currentIndex() == 5) {
+1421         for (int i = 0; i < ui->tabel_alarm->rowCount(); i++) {
+1422             data[i] = QString::number(i+1) + ";" +
+1423                       name_alarm[i]->text() + ";" +
+1424                       QString::number(input_alarm[i]->currentIndex()) + ";" +
+1425                       QString::number(output_alarm[i]->currentIndex()) + ";" +
+1426                       QString::number(state_alarm[i]->currentIndex()) + ";" +
+1427                       range_l[i]->text() + ";" +
+1428                       batas_ll[i]->text() + ";" +
+1429                       batas_l[i]->text() + ";" +
+1430                       batas_h[i]->text() + ";" +
+1431                       batas_hh[i]->text() + ";" +
+1432                       range_h[i]->text();
+1433 
+1434             tModule\&.alarm[i] = data[i];
+1435             for (int j = 0; j < tModule\&.jml_data; j++) {
+1436                 str = tModule\&.data\&.at(j);
+1437                 list = str\&.split(';');
+1438                 if (input_alarm[i]->currentIndex() > 0 &&
+1439                         input_alarm[i]->currentIndex() <= tModule\&.jml_input_digital) {
+1440                     if (QString::number(input_alarm[i]->currentIndex()) == list\&.at(0)) {
+1441                         str = list\&.at(0) + ";" +
+1442                               list\&.at(1) + ";" +
+1443                               name_alarm[i]->text() + ";" +
+1444                               list\&.at(3) + ";" +
+1445                               list\&.at(4) + ";" +
+1446                               range_l[i]->text() + ";" +
+1447                               batas_ll[i]->text() + ";" +
+1448                               batas_l[i]->text() + ";" +
+1449                               batas_h[i]->text() + ";" +
+1450                               batas_hh[i]->text() + ";" +
+1451                               range_h[i]->text() + ";" +
+1452                               list\&.at(11); //QString::number(state_alarm[i]->currentIndex());
+1453 
+1454                         tModule\&.data[j] = str;
+1455                     }
+1456                 } else if (input_alarm[i]->currentIndex() > tModule\&.jml_input_digital &&
+1457                            input_alarm[i]->currentIndex() <= tModule\&.jml_input_digital + tModule\&.jml_input_analog) {
+1458                     if (QString::number(input_alarm[i]->currentIndex()+4) == list\&.at(0)) {
+1459                         str = list\&.at(0) + ";" +
+1460                               list\&.at(1) + ";" +
+1461                               name_alarm[i]->text() + ";" +
+1462                               list\&.at(3) + ";" +
+1463                               list\&.at(4) + ";" +
+1464                               range_l[i]->text() + ";" +
+1465                               batas_ll[i]->text() + ";" +
+1466                               batas_l[i]->text() + ";" +
+1467                               batas_h[i]->text() + ";" +
+1468                               batas_hh[i]->text() + ";" +
+1469                               range_h[i]->text() + ";" +
+1470                               list\&.at(11); //QString::number(state_alarm[i]->currentIndex());
+1471 
+1472                         tModule\&.data[j] = str;
+1473                     }
+1474                 }
+1475             }
+1476         }
+1477     } else if (this->ui->tabWidget->currentIndex() == 6) {
+1479         for (int i = 0; i < ui->tabel_data_s->rowCount(); i++) {
+1480             data[i] = QString::number(i+1) + ";" +
+1481                       QString::number(id_data_s[i]->value()) + ";" +
+1482                       name_data_s[i]->text() + ";" +
+1483                       "0;" +
+1484                       unit_data_s[i]->text() + ";" +
+1485                       QString::number(range_l_data_s[i]->value()) + ";" +
+1486                       QString::number(border_ll_data_s[i]->value()) + ";" +
+1487                       QString::number(border_l_data_s[i]->value()) + ";" +
+1488                       QString::number(border_h_data_s[i]->value()) + ";" +
+1489                       QString::number(border_hh_data_s[i]->value()) + ";" +
+1490                       QString::number(range_h_data_s[i]->value()) + ";" +
+1491                       QString::number(state_data_s[i]->currentIndex());
+1492 
+1493             tModule\&.data[i] = data[i];
+1494         }
+1495     }
+1496 
+1497     mod\&.write_module(&tModule);
+1498     cryp code; code\&.encryp(Address_Module);
+1499 
+1501     if (Serial_Com->isOpen()) {
+1502         this->writeLogFile();
+1503         this->EnableButton(false);
+1504 
+1505         struct t_serial_settings tSerial;
+1506         QString Request; QStringList val_data;
+1507 
+1508         timeout = work->Request_ENV(Serial_Com, false);
+1509         if (timeout) {fail = true;} else {
+1510             Serial->read_parsing(&tSerial);
+1511             val_data = tSerial\&.str_data_env\&.split(";");
+1512             if (NoSeri == val_data\&.at(1)) {
+1513                 if (this->ui->tabWidget->currentIndex() == 0) {
+1514                     Request = "0102";
+1515                 } else if (this->ui->tabWidget->currentIndex() == 1) {
+1516                     Request = "0103";
+1517                 } else if (this->ui->tabWidget->currentIndex() == 2) {
+1518                     Request = "0101";
+1519                 } else if (this->ui->tabWidget->currentIndex() == 3) {
+1520                     Request = "0100";
+1521                 } else if (this->ui->tabWidget->currentIndex() == 4) {
+1522                     Request = "0104";
+1523                 } else if (this->ui->tabWidget->currentIndex() == 5) {
+1524 
+1525                 } else if (this->ui->tabWidget->currentIndex() == 6) {
+1526                     Request = "0105";
+1527                 }
+1528 //                work->Reset_Board(busyForm, "Reset Board \&.\&.\&.", Serial_Com);
+1529                 if (this->ui->tabWidget->currentIndex() <= 1) {
+1530                     Request = Request + ";0005;0002";
+1531                 } else if (this->ui->tabWidget->currentIndex() == 2) {
+1532                     Request = Request + ";0001";
+1533                 } else if (this->ui->tabWidget->currentIndex() == 3) {
+1534                     Request = Request + ";0000";
+1535                 } else if (this->ui->tabWidget->currentIndex() == 4) {
+1536                     Request = Request + ";0004;0005";
+1537                 } else if (this->ui->tabWidget->currentIndex() == 5) {
+1538 
+1539                 } else if (this->ui->tabWidget->currentIndex() == 6) {
+1540                     Request = Request + ";0005";
+1541                 }
+1542 
+1543                 progress_dialog->show();
+1544                 progress_dialog->setWindowTitle("Set " + Message + "to board");
+1545                 progress_dialog->Processing(Serial_Com, Address_Module, Request);
+1546                 progress_dialog->close();
+1547                 mod\&.read_module(&tModule, Address_Module);
+1548 
+1549                 Message = "On-Board";
+1550 
+1551             } else {
+1552                 Message = "On-Local";
+1553                 if (val_data\&.at(1) != "") {
+1554                     diff = 1;
+1555                 } else {
+1556                     diff = 2;
+1557                 }
+1558             }
+1559         }
+1560     } else {
+1561         Message = "On-Local";
+1562     }
+1563 
+1564     if (reset == 1) {
+1565 //        Request = "reset\r\n";
+1566 //        Serial->write_data(Serial_Com, Request);
+1567 //        work->delay(jeda*5);
+1568     }
+1569 
+1570     mod\&.write_module(&tModule);
+1571     code\&.encryp(Address_Module);
+1572 
+1573     this->setInterface(Address_Module);
+1574 
+1575     if (diff == 0 && !fail) {
+1576         if (this->ui->tabWidget->currentIndex() == 0) {
+1577             Message\&.prepend("Input Channel ");
+1578         } else if (this->ui->tabWidget->currentIndex() == 1) {
+1579             Message\&.prepend("Output Channel ");
+1580         } else if (this->ui->tabWidget->currentIndex() == 2) {
+1581             Message\&.prepend("SIM Configuration ");
+1582         } else if (this->ui->tabWidget->currentIndex() == 3) {
+1583             Message\&.prepend("Environtment ");
+1584         } else if (this->ui->tabWidget->currentIndex() == 4) {
+1585             Message\&.prepend("Sources ");
+1586         } else if (this->ui->tabWidget->currentIndex() == 5) {
+1587             Message\&.prepend("Alarm ");
+1588         } else if (this->ui->tabWidget->currentIndex() == 6) {
+1589             Message\&.prepend("Data ");
+1590         }
+1591         Message\&.prepend("Setting ")\&.append(" Saved");
+1592         QMessageBox::information(this, "Success!!", Message, 0, 0);
+1593     } else if (diff == 1 && !fail) {
+1594         Message\&.prepend("Setting ")\&.append(" Saved");
+1595         Message\&.append("\n\n Different Serial Number !!!");
+1596         QMessageBox::information(this, "Success!!", Message, 0, 0);
+1597     } else if (diff == 2 && !fail) {
+1598         Message\&.prepend("Setting ")\&.append(" Saved");
+1599         Message\&.append("\nBoard is not have Serial Number \&.\&.");
+1600         QMessageBox::information(this, "Success!!", Message, 0, 0);
+1601     }
+1602 
+1603     if (fail) {
+1604         QMessageBox::information(this, "Serial Communication", STR_TIMEOUT, 0, 0);
+1605     }
+1606 
+1607     this->EnableButton(true);
+1608 }
+.fi
+.SS "void on_pbSetAll_clicked ()\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+on_pbSetAll_clicked ON MODULE FILE
+.PP
+SET KANAL
+.PP
+SET RELAY
+.PP
+SET SUMBER
+.PP
+SET ALARM
+.PP
+SET DATA
+.PP
+ON BOARD 
+.PP
+.nf
+1081 {
+1082     struct t_module tModule;
+1083     QString data[60];
+1084     indx = 0;
+1085     diff = 0;
+1086     timeout = false;
+1087     fail = false;
+1088     cancel = false;
+1089 
+1090     module mod;
+1091     mod\&.read_module(&tModule, Address_Module);
+1092 
+1095     for (int i = 0; i < ui->tabel_input->rowCount(); i++)
+1096     {
+1097 //        tModule\&.d_port[i]\&.status_input = state_input[i]->currentIndex();
+1098         tModule\&.d_port[i]\&.calib_m = calib_m[i]->value();
+1099         tModule\&.d_port[i]\&.calib_x = calib_x[i]->value();
+1100 
+1101         if (i >= 6) {
+1102             if (type_input[i]->currentIndex() == 0) {indx = 250;}
+1103             if (type_input[i]->currentIndex() == 1) {indx = 230;}
+1104             tModule\&.d_port[i]\&.type_input = indx;
+1105 
+1106             data[i]\&.sprintf("A;%d;%d;%\&.3f;%\&.3f", i+1
+1107                             , indx
+1108                             , tModule\&.d_port[i]\&.calib_m
+1109                             , tModule\&.d_port[i]\&.calib_x);
+1110         } else {
+1111             if (type_input[i]->currentIndex() == 0) {indx = 1;}
+1112             if (type_input[i]->currentIndex() == 1) {indx = 2;}
+1113             if (type_input[i]->currentIndex() == 2) {indx = 6;}
+1114             if (type_input[i]->currentIndex() == 3) {indx = 7;}
+1115             if (type_input[i]->currentIndex() == 4) {indx = 9;}
+1116             tModule\&.d_port[i]\&.type_input = indx;
+1117 
+1118             data[i]\&.sprintf("D;%d;%d;%\&.3f;%\&.3f", i+1
+1119                             , indx
+1120                             , tModule\&.d_port[i]\&.calib_m
+1121                             , tModule\&.d_port[i]\&.calib_x);
+1122         }
+1123         tModule\&.Input[i] = data[i];
+1124         tModule\&.InputName[i] = name_input[i]->text();
+1125 
+1126         data[i] = tModule\&.data\&.at(i);
+1127         list = data[i]\&.split(';');
+1128         list[1] = reg_input[i]->currentText();
+1129         list[2] = name_input[i]->text();
+1130         list[11] = QString::number(state_input[i]->currentIndex());
+1131         data[i]\&.clear();
+1132         data[i] = list[0];
+1133         for (int j = 1; j < 12; j++) {
+1134             data[i]\&.append(";")\&.append(list[j]);
+1135         }
+1136         tModule\&.data[i] = data[i];
+1137     }
+1138 
+1140     for (int i = 0; i < ui->tabel_output->rowCount(); i++)
+1141     {
+1142         tModule\&.d_port[i]\&.status_output = state_output[i]->currentIndex();
+1143         tModule\&.d_port[i]\&.control = control[i]->currentIndex();
+1144         tModule\&.d_port[i]\&.reg_output = reg_output[i]->value();
+1145 
+1146         data[i]\&.sprintf("R;%d;%d;%d;%d", i+1
+1147                      , tModule\&.d_port[i]\&.status_output
+1148                      , tModule\&.d_port[i]\&.control
+1149                      , tModule\&.d_port[i]\&.reg_output);
+1150 
+1151         tModule\&.Output[i] = data[i];
+1152 //        tModule\&.OutputName[i] = name_output[i]->text();
+1153     }
+1154 
+1156     for (int i = 0; i < ui->tabel_sources->rowCount(); i++) {
+1157         data[i] = QString::number(i+1) + ";" +
+1158                   name_source[i]->text() + ";" +
+1159                   ip_source[i]->text() + ";" +
+1160                   QString::number(port_source[i]->value()) + ";" +
+1161                   QString::number(state_source[i]->currentIndex()) + ";" +
+1162                   QString::number(type_source[i]->currentIndex()) + ";" +
+1163                   QString::number(id_source[i]->value()) + ";" +
+1164                   QString::number(sensor_reg_source[i]->value()) + ";" +
+1165 //                  QString::number(OffsetBase_source[i]->currentIndex()) + ";" +
+1166                   "0;" +
+1167                   QString::number(command_source[i]->currentIndex()) + ";" +
+1168                   length_source[i]->currentText() + ";" +
+1169                   target_reg_source[i]->currentText();
+1170 
+1171         tModule\&.sumber[i] = data[i];
+1172     }
+1173 
+1175     for (int i = 0; i < ui->tabel_alarm->rowCount(); i++) {
+1176         data[i] = QString::number(i+1) + ";" +
+1177                   name_alarm[i]->text() + ";" +
+1178                   QString::number(input_alarm[i]->currentIndex()) + ";" +
+1179                   QString::number(output_alarm[i]->currentIndex()) + ";" +
+1180                   QString::number(state_alarm[i]->currentIndex()) + ";" +
+1181                   range_l[i]->text() + ";" +
+1182                   batas_ll[i]->text() + ";" +
+1183                   batas_l[i]->text() + ";" +
+1184                   batas_h[i]->text() + ";" +
+1185                   batas_hh[i]->text() + ";" +
+1186                   range_h[i]->text();
+1187 
+1188         tModule\&.alarm[i] = data[i];
+1189         for (int j = 0; j < tModule\&.jml_data; j++) {
+1190             str = tModule\&.data\&.at(j);
+1191             list = str\&.split(';');
+1192             if (input_alarm[i]->currentIndex() > 0 &&
+1193                     input_alarm[i]->currentIndex() < tModule\&.jml_input_digital) {
+1194                 if (QString::number(input_alarm[i]->currentIndex()) == list\&.at(0)) {
+1195                     str = list\&.at(0) + ";" +
+1196                           list\&.at(1) + ";" +
+1197                           name_alarm[i]->text() + ";" +
+1198                           list\&.at(3) + ";" +
+1199                           list\&.at(4) + ";" +
+1200                           range_l[i]->text() + ";" +
+1201                           batas_ll[i]->text() + ";" +
+1202                           batas_l[i]->text() + ";" +
+1203                           batas_h[i]->text() + ";" +
+1204                           batas_hh[i]->text() + ";" +
+1205                           range_h[i]->text() + ";" +
+1206                           list\&.at(11); //QString::number(state_alarm[i]->currentIndex());
+1207 
+1208                     tModule\&.data[j] = str;
+1209                 }
+1210             } else if (input_alarm[i]->currentIndex() > tModule\&.jml_input_digital &&
+1211                        input_alarm[i]->currentIndex() < tModule\&.jml_input_digital + tModule\&.jml_input_analog) {
+1212                 if (QString::number(input_alarm[i]->currentIndex()+4) == list\&.at(0)) {
+1213                     str = list\&.at(0) + ";" +
+1214                           list\&.at(1) + ";" +
+1215                           name_alarm[i]->text() + ";" +
+1216                           list\&.at(3) + ";" +
+1217                           list\&.at(4) + ";" +
+1218                           range_l[i]->text() + ";" +
+1219                           batas_ll[i]->text() + ";" +
+1220                           batas_l[i]->text() + ";" +
+1221                           batas_h[i]->text() + ";" +
+1222                           batas_hh[i]->text() + ";" +
+1223                           range_h[i]->text() + ";" +
+1224                           list\&.at(11); //QString::number(state_alarm[i]->currentIndex());
+1225 
+1226                     tModule\&.data[j] = str;
+1227                 }
+1228             }
+1229         }
+1230     }
+1231 
+1233     for (int i = 0; i < ui->tabel_data_s->rowCount(); i++) {
+1234         data[i] = QString::number(i+1) + ";" +
+1235                   QString::number(id_data_s[i]->value()) + ";" +
+1236                   name_data_s[i]->text() + ";" +
+1237                   "0;" +
+1238                   unit_data_s[i]->text() + ";" +
+1239                   QString::number(range_l_data_s[i]->value()) + ";" +
+1240                   QString::number(border_ll_data_s[i]->value()) + ";" +
+1241                   QString::number(border_l_data_s[i]->value()) + ";" +
+1242                   QString::number(border_h_data_s[i]->value()) + ";" +
+1243                   QString::number(border_hh_data_s[i]->value()) + ";" +
+1244                   QString::number(range_h_data_s[i]->value()) + ";" +
+1245                   QString::number(state_data_s[i]->currentIndex());
+1246 
+1247         tModule\&.data[i] = data[i];
+1248     }
+1249 
+1250     mod\&.write_module(&tModule);
+1251     cryp code; code\&.encryp(Address_Module);
+1252 
+1254     if (Serial_Com->isOpen()) {
+1255         this->writeLogFile();
+1256         this->EnableButton(false);
+1257 
+1258         struct t_serial_settings tSerial;
+1259         QStringList val_data;
+1260 
+1261         timeout = work->Request_ENV(Serial_Com, false);
+1262         if (timeout) {fail = true;} else {
+1263             Serial->read_parsing(&tSerial);
+1264             val_data = tSerial\&.str_data_env\&.split(";");
+1265             if (NoSeri == val_data\&.at(1)) {
+1266                 if (!fail) {
+1267                     progress_dialog->show();
+1268                     progress_dialog->setWindowTitle("Set All Configuration to board \&.\&.");
+1269                     progress_dialog->Processing(Serial_Com, Address_Module, "0102;0103;0101;0104;0105;0005;0002;0001;0004");
+1270                     cancel = progress_dialog->cancel;
+1271                     progress_dialog->close();
+1272                     mod\&.read_module(&tModule, Address_Module);
+1273                 }
+1274 
+1275                 Message = "On-Board";
+1276 
+1277             } else {
+1278                 Message = "On-Local";
+1279                 if (val_data\&.at(1) != "") {
+1280                     diff = 1;
+1281                 } else {
+1282                     diff = 2;
+1283                 }
+1284             }
+1285         }
+1286     } else {
+1287         Message = "On-Local";
+1288     }
+1289 
+1290 //    if (reset == 1) {
+1291 //        Request = "reset\r\n";
+1292 //        Serial->write_data(Serial_Com, Request);
+1293 //        work->delay(jeda*5);
+1294 //    }
+1295 
+1296     mod\&.write_module(&tModule);
+1297     code\&.encryp(Address_Module);
+1298 
+1299     this->setInterface(Address_Module);
+1300 
+1301     if (diff == 0 && !fail) {
+1302         if (cancel) {
+1303             Message\&.prepend("Setting ")\&.append(" Canceled");
+1304             QMessageBox::information(this, "Cancel!!", Message, 0, 0);
+1305         } else {
+1306             Message\&.prepend("Setting ")\&.append(" Saved");
+1307             QMessageBox::information(this, "Success!!", Message, 0, 0);
+1308         }
+1309     } else if (diff == 1 && !fail) {
+1310         Message\&.prepend("Setting ")\&.append(" Error !!");
+1311         Message\&.append("\n\n Different Serial Number !!!");
+1312         QMessageBox::information(this, "Error!!", Message, 0, 0);
+1313     } else if (diff == 2 && !fail) {
+1314         Message\&.prepend("Setting ")\&.append(" Error !!");
+1315         Message\&.append("\nBoard Serial Number is not exist \&.\&.");
+1316         QMessageBox::information(this, "Error!!", Message, 0, 0);
+1317     }
+1318 
+1319     if (fail) {
+1320         QMessageBox::information(this, "Serial Communication", STR_TIMEOUT, 0, 0);
+1321     }
+1322 
+1323     this->EnableButton(true);
+1324 }
+.fi
+.SS "void on_pbSetChk_clicked ()\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+on_pbSetChk_clicked ON MODULE FILE
+.PP
+SET INPUT
+.PP
+SET OUTPUT
+.PP
+SET SUMBER
+.PP
+SET ALARM
+.PP
+SET DATA
+.PP
+ON BOARD 
+.PP
+.nf
+1611 {
+1612     struct t_module tModule;
+1613     QString data[60];
+1614     indx = 0;
+1615     diff = 0;
+1616     reset = 0;
+1617     timeout = false;
+1618     fail = false;
+1619     int checked = 0;
+1620     Request\&.clear();
+1621 
+1622     module mod;
+1623     mod\&.read_module(&tModule, Address_Module);
+1624 
+1626     if (this->ui->tabWidget->currentIndex() == 0) {
+1628         for (int i = 0; i < ui->tabel_input->rowCount(); i++) {
+1629             if (check_input[i]->isChecked()) {
+1630                 checked++;
+1631                 tModule\&.d_port[i]\&.calib_m = calib_m[i]->value();
+1632                 tModule\&.d_port[i]\&.calib_x = calib_x[i]->value();
+1633 
+1634                 if (i >= 6) {
+1635                     if (type_input[i]->currentIndex() == 0) {indx = 250;}
+1636                     if (type_input[i]->currentIndex() == 1) {indx = 230;}
+1637                     tModule\&.d_port[i]\&.type_input = indx;
+1638 
+1639                     data[i]\&.sprintf("A;%d;%d;%\&.3f;%\&.3f", i+1
+1640                                     , indx
+1641                                     , tModule\&.d_port[i]\&.calib_m
+1642                                     , tModule\&.d_port[i]\&.calib_x);
+1643                 } else {
+1644                     if (type_input[i]->currentIndex() == 0) {indx = 1;}
+1645                     if (type_input[i]->currentIndex() == 1) {indx = 2;}
+1646                     if (type_input[i]->currentIndex() == 2) {indx = 6;}
+1647                     if (type_input[i]->currentIndex() == 3) {indx = 7;}
+1648                     if (type_input[i]->currentIndex() == 4) {indx = 9;}
+1649                     tModule\&.d_port[i]\&.type_input = indx;
+1650 
+1651                     data[i]\&.sprintf("D;%d;%d;%\&.3f;%\&.3f", i+1
+1652                                     , indx
+1653                                     , tModule\&.d_port[i]\&.calib_m
+1654                                     , tModule\&.d_port[i]\&.calib_x);
+1655                 }
+1656                 tModule\&.Input[i] = data[i];
+1657                 tModule\&.InputName[i] = name_input[i]->text();
+1658 
+1659                 data[i] = tModule\&.data\&.at(i);
+1660                 list = data[i]\&.split(';');
+1661                 list[1] = reg_input[i]->currentText();
+1662                 list[2] = name_input[i]->text();
+1663                 list[11] = QString::number(state_input[i]->currentIndex());
+1664                 data[i]\&.clear();
+1665                 data[i] = list[0];
+1666                 for (int j = 1; j < 12; j++) {
+1667                     data[i]\&.append(";")\&.append(list[j]);
+1668                 }
+1669                 tModule\&.data[i] = data[i];
+1670             }
+1671         }
+1672     } else if (this->ui->tabWidget->currentIndex() == 1) {
+1674         for (int i = 0; i < ui->tabel_output->rowCount(); i++) {
+1675             if (check_output[i]->isChecked()) {
+1676                 checked++;
+1677                 tModule\&.d_port[i]\&.status_output = state_output[i]->currentIndex();
+1678                 tModule\&.d_port[i]\&.control = control[i]->currentIndex();
+1679                 tModule\&.d_port[i]\&.reg_output = reg_output[i]->value();
+1680 
+1681                 data[i]\&.sprintf("R;%d;%d;%d;%d", i+1
+1682                              , tModule\&.d_port[i]\&.status_output
+1683                              , tModule\&.d_port[i]\&.control
+1684                              , tModule\&.d_port[i]\&.reg_output);
+1685 
+1686                 tModule\&.Output[i] = data[i];
+1687 //                tModule\&.OutputName[i] = name_output[i]->text();
+1688             }
+1689         }
+1690     } else if (this->ui->tabWidget->currentIndex() == 4) {
+1692         for (int i = 0; i < ui->tabel_sources->rowCount(); i++) {
+1693             if (check_source[i]->isChecked()) {
+1694                 checked++;
+1695                 data[i] = QString::number(i+1) + ";" +
+1696                           name_source[i]->text() + ";" +
+1697                           ip_source[i]->text() + ";" +
+1698                           QString::number(port_source[i]->value()) + ";" +
+1699                           QString::number(state_source[i]->currentIndex()) + ";" +
+1700                           QString::number(type_source[i]->currentIndex()) + ";" +
+1701                           QString::number(id_source[i]->value()) + ";" +
+1702                           QString::number(sensor_reg_source[i]->value()) + ";" +
+1703 //                          QString::number(OffsetBase_source[i]->currentIndex()) + ";" +
+1704                           "0;" +
+1705                           QString::number(command_source[i]->currentIndex()) + ";" +
+1706                           length_source[i]->currentText() + ";" +
+1707                           target_reg_source[i]->currentText();
+1708 
+1709                 tModule\&.sumber[i] = data[i];
+1710             }
+1711         }
+1712     } else if (this->ui->tabWidget->currentIndex() == 5) {
+1714         for (int i = 0; i < ui->tabel_alarm->rowCount(); i++) {
+1715             if (check_alarm[i]->isChecked()) {
+1716                 checked++;
+1717                 data[i] = QString::number(i+1) + ";" +
+1718                           name_alarm[i]->text() + ";" +
+1719                           QString::number(input_alarm[i]->currentIndex()) + ";" +
+1720                           QString::number(output_alarm[i]->currentIndex()) + ";" +
+1721                           QString::number(state_alarm[i]->currentIndex()) + ";" +
+1722                           range_l[i]->text() + ";" +
+1723                           batas_ll[i]->text() + ";" +
+1724                           batas_l[i]->text() + ";" +
+1725                           batas_h[i]->text() + ";" +
+1726                           batas_hh[i]->text() + ";" +
+1727                           range_h[i]->text();
+1728 
+1729                 tModule\&.alarm[i] = data[i];
+1730                 for (int j = 0; j < tModule\&.jml_data; j++) {
+1731                     str = tModule\&.data\&.at(j);
+1732                     list = str\&.split(';');
+1733                     if (input_alarm[i]->currentIndex() > 0 &&
+1734                         input_alarm[i]->currentIndex() <= tModule\&.jml_input_digital) {
+1735                        if (QString::number(input_alarm[i]->currentIndex()) == list\&.at(0)) {
+1736                             str = list\&.at(0) + ";" +
+1737                                   list\&.at(1) + ";" +
+1738                                   name_alarm[i]->text() + ";" +
+1739                                   list\&.at(3) + ";" +
+1740                                   list\&.at(4) + ";" +
+1741                                   range_l[i]->text() + ";" +
+1742                                   batas_ll[i]->text() + ";" +
+1743                                   batas_l[i]->text() + ";" +
+1744                                   batas_h[i]->text() + ";" +
+1745                                   batas_hh[i]->text() + ";" +
+1746                                   range_h[i]->text() + ";" +
+1747                                   list\&.at(11); //QString::number(state_alarm[i]->currentIndex());
+1748 
+1749                             tModule\&.data[j] = str;
+1750                         }
+1751                     } else if (input_alarm[i]->currentIndex() > tModule\&.jml_input_digital &&
+1752                                input_alarm[i]->currentIndex() <= tModule\&.jml_input_digital + tModule\&.jml_input_analog) {
+1753                         if (QString::number(input_alarm[i]->currentIndex()+4) == list\&.at(0)) {
+1754                             str = list\&.at(0) + ";" +
+1755                                   list\&.at(1) + ";" +
+1756                                   name_alarm[i]->text() + ";" +
+1757                                   list\&.at(3) + ";" +
+1758                                   list\&.at(4) + ";" +
+1759                                   range_l[i]->text() + ";" +
+1760                                   batas_ll[i]->text() + ";" +
+1761                                   batas_l[i]->text() + ";" +
+1762                                   batas_h[i]->text() + ";" +
+1763                                   batas_hh[i]->text() + ";" +
+1764                                   range_h[i]->text() + ";" +
+1765                                   list\&.at(11); //QString::number(state_alarm[i]->currentIndex());
+1766 
+1767                             tModule\&.data[j] = str;
+1768                         }
+1769                     }
+1770                 }
+1771             }
+1772         }
+1773     } else if (this->ui->tabWidget->currentIndex() == 6) {
+1775         for (int i = 0; i < ui->tabel_data_s->rowCount(); i++) {
+1776             if (check_data_s[i]->isChecked()) {
+1777                 checked++;
+1778                 data[i] = QString::number(i+1) + ";" +
+1779                           QString::number(id_data_s[i]->value()) + ";" +
+1780                           name_data_s[i]->text() + ";" +
+1781                           "0;" +
+1782                           unit_data_s[i]->text() + ";" +
+1783                           QString::number(range_l_data_s[i]->value()) + ";" +
+1784                           QString::number(border_ll_data_s[i]->value()) + ";" +
+1785                           QString::number(border_l_data_s[i]->value()) + ";" +
+1786                           QString::number(border_h_data_s[i]->value()) + ";" +
+1787                           QString::number(border_hh_data_s[i]->value()) + ";" +
+1788                           QString::number(range_h_data_s[i]->value()) + ";" +
+1789                           QString::number(state_data_s[i]->currentIndex());
+1790 
+1791                 tModule\&.data[i] = data[i];
+1792             }
+1793         }
+1794     }
+1795 
+1796     mod\&.write_module(&tModule);
+1797     cryp code; code\&.encryp(Address_Module);
+1798 
+1800     if (Serial_Com->isOpen()) {
+1801         this->writeLogFile();
+1802         this->EnableButton(false);
+1803 
+1804         struct t_serial_settings tSerial;
+1805         QStringList val_data;
+1806 
+1807         timeout = work->Request_ENV(Serial_Com, false);
+1808         if (timeout) {fail = true;} else {
+1809             Serial->read_parsing(&tSerial);
+1810             val_data = tSerial\&.str_data_env\&.split(";");
+1811             if (NoSeri == val_data\&.at(1)) {
+1812                 if (this->ui->tabWidget->currentIndex() == 0) {
+1813                     for (int i = 0; i < ui->tabel_input->rowCount(); i++) {
+1814                         if (check_input[i]->isChecked()) {
+1815                             checked++;
+1816                             str = tModule\&.Input\&.at(i); list = str\&.split(';');
+1817                             if (!progress_dialog->isActiveWindow()) progress_dialog->show();
+1818                             progress_dialog->setWindowTitle("Set Input to board");
+1819                             if (i < 6) {
+1820                                 progress_dialog->Processing(Serial_Com, Address_Module, "0102;0105", QString::number(i) + ";" + QString::number(i));
+1821                             } else {
+1822                                 progress_dialog->Processing(Serial_Com, Address_Module, "0102;0105", QString::number(i) + ";" + QString::number(i));
+1823                             }
+1824                         }
+1825                     }
+1826                 } else if (this->ui->tabWidget->currentIndex() == 1) {
+1827                     for (int i = 0; i < ui->tabel_output->rowCount(); i++) {
+1828                         if (check_output[i]->isChecked()) {
+1829                             checked++;
+1830                             if (!progress_dialog->isActiveWindow()) progress_dialog->show();
+1831                             progress_dialog->setWindowTitle("Set Output to board");
+1832                             progress_dialog->Processing(Serial_Com, Address_Module, "0103", QString::number(i));
+1833                         }
+1834                     }
+1835                 } else if (this->ui->tabWidget->currentIndex() == 4) {
+1836                     for (int i = 0; i < ui->tabel_sources->rowCount(); i++) {
+1837                         if (check_source[i]->isChecked()) {
+1838                             checked++;
+1839                             if (!progress_dialog->isActiveWindow()) progress_dialog->show();
+1840                             progress_dialog->setWindowTitle("Set Sources to board");
+1841                             progress_dialog->Processing(Serial_Com, Address_Module, "0104", QString::number(i));
+1842                         }
+1843                     }
+1844                 } else if (this->ui->tabWidget->currentIndex() == 5) {
+1845 
+1846                 } else if (this->ui->tabWidget->currentIndex() == 6) {
+1847                     for (int i = 0; i < ui->tabel_data_s->rowCount(); i++) {
+1848                         if (check_data_s[i]->isChecked()) {
+1849                             checked++;
+1850                             if (!progress_dialog->isActiveWindow()) progress_dialog->show();
+1851                             progress_dialog->setWindowTitle("Set Data to board");
+1852                             progress_dialog->Processing(Serial_Com, Address_Module, "0105", QString::number(i));
+1853                         }
+1854                     }
+1855                 }
+1856 
+1857                 if (checked != 0) {
+1858 //                    progress_dialog->close();
+1859                     if (this->ui->tabWidget->currentIndex() <= 1) {
+1860                         Message = "I/O ";
+1861                         Request = "0005;0002";
+1862                     } else if (this->ui->tabWidget->currentIndex() == 2) {
+1863                         Message = "SIM Configuration ";
+1864                         Request = "0001";
+1865                     } else if (this->ui->tabWidget->currentIndex() == 3) {
+1866                         Message = "Environtment ";
+1867                         Request = "0000";
+1868                     } else if (this->ui->tabWidget->currentIndex() == 4) {
+1869                         Message = "Sources ";
+1870                         Request = "0005;0004";
+1871                     } else if (this->ui->tabWidget->currentIndex() == 5) {
+1872                         Message = "Alarm ";
+1873                     } else if (this->ui->tabWidget->currentIndex() == 6) {
+1874                         Message = "Data ";
+1875                         Request = "0005";
+1876                     }
+1877 //                    progress_dialog->show();
+1878                     progress_dialog->setWindowTitle("Get " + Message + "from board");
+1879                     progress_dialog->Processing(Serial_Com, Address_Module, Request);
+1880                     progress_dialog->close();
+1881                     mod\&.read_module(&tModule, Address_Module);
+1882                 }
+1883                 Message = "On-Board";
+1884 
+1885             } else {
+1886                 Message = "On-Local";
+1887                 if (val_data\&.at(1) != "") {
+1888                     diff = 1;
+1889                 } else {
+1890                     diff = 2;
+1891                 }
+1892             }
+1893         }
+1894     } else {
+1895         Message = "On-Local";
+1896     }
+1897 
+1898     if (reset == 1) {
+1899 //        Request = "reset\r\n";
+1900 //        Serial->write_data(Serial_Com, Request);
+1901 //        work->delay(jeda*5);
+1902     }
+1903 
+1904     mod\&.write_module(&tModule);
+1905     code\&.encryp(Address_Module);
+1906 
+1907 //    this->setInterface(Address_Module);
+1908     if (checked != 0) {
+1909         if (diff == 0 && !fail) {
+1910             if (this->ui->tabWidget->currentIndex() == 0) {
+1911                 Message\&.prepend("Input Channel ");
+1912             } else if (this->ui->tabWidget->currentIndex() == 1) {
+1913                 Message\&.prepend("Output Channel ");
+1914             } else if (this->ui->tabWidget->currentIndex() == 2) {
+1915                 Message\&.prepend("SIM Configuration ");
+1916             } else if (this->ui->tabWidget->currentIndex() == 3) {
+1917                 Message\&.prepend("Environtment ");
+1918             } else if (this->ui->tabWidget->currentIndex() == 4) {
+1919                 Message\&.prepend("Sources ");
+1920             } else if (this->ui->tabWidget->currentIndex() == 5) {
+1921                 Message\&.prepend("Alarm ");
+1922             } else if (this->ui->tabWidget->currentIndex() == 6) {
+1923                 Message\&.prepend("Data ");
+1924             }
+1925             Message\&.prepend("Setting (with checked) ")\&.append(" Saved");
+1926             QMessageBox::information(this, "Success!!", Message, 0, 0);
+1927         } else if (diff == 1 && !fail) {
+1928             Message\&.prepend("Setting (with checked) ")\&.append(" Saved");
+1929             Message\&.append("\n\n Different Serial Number !!!");
+1930             QMessageBox::information(this, "Success!!", Message, 0, 0);
+1931         } else if (diff == 2 && !fail) {
+1932             Message\&.prepend("Setting (with checked) ")\&.append(" Saved");
+1933             Message\&.append("\nBoard is not have Serial Number \&.\&.");
+1934             QMessageBox::information(this, "Success!!", Message, 0, 0);
+1935         }
+1936         if (fail) {
+1937             QMessageBox::information(this, "Serial Communication", STR_TIMEOUT, 0, 0);
+1938         }
+1939     } else {
+1940         QMessageBox::critical(this, "Settings Critical", "Please Check List Before Setting \&.\&.", 0, 0);
+1941     }
+1942 
+1943     this->EnableButton(true);
+1944 }
+.fi
+.SS "void on_tabWidget_tabBarClicked (int index)\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+on_tabWidget_tabBarClicked 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIindex\fP 
+.RE
+.PP
+
+.PP
+.nf
+1015 {
+1016     if (index == 2 || index == 3) {
+1017         this->ui->pbSet->setHidden(true);
+1018         this->ui->pbSetChk->setHidden(true);
+1019         this->ui->pbGet->setHidden(true);
+1020         this->ui->pbEdit->setHidden(false);
+1021         this->ui->pbAddRow->setHidden(true);
+1022         this->ui->pbDeleteRows->setHidden(true);
+1023         this->ui->pbRefresh->setHidden(true);
+1024     } else {
+1025         this->ui->pbSet->setHidden(false);
+1026         this->ui->pbSetChk->setHidden(false);
+1027         this->ui->pbGet->setHidden(false);
+1028         this->ui->pbEdit->setHidden(true);
+1029         this->ui->pbRefresh->setHidden(true);
+1030         if (index == 4 || index == 5) {
+1031             this->ui->pbAddRow->setHidden(false);
+1032             this->ui->pbDeleteRows->setHidden(false);
+1033         } else {
+1034             this->ui->pbAddRow->setHidden(true);
+1035             this->ui->pbDeleteRows->setHidden(true);
+1036         }
+1037     }
+1038     if (index == 7) {
+1039         this->ui->pbSet->setHidden(true);
+1040         this->ui->pbSetChk->setHidden(true);
+1041         this->ui->pbSetAll->setHidden(true);
+1042         this->ui->pbGet->setHidden(true);
+1043         this->ui->pbGetAll->setHidden(true);
+1044         this->ui->pbRefresh->setHidden(false);
+1045     } else {
+1046         this->ui->pbSetAll->setHidden(false);
+1047         this->ui->pbGetAll->setHidden(false);
+1048         this->ui->pbRefresh->setHidden(true);
+1049     }
+1050     this->ui->tabWidget->setCurrentIndex(index);
+1051 
+1052     if (index == 0) {
+1053         this->ui->pbSet->setText("Set All Input Settings");
+1054         this->ui->pbSetChk->setText("Set Checked Input Settings");
+1055         this->ui->pbGet->setText("Get All Input Settings");
+1056     } else if (index == 1) {
+1057         this->ui->pbSet->setText("Set All Output Settings");
+1058         this->ui->pbSetChk->setText("Set Checked Output Settings");
+1059         this->ui->pbGet->setText("Get All Output Settings");
+1060     } else if (index == 2) {
+1061         this->ui->pbEdit->setText("Edit Communication");
+1062     } else if (index == 3) {
+1063         this->ui->pbEdit->setText("Edit Environtment");
+1064     } else if (index == 4) {
+1065         this->ui->pbSet->setText("Set Sources Settings");
+1066         this->ui->pbSetChk->setText("Set Checked Sources Settings");
+1067         this->ui->pbGet->setText("Get Sources Settings");
+1068     } else if (index == 5) {
+1069         this->ui->pbSet->setText("Set Alarm Settings");
+1070         this->ui->pbSetChk->setText("Set Checked Alarm Settings");
+1071         this->ui->pbGet->setText("Get Alarm Settings");
+1072         this->setInterface_Alarm("\&.RTUdata/module/m_" + this->windowTitle() + "\&.dbe");
+1073     } else if (index == 6) {
+1074         this->ui->pbSet->setText("Set Data Settings");
+1075         this->ui->pbSetChk->setText("Set Checked Data Settings");
+1076         this->ui->pbGet->setText("Get Data Settings");
+1077     }
+1078 }
+.fi
+.SS "void reg_kanal_changed ()\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+reg_kanal_changed 
+.PP
+.nf
+2499 {
+2500     struct t_module tModule; module mod;
+2501     Address_Module = "\&.RTUdata/module/m_" + this->windowTitle() + "\&.dbe";
+2502     QString tmp;
+2503     mod\&.read_module(&tModule, Address_Module);
+2504 
+2505     for (int i = 0; i < tModule\&.jml_input_digital; i++) {
+2506         for (int j = 0; j < PIN_DIGITAL; j++) {
+2507             qobject_cast<QStandardItemModel *>(reg_input[i]->model())->item(j)->setEnabled(true);
+2508         }
+2509     }
+2510     for (int i = tModule\&.jml_input_digital; i < tModule\&.jml_input_digital + tModule\&.jml_input_analog; i++) {
+2511         for (int j = 0; j < PIN_ANALOG; j++) {
+2512             qobject_cast<QStandardItemModel *>(reg_input[i]->model())->item(j)->setEnabled(true);
+2513         }
+2514     }
+2515     for (int i = 0; i < tModule\&.jml_input_digital; i++) {
+2516         for (int j = 0; j < tModule\&.jml_input_digital; j++) {
+2517             tmp = reg_input[j]->currentText();
+2518             qobject_cast<QStandardItemModel *>(reg_input[i]->model())->item(reg_input[i]->findText(tmp))->setEnabled(false);
+2519         }
+2520     }
+2521     for (int i = tModule\&.jml_input_digital; i < tModule\&.jml_input_digital + tModule\&.jml_input_analog; i++) {
+2522         for (int j = tModule\&.jml_input_digital; j < tModule\&.jml_input_digital + tModule\&.jml_input_analog; j++) {
+2523             tmp = reg_input[j]->currentText();
+2524             qobject_cast<QStandardItemModel *>(reg_input[i]->model())->item(reg_input[i]->findText(tmp))->setEnabled(false);
+2525         }
+2526     }
+2527 }
+.fi
+.SS "void setInterface (QString address)\fC [private]\fP"
+
+.PP
+setInterface 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIaddress\fP 
+.RE
+.PP
+
+.PP
+.nf
+50 {
+51     this->setInterface_Input(address);
+52     this->setInterface_Output(address);
+53     this->setInterface_Communication(address);
+54     this->setInterface_Environtment(address);
+55     this->setInterface_Sumber(address);
+56     this->setInterface_Alarm(address);
+57     this->setInterface_Data_Settings(address);
+58     this->setInterface_Data_Monitoring(address);
+59 }
+.fi
+.SS "void setInterface_Alarm (QString address)\fC [private]\fP"
+
+.PP
+setInterface_Alarm 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIaddress\fP 
+.RE
+.PP
+
+.PP
+.nf
+577 {
+578     struct t_module tModule;
+579     module mod;
+580     Address_Module = address;
+581     mod\&.read_module(&tModule, Address_Module);
+582     QString modules;
+583     QString type;
+584     QString str;
+585     QString tmp;
+586     QStringList list;
+587     QStringList data = tModule\&.data;
+588     QStringList temp = tModule\&.data;
+589     tModule\&.data\&.clear();
+590     for (int i = 0; i < this->ui->tabel_input->rowCount(); i++) {
+591         for (int j = 0; j < data\&.length(); j++) {
+592             str = data\&.at(j);
+593             str2 = tModule\&.Input\&.at(i);
+594             list = str\&.split(';');
+595             list2 = str2\&.split(';');
+596             if (list\&.at(0) == list2\&.at(1)) {
+597                 tModule\&.data\&.append(str);
+598             }
+599         }
+600     }
+601     data = tModule\&.data;
+602     tModule\&.data = temp;
+603     mod\&.read_module(&tModule, Address_Module);
+604     int rowAlarm = tModule\&.jml_alarm;
+605 
+606     this->ui->tabel_alarm->verticalHeader()->setHidden(true);
+607     this->ui->tabel_alarm->setColumnCount(13);
+608     this->ui->tabel_alarm->setColumnWidth(0, 25);
+609     this->ui->tabel_alarm->setColumnWidth(1, 25);
+610 //    this->ui->tabel_alarm->setColumnWidth(2, 75);
+611     this->ui->tabel_alarm->setColumnWidth(3, 100);
+612     this->ui->tabel_alarm->setColumnWidth(4, 175);
+613 //    this->ui->tabel_alarm->setColumnWidth(5, 75);
+614     this->ui->tabel_alarm->setColumnWidth(6, 100);
+615 //    this->ui->tabel_alarm->setColumnWidth(7, 50);
+616 //    this->ui->tabel_alarm->setColumnWidth(8, 75);
+617 //    this->ui->tabel_alarm->setColumnWidth(9, 75);
+618 //    this->ui->tabel_alarm->setColumnWidth(10, 75);
+619 //    this->ui->tabel_alarm->setColumnWidth(11, 75);
+620 //    this->ui->tabel_alarm->setColumnWidth(12, 75);
+621     this->ui->tabel_alarm->setRowCount(rowAlarm);
+622 
+623     SigMapDel_alarm = new QSignalMapper(this);
+624     SigMapInput_alarm = new QSignalMapper(this);
+625     for (int i = 0; i < rowAlarm; i++){
+626         check_alarm[i] = new QCheckBox(this);
+627         delete_alarm[i] = new QPushButton("Del", this);
+628         SigMapDel_alarm->setMapping(delete_alarm[i], i);
+629         connect(delete_alarm[i],SIGNAL(clicked()),SigMapDel_alarm,SLOT(map()));
+630 
+631         name_alarm[i] = new QLineEdit(this);
+632         name_alarm[i]->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
+633 
+634         state_alarm[i] = new QComboBox(this);
+635         state_alarm[i]->addItem("NOT ACTIVE",0);
+636         state_alarm[i]->addItem("ACTIVE",1);
+637 
+638         input_alarm[i] = new QComboBox(this);
+639         input_alarm[i]->addItem("");
+640         for (int j = 0; j < tModule\&.jml_input_digital + tModule\&.jml_input_analog; j++) {
+641             if (j < tModule\&.jml_input_digital) {
+642                 str = data\&.at(j); list = str\&.split(';');
+643                 type = "Kanal " + list\&.at(0) + " - Digital - REG: " + list\&.at(1);
+644                 input_alarm[i]->addItem(type);
+645                 type\&.clear();
+646             } else {
+647                 str = data\&.at(j); list = str\&.split(';');
+648                 type = "Kanal " + list\&.at(0) + " - Analog - REG: " + list\&.at(1);
+649                 input_alarm[i]->addItem(type);
+650                 type\&.clear();
+651             }
+652         }
+653 
+654         output_alarm[i] = new QComboBox(this);
+655         for (int j = 0; j < tModule\&.jml_output; j++) {
+656             str = tModule\&.Output\&.at(j); list = str\&.split(';');
+657             type = "Relay " + list\&.at(1);
+658             output_alarm[i]->addItem(type);
+659             type\&.clear();
+660         }
+661 
+662         range_l[i] = new QLineEdit(this);
+663         range_l[i]->setAlignment(Qt::AlignCenter);
+664         range_l[i]->setValidator(new QDoubleValidator(-9999\&.999,9999\&.999,1,this));
+665 
+666         batas_ll[i] = new QLineEdit(this);
+667         batas_ll[i]->setAlignment(Qt::AlignCenter);
+668         batas_ll[i]->setValidator(new QDoubleValidator(-9999\&.999,9999\&.999,1,this));
+669 
+670         batas_l[i] = new QLineEdit(this);
+671         batas_l[i]->setAlignment(Qt::AlignCenter);
+672         batas_l[i]->setValidator(new QDoubleValidator(-9999\&.999,9999\&.999,1,this));
+673 
+674         batas_h[i] = new QLineEdit(this);
+675         batas_h[i]->setAlignment(Qt::AlignCenter);
+676         batas_h[i]->setValidator(new QDoubleValidator(-9999\&.999,9999\&.999,1,this));
+677 
+678         batas_hh[i] = new QLineEdit(this);
+679         batas_hh[i]->setAlignment(Qt::AlignCenter);
+680         batas_hh[i]->setValidator(new QDoubleValidator(-9999\&.999,9999\&.999,1,this));
+681 
+682         range_h[i] = new QLineEdit(this);
+683         range_h[i]->setAlignment(Qt::AlignCenter);
+684         range_h[i]->setValidator(new QDoubleValidator(-9999\&.999,9999\&.999,1,this));
+685     }
+686     connect(SigMapDel_alarm,SIGNAL(mapped(int)),this,SLOT(del_alrm_clicked(int)));
+687 
+688     for (int i = 0; i < rowAlarm; i++){
+689         type = "Alarm - ";
+690         if (i <= tModule\&.alarm\&.length()) {
+691             str = tModule\&.alarm\&.at(i);
+692             list = str\&.split(';');
+693             type\&.append(list[0]);
+694             name_alarm[i]->setText(list\&.at(1));
+695             input_alarm[i]->setCurrentIndex(list\&.at(2)\&.toInt());
+696             output_alarm[i]->setCurrentIndex(list\&.at(3)\&.toInt());
+697             state_alarm[i]->setCurrentIndex(list\&.at(4)\&.toInt());
+698             range_l[i]->setText(list\&.at(5));
+699             batas_ll[i]->setText(list\&.at(6));
+700             batas_l[i]->setText(list\&.at(7));
+701             batas_h[i]->setText(list\&.at(8));
+702             batas_hh[i]->setText(list\&.at(9));
+703             range_h[i]->setText(list\&.at(10));
+704         }
+705         SigMapInput_alarm->setMapping(input_alarm[i], i);
+706         connect(input_alarm[i],SIGNAL(currentIndexChanged(int)),SigMapInput_alarm,SLOT(map()));
+707 
+708         this->ui->tabel_alarm->setCellWidget(i,0, check_alarm[i]);
+709         this->ui->tabel_alarm->setCellWidget(i,1, delete_alarm[i]);
+710         this->ui->tabel_alarm->setItem(i,2, new QTableWidgetItem(type));
+711         this->ui->tabel_alarm->setCellWidget(i,3, name_alarm[i]);
+712         this->ui->tabel_alarm->setCellWidget(i,4, input_alarm[i]);
+713         this->ui->tabel_alarm->setCellWidget(i,5, output_alarm[i]);
+714         this->ui->tabel_alarm->setCellWidget(i,6, state_alarm[i]);
+715         this->ui->tabel_alarm->setCellWidget(i,7, range_l[i]);
+716         this->ui->tabel_alarm->setCellWidget(i,8, batas_ll[i]);
+717         this->ui->tabel_alarm->setCellWidget(i,9, batas_l[i]);
+718         this->ui->tabel_alarm->setCellWidget(i,10, batas_h[i]);
+719         this->ui->tabel_alarm->setCellWidget(i,11, batas_hh[i]);
+720         this->ui->tabel_alarm->setCellWidget(i,12, range_h[i]);
+721     }
+722     connect(SigMapInput_alarm,SIGNAL(mapped(int)),this,SLOT(input_alrm_changed(int)));
+723 
+724     this->ui->tabel_alarm->setEditTriggers(QAbstractItemView::NoEditTriggers);
+725     this->ui->tabel_alarm->hideColumn(5);
+726     this->ui->tabel_alarm->hideColumn(5);
+727 
+728     for (int i = 0; i < tModule\&.jml_alarm; i++) {
+729         for (int j = 0; j < tModule\&.jml_alarm; j++) {
+730             qobject_cast<QStandardItemModel *>(input_alarm[i]->model())->item(input_alarm[i]->findText(input_alarm[j]->currentText()))->setEnabled(false);
+731         }
+732     }
+733 }
+.fi
+.SS "void setInterface_Communication (QString address)\fC [private]\fP"
+
+.PP
+setInterface_Communication 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIaddress\fP 
+.RE
+.PP
+
+.PP
+.nf
+286 {
+287     struct t_module tModule;
+288     module mod;
+289     Address_Module = address;
+290     mod\&.read_module(&tModule, Address_Module);
+291     QString modules;
+292 
+293     modules\&.sprintf("%s", tModule\&.name_gsm_1);
+294     this->ui->opt_1->setText(modules);
+295     modules\&.sprintf("%s", tModule\&.name_gsm_2);
+296     this->ui->opt_2->setText(modules);
+297     modules\&.sprintf("%s", tModule\&.device_name_gsm_1);
+298     this->ui->device_1->setText(modules);
+299     modules\&.sprintf("%s", tModule\&.device_name_gsm_2);
+300     this->ui->device_2->setText(modules);
+301     modules\&.sprintf("%s", tModule\&.status_gsm_1);
+302     this->ui->status_1->setText(modules);
+303     modules\&.sprintf("%s", tModule\&.status_gsm_2);
+304     this->ui->status_2->setText(modules);
+305     modules\&.sprintf("%s", tModule\&.com_gsm_1);
+306     this->ui->com_1->setText(modules);
+307     modules\&.sprintf("%s", tModule\&.com_gsm_2);
+308     this->ui->com_2->setText(modules);
+309     modules\&.sprintf("%s", tModule\&.number_gsm_1);
+310     this->ui->number_1->setText(modules);
+311     modules\&.sprintf("%s", tModule\&.number_gsm_2);
+312     this->ui->number_2->setText(modules);
+313 
+314     modules\&.sprintf("%s", tModule\&.user_gsm_1);
+315     this->ui->user_1->setText(modules);
+316     modules\&.sprintf("%s", tModule\&.apn_gsm_1);
+317     this->ui->apn_1->setText(modules);
+318     modules\&.sprintf("%s", tModule\&.passwd_gsm_1);
+319     this->ui->passwd_1->setText(modules);
+320 
+321     modules\&.sprintf("%s", tModule\&.user_gsm_2);
+322     this->ui->user_2->setText(modules);
+323     modules\&.sprintf("%s", tModule\&.apn_gsm_2);
+324     this->ui->apn_2->setText(modules);
+325     modules\&.sprintf("%s", tModule\&.passwd_gsm_2);
+326     this->ui->passwd_2->setText(modules);
+327 }
+.fi
+.SS "void setInterface_Data_Monitoring (QString address)\fC [private]\fP"
+
+.PP
+setInterface_Data_Monitoring 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIaddress\fP 
+.RE
+.PP
+
+.PP
+.nf
+856 {
+857     struct t_module tModule;
+858     module mod;
+859     Address_Module = address;
+860     mod\&.read_module(&tModule, Address_Module);
+861     QString modules;
+862 
+863     QString str;
+864     QString tmp;
+865     QStringList list;
+866     QStringList data = tModule\&.data;
+867     QStringList temp = tModule\&.data;
+868     tModule\&.data\&.clear();
+869     for (int i = 0; i < data\&.length(); i++) {
+870         str = data\&.at(i);
+871         list =str\&.split(';');
+872         if (list\&.at(11) == "1") {
+873             tModule\&.data\&.append(str);
+874         }
+875     }
+876 
+877     int rowData = tModule\&.data\&.length();
+878     QString type;
+879 
+880     this->ui->tabel_data_m->verticalHeader()->setHidden(true);
+881     this->ui->tabel_data_m->setColumnCount(5);
+882     this->ui->tabel_data_m->setColumnWidth(0, 25);
+883 //    this->ui->tabel_data_m->setColumnWidth(1, 75);
+884     this->ui->tabel_data_m->setColumnWidth(2, 100);
+885     this->ui->tabel_data_m->setColumnWidth(3, 100);
+886     this->ui->tabel_data_m->setColumnWidth(4, 50);
+887     this->ui->tabel_data_m->setRowCount(rowData);
+888 
+889     for (int i = 0; i < rowData; i++){
+890         reg_data[i] = new QLabel(this);
+891         reg_data[i]->setAlignment(Qt::AlignCenter);
+892 
+893         name_data[i] = new QLabel(this);
+894         name_data[i]->setAlignment(Qt::AlignCenter);
+895 
+896         value_data[i] = new QLabel(this);
+897         value_data[i]->setAlignment(Qt::AlignCenter);
+898 
+899         unit_data[i] = new QLabel(this);
+900         unit_data[i]->setAlignment(Qt::AlignCenter);
+901     }
+902 
+903     for (int i = 0; i < rowData; i++){
+904         str = tModule\&.data\&.at(i);
+905         list = str\&.split(';');
+906         type = list[0];
+907         reg_data[i]->setText(list[1]);
+908         name_data[i]->setText(list[2]);
+909         value_data[i]->setText(list[3]);
+910         unit_data[i]->setText(list[4]);
+911 
+912         this->ui->tabel_data_m->setItem(i,0, new QTableWidgetItem(type));
+913         this->ui->tabel_data_m->setCellWidget(i,1, reg_data[i]);
+914         this->ui->tabel_data_m->setCellWidget(i,2, name_data[i]);
+915         this->ui->tabel_data_m->setCellWidget(i,3, value_data[i]);
+916         this->ui->tabel_data_m->setCellWidget(i,4, unit_data[i]);
+917     }
+918 
+919     this->ui->tabel_data_m->setEditTriggers(QAbstractItemView::NoEditTriggers);
+920     tModule\&.data = temp;
+921 }
+.fi
+.SS "void setInterface_Data_Settings (QString address)\fC [private]\fP"
+
+.PP
+setInterface_Data_Settings 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIaddress\fP 
+.RE
+.PP
+
+.PP
+.nf
+736 {
+737     struct t_module tModule;
+738     module mod;
+739     Address_Module = address;
+740     mod\&.read_module(&tModule, Address_Module);
+741     QString modules;
+742 
+743     QString str;
+744     QString tmp;
+745     QStringList list;
+746 
+747     int rowData = tModule\&.jml_data;
+748     QString type;
+749 
+750     this->ui->tabel_data_s->verticalHeader()->setHidden(true);
+751     this->ui->tabel_data_s->setColumnCount(12);
+752     this->ui->tabel_data_s->setColumnWidth(0, 25);
+753     this->ui->tabel_data_s->setColumnWidth(1, 25);
+754     this->ui->tabel_data_s->setColumnWidth(2, 75);
+755     this->ui->tabel_data_s->setColumnWidth(3, 75);
+756 //    this->ui->tabel_data_s->setColumnWidth(4, 75);
+757     this->ui->tabel_data_s->setColumnWidth(4, 75);
+758     this->ui->tabel_data_s->setColumnWidth(5, 100);
+759     this->ui->tabel_data_s->setColumnWidth(6, 100);
+760     this->ui->tabel_data_s->setColumnWidth(7, 100);
+761     this->ui->tabel_data_s->setColumnWidth(8, 100);
+762     this->ui->tabel_data_s->setColumnWidth(9, 100);
+763     this->ui->tabel_data_s->setColumnWidth(10, 100);
+764     this->ui->tabel_data_s->setColumnWidth(11, 125);
+765     this->ui->tabel_data_s->setRowCount(rowData);
+766 
+767     SigMapState_data_s = new QSignalMapper(this);
+768     for (int i = 0; i < rowData; i++){
+769         check_data_s[i] = new QCheckBox(this);
+770 
+771         id_data_s[i] = new QSpinBox(this);
+772         id_data_s[i]->setAlignment(Qt::AlignHCenter);
+773         id_data_s[i]->setRange(0,9999);
+774 
+775         name_data_s[i] = new QLineEdit(this);
+776         name_data_s[i]->setAlignment(Qt::AlignHCenter);
+777         name_data_s[i]->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
+778 
+779 //        value_data_s[i] = new QDoubleSpinBox(this);
+780 //        value_data_s[i]->setAlignment(Qt::AlignHCenter);
+781 //        value_data_s[i]->setEnabled(false);
+782 //        value_data_s[i]->setRange(-999999,999999);
+783 
+784         unit_data_s[i] = new QLineEdit(this);
+785         unit_data_s[i]->setAlignment(Qt::AlignHCenter);
+786         unit_data_s[i]->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
+787 
+788         range_l_data_s[i] = new QDoubleSpinBox(this);
+789         range_l_data_s[i]->setAlignment(Qt::AlignHCenter);
+790         range_l_data_s[i]->setRange(-999999,999999);
+791 
+792         border_ll_data_s[i] = new QDoubleSpinBox(this);
+793         border_ll_data_s[i]->setAlignment(Qt::AlignHCenter);
+794         border_ll_data_s[i]->setRange(-999999,999999);
+795 
+796         border_l_data_s[i] = new QDoubleSpinBox(this);
+797         border_l_data_s[i]->setAlignment(Qt::AlignHCenter);
+798         border_l_data_s[i]->setRange(-999999,999999);
+799 
+800         border_h_data_s[i] = new QDoubleSpinBox(this);
+801         border_h_data_s[i]->setAlignment(Qt::AlignHCenter);
+802         border_h_data_s[i]->setRange(-999999,999999);
+803 
+804         border_hh_data_s[i] = new QDoubleSpinBox(this);
+805         border_hh_data_s[i]->setAlignment(Qt::AlignHCenter);
+806         border_hh_data_s[i]->setRange(-999999,999999);
+807 
+808         range_h_data_s[i] = new QDoubleSpinBox(this);
+809         range_h_data_s[i]->setAlignment(Qt::AlignHCenter);
+810         range_h_data_s[i]->setRange(-999999,999999);
+811 
+812         state_data_s[i] = new QComboBox(this);
+813         state_data_s[i]->addItem("NOT ACTIVE");
+814         state_data_s[i]->addItem("ACTIVE");
+815         SigMapState_data_s->setMapping(state_data_s[i], i);
+816         connect(state_data_s[i], SIGNAL(currentIndexChanged(int)), SigMapState_data_s, SLOT(map()));
+817     }
+818     connect(SigMapState_data_s,SIGNAL(mapped(int)),this,SLOT(state_data_change(int)));
+819 
+820     for (int i = 0; i < rowData; i++){
+821         str = tModule\&.data\&.at(i);
+822         list = str\&.split(';');
+823         type = list[0];
+824 
+825         id_data_s[i]->setValue(list\&.at(1)\&.toInt());
+826         name_data_s[i]->setText(list\&.at(2));
+827 //        value_data_s[i]->setValue(list\&.at(3)\&.toInt());
+828         unit_data_s[i]->setText(list\&.at(4));
+829         range_l_data_s[i]->setValue(list\&.at(5)\&.toInt());
+830         border_ll_data_s[i]->setValue(list\&.at(6)\&.toInt());
+831         border_l_data_s[i]->setValue(list\&.at(7)\&.toInt());
+832         border_h_data_s[i]->setValue(list\&.at(8)\&.toInt());
+833         border_hh_data_s[i]->setValue(list\&.at(9)\&.toInt());
+834         range_h_data_s[i]->setValue(list\&.at(10)\&.toInt());
+835         state_data_s[i]->setCurrentIndex(list\&.at(11)\&.toInt());
+836 
+837         this->ui->tabel_data_s->setCellWidget(i,0, check_data_s[i]);
+838         this->ui->tabel_data_s->setItem(i,1, new QTableWidgetItem(type));
+839         this->ui->tabel_data_s->setCellWidget(i,2, id_data_s[i]);
+840         this->ui->tabel_data_s->setCellWidget(i,3, name_data_s[i]);
+841 //        this->ui->tabel_data_s->setCellWidget(i,4, value_data_s[i]);
+842         this->ui->tabel_data_s->setCellWidget(i,4, unit_data_s[i]);
+843         this->ui->tabel_data_s->setCellWidget(i,5, range_l_data_s[i]);
+844         this->ui->tabel_data_s->setCellWidget(i,6, border_ll_data_s[i]);
+845         this->ui->tabel_data_s->setCellWidget(i,7, border_l_data_s[i]);
+846         this->ui->tabel_data_s->setCellWidget(i,8, border_h_data_s[i]);
+847         this->ui->tabel_data_s->setCellWidget(i,9, border_hh_data_s[i]);
+848         this->ui->tabel_data_s->setCellWidget(i,10, range_h_data_s[i]);
+849         this->ui->tabel_data_s->setCellWidget(i,11, state_data_s[i]);
+850     }
+851 
+852     this->ui->tabel_data_s->setEditTriggers(QAbstractItemView::NoEditTriggers);
+853 }
+.fi
+.SS "void setInterface_Environtment (QString address)\fC [private]\fP"
+
+.PP
+setInterface_Environtment 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIaddress\fP 
+.RE
+.PP
+
+.PP
+.nf
+330 {
+331     struct t_module tModule;
+332     module mod;
+333     Address_Module = address;
+334     mod\&.read_module(&tModule, Address_Module);
+335     QString modules;
+336 
+337     modules\&.sprintf("%s", tModule\&.module_name);
+338     this->ui->module_name->setText(modules);
+339     modules\&.sprintf("%s", tModule\&.serial_number);
+340     this->ui->serial_number->setText(modules);
+341 
+342 //    modules\&.sprintf("%s", tModule\&.ip_address);
+343 //    this->ui->ip_address->setText(modules);
+344     modules\&.sprintf("%s", tModule\&.server_address);
+345     this->ui->server_address->setText(modules);
+346     modules\&.sprintf("%s", tModule\&.file_address);
+347     this->ui->file_address->setText(modules);
+348     modules\&.sprintf("%s", tModule\&.status_webclient);
+349     this->ui->web_client->setText(modules);
+350     int s = 0; int m = 0; int h = 0; int d = 0;
+351     if (tModule\&.interval_relay <= 60) {
+352         this->ui->interval_relay->setText(QString::number(tModule\&.interval_relay) + " s");
+353     } else {
+354         s = tModule\&.interval_relay;
+355         m = s / 60;
+356         for (int i = 0; i < m; i++) s = s - 60;
+357         if (m > 60) {
+358             h = m / 60;
+359             for (int i = 0; i < h; i++) m = m - 60;
+360             if (h > 24) {
+361                 d = h / 24;
+362                 for (int i = 0; i < d; i++) h = h - 24;
+363                 this->ui->interval_relay->setText(QString::number(d) + " d " + QString::number(h) + " h " + QString::number(m) + " m " + QString::number(s) + " s");
+364             } else {
+365                 this->ui->interval_relay->setText(QString::number(h) + " h " + QString::number(m) + " m " + QString::number(s) + " s");
+366             }
+367         } else {
+368             this->ui->interval_relay->setText(QString::number(m) + " m " + QString::number(s) + " s");
+369         }
+370     }
+371     s = 0; m = 0; h = 0; d = 0;
+372     if (tModule\&.interval_data <= 60) {
+373         this->ui->interval_data->setText(QString::number(tModule\&.interval_data) + " s");
+374     } else {
+375         s = tModule\&.interval_data;
+376         m = s / 60;
+377         for (int i = 0; i < m; i++) s = s - 60;
+378         if (m > 60) {
+379             h = m / 60;
+380             for (int i = 0; i < h; i++) m = m - 60;
+381             if (h > 24) {
+382                 d = h / 24;
+383                 for (int i = 0; i < d; i++) h = h - 24;
+384                 this->ui->interval_data->setText(QString::number(d) + " d " + QString::number(h) + " h " + QString::number(m) + " m " + QString::number(s) + " s");
+385             } else {
+386                 this->ui->interval_data->setText(QString::number(h) + " h " + QString::number(m) + " m " + QString::number(s) + " s");
+387             }
+388         } else {
+389             this->ui->interval_data->setText(QString::number(m) + " m " + QString::number(s) + " s");
+390         }
+391     }
+392     modules\&.sprintf("%s", tModule\&.mode_http);
+393     this->ui->mode_http->setText(modules);
+394     this->ui->port->setText(QString::number(tModule\&.port));
+395     this->ui->utc->setText(QString::number(tModule\&.utc));
+396 }
+.fi
+.SS "void setInterface_Input (QString address)\fC [private]\fP"
+
+.PP
+setInterface_Input 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIaddress\fP 
+.RE
+.PP
+
+.PP
+.nf
+62 {
+63     struct t_module tModule;
+64     module mod;
+65     Address_Module = address;
+66     mod\&.read_module(&tModule, Address_Module);
+67     QStringList data = tModule\&.data;
+68 
+69     int rowInputDigital = tModule\&.jml_input_digital;
+70     int rowInputAnalog = tModule\&.jml_input_analog;
+71 
+72     this->ui->tabel_input->verticalHeader()->setHidden(true);
+73     this->ui->tabel_input->setColumnCount(8);
+74     this->ui->tabel_input->setColumnWidth(0, 25);
+75 //    this->ui->tabel_input->setColumnWidth(1, 50);
+76     this->ui->tabel_input->setColumnWidth(2, 100);
+77     this->ui->tabel_input->setColumnWidth(3, 150);
+78 //    this->ui->tabel_input->setColumnWidth(4, 100);
+79 //    this->ui->tabel_input->setColumnWidth(5, 100);
+80 //    this->ui->tabel_input->setColumnWidth(6, 100);
+81     this->ui->tabel_input->setColumnWidth(7, 125);
+82     this->ui->tabel_input->setRowCount(rowInputDigital + rowInputAnalog);
+83 
+84     SigMapReg_input = new QSignalMapper(this);
+85     SigMapState_input = new QSignalMapper(this);
+86     for (int i = 0; i < rowInputDigital + rowInputAnalog; i++) {
+87         check_input[i] = new QCheckBox(this);
+88 
+89         name_input[i] = new QLineEdit(this);
+90         name_input[i]->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
+91 
+92         type_input[i] = new QComboBox(this);
+93         if (i >= rowInputDigital) {
+94             type_input[i]->addItem("Analog Monita",250);
+95             type_input[i]->addItem("Analog Running Hours",230);
+96         } else
+97         {
+98             type_input[i]->addItem("RPM",1);
+99             type_input[i]->addItem("ON / OFF",2);
+100 //            type_input[i]->addItem("Push Button",3);
+101             type_input[i]->addItem("Flow - X",6);
+102             type_input[i]->addItem("RPM - RH",7);
+103 //            type_input[i]->addItem("Running Hours",8);
+104             type_input[i]->addItem("ON / OFF - RH",9);
+105         }
+106 
+107         calib_m[i] = new QDoubleSpinBox(this);
+108         calib_m[i]->setAlignment(Qt::AlignRight);
+109         calib_m[i]->setRange(-99999,99999);
+110 
+111         calib_x[i] = new QDoubleSpinBox(this);
+112         calib_x[i]->setAlignment(Qt::AlignRight);
+113         calib_x[i]->setRange(-99999,99999);
+114 
+115         reg_input[i] = new QComboBox(this);
+116         SigMapReg_input->setMapping(reg_input[i], i);
+117         connect(reg_input[i],SIGNAL(currentIndexChanged(int)),SigMapReg_input,SLOT(map()));
+118         if (i < rowInputDigital) {
+119             for (int j = 0; j < PIN_DIGITAL; j++) {
+120                 tmp = tModule\&.data\&.at(j); list = tmp\&.split(';');
+121                 reg_input[i]->addItem(list\&.at(1));
+122             }
+123         } else {
+124             for (int j = PIN_DIGITAL; j < PIN_DIGITAL + PIN_ANALOG; j++) {
+125                 tmp = tModule\&.data\&.at(j); list = tmp\&.split(';');
+126                 reg_input[i]->addItem(list\&.at(1));
+127             }
+128         }
+129 
+130         state_input[i] = new QComboBox(this);
+131         state_input[i]->addItem("NOT ACTIVE",0);
+132         state_input[i]->addItem("ACTIVE",1);
+133         SigMapState_input->setMapping(state_input[i], i);
+134         connect(state_input[i], SIGNAL(currentIndexChanged(int)), SigMapState_input, SLOT(map()));
+135     }
+136     connect(SigMapReg_input,SIGNAL(mapped(int)),this,SLOT(reg_kanal_changed()));
+137     connect(SigMapState_input,SIGNAL(mapped(int)),this,SLOT(state_kanal_change(int)));
+138 
+139     tModule\&.data\&.clear();
+140     for (int i = 0; i < rowInputDigital + rowInputAnalog; i++) {
+141         for (int j = 0; j < data\&.length(); j++) {
+142             str = data\&.at(j);
+143             str2 = tModule\&.Input\&.at(i);
+144             list = str\&.split(';');
+145             list2 = str2\&.split(';');
+146             if (list\&.at(0) == list2\&.at(1)) {
+147                 tModule\&.data\&.append(str);
+148             }
+149         }
+150     }
+151 
+152     str\&.clear();
+153     for (int i = 0; i < tModule\&.Input\&.length(); i++) {
+154         str\&.append(tModule\&.InputName\&.at(i))\&.append(";")\&.append(tModule\&.Input\&.at(i))\&.append(";");
+155         tmp = tModule\&.data\&.at(i); list = tmp\&.split(';');
+156         str\&.append(list\&.at(1))\&.append(";")\&.append(list\&.at(11))\&.append(";");
+157     }
+158 
+159     list = str\&.split(';');
+160     tModule\&.data = data;
+161 
+162     for(int i = 0; i < rowInputDigital + rowInputAnalog; i++){
+163         if (i >= rowInputDigital) {
+164             type = " - Analog";
+165         } else {
+166             type = " - Digital";
+167         }
+168 
+169         type\&.prepend(QString::number(i+1));
+170 
+171         name_input[i]->setText(list[i*8]);
+172         if (list\&.at((i*8)+3)\&.toInt() == Analog_Monita) {indx = 0;}
+173         if (list\&.at((i*8)+3)\&.toInt() == Analog_Running_Hours) {indx = 1;}
+174         if (list\&.at((i*8)+3)\&.toInt() == RPM) {indx = 0;}
+175         if (list\&.at((i*8)+3)\&.toInt() == ON_OFF) {indx = 1;}
+176         if (list\&.at((i*8)+3)\&.toInt() == FLOW_X) {indx = 2;}
+177         if (list\&.at((i*8)+3)\&.toInt() == RPM_RH) {indx = 3;}
+178         if (list\&.at((i*8)+3)\&.toInt() == ON_OFF_RH) {indx = 4;}
+179         type_input[i]->setCurrentIndex(indx);
+180         calib_m[i]->setValue(list\&.at((i*8)+4)\&.toFloat());
+181         calib_x[i]->setValue(list\&.at((i*8)+5)\&.toFloat());
+182         if (i < rowInputDigital) {reg_input[i]->setCurrentText(list\&.at((i*8)+6));}
+183         else {reg_input[i]->setCurrentText(list\&.at((i*8)+6));}
+184         state_input[i]->setCurrentIndex(list\&.at((i*8)+7)\&.toInt());
+185 
+186         this->ui->tabel_input->setCellWidget(i,0, check_input[i]);
+187         this->ui->tabel_input->setItem(i,1, new QTableWidgetItem(type));
+188         this->ui->tabel_input->setCellWidget(i,2, name_input[i]);
+189         this->ui->tabel_input->setCellWidget(i,3, type_input[i]);
+190         this->ui->tabel_input->setCellWidget(i,4, calib_m[i]);
+191         this->ui->tabel_input->setCellWidget(i,5, calib_x[i]);
+192         this->ui->tabel_input->setCellWidget(i,6, reg_input[i]);
+193         this->ui->tabel_input->setCellWidget(i,7, state_input[i]);
+194     }
+195 
+196     this->ui->tabel_input->setEditTriggers(QAbstractItemView::NoEditTriggers);
+197 
+198     for (int i = 0; i < tModule\&.jml_input_digital; i++) {
+199         for (int j = 0; j < tModule\&.jml_input_digital; j++) {
+200             qobject_cast<QStandardItemModel *>(reg_input[i]->model())
+201                     ->item(reg_input[i]->findText(reg_input[j]->currentText()))
+202                     ->setEnabled(false);
+203         }
+204     }
+205     for (int i = tModule\&.jml_input_digital; i < tModule\&.jml_input_digital + tModule\&.jml_input_analog; i++) {
+206         for (int j = tModule\&.jml_input_digital; j < tModule\&.jml_input_digital + tModule\&.jml_input_analog; j++) {
+207             tmp = reg_input[j]->currentText();
+208             type = QString::number(reg_input[i]->findText(reg_input[j]->currentText()));
+209             qobject_cast<QStandardItemModel *>(reg_input[i]->model())
+210                     ->item(reg_input[i]->findText(reg_input[j]->currentText()))
+211                     ->setEnabled(false);
+212         }
+213     }
+214 }
+.fi
+.SS "void setInterface_Output (QString address)\fC [private]\fP"
+
+.PP
+setInterface_Output 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIaddress\fP 
+.RE
+.PP
+
+.PP
+.nf
+217 {
+218     struct t_module tModule;
+219     module mod;
+220     Address_Module = address;
+221     mod\&.read_module(&tModule, Address_Module);
+222     QString modules;
+223 
+224     int rowOutput = tModule\&.jml_output;
+225     QString type;
+226 
+227     this->ui->tabel_output->verticalHeader()->setHidden(true);
+228     this->ui->tabel_output->setColumnCount(5);
+229         this->ui->tabel_output->setColumnWidth(0, 25);
+230         this->ui->tabel_output->setColumnWidth(1, 100);
+231         this->ui->tabel_output->setColumnWidth(2, 125);
+232     //    this->ui->tabel_output->setColumnWidth(3, 100);
+233     //    this->ui->tabel_output->setColumnWidth(4, 75);
+234     this->ui->tabel_output->setRowCount(rowOutput);
+235 
+236     for (int i = 0; i < rowOutput; i++){
+237         check_output[i] = new QCheckBox(this);
+238 
+239 //        name_output[i] = new QLineEdit(this);
+240 //        name_output[i]->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
+241 
+242         state_output[i] = new QComboBox(this);
+243         state_output[i]->addItem("NOT ACTIVE");
+244         state_output[i]->addItem("ACTIVE");
+245 
+246         control[i] = new QComboBox(this);
+247         control[i]->addItem("LATCH");
+248         control[i]->addItem("LOGIC");
+249         control[i]->addItem("SCHEDULER");
+250 
+251         reg_output[i] = new QSpinBox(this);
+252         reg_output[i]->setAlignment(Qt::AlignCenter);
+253         reg_output[i]->setRange(0,99999);
+254     }
+255 
+256     QString str;
+257     QString tmp;
+258     QStringList list;
+259     for (int i = 0; i < tModule\&.Output\&.length(); i++) {
+260         str\&.append(tModule\&.OutputName\&.at(i))\&.append(";")
+261                 \&.append(tModule\&.Output\&.at(i))\&.append(";");
+262     }
+263     list = str\&.split(';');
+264 
+265     for(int i = 0; i < rowOutput; i++){
+266 //        name_output[i]->setText(list[i*6]);
+267         state_output[i]->setCurrentIndex(list\&.at((i*6)+3)\&.toInt());
+268         control[i]->setCurrentIndex(list\&.at((i*6)+4)\&.toInt());
+269         reg_output[i]->setValue(list\&.at((i*6)+5)\&.toInt());
+270 //        reg_output[i]->setText(QString::number(i+1) + QString::number(i+1) + QString::number(i+1));
+271 
+272         type = " - Relay";
+273         type\&.prepend(list\&.at((i*6)+2));
+274         this->ui->tabel_output->setCellWidget(i,0, check_output[i]);
+275         this->ui->tabel_output->setItem(i,1, new QTableWidgetItem(type));
+276 //        this->ui->tabel_output->setCellWidget(i,2, name_output[i]);
+277         this->ui->tabel_output->setCellWidget(i,2, state_output[i]);
+278         this->ui->tabel_output->setCellWidget(i,3, control[i]);
+279         this->ui->tabel_output->setCellWidget(i,4, reg_output[i]);
+280     }
+281 
+282     this->ui->tabel_output->setEditTriggers(QAbstractItemView::NoEditTriggers);
+283 }
+.fi
+.SS "void setInterface_Sumber (QString address)\fC [private]\fP"
+
+.PP
+setInterface_Sumber 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIaddress\fP 
+.RE
+.PP
+
+.PP
+.nf
+399 {
+400     struct t_module tModule;
+401     module mod;
+402     Address_Module = address;
+403     mod\&.read_module(&tModule, Address_Module);
+404     QString modules;
+405 
+406     QString str;
+407     QString tmp;
+408     QStringList list;
+409 
+410     int rowSource = tModule\&.jml_sumber;
+411     QString type;
+412 
+413     this->ui->tabel_sources->verticalHeader()->setHidden(true);
+414     this->ui->tabel_sources->setColumnCount(13);
+415     this->ui->tabel_sources->setColumnWidth(0, 25);
+416     this->ui->tabel_sources->setColumnWidth(1, 25);
+417 //    this->ui->tabel_sources->setColumnWidth(2, 75);
+418     this->ui->tabel_sources->setColumnWidth(3, 100);
+419     this->ui->tabel_sources->setColumnWidth(4, 125);
+420 //    this->ui->tabel_sources->setColumnWidth(5, 75);
+421     this->ui->tabel_sources->setColumnWidth(6, 125);
+422 //    this->ui->tabel_sources->setColumnWidth(7, 75);
+423     this->ui->tabel_sources->setColumnWidth(8, 75);
+424     this->ui->tabel_sources->setColumnWidth(9, 150);
+425     this->ui->tabel_sources->setColumnWidth(10, 125);
+426     this->ui->tabel_sources->setColumnWidth(11, 125);
+427 //    this->ui->tabel_sources->setColumnWidth(12, 75);
+428     this->ui->tabel_sources->setRowCount(rowSource);
+429 
+430     SigMapDel_Source = new QSignalMapper(this);
+431     SigMap_length_source = new QSignalMapper(this);
+432     SigMap_tReg_source = new QSignalMapper(this);
+433     for (int i = 0; i < rowSource; i++){
+434         check_source[i] = new QCheckBox(this);
+435         delete_source[i] = new QPushButton("Del", this);
+436         SigMapDel_Source->setMapping(delete_source[i], i);
+437         connect(delete_source[i],SIGNAL(clicked()),SigMapDel_Source,SLOT(map()));
+438 
+439         name_source[i] = new QLineEdit(this);
+440         name_source[i]->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
+441 
+442         ip_source[i] = new QLineEdit(this);
+443         ip_source[i]->setAlignment(Qt::AlignCenter);
+444         ip_source[i]->setInputMask("000\&.000\&.000\&.000");
+445 
+446         port_source[i] = new QSpinBox(this);
+447         port_source[i]->setAlignment(Qt::AlignCenter);
+448         port_source[i]->setRange(0,99999);
+449 
+450         state_source[i] = new QComboBox(this);
+451         state_source[i]->addItem("NOT ACTIVE",0);
+452         state_source[i]->addItem("ACTIVE",1);
+453 
+454         type_source[i] = new QComboBox(this);
+455         type_source[i]->addItem("",0);
+456         type_source[i]->addItem("Native",1);
+457         type_source[i]->addItem("PM810",2);
+458         type_source[i]->addItem("Santer",3);
+459         type_source[i]->addItem("GWR",4);
+460         type_source[i]->addItem("PM5560",5);
+461 
+462         id_source[i] = new QSpinBox(this);
+463         id_source[i]->setAlignment(Qt::AlignCenter);
+464         id_source[i]->setRange(0,999);
+465 
+466         sensor_reg_source[i] = new QSpinBox(this);
+467         sensor_reg_source[i]->setAlignment(Qt::AlignCenter);
+468         sensor_reg_source[i]->setRange(0,99999);
+469 
+470 //        OffsetBase_source[i] = new QComboBox(this);
+471 //        OffsetBase_source[i]->addItem("Offset",0);
+472 //        OffsetBase_source[i]->addItem("Base",1);
+473 
+474         command_source[i] = new QComboBox(this);
+475         command_source[i]->addItem("Read Holding Register",0);
+476         command_source[i]->addItem("Write Holding Register",1);
+477 
+478         length_source[i] = new QComboBox(this);
+479         for (int j = 0; j <= tModule\&.data\&.length()+(DATA_PERIOD*2); j+=2) {
+480             length_source[i]->addItem(QString::number(j));
+481         }
+482 
+483         target_reg_source[i] = new QComboBox(this);
+484         target_reg_source[i]->addItem("");
+485         for (int j = tModule\&.data\&.length()-(tModule\&.data\&.length()-(DATA_PERIOD*2)); j < tModule\&.data\&.length(); j++) {
+486             str = tModule\&.data\&.at(j); list = str\&.split(';');
+487             target_reg_source[i]->addItem(list\&.at(1));
+488         }
+489     }
+490     connect(SigMapDel_Source,SIGNAL(mapped(int)),this,SLOT(del_src_clicked(int)));
+491 
+492     for (int i = 0; i < rowSource; i++){
+493         type = "Source - ";
+494         type\&.append(QString::number(i+1));
+495 
+496         if (i <= tModule\&.sumber\&.length()) {
+497             if (this->checkFormula(tModule\&.sumber\&.at(i))) {
+498                 str = tModule\&.sumber\&.at(i);
+499                 list = str\&.split(';');
+500                 name_source[i]->setText(list\&.at(1));
+501                 ip_source[i]->setText(list\&.at(2));
+502                 port_source[i]->setValue(list\&.at(3)\&.toInt());
+503                 state_source[i]->setCurrentIndex(list\&.at(4)\&.toInt());
+504                 type_source[i]->setCurrentIndex(list\&.at(5)\&.toInt());
+505                 id_source[i]->setValue(list\&.at(6)\&.toInt());
+506                 sensor_reg_source[i]->setValue(list\&.at(7)\&.toInt());
+507 //                OffsetBase_source[i]->setCurrentIndex(list\&.at(8)\&.toInt());
+508                 command_source[i]->setCurrentIndex(list\&.at(9)\&.toInt());
+509                 length_source[i]->setCurrentText(list\&.at(10));
+510                 if (list[11] != "") {
+511                     target_reg_source[i]->setCurrentText(list\&.at(11));
+512                 } else {
+513                     target_reg_source[i]->setCurrentIndex(0);
+514                 }
+515             } else {
+516                 str = tModule\&.sumber\&.at(i);
+517                 list = str\&.split(';');
+518                 name_source[i]->setText(list\&.at(1));
+519                 ip_source[i]->setText(list\&.at(2));
+520                 port_source[i]->setValue(list\&.at(3)\&.toInt());
+521                 state_source[i]->setCurrentIndex(list\&.at(4)\&.toInt());
+522             }
+523         }
+524         SigMap_length_source->setMapping(length_source[i], i);
+525         connect(length_source[i],SIGNAL(currentIndexChanged(int)),SigMap_length_source,SLOT(map()));
+526         SigMap_tReg_source->setMapping(target_reg_source[i], i);
+527         connect(target_reg_source[i],SIGNAL(currentIndexChanged(int)),SigMap_tReg_source,SLOT(map()));
+528 
+529         this->ui->tabel_sources->setCellWidget(i,0, check_source[i]);
+530         this->ui->tabel_sources->setCellWidget(i,1, delete_source[i]);
+531         this->ui->tabel_sources->setItem(i,2, new QTableWidgetItem(type));
+532         this->ui->tabel_sources->setCellWidget(i,3, name_source[i]);
+533         this->ui->tabel_sources->setCellWidget(i,4, ip_source[i]);
+534         this->ui->tabel_sources->setCellWidget(i,5, port_source[i]);
+535         this->ui->tabel_sources->setCellWidget(i,6, state_source[i]);
+536         this->ui->tabel_sources->setCellWidget(i,7, type_source[i]);
+537         this->ui->tabel_sources->setCellWidget(i,8, id_source[i]);
+538         this->ui->tabel_sources->setCellWidget(i,9, command_source[i]);
+539         this->ui->tabel_sources->setCellWidget(i,10, sensor_reg_source[i]);
+540         this->ui->tabel_sources->setCellWidget(i,11, target_reg_source[i]);
+541         this->ui->tabel_sources->setCellWidget(i,12, length_source[i]);
+542     }
+543     connect(SigMap_length_source,SIGNAL(mapped(int)),this,SLOT(length_src_changed()));
+544     connect(SigMap_tReg_source,SIGNAL(mapped(int)),this,SLOT(tReg_src_changed()));
+545     this->ui->tabel_sources->setEditTriggers(QAbstractItemView::NoEditTriggers);
+546 
+547     int val;
+548     for (int i = 0; i < tModule\&.jml_sumber; i++) {
+549         for (int j = 0; j < tModule\&.jml_sumber; j++) {
+550             for (int k = 0; k < length_source[i]->currentIndex(); k++) {
+551                 qobject_cast<QStandardItemModel *>(target_reg_source[j]->model())
+552                         ->item(target_reg_source[i]->currentIndex()+k)
+553                         ->setEnabled(false);
+554             }
+555             if (target_reg_source[i]->currentIndex() == 0) {
+556                 for (int k = 0; k <= tModule\&.data\&.length()+(DATA_PERIOD*2); k+=2) {
+557                     qobject_cast<QStandardItemModel *>(length_source[i]->model())
+558                             ->item(length_source[i]->findText(QString::number(k)))
+559                             ->setEnabled(false);
+560                 }
+561             } else {
+562                 val = 0;
+563                 for (int k = 0; k < tModule\&.jml_sumber; k++) {
+564                     val = val + length_source[k]->currentIndex();
+565                 }
+566                 for (int k = 0; k < val; k++) {
+567                     qobject_cast<QStandardItemModel *>(length_source[j]->model())
+568                             ->item((tModule\&.data\&.length()+(DATA_PERIOD*2))/2-k)
+569                             ->setEnabled(false);
+570                 }
+571             }
+572         }
+573     }
+574 }
+.fi
+.SS "void state_data_change (int index)\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+state_data_change 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIindex\fP 
+.RE
+.PP
+
+.PP
+.nf
+2494 {
+2495 //    state_input[index]->setCurrentIndex(state_data_s[index]->currentIndex());
+2496 }
+.fi
+.SS "void state_kanal_change (int index)\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+state_kanal_change 
+.PP
+\fBParameter:\fP
+.RS 4
+\fIindex\fP 
+.RE
+.PP
+
+.PP
+.nf
+2489 {
+2490 //    state_data_s[index]->setCurrentIndex(state_input[index]->currentIndex());
+2491 }
+.fi
+.SS "void tReg_src_changed ()\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+tReg_src_changed 
+.PP
+.nf
+2291 {
+2292     struct t_module tModule; module mod;
+2293     Address_Module = "\&.RTUdata/module/m_" + this->windowTitle() + "\&.dbe";
+2294     QString tmp; int val;
+2295     mod\&.read_module(&tModule, Address_Module);
+2296 
+2297     for (int i = 0; i < tModule\&.jml_sumber; i++) {
+2298         for (int j = 0; j <= 30; j++) {
+2299             qobject_cast<QStandardItemModel *>(length_source[i]->model())->item(j)->setEnabled(true);
+2300         }
+2301         for (int j = 0; j <= 30; j++) {
+2302             qobject_cast<QStandardItemModel *>(target_reg_source[i]->model())->item(j)->setEnabled(true);
+2303         }
+2304     }
+2305     for (int i = 0; i < tModule\&.jml_sumber; i++) {
+2306         for (int j = 0; j < tModule\&.jml_sumber; j++) {
+2307             for (int k = 0; k < length_source[i]->currentIndex(); k++) {
+2308                 qobject_cast<QStandardItemModel *>(target_reg_source[j]->model())
+2309                         ->item(target_reg_source[i]->currentIndex()+k)
+2310                         ->setEnabled(false);
+2311             }
+2312             if (target_reg_source[i]->currentIndex() == 0) {
+2313                 for (int k = 0; k <= tModule\&.data\&.length()+(DATA_PERIOD*2); k+=2) {
+2314                     qobject_cast<QStandardItemModel *>(length_source[i]->model())
+2315                             ->item(length_source[i]->findText(QString::number(k)))
+2316                             ->setEnabled(false);
+2317                 }
+2318             } else {
+2319                 val = 0;
+2320                 for (int k = 0; k < tModule\&.jml_sumber; k++) {
+2321                     val = val + length_source[k]->currentIndex();
+2322                 }
+2323                 for (int k = 0; k < val; k++) {
+2324                     qobject_cast<QStandardItemModel *>(length_source[j]->model())
+2325                             ->item((tModule\&.data\&.length()+(DATA_PERIOD*2))/2-k)
+2326                             ->setEnabled(false);
+2327                 }
+2328             }
+2329         }
+2330     }
+2331 }
+.fi
+.SS "void writeLogFile ()\fC [private]\fP, \fC [slot]\fP"
+
+.PP
+writeLogFile 
+.PP
+.nf
+2158                               {
+2159     /* Try and open a file for output */
+2160     QString outputFilename = PATH_LOG;
+2161     QFile outputFile(outputFilename);
+2162     outputFile\&.open(QIODevice::Append | QIODevice::Text);
+2163 
+2164     /* Check it opened OK */
+2165     if(!outputFile\&.isOpen()){
+2166         qDebug() << "- Error, unable to open" << outputFilename << "for output";
+2167     } else {
+2168 
+2169         /* Point a QTextStream object at the file */
+2170         QTextStream outStream(&outputFile);
+2171 
+2172         /* Write the line to the file */
+2173         outStream << "----------" << "----------" <<
+2174                      "----------" << "----------" <<
+2175                      "----------" << "----------" <<
+2176                      "----------" << "----------" <<
+2177                      "----------" << "----------" <<
+2178                      "----------" << "----------" <<
+2179                      "----------" << "----------" <<
+2180                      "----------" << "----------" <<
+2181                      "\r\n";
+2182 
+2183         /* Close the file */
+2184         outputFile\&.close();
+2185     }
+2186 }
+.fi
+.SH "Dokumentasi Variabel"
+.PP 
+.SS "QString Address_Module\fC [private]\fP"
+
+.PP
+Address_Module\&. 
+.SS "QLineEdit* batas_h[16]\fC [private]\fP"
+
+.PP
+batas_h 
+.SS "QLineEdit* batas_hh[16]\fC [private]\fP"
+
+.PP
+batas_hh 
+.SS "QLineEdit* batas_l[16]\fC [private]\fP"
+
+.PP
+batas_l 
+.SS "QLineEdit* batas_ll[16]\fC [private]\fP"
+
+.PP
+batas_ll 
+.SS "QDoubleSpinBox* border_h_data_s[60]\fC [private]\fP"
+
+.PP
+border_h_data_s 
+.SS "QDoubleSpinBox* border_hh_data_s[60]\fC [private]\fP"
+
+.PP
+border_hh_data_s 
+.SS "QDoubleSpinBox* border_l_data_s[60]\fC [private]\fP"
+
+.PP
+border_l_data_s 
+.SS "QDoubleSpinBox* border_ll_data_s[60]\fC [private]\fP"
+
+.PP
+border_ll_data_s 
+.SS "QDoubleSpinBox* calib_m[16]\fC [private]\fP"
+
+.PP
+calib_m 
+.SS "QDoubleSpinBox* calib_x[16]\fC [private]\fP"
+
+.PP
+calib_x 
+.SS "bool cancel\fC [private]\fP"
+
+.PP
+cancel 
+.SS "QCheckBox* check_alarm[16]\fC [private]\fP"
+
+.PP
+check_alarm 
+.SS "QCheckBox* check_data_s[60]\fC [private]\fP"
+
+.PP
+check_data_s 
+.SS "QCheckBox* check_input[16]\fC [private]\fP"
+
+.PP
+check_input 
+.SS "QCheckBox* check_output[16]\fC [private]\fP"
+
+.PP
+check_output 
+.SS "QCheckBox* check_source[16]\fC [private]\fP"
+
+.PP
+check_source 
+.SS "QComboBox* command_source[16]\fC [private]\fP"
+
+.PP
+command_source 
+.SS "QComboBox* control[16]\fC [private]\fP"
+
+.PP
+control 
+.SS "QPushButton* delete_alarm[16]\fC [private]\fP"
+
+.PP
+delete_alarm 
+.SS "QPushButton* delete_source[16]\fC [private]\fP"
+
+.PP
+delete_source 
+.SS "int diff\fC [private]\fP"
+
+.PP
+diff 
+.SS "\fBform_addModule\fP* faddModule\fC [private]\fP"
+
+.PP
+faddModule 
+.SS "bool fail\fC [private]\fP"
+
+.PP
+fail 
+.SS "QSpinBox* id_data_s[60]\fC [private]\fP"
+
+.PP
+id_data_s 
+.SS "QSpinBox* id_source[16]\fC [private]\fP"
+
+.PP
+id_source 
+.SS "int indx\fC [private]\fP"
+
+.PP
+indx 
+.SS "QComboBox* input_alarm[16]\fC [private]\fP"
+
+.PP
+input_alarm 
+.SS "QLineEdit* ip_source[16]\fC [private]\fP"
+
+.PP
+ip_source 
+.SS "QComboBox* length_source[16]\fC [private]\fP"
+
+.PP
+length_source 
+.SS "QStringList list\fC [private]\fP"
+
+.PP
+list 
+.SS "QStringList list2\fC [private]\fP"
+
+.PP
+list2 
+.SS "\fBMainWindow\fP* Main\fC [private]\fP"
+
+.PP
+Main\&. 
+.SS "QString Message\fC [private]\fP"
+
+.PP
+Message\&. 
+.SS "\fBmodule\fP mod\fC [private]\fP"
+
+.PP
+mod 
+.SS "QString module_name\fC [private]\fP"
+
+.PP
+module_name 
+.SS "QLineEdit* name_alarm[16]\fC [private]\fP"
+
+.PP
+name_alarm 
+.SS "QLabel* name_data[60]\fC [private]\fP"
+
+.PP
+name_data 
+.SS "QLineEdit* name_data_s[60]\fC [private]\fP"
+
+.PP
+name_data_s 
+.SS "QLineEdit* name_input[16]\fC [private]\fP"
+
+.PP
+name_input 
+.SS "QLineEdit* name_output[16]\fC [private]\fP"
+
+.PP
+name_output 
+.SS "QLineEdit* name_source[16]\fC [private]\fP"
+
+.PP
+name_source 
+.SS "QString NoSeri\fC [private]\fP"
+
+.PP
+NoSeri\&. 
+.SS "QComboBox* output_alarm[16]\fC [private]\fP"
+
+.PP
+output_alarm 
+.SS "QSpinBox* port_source[16]\fC [private]\fP"
+
+.PP
+port_source 
+.SS "\fBProgressDialog\fP* progress_dialog\fC [private]\fP"
+
+.PP
+progress_dialog 
+.SS "QLineEdit* range_h[16]\fC [private]\fP"
+
+.PP
+range_h 
+.SS "QDoubleSpinBox* range_h_data_s[60]\fC [private]\fP"
+
+.PP
+range_h_data_s 
+.SS "QLineEdit* range_l[16]\fC [private]\fP"
+
+.PP
+range_l 
+.SS "QDoubleSpinBox* range_l_data_s[60]\fC [private]\fP"
+
+.PP
+range_l_data_s 
+.SS "QLabel* reg_data[60]\fC [private]\fP"
+
+.PP
+reg_data 
+.SS "QComboBox* reg_input[60]\fC [private]\fP"
+
+.PP
+reg_input 
+.SS "QSpinBox* reg_output[16]\fC [private]\fP"
+
+.PP
+reg_output 
+.SS "QString Request\fC [private]\fP"
+
+.PP
+Request\&. 
+.SS "int reset\fC [private]\fP"
+
+.PP
+reset 
+.SS "QSpinBox* sensor_reg_source[16]\fC [private]\fP"
+
+.PP
+sensor_reg_source 
+.SS "\fBserial\fP* Serial\fC [private]\fP"
+
+.PP
+Serial\&. 
+.SS "QSerialPort* Serial_Com\fC [private]\fP"
+
+.PP
+Serial_Com\&. 
+.SS "\fBsetting\fP* Setting\fC [private]\fP"
+
+.PP
+Setting\&. 
+.SS "QSignalMapper* SigMap_length_source\fC [private]\fP"
+
+.PP
+SigMap_length_source\&. 
+.SS "QSignalMapper* SigMap_tReg_source\fC [private]\fP"
+
+.PP
+SigMap_tReg_source\&. 
+.SS "QSignalMapper* SigMapDel_alarm\fC [private]\fP"
+
+.PP
+SigMapDel_alarm\&. 
+.SS "QSignalMapper* SigMapDel_Source\fC [private]\fP"
+
+.PP
+SigMapDel_Source\&. 
+.SS "QSignalMapper* SigMapInput_alarm\fC [private]\fP"
+
+.PP
+SigMapInput_alarm\&. 
+.SS "QSignalMapper* SigMapReg_input\fC [private]\fP"
+
+.PP
+SigMapReg_input\&. 
+.SS "QSignalMapper* SigMapState_data_s\fC [private]\fP"
+
+.PP
+SigMapState_data_s\&. 
+.SS "QSignalMapper* SigMapState_input\fC [private]\fP"
+
+.PP
+SigMapState_input\&. 
+.SS "QComboBox* state_alarm[16]\fC [private]\fP"
+
+.PP
+state_alarm 
+.SS "QComboBox* state_data_s[60]\fC [private]\fP"
+
+.PP
+state_data_s 
+.SS "QComboBox* state_input[16]\fC [private]\fP"
+
+.PP
+state_input 
+.SS "QComboBox* state_output[16]\fC [private]\fP"
+
+.PP
+state_output 
+.SS "QComboBox* state_source[16]\fC [private]\fP"
+
+.PP
+state_source 
+.SS "QString str\fC [private]\fP"
+
+.PP
+str 
+.SS "QString str2\fC [private]\fP"
+
+.PP
+str2 
+.SS "QComboBox* target_reg_source[16]\fC [private]\fP"
+
+.PP
+target_reg_source 
+.SS "bool timeout\fC [private]\fP"
+
+.PP
+timeout 
+.SS "QString tmp\fC [private]\fP"
+
+.PP
+tmp 
+.SS "QString tmp2\fC [private]\fP"
+
+.PP
+tmp2 
+.SS "QString type\fC [private]\fP"
+
+.PP
+type 
+.SS "QComboBox* type_input[16]\fC [private]\fP"
+
+.PP
+type_input 
+.SS "QLineEdit* type_output[16]\fC [private]\fP"
+
+.PP
+type_output 
+.SS "QComboBox* type_source[16]\fC [private]\fP"
+
+.PP
+type_source 
+.SS "Ui::formModule* ui"
+
+.PP
+ui 
+.SS "QLabel* unit_data[60]\fC [private]\fP"
+
+.PP
+unit_data 
+.SS "QLineEdit* unit_data_s[60]\fC [private]\fP"
+
+.PP
+unit_data_s 
+.SS "QLabel* value_data[60]\fC [private]\fP"
+
+.PP
+value_data 
+.SS "wait_process* wait"
+
+.PP
+wait 
+.SS "\fBworker\fP* work\fC [private]\fP"
+
+.PP
+work 
+
+.SH "Penulis"
+.PP 
+Dibangkitkan secara otomatis oleh Doxygen untuk Sarasvati dari kode sumber\&.

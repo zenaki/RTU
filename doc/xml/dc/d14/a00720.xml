@@ -1,0 +1,517 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.14">
+  <compounddef id="dc/d14/a00720" kind="class" language="C++" prot="public">
+    <compoundname>form_addModule</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">QDialog</basecompoundref>
+    <includes refid="da/dec/a00080" local="no">form_addmodule.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="dc/d14/a00720_1a5898fdb8661138948b224bf07d8fb1b2" prot="public" static="no" mutable="no">
+        <type>Ui::form_addModule*</type>
+        <definition>Ui::form_addModule* ui</definition>
+        <argsstring></argsstring>
+        <name>ui</name>
+        <briefdescription>
+<para>ui </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/form_addmodule.h" line="28" column="1" bodyfile="view/form_addmodule.h" bodystart="28" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="dc/d14/a00720_1adfdac3a8bec9af03243e16cc76c5f4e2" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool edit</definition>
+        <argsstring></argsstring>
+        <name>edit</name>
+        <briefdescription>
+<para>edit </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/form_addmodule.h" line="43" column="1" bodyfile="view/form_addmodule.h" bodystart="43" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="dc/d14/a00720_1a1d3b9dfdf01d4cd2ea84d191b55e8bff" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int accept</definition>
+        <argsstring></argsstring>
+        <name>accept</name>
+        <briefdescription>
+<para>accept </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/form_addmodule.h" line="47" column="1" bodyfile="view/form_addmodule.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="dc/d14/a00720_1a27a75e9f146a4bb7845cd7520c8ab374" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int flag_gsm_2_active</definition>
+        <argsstring></argsstring>
+        <name>flag_gsm_2_active</name>
+        <briefdescription>
+<para>flag_gsm_2_active </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/form_addmodule.h" line="51" column="1" bodyfile="view/form_addmodule.h" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="dc/d14/a00720_1aa7be515b4acdd48d7aca5e500b25c3e3" prot="public" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString currentFile</definition>
+        <argsstring></argsstring>
+        <name>currentFile</name>
+        <briefdescription>
+<para>currentFile </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/form_addmodule.h" line="55" column="1" bodyfile="view/form_addmodule.h" bodystart="55" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="dc/d14/a00720_1a7ab2b62fd8d152497b902f9c9244e204" prot="public" static="no" mutable="no">
+        <type>QString</type>
+        <definition>QString currentName</definition>
+        <argsstring></argsstring>
+        <name>currentName</name>
+        <briefdescription>
+<para>currentName </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/form_addmodule.h" line="59" column="1" bodyfile="view/form_addmodule.h" bodystart="59" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="dc/d14/a00720_1a457799b6676119949ee5941f0f587a39" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool active_button</definition>
+        <argsstring></argsstring>
+        <name>active_button</name>
+        <briefdescription>
+<para>active_button </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/form_addmodule.h" line="134" column="1" bodyfile="view/form_addmodule.h" bodystart="134" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="dc/d14/a00720_1ad311e6c11f36ec0be84c8f0081f581d6" prot="private" static="no" mutable="no">
+        <type><ref refid="df/d7d/a00696" kindref="compound">module</ref></type>
+        <definition>module mod</definition>
+        <argsstring></argsstring>
+        <name>mod</name>
+        <briefdescription>
+<para>mod </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/form_addmodule.h" line="138" column="1" bodyfile="view/form_addmodule.h" bodystart="138" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="dc/d14/a00720_1a596e990190d71c1175d6f00bd21bba5e" prot="public" static="no" const="no" explicit="yes" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>form_addModule</definition>
+        <argsstring>(QWidget *parent = 0, bool create = true, QString address = 0, int index = 0)</argsstring>
+        <name>form_addModule</name>
+        <param>
+          <type>QWidget *</type>
+          <declname>parent</declname>
+          <defval>0</defval>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>create</declname>
+          <defval>true</defval>
+        </param>
+        <param>
+          <type>QString</type>
+          <declname>address</declname>
+          <defval>0</defval>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>index</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+<para><ref refid="dc/d14/a00720" kindref="compound">form_addModule</ref> </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>parent</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>create</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>address</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>index</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+<para>COMMUNICATION AND ENVIRONTMENT</para><para>COMMUNICATION</para><para>ENVIRONTMENT </para>        </inbodydescription>
+        <location file="view/form_addmodule.h" line="37" column="1" bodyfile="view/form_addmodule.cpp" bodystart="4" bodyend="218"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d14/a00720_1a698202d9669f1f8ad20f3766319df4fa" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>~form_addModule</definition>
+        <argsstring>()</argsstring>
+        <name>~form_addModule</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/form_addmodule.h" line="38" column="1" bodyfile="view/form_addmodule.cpp" bodystart="220" bodyend="224"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-slot">
+      <memberdef kind="slot" id="dc/d14/a00720_1a20149f8a88766999824b1bfe6bf55685" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void on_buttonBox_accepted</definition>
+        <argsstring>()</argsstring>
+        <name>on_buttonBox_accepted</name>
+        <briefdescription>
+<para>on_buttonBox_accepted </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+<para>GSM_1</para><para>GSM_2</para><para>--------------<mdash/><mdash/><mdash/><mdash/><mdash/> WRITE -------------<mdash/><mdash/><mdash/><mdash/><mdash/></para><para>INPUT</para><para>OUTPUT</para><para>SOURCES</para><para>DATA </para>        </inbodydescription>
+        <location file="view/form_addmodule.h" line="65" column="1" bodyfile="view/form_addmodule.cpp" bodystart="226" bodyend="428"/>
+      </memberdef>
+      <memberdef kind="slot" id="dc/d14/a00720_1a6462e55d10d1670c6c18fb98b9f72e51" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void on_buttonBox_rejected</definition>
+        <argsstring>()</argsstring>
+        <name>on_buttonBox_rejected</name>
+        <briefdescription>
+<para>on_buttonBox_rejected </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/form_addmodule.h" line="69" column="1" bodyfile="view/form_addmodule.cpp" bodystart="430" bodyend="434"/>
+      </memberdef>
+      <memberdef kind="slot" id="dc/d14/a00720_1a4b1ed8264117853c550158e0d57cc53c" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void on_ck_flag_active_gsm_2_clicked</definition>
+        <argsstring>(bool checked)</argsstring>
+        <name>on_ck_flag_active_gsm_2_clicked</name>
+        <param>
+          <type>bool</type>
+          <declname>checked</declname>
+        </param>
+        <briefdescription>
+<para>on_ck_flag_active_gsm_2_clicked </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>checked</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/form_addmodule.h" line="75" column="1" bodyfile="view/form_addmodule.cpp" bodystart="436" bodyend="456"/>
+      </memberdef>
+      <memberdef kind="slot" id="dc/d14/a00720_1a10b5f17733e32f5ca6c9eeeca0e0f71a" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void on_cb_com_1_currentIndexChanged</definition>
+        <argsstring>(int index)</argsstring>
+        <name>on_cb_com_1_currentIndexChanged</name>
+        <param>
+          <type>int</type>
+          <declname>index</declname>
+        </param>
+        <briefdescription>
+<para>on_cb_com_1_currentIndexChanged </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>index</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/form_addmodule.h" line="81" column="1" bodyfile="view/form_addmodule.cpp" bodystart="458" bodyend="469"/>
+      </memberdef>
+      <memberdef kind="slot" id="dc/d14/a00720_1aa2e58a90bc00d121e5c15cc76cff3e24" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void on_cb_com_2_currentIndexChanged</definition>
+        <argsstring>(int index)</argsstring>
+        <name>on_cb_com_2_currentIndexChanged</name>
+        <param>
+          <type>int</type>
+          <declname>index</declname>
+        </param>
+        <briefdescription>
+<para>on_cb_com_2_currentIndexChanged </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>index</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/form_addmodule.h" line="87" column="1" bodyfile="view/form_addmodule.cpp" bodystart="471" bodyend="482"/>
+      </memberdef>
+      <memberdef kind="slot" id="dc/d14/a00720_1a4abd48bd217e5772d5439e91d967cd56" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void enabledButton</definition>
+        <argsstring>()</argsstring>
+        <name>enabledButton</name>
+        <briefdescription>
+<para>enabledButton </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/form_addmodule.h" line="92" column="1" bodyfile="view/form_addmodule.cpp" bodystart="484" bodyend="503"/>
+      </memberdef>
+      <memberdef kind="slot" id="dc/d14/a00720_1a874e9e2b16c069a441ebca4001746fe4" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void on_spin_interval_relay_d_valueChanged</definition>
+        <argsstring>(int arg1)</argsstring>
+        <name>on_spin_interval_relay_d_valueChanged</name>
+        <param>
+          <type>int</type>
+          <declname>arg1</declname>
+        </param>
+        <briefdescription>
+<para>on_spin_interval_relay_d_valueChanged </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>arg1</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/form_addmodule.h" line="98" column="1" bodyfile="view/form_addmodule.cpp" bodystart="505" bodyend="523"/>
+      </memberdef>
+      <memberdef kind="slot" id="dc/d14/a00720_1a6c67822e14d40375d9ac4fbcf11e40ee" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void on_spin_interval_relay_h_valueChanged</definition>
+        <argsstring>(int arg1)</argsstring>
+        <name>on_spin_interval_relay_h_valueChanged</name>
+        <param>
+          <type>int</type>
+          <declname>arg1</declname>
+        </param>
+        <briefdescription>
+<para>on_spin_interval_relay_h_valueChanged </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>arg1</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/form_addmodule.h" line="104" column="1" bodyfile="view/form_addmodule.cpp" bodystart="545" bodyend="563"/>
+      </memberdef>
+      <memberdef kind="slot" id="dc/d14/a00720_1a3031c3efd0277b879dddc893c1c4c21f" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void on_spin_interval_relay_m_valueChanged</definition>
+        <argsstring>(int arg1)</argsstring>
+        <name>on_spin_interval_relay_m_valueChanged</name>
+        <param>
+          <type>int</type>
+          <declname>arg1</declname>
+        </param>
+        <briefdescription>
+<para>on_spin_interval_relay_m_valueChanged </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>arg1</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/form_addmodule.h" line="110" column="1" bodyfile="view/form_addmodule.cpp" bodystart="525" bodyend="543"/>
+      </memberdef>
+      <memberdef kind="slot" id="dc/d14/a00720_1ac026e29af116f1d170f9e24d03a6e5a6" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void on_spin_interval_data_d_valueChanged</definition>
+        <argsstring>(int arg1)</argsstring>
+        <name>on_spin_interval_data_d_valueChanged</name>
+        <param>
+          <type>int</type>
+          <declname>arg1</declname>
+        </param>
+        <briefdescription>
+<para>on_spin_interval_data_d_valueChanged </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>arg1</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/form_addmodule.h" line="116" column="1" bodyfile="view/form_addmodule.cpp" bodystart="565" bodyend="583"/>
+      </memberdef>
+      <memberdef kind="slot" id="dc/d14/a00720_1a149f7e12382cf3338a801588e5d05e65" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void on_spin_interval_data_h_valueChanged</definition>
+        <argsstring>(int arg1)</argsstring>
+        <name>on_spin_interval_data_h_valueChanged</name>
+        <param>
+          <type>int</type>
+          <declname>arg1</declname>
+        </param>
+        <briefdescription>
+<para>on_spin_interval_data_h_valueChanged </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>arg1</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/form_addmodule.h" line="122" column="1" bodyfile="view/form_addmodule.cpp" bodystart="605" bodyend="623"/>
+      </memberdef>
+      <memberdef kind="slot" id="dc/d14/a00720_1ab2e3741e06f4474c0fd5318484852ccf" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void on_spin_interval_data_m_valueChanged</definition>
+        <argsstring>(int arg1)</argsstring>
+        <name>on_spin_interval_data_m_valueChanged</name>
+        <param>
+          <type>int</type>
+          <declname>arg1</declname>
+        </param>
+        <briefdescription>
+<para>on_spin_interval_data_m_valueChanged </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>arg1</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="view/form_addmodule.h" line="128" column="1" bodyfile="view/form_addmodule.cpp" bodystart="585" bodyend="603"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>The <ref refid="dc/d14/a00720" kindref="compound">form_addModule</ref> class. </para>    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="6">
+        <label>form_addModule</label>
+        <link refid="dc/d14/a00720"/>
+        <childnode refid="7" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>QDialog</label>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="10">
+        <label>module</label>
+        <link refid="df/d7d/a00696"/>
+      </node>
+      <node id="8">
+        <label>form_addModule</label>
+        <link refid="dc/d14/a00720"/>
+        <childnode refid="9" relation="public-inheritance">
+        </childnode>
+        <childnode refid="10" relation="usage">
+          <edgelabel>-mod</edgelabel>
+        </childnode>
+      </node>
+      <node id="9">
+        <label>QDialog</label>
+      </node>
+    </collaborationgraph>
+    <location file="view/form_addmodule.h" line="21" column="1" bodyfile="view/form_addmodule.h" bodystart="20" bodyend="139"/>
+    <listofallmembers>
+      <member refid="dc/d14/a00720_1a1d3b9dfdf01d4cd2ea84d191b55e8bff" prot="public" virt="non-virtual"><scope>form_addModule</scope><name>accept</name></member>
+      <member refid="dc/d14/a00720_1a457799b6676119949ee5941f0f587a39" prot="private" virt="non-virtual"><scope>form_addModule</scope><name>active_button</name></member>
+      <member refid="dc/d14/a00720_1aa7be515b4acdd48d7aca5e500b25c3e3" prot="public" virt="non-virtual"><scope>form_addModule</scope><name>currentFile</name></member>
+      <member refid="dc/d14/a00720_1a7ab2b62fd8d152497b902f9c9244e204" prot="public" virt="non-virtual"><scope>form_addModule</scope><name>currentName</name></member>
+      <member refid="dc/d14/a00720_1adfdac3a8bec9af03243e16cc76c5f4e2" prot="public" virt="non-virtual"><scope>form_addModule</scope><name>edit</name></member>
+      <member refid="dc/d14/a00720_1a4abd48bd217e5772d5439e91d967cd56" prot="private" virt="non-virtual"><scope>form_addModule</scope><name>enabledButton</name></member>
+      <member refid="dc/d14/a00720_1a27a75e9f146a4bb7845cd7520c8ab374" prot="public" virt="non-virtual"><scope>form_addModule</scope><name>flag_gsm_2_active</name></member>
+      <member refid="dc/d14/a00720_1a596e990190d71c1175d6f00bd21bba5e" prot="public" virt="non-virtual"><scope>form_addModule</scope><name>form_addModule</name></member>
+      <member refid="dc/d14/a00720_1ad311e6c11f36ec0be84c8f0081f581d6" prot="private" virt="non-virtual"><scope>form_addModule</scope><name>mod</name></member>
+      <member refid="dc/d14/a00720_1a20149f8a88766999824b1bfe6bf55685" prot="private" virt="non-virtual"><scope>form_addModule</scope><name>on_buttonBox_accepted</name></member>
+      <member refid="dc/d14/a00720_1a6462e55d10d1670c6c18fb98b9f72e51" prot="private" virt="non-virtual"><scope>form_addModule</scope><name>on_buttonBox_rejected</name></member>
+      <member refid="dc/d14/a00720_1a10b5f17733e32f5ca6c9eeeca0e0f71a" prot="private" virt="non-virtual"><scope>form_addModule</scope><name>on_cb_com_1_currentIndexChanged</name></member>
+      <member refid="dc/d14/a00720_1aa2e58a90bc00d121e5c15cc76cff3e24" prot="private" virt="non-virtual"><scope>form_addModule</scope><name>on_cb_com_2_currentIndexChanged</name></member>
+      <member refid="dc/d14/a00720_1a4b1ed8264117853c550158e0d57cc53c" prot="private" virt="non-virtual"><scope>form_addModule</scope><name>on_ck_flag_active_gsm_2_clicked</name></member>
+      <member refid="dc/d14/a00720_1ac026e29af116f1d170f9e24d03a6e5a6" prot="private" virt="non-virtual"><scope>form_addModule</scope><name>on_spin_interval_data_d_valueChanged</name></member>
+      <member refid="dc/d14/a00720_1a149f7e12382cf3338a801588e5d05e65" prot="private" virt="non-virtual"><scope>form_addModule</scope><name>on_spin_interval_data_h_valueChanged</name></member>
+      <member refid="dc/d14/a00720_1ab2e3741e06f4474c0fd5318484852ccf" prot="private" virt="non-virtual"><scope>form_addModule</scope><name>on_spin_interval_data_m_valueChanged</name></member>
+      <member refid="dc/d14/a00720_1a874e9e2b16c069a441ebca4001746fe4" prot="private" virt="non-virtual"><scope>form_addModule</scope><name>on_spin_interval_relay_d_valueChanged</name></member>
+      <member refid="dc/d14/a00720_1a6c67822e14d40375d9ac4fbcf11e40ee" prot="private" virt="non-virtual"><scope>form_addModule</scope><name>on_spin_interval_relay_h_valueChanged</name></member>
+      <member refid="dc/d14/a00720_1a3031c3efd0277b879dddc893c1c4c21f" prot="private" virt="non-virtual"><scope>form_addModule</scope><name>on_spin_interval_relay_m_valueChanged</name></member>
+      <member refid="dc/d14/a00720_1a5898fdb8661138948b224bf07d8fb1b2" prot="public" virt="non-virtual"><scope>form_addModule</scope><name>ui</name></member>
+      <member refid="dc/d14/a00720_1a698202d9669f1f8ad20f3766319df4fa" prot="public" virt="non-virtual"><scope>form_addModule</scope><name>~form_addModule</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

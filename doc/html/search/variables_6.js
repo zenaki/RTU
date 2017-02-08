@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['getnamaboard',['GetNamaBoard',['../class_main_window.html#acb5475a748e6fd4bb78afb600e908ae7',1,'MainWindow']]],
-  ['getnoseri',['GetNoSeri',['../class_main_window.html#aa82ba5ac9741e3a3b8d824a8472bc536',1,'MainWindow']]]
+  ['getnamaboard',['GetNamaBoard',['../d4/db8/a00732.html#af0a201cae1aa8efe1a17c2447922aaed',1,'MainWindow']]],
+  ['getnoseri',['GetNoSeri',['../d4/db8/a00732.html#acc2c26e7bbdcbbc4a4c16f026f31615e',1,'MainWindow']]]
 ];
