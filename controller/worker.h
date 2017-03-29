@@ -147,6 +147,10 @@ public:
      */
     QString read_strERR();
 
+    /**
+     * @brief delay
+     * @param ms
+     */
     void delay(int ms);
     /**
      * @brief serial_write

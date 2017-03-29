@@ -47,8 +47,6 @@ QString worker::loadModule(QStandardItemModel *tree, QTreeView *treeView, QStrin
     if (!NewName.isEmpty()) {
         strcpy(tModule.module_name, NewName.toLatin1());
     }
-    mod.write_module(&tModule);
-    cryp code; code.encryp(address);
 
     QString modules;
     modules.sprintf("%s [%s]", tModule.module_name, tModule.serial_number);

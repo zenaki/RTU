@@ -144,16 +144,16 @@ private slots:
      */
     void on_pbRefresh_clicked();
 
-    /**
-     * @brief state_kanal_change
-     * @param index
-     */
-    void state_kanal_change(int index);
-    /**
-     * @brief state_data_change
-     * @param index
-     */
-    void state_data_change(int index);
+//    /**
+//     * @brief state_kanal_change
+//     * @param index
+//     */
+//    void state_kanal_change(int index);
+//    /**
+//     * @brief state_data_change
+//     * @param index
+//     */
+//    void state_data_change(int index);
 private:
     /**
      * @brief work
@@ -420,6 +420,9 @@ private:
      * @brief sensor_reg_source
      */
     QSpinBox        *sensor_reg_source[16];
+//    /**
+//     * @brief OffsetBase_source
+//     */
 //    QComboBox       *OffsetBase_source[16];
     /**
      * @brief command_source
@@ -441,6 +444,18 @@ private:
      * @brief SigMap_tReg_source
      */
     QSignalMapper   *SigMap_tReg_source;
+    /**
+     * @brief target_reg_source
+     */
+    QComboBox       *swap_source[16];
+    /**
+     * @brief target_reg_source
+     */
+    QComboBox       *data_type_source[16];
+    /**
+     * @brief target_reg_source
+     */
+    QComboBox       *data_bits_source[16];
 
     /**
      * @brief checkFormula

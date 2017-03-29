@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    MainWindow::setWindowTitle("Sarasvati ver 1.0.2-4 - MONITA RTU Configuration");
+    MainWindow::setWindowTitle("Sarasvati ver 1.0.2-6 - MONITA RTU Configuration");
     ui->treeView->header()->setHidden(true);
     ui->treeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
@@ -251,11 +251,13 @@ void MainWindow::on_actionSave_triggered()
         struct t_module tModule;
         mod->read_module(&tModule, module_address_sv);
         QString newAddress = QFileDialog::getSaveFileName(this, tr("Save As Module"), module_address_sv, tr("(*.dbe)"));
-        mod->save_as_module(&tModule, newAddress);
-        cryp code; code.encryp(newAddress);
-        Message = "Module with name : " + module_name_sv + " was saved on \n\n";
-        Message.append(newAddress);
-        QMessageBox::information(this, "Saving Successfully ..", Message, 0, 0);
+        if (!newAddress.isEmpty()) {
+            mod->save_as_module(&tModule, newAddress);
+            cryp code; code.encryp(newAddress);
+            Message = "Module with name : " + module_name_sv + " was saved on \n\n";
+            Message.append(newAddress);
+            QMessageBox::information(this, "Saving Successfully ..", Message, 0, 0);
+        }
     } else {
         QMessageBox::information(this, "Cannot Saving ..", "Please Select Module Name Before Save Module ..", 0, 0);
     }

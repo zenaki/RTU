@@ -622,6 +622,7 @@ void ProgressDialog::Set_Output(bool stat, t_module *tModule, QString index)
 
 void ProgressDialog::Set_Sumber(bool stat, t_module *tModule, QString index)
 {
+    QStringList data_setting;
     if (index.isEmpty()) {
         for (int i = 0; i < tModule->sumber.length(); i++) {
             int validation = 0;
@@ -634,7 +635,8 @@ void ProgressDialog::Set_Sumber(bool stat, t_module *tModule, QString index)
                       list1.at(2) + " " + list1.at(3) + " " + list1.at(4) + " " +
                       list1.at(5) + ";" + list1.at(6) + ";" + list1.at(7) + ";" +
                       list1.at(8) + ";" + list1.at(9) + ";" +
-                      list1.at(10) + ";" + list1.at(11) + " " +
+                      list1.at(10) + ";" + list1.at(11) + ";" +
+                      list1.at(12) + ";" + list1.at(13) + ";" + list1.at(14) + " " +
                       QString::number(validation) + "\r\n";
             Desc = "Set Sources " + list1.at(0) + " : \"" + list1.at(1) + "\" ..";
             if (stat) {
@@ -642,32 +644,36 @@ void ProgressDialog::Set_Sumber(bool stat, t_module *tModule, QString index)
                 ui->progressBar->setValue(progressVal++);
             } else {progressVal++;}
 
-//            if (list1.at(5) != "0" && list1.at(11) != "") {
-//                temp = list1.at(11);
-//                for (int k = 0; k < tModule->data.length(); k++) {
-//                    str = tModule->data.at(k);
-//                    list2 = str.split(';');
-//                    if (temp == list2.at(1)) {
-//                        str = list2.at(0);
-//                        break;
-//                    }
-//                }
-//                temp = list1.at(10);
-//                for (int j = 0; j < temp.toInt()/2; j++) {
-//                    Request = "set_data " + QString::number(str.toInt()+j) +
-//                              " status " + list1.at(4);
-//                    if (list1.at(4) == "1") {
-//                        Desc = "Set Data " + QString::number(str.toInt()+j) + " with status : ACTIVE ..";
-//                    } else {
-//                        Desc = "Set Data " + QString::number(str.toInt()+j) + " with status : NOT ACTIVE ..";
-//                    }
-//                    if (stat) {
-//                        serial_write(Desc, Request, WAIT_WRITE);
-//                        ui->progressBar->setValue(progressVal++);
-//                    } else {progressVal++;}
-//                }
-//            }
+            if (list1.at(5) != "0" && list1.at(11) != "") {
+                temp = list1.at(11);
+                for (int k = 0; k < tModule->data.length(); k++) {
+                    str = tModule->data.at(k);
+                    list2 = str.split(';');
+                    if (temp == list2.at(1)) {
+                        str = list2.at(0);
+                        break;
+                    }
+                }
+                temp = list1.at(10);
+                for (int j = 0; j < temp.toInt()/2; j++) {
+                    data_setting.append(QString::number(str.toInt()+j) + ";" + list1.at(4));
+                }
+            }
             if (cancel) break;
+        }
+        for (int i = 0; i < data_setting.length(); i++) {
+            list1 = data_setting.at(i).split(";");
+            Request = "set_data " + list1.at(0) +
+                      " status " + list1.at(1);
+            if (list1.at(1) == "1") {
+                Desc = "Set Data " + list1.at(0) + " with status : ACTIVE ..";
+            } else {
+                Desc = "Set Data " + list1.at(0) + " with status : NOT ACTIVE ..";
+            }
+            if (stat) {
+                serial_write(Desc, Request, WAIT_WRITE);
+                ui->progressBar->setValue(progressVal++);
+            } else {progressVal++;}
         }
     } else {
         temp = tModule->sumber.at(index.toInt());
@@ -677,38 +683,39 @@ void ProgressDialog::Set_Sumber(bool stat, t_module *tModule, QString index)
                   list1.at(2) + " " + list1.at(3) + " " + list1.at(4) + " " +
                   list1.at(5) + ";" + list1.at(6) + ";" + list1.at(7) + ";" +
                   list1.at(8) + ";" + list1.at(9) + ";" +
-                  list1.at(10) + ";" + list1.at(11) + " 3\r\n";
+                  list1.at(10) + ";" + list1.at(11) + ";" +
+                  list1.at(12) + ";" + list1.at(13) + ";" + list1.at(14) + " 3\r\n";
         Desc = "Set Sources " + list1.at(0) + " : \"" + list1.at(1) + "\" ..";
         if (stat) {
             serial_write(Desc, Request, WAIT_WRITE);
             ui->progressBar->setValue(progressVal++);
         } else {progressVal++;}
 
-//        if (list1.at(5) != "0" && list1.at(11) != "") {
-//            temp = list1.at(11);
-//            for (int k = 0; k < tModule->data.length(); k++) {
-//                str = tModule->data.at(k);
-//                list2 = str.split(';');
-//                if (temp == list2.at(1)) {
-//                    str = list2.at(0);
-//                    break;
-//                }
-//            }
-//            temp = list1.at(10);
-//            for (int j = 0; j < temp.toInt()/2; j++) {
-//                Request = "set_data " + QString::number(str.toInt()+j) +
-//                          " status " + list1.at(4);
-//                if (list1.at(4) == "1") {
-//                    Desc = "Set Data " + QString::number(str.toInt()+j) + " with status : ACTIVE ..";
-//                } else {
-//                    Desc = "Set Data " + QString::number(str.toInt()+j) + " with status : NOT ACTIVE ..";
-//                }
-//                if (stat) {
-//                    serial_write(Desc, Request, WAIT_WRITE);
-//                    ui->progressBar->setValue(progressVal++);
-//                } else {progressVal++;}
-//            }
-//        }
+        if (list1.at(5) != "0" && list1.at(11) != "") {
+            temp = list1.at(11);
+            for (int k = 0; k < tModule->data.length(); k++) {
+                str = tModule->data.at(k);
+                list2 = str.split(';');
+                if (temp == list2.at(1)) {
+                    str = list2.at(0);
+                    break;
+                }
+            }
+            temp = list1.at(10);
+            for (int j = 0; j < temp.toInt()/2; j++) {
+                Request = "set_data " + QString::number(str.toInt()+j) +
+                          " status " + list1.at(4);
+                if (list1.at(4) == "1") {
+                    Desc = "Set Data " + QString::number(str.toInt()+j) + " with status : ACTIVE ..";
+                } else {
+                    Desc = "Set Data " + QString::number(str.toInt()+j) + " with status : NOT ACTIVE ..";
+                }
+                if (stat) {
+                    serial_write(Desc, Request, WAIT_WRITE);
+                    ui->progressBar->setValue(progressVal++);
+                } else {progressVal++;}
+            }
+        }
     }
 }
 

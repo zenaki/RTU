@@ -134,7 +134,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="tab_input">
       <attribute name="title">
@@ -1639,6 +1639,21 @@
          <column>
           <property name="text">
            <string>Length</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Swap</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Data Type</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Data Bits</string>
           </property>
          </column>
         </widget>

@@ -411,20 +411,23 @@ void formModule::setInterface_Sumber(QString address)
     QString type;
 
     this->ui->tabel_sources->verticalHeader()->setHidden(true);
-    this->ui->tabel_sources->setColumnCount(13);
+    this->ui->tabel_sources->setColumnCount(16);
     this->ui->tabel_sources->setColumnWidth(0, 25);
     this->ui->tabel_sources->setColumnWidth(1, 25);
-//    this->ui->tabel_sources->setColumnWidth(2, 75);
+    this->ui->tabel_sources->setColumnWidth(2, 75);
     this->ui->tabel_sources->setColumnWidth(3, 100);
     this->ui->tabel_sources->setColumnWidth(4, 125);
-//    this->ui->tabel_sources->setColumnWidth(5, 75);
+    this->ui->tabel_sources->setColumnWidth(5, 75);
     this->ui->tabel_sources->setColumnWidth(6, 125);
-//    this->ui->tabel_sources->setColumnWidth(7, 75);
+    this->ui->tabel_sources->setColumnWidth(7, 75);
     this->ui->tabel_sources->setColumnWidth(8, 75);
     this->ui->tabel_sources->setColumnWidth(9, 150);
     this->ui->tabel_sources->setColumnWidth(10, 125);
     this->ui->tabel_sources->setColumnWidth(11, 125);
-//    this->ui->tabel_sources->setColumnWidth(12, 75);
+    this->ui->tabel_sources->setColumnWidth(12, 75);
+    this->ui->tabel_sources->setColumnWidth(13, 75);
+    this->ui->tabel_sources->setColumnWidth(14, 75);
+    this->ui->tabel_sources->setColumnWidth(15, 75);
     this->ui->tabel_sources->setRowCount(rowSource);
 
     SigMapDel_Source = new QSignalMapper(this);
@@ -486,6 +489,20 @@ void formModule::setInterface_Sumber(QString address)
             str = tModule.data.at(j); list = str.split(';');
             target_reg_source[i]->addItem(list.at(1));
         }
+
+        swap_source[i] = new QComboBox(this);
+        swap_source[i]->addItem("Normal", 0);
+        swap_source[i]->addItem("Swap Byte", 1);
+        swap_source[i]->addItem("Swap Word", 2);
+        swap_source[i]->addItem("Swap Byte & Word", 3);
+
+        data_type_source[i] = new QComboBox(this);
+        data_type_source[i]->addItem("Float", 0);
+        data_type_source[i]->addItem("Integer", 1);
+
+        data_bits_source[i] = new QComboBox(this);
+        data_bits_source[i]->addItem("16 bit", 0);
+        data_bits_source[i]->addItem("32 bit", 1);
     }
     connect(SigMapDel_Source,SIGNAL(mapped(int)),this,SLOT(del_src_clicked(int)));
 
@@ -512,6 +529,9 @@ void formModule::setInterface_Sumber(QString address)
                 } else {
                     target_reg_source[i]->setCurrentIndex(0);
                 }
+                swap_source[i]->setCurrentIndex(list.at(12).toInt());
+                data_type_source[i]->setCurrentIndex(list.at(13).toInt());
+                data_bits_source[i]->setCurrentIndex(list.at(14).toInt());
             } else {
                 str = tModule.sumber.at(i);
                 list = str.split(';');
@@ -539,6 +559,9 @@ void formModule::setInterface_Sumber(QString address)
         this->ui->tabel_sources->setCellWidget(i,10, sensor_reg_source[i]);
         this->ui->tabel_sources->setCellWidget(i,11, target_reg_source[i]);
         this->ui->tabel_sources->setCellWidget(i,12, length_source[i]);
+        this->ui->tabel_sources->setCellWidget(i,13, swap_source[i]);
+        this->ui->tabel_sources->setCellWidget(i,14, data_type_source[i]);
+        this->ui->tabel_sources->setCellWidget(i,15, data_bits_source[i]);
     }
     connect(SigMap_length_source,SIGNAL(mapped(int)),this,SLOT(length_src_changed()));
     connect(SigMap_tReg_source,SIGNAL(mapped(int)),this,SLOT(tReg_src_changed()));
@@ -1166,7 +1189,10 @@ void formModule::on_pbSetAll_clicked()
                   "0;" +
                   QString::number(command_source[i]->currentIndex()) + ";" +
                   length_source[i]->currentText() + ";" +
-                  target_reg_source[i]->currentText();
+                  target_reg_source[i]->currentText() + ";" +
+                  QString::number(swap_source[i]->currentIndex()) + ";" +
+                  QString::number(data_type_source[i]->currentIndex()) + ";" +
+                  QString::number(data_bits_source[i]->currentIndex());
 
         tModule.sumber[i] = data[i];
     }
@@ -1412,7 +1438,10 @@ void formModule::on_pbSet_clicked()
                       "0;" +
                       QString::number(command_source[i]->currentIndex()) + ";" +
                       length_source[i]->currentText() + ";" +
-                      target_reg_source[i]->currentText();
+                      target_reg_source[i]->currentText() + ";" +
+                      QString::number(swap_source[i]->currentIndex()) + ";" +
+                      QString::number(data_type_source[i]->currentIndex()) + ";" +
+                      QString::number(data_bits_source[i]->currentIndex());
 
             tModule.sumber[i] = data[i];
         }
@@ -1704,7 +1733,10 @@ void formModule::on_pbSetChk_clicked()
                           "0;" +
                           QString::number(command_source[i]->currentIndex()) + ";" +
                           length_source[i]->currentText() + ";" +
-                          target_reg_source[i]->currentText();
+                          target_reg_source[i]->currentText() + ";" +
+                          QString::number(swap_source[i]->currentIndex()) + ";" +
+                          QString::number(data_type_source[i]->currentIndex()) + ";" +
+                          QString::number(data_bits_source[i]->currentIndex());
 
                 tModule.sumber[i] = data[i];
             }
@@ -2485,15 +2517,15 @@ void formModule::on_pbRefresh_clicked()
     this->ui->pbRefresh->setEnabled(true);
 }
 
-void formModule::state_kanal_change(int index)
-{
-//    state_data_s[index]->setCurrentIndex(state_input[index]->currentIndex());
-}
+//void formModule::state_kanal_change(int index)
+//{
+////    state_data_s[index]->setCurrentIndex(state_input[index]->currentIndex());
+//}
 
-void formModule::state_data_change(int index)
-{
-//    state_input[index]->setCurrentIndex(state_data_s[index]->currentIndex());
-}
+//void formModule::state_data_change(int index)
+//{
+////    state_input[index]->setCurrentIndex(state_data_s[index]->currentIndex());
+//}
 
 void formModule::reg_kanal_changed()
 {
