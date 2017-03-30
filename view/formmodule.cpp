@@ -90,6 +90,7 @@ void formModule::setInterface_Input(QString address)
         name_input[i]->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
 
         type_input[i] = new QComboBox(this);
+        type_input[i]->installEventFilter(this);
         if (i >= rowInputDigital) {
             type_input[i]->addItem("Analog Monita",250);
             type_input[i]->addItem("Analog Running Hours",230);
@@ -105,14 +106,17 @@ void formModule::setInterface_Input(QString address)
         }
 
         calib_m[i] = new QDoubleSpinBox(this);
+        calib_m[i]->installEventFilter(this);
         calib_m[i]->setAlignment(Qt::AlignRight);
         calib_m[i]->setRange(-99999,99999);
 
         calib_x[i] = new QDoubleSpinBox(this);
+        calib_x[i]->installEventFilter(this);
         calib_x[i]->setAlignment(Qt::AlignRight);
         calib_x[i]->setRange(-99999,99999);
 
         reg_input[i] = new QComboBox(this);
+        reg_input[i]->installEventFilter(this);
         SigMapReg_input->setMapping(reg_input[i], i);
         connect(reg_input[i],SIGNAL(currentIndexChanged(int)),SigMapReg_input,SLOT(map()));
         if (i < rowInputDigital) {
@@ -128,6 +132,7 @@ void formModule::setInterface_Input(QString address)
         }
 
         state_input[i] = new QComboBox(this);
+        state_input[i]->installEventFilter(this);
         state_input[i]->addItem("NOT ACTIVE",0);
         state_input[i]->addItem("ACTIVE",1);
         SigMapState_input->setMapping(state_input[i], i);
@@ -240,15 +245,18 @@ void formModule::setInterface_Output(QString address)
 //        name_output[i]->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
 
         state_output[i] = new QComboBox(this);
+        state_output[i]->installEventFilter(this);
         state_output[i]->addItem("NOT ACTIVE");
         state_output[i]->addItem("ACTIVE");
 
         control[i] = new QComboBox(this);
+        control[i]->installEventFilter(this);
         control[i]->addItem("LATCH");
         control[i]->addItem("LOGIC");
         control[i]->addItem("SCHEDULER");
 
         reg_output[i] = new QSpinBox(this);
+        reg_output[i]->installEventFilter(this);
         reg_output[i]->setAlignment(Qt::AlignCenter);
         reg_output[i]->setRange(0,99999);
     }
@@ -447,14 +455,17 @@ void formModule::setInterface_Sumber(QString address)
         ip_source[i]->setInputMask("000.000.000.000");
 
         port_source[i] = new QSpinBox(this);
+        port_source[i]->installEventFilter(this);
         port_source[i]->setAlignment(Qt::AlignCenter);
         port_source[i]->setRange(0,99999);
 
         state_source[i] = new QComboBox(this);
+        state_source[i]->installEventFilter(this);
         state_source[i]->addItem("NOT ACTIVE",0);
         state_source[i]->addItem("ACTIVE",1);
 
         type_source[i] = new QComboBox(this);
+        type_source[i]->installEventFilter(this);
         type_source[i]->addItem("",0);
         type_source[i]->addItem("Native",1);
         type_source[i]->addItem("PM810",2);
@@ -463,10 +474,12 @@ void formModule::setInterface_Sumber(QString address)
         type_source[i]->addItem("PM5560",5);
 
         id_source[i] = new QSpinBox(this);
+        id_source[i]->installEventFilter(this);
         id_source[i]->setAlignment(Qt::AlignCenter);
         id_source[i]->setRange(0,999);
 
         sensor_reg_source[i] = new QSpinBox(this);
+        sensor_reg_source[i]->installEventFilter(this);
         sensor_reg_source[i]->setAlignment(Qt::AlignCenter);
         sensor_reg_source[i]->setRange(0,99999);
 
@@ -475,15 +488,18 @@ void formModule::setInterface_Sumber(QString address)
 //        OffsetBase_source[i]->addItem("Base",1);
 
         command_source[i] = new QComboBox(this);
+        command_source[i]->installEventFilter(this);
         command_source[i]->addItem("Read Holding Register",0);
         command_source[i]->addItem("Write Holding Register",1);
 
         length_source[i] = new QComboBox(this);
+        length_source[i]->installEventFilter(this);
         for (int j = 0; j <= tModule.data.length()+(DATA_PERIOD*2); j+=2) {
             length_source[i]->addItem(QString::number(j));
         }
 
         target_reg_source[i] = new QComboBox(this);
+        target_reg_source[i]->installEventFilter(this);
         target_reg_source[i]->addItem("");
         for (int j = tModule.data.length()-(tModule.data.length()-(DATA_PERIOD*2)); j < tModule.data.length(); j++) {
             str = tModule.data.at(j); list = str.split(';');
@@ -491,16 +507,19 @@ void formModule::setInterface_Sumber(QString address)
         }
 
         swap_source[i] = new QComboBox(this);
+        swap_source[i]->installEventFilter(this);
         swap_source[i]->addItem("Normal", 0);
         swap_source[i]->addItem("Swap Byte", 1);
         swap_source[i]->addItem("Swap Word", 2);
         swap_source[i]->addItem("Swap Byte & Word", 3);
 
         data_type_source[i] = new QComboBox(this);
+        data_type_source[i]->installEventFilter(this);
         data_type_source[i]->addItem("Float", 0);
         data_type_source[i]->addItem("Integer", 1);
 
         data_bits_source[i] = new QComboBox(this);
+        data_bits_source[i]->installEventFilter(this);
         data_bits_source[i]->addItem("16 bit", 0);
         data_bits_source[i]->addItem("32 bit", 1);
     }
@@ -792,6 +811,7 @@ void formModule::setInterface_Data_Settings(QString address)
         check_data_s[i] = new QCheckBox(this);
 
         id_data_s[i] = new QSpinBox(this);
+        id_data_s[i]->installEventFilter(this);
         id_data_s[i]->setAlignment(Qt::AlignHCenter);
         id_data_s[i]->setRange(0,9999);
 
@@ -809,30 +829,37 @@ void formModule::setInterface_Data_Settings(QString address)
         unit_data_s[i]->setValidator(new QRegExpValidator(QRegExp("^\\S{1,10}$"),this));
 
         range_l_data_s[i] = new QDoubleSpinBox(this);
+        range_l_data_s[i]->installEventFilter(this);
         range_l_data_s[i]->setAlignment(Qt::AlignHCenter);
         range_l_data_s[i]->setRange(-999999,999999);
 
         border_ll_data_s[i] = new QDoubleSpinBox(this);
+        border_ll_data_s[i]->installEventFilter(this);
         border_ll_data_s[i]->setAlignment(Qt::AlignHCenter);
         border_ll_data_s[i]->setRange(-999999,999999);
 
         border_l_data_s[i] = new QDoubleSpinBox(this);
+        border_l_data_s[i]->installEventFilter(this);
         border_l_data_s[i]->setAlignment(Qt::AlignHCenter);
         border_l_data_s[i]->setRange(-999999,999999);
 
         border_h_data_s[i] = new QDoubleSpinBox(this);
+        border_h_data_s[i]->installEventFilter(this);
         border_h_data_s[i]->setAlignment(Qt::AlignHCenter);
         border_h_data_s[i]->setRange(-999999,999999);
 
         border_hh_data_s[i] = new QDoubleSpinBox(this);
+        border_hh_data_s[i]->installEventFilter(this);
         border_hh_data_s[i]->setAlignment(Qt::AlignHCenter);
         border_hh_data_s[i]->setRange(-999999,999999);
 
         range_h_data_s[i] = new QDoubleSpinBox(this);
+        range_h_data_s[i]->installEventFilter(this);
         range_h_data_s[i]->setAlignment(Qt::AlignHCenter);
         range_h_data_s[i]->setRange(-999999,999999);
 
         state_data_s[i] = new QComboBox(this);
+        state_data_s[i]->installEventFilter(this);
         state_data_s[i]->addItem("NOT ACTIVE");
         state_data_s[i]->addItem("ACTIVE");
         SigMapState_data_s->setMapping(state_data_s[i], i);
@@ -2556,4 +2583,14 @@ void formModule::reg_kanal_changed()
             qobject_cast<QStandardItemModel *>(reg_input[i]->model())->item(reg_input[i]->findText(tmp))->setEnabled(false);
         }
     }
+}
+
+bool formModule::eventFilter(/*QObject *obj, */QEvent *event)
+{
+    if(event->type() == QEvent::Wheel/* && obj == m_combo*/)
+    {
+//        qDebug() << "Wheel event blocked";
+        return true;
+    }
+    return false;
 }

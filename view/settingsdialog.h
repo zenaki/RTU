@@ -58,6 +58,12 @@ public:
      */
     MainWindow *Main;
 //    t_serial_settings currentSettings;
+
+    /**
+     * @brief updateSettings
+     * @param tSerial
+     */
+    void updateSettings(struct t_serial_settings *tSerial);
 private slots:
     /**
      * @brief showPortInfo
@@ -94,11 +100,6 @@ private:
      * @brief fillSettings
      */
     void fillSettings();
-    /**
-     * @brief updateSettings
-     * @param tSerial
-     */
-    void updateSettings(struct t_serial_settings *tSerial);
 
 private:
 //    Settings currentSettings;

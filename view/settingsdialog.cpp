@@ -30,8 +30,6 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 
     fillPortsParameters();
     fillPortsInfo();
-
-    //updateSettings(tSerial);
 }
 
 SettingsDialog::~SettingsDialog()
@@ -127,10 +125,10 @@ void SettingsDialog::fillPortsParameters()
         Setting->read_setting(&tSerial);
 
 //        ui->serialPortInfoListBox->currentText(tSerial.name);
-        ui->baudRateBox->currentData(tSerial.baudRate);
-        ui->dataBitsBox->currentData(tSerial.dataBits);
+        ui->baudRateBox->setCurrentText(QString::number(tSerial.baudRate));
+        ui->dataBitsBox->setCurrentText(QString::number(tSerial.dataBits));
         ui->parityBox->currentData(tSerial.parity);
-        ui->stopBitsBox->currentData(tSerial.stopBits);
+        ui->stopBitsBox->setCurrentText(QString::number(tSerial.stopBits));
         ui->flowControlBox->currentData(tSerial.flowControl);
     }
 }

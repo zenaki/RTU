@@ -63,6 +63,10 @@ public:
      * @brief wait
      */
     wait_process    *wait;
+    /**
+     * @brief eventFilter
+     */
+    bool eventFilter(/*QObject *obj, */QEvent *event);
 private slots:
     /**
      * @brief on_pbSetAll_clicked

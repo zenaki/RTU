@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    MainWindow::setWindowTitle("Sarasvati ver 1.0.2-6 - MONITA RTU Configuration");
+    MainWindow::setWindowTitle("Sarasvati ver 1.0.2-5 - MONITA RTU Configuration");
     ui->treeView->header()->setHidden(true);
     ui->treeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
@@ -656,11 +656,21 @@ void MainWindow::readData()
 
 void MainWindow::on_actionConfig_triggered()
 {
+    struct t_serial_settings tSerial;
+    setting Setting;
+
     int exe;
     settings_dialog = new SettingsDialog(this);
     settings_dialog->setWindowTitle("Serial Communication Setting");
     settings_dialog->setModal(true);
+
+//    if (Setting.checkSetting()) {
+//        Setting.read_setting(&tSerial);
+//        settings_dialog->updateSettings(&tSerial);
+//    }
+
     exe = settings_dialog->exec();
+
     if(exe == 0) return;
 }
 
