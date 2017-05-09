@@ -37,8 +37,12 @@ void ProgressDialog::Processing(QSerialPort *SerialPort, QString address, QStrin
             Request_IO(false);
         } if (list_mode.at(i) == MODE_GET_SRC) {
             Request_Sumber(false);
+        } if (list_mode.at(i) == MODE_GET_FRM) {
+            Request_Formula(false);
         } if (list_mode.at(i) == MODE_GET_DAT) {
             Request_Data(false);
+        } if (list_mode.at(i) == MODE_GET_SYS) {
+            Request_System(false);
         } if (list_mode.at(i) == MODE_SET_ENV) {
             Set_ENV(false, &tModule);
         } if (list_mode.at(i) == MODE_SET_SIM) {
@@ -52,6 +56,9 @@ void ProgressDialog::Processing(QSerialPort *SerialPort, QString address, QStrin
         } if (list_mode.at(i) == MODE_SET_SRC) {
             if (index.isEmpty()) {Set_Sumber(false, &tModule);}
             else {Set_Sumber(false, &tModule, list_index.at(i));}
+        } if (list_mode.at(i) == MODE_SET_FRM) {
+            if (index.isEmpty()) {Set_Formula(false, &tModule);}
+            else {Set_Formula(false, &tModule, list_index.at(i));}
         } if (list_mode.at(i) == MODE_SET_DAT) {
             if (index.isEmpty()) {Set_Data(false, &tModule);}
             else {Set_Data(false, &tModule, list_index.at(i));}
@@ -82,11 +89,21 @@ void ProgressDialog::Processing(QSerialPort *SerialPort, QString address, QStrin
             Serial->read_parsing(&tSerial);
             list1 = tSerial.str_data_src.split("*");
             Get_Sumber(&tModule, list1);
+        } if (list_mode.at(i) == MODE_GET_FRM) {
+            Request_Formula(true);
+            Serial->read_parsing(&tSerial);
+            list1 = tSerial.str_data_frm.split("*");
+            Get_Formula(&tModule, list1);
         } if (list_mode.at(i) == MODE_GET_DAT) {
             Request_Data(true);
             Serial->read_parsing(&tSerial);
             list1 = tSerial.str_data_dat.split("*");
             Get_Data(&tModule, list1);
+        } if (list_mode.at(i) == MODE_GET_SYS) {
+            Request_System(true);
+            Serial->read_parsing(&tSerial);
+            list1 = tSerial.str_data_sys.split(";");
+            Get_System(&tModule, list1);
         } if (list_mode.at(i) == MODE_SET_ENV) {
             Set_ENV(true, &tModule);
         } if (list_mode.at(i) == MODE_SET_SIM) {
@@ -109,6 +126,12 @@ void ProgressDialog::Processing(QSerialPort *SerialPort, QString address, QStrin
             } else {
                 Set_Sumber(true, &tModule, list_index.at(i));
             }
+        } if (list_mode.at(i) == MODE_SET_FRM) {
+            if (index.isEmpty()) {
+                Set_Formula(true, &tModule);
+            } else {
+                Set_Formula(true, &tModule, list_index.at(i));
+            }
         } if (list_mode.at(i) == MODE_SET_DAT) {
             if (index.isEmpty()) {
                 Set_Data(true, &tModule);
@@ -119,7 +142,8 @@ void ProgressDialog::Processing(QSerialPort *SerialPort, QString address, QStrin
         if (cancel) break;
     }
 /** ---------------------------------------------------------- **/
-    strcpy(tModule.module_name, address.mid(18,address.length()-22).toLatin1().data());
+//    strcpy(tModule.module_name, address.mid(18,address.length()-22).toLatin1().data());
+    tModule.module_name = address.mid(18,address.length()-22);
     mod->write_module(&tModule);
     cryp code; code.encryp(address);
     finish = true;
@@ -128,7 +152,7 @@ void ProgressDialog::Processing(QSerialPort *SerialPort, QString address, QStrin
 void ProgressDialog::Request_ENV(bool stat)
 {
     if (stat) {
-        Request = QString::fromUtf8(MODE_GET_ENV) + "\r\n";
+        Request = QString(MODE_GET_ENV) + "\r\n";
         Desc = "Request Environment ..";
         serial_write(Desc, Request, WAIT_WRITE);
         ui->progressBar->setValue(progressVal++);
@@ -138,7 +162,7 @@ void ProgressDialog::Request_ENV(bool stat)
 void ProgressDialog::Request_SIM(bool stat)
 {
     if (stat) {
-        Request = QString::fromUtf8(MODE_GET_SIM) + "\r\n";
+        Request = QString(MODE_GET_SIM) + "\r\n";
         Desc = "Request SIM Configuration ..";
         serial_write(Desc, Request, WAIT_WRITE);
         ui->progressBar->setValue(progressVal++);
@@ -148,7 +172,7 @@ void ProgressDialog::Request_SIM(bool stat)
 void ProgressDialog::Request_IO(bool stat)
 {
     if (stat) {
-        Request = QString::fromUtf8(MODE_GET_I0) + "\r\n";
+        Request = QString(MODE_GET_I0) + "\r\n";
         Desc = "Request I/O ..";
         serial_write(Desc, Request, WAIT_WRITE);
         ui->progressBar->setValue(progressVal++);
@@ -158,7 +182,7 @@ void ProgressDialog::Request_IO(bool stat)
 void ProgressDialog::Request_Signal(bool stat)
 {
     if (stat) {
-        Request = "0003\r\n";
+        Request = QString(MODE_GET_SYS) + "\r\n";
         Desc = "Request Signal ..";
         serial_write(Desc, Request, WAIT_WRITE);
         ui->progressBar->setValue(progressVal++);
@@ -168,8 +192,18 @@ void ProgressDialog::Request_Signal(bool stat)
 void ProgressDialog::Request_Sumber(bool stat)
 {
     if (stat) {
-        Request = QString::fromUtf8(MODE_GET_SRC) + "\r\n";
+        Request = QString(MODE_GET_SRC) + "\r\n";
         Desc = "Request Sources ..";
+        serial_write(Desc, Request, WAIT_WRITE);
+        ui->progressBar->setValue(progressVal++);
+    } else {progressVal++;}
+}
+
+void ProgressDialog::Request_Formula(bool stat)
+{
+    if (stat) {
+        Request = QString(MODE_GET_FRM) + "\r\n";
+        Desc = "Request Formula ..";
         serial_write(Desc, Request, WAIT_WRITE);
         ui->progressBar->setValue(progressVal++);
     } else {progressVal++;}
@@ -178,8 +212,18 @@ void ProgressDialog::Request_Sumber(bool stat)
 void ProgressDialog::Request_Data(bool stat)
 {
     if (stat) {
-        Request = QString::fromUtf8(MODE_GET_DAT) + "\r\n";
+        Request = QString(MODE_GET_DAT) + "\r\n";
         Desc = "Request Data ..";
+        serial_write(Desc, Request, WAIT_WRITE);
+        ui->progressBar->setValue(progressVal++);
+    } else {progressVal++;}
+}
+
+void ProgressDialog::Request_System(bool stat)
+{
+    if (stat) {
+        Request = QString(MODE_GET_SYS) + "\r\n";
+        Desc = "Request System ..";
         serial_write(Desc, Request, WAIT_WRITE);
         ui->progressBar->setValue(progressVal++);
     } else {progressVal++;}
@@ -187,42 +231,55 @@ void ProgressDialog::Request_Data(bool stat)
 
 void ProgressDialog::Get_ENV(struct t_module *tModule, QStringList data)
 {
-    temp = data.at(0);
-    strcpy(tModule->module_name, temp.toUtf8().data());
-    temp = data.at(1);
-    strcpy(tModule->serial_number, temp.toUtf8().data());
-    temp = data.at(2);
-    strcpy(tModule->ip_address, temp.toUtf8().data());
-    temp = data.at(3);
-    strcpy(tModule->server_address, temp.toUtf8().data());
-    temp = data.at(4);
-    strcpy(tModule->file_address, temp.toUtf8().data());
-    temp = data.at(5);
-    tModule->flag_webclient = temp.toInt();
-    if (temp == "1") {
-        temp = "ACTIVE";
-        strcpy(tModule->status_webclient, temp.toUtf8().data());
-    } else if (temp == "0") {
-        temp = "NOT ACTIVE";
-        strcpy(tModule->status_webclient, temp.toUtf8().data());
-    }
-    temp = data.at(7);
-    tModule->interval_relay = temp.toInt()+3;
-    temp = data.at(8);
-    tModule->interval_data = temp.toInt()+3;
-    temp = data.at(9);
-    tModule->flag_mode_http = temp.toInt();
-    if (temp == "1") {
-        temp = "POST";
-        strcpy(tModule->mode_http, temp.toUtf8().data());
-    } else if (temp == "0") {
-        temp = "GET";
-        strcpy(tModule->mode_http, temp.toUtf8().data());
-    }
-    temp = data.at(10);
-    tModule->port = temp.toInt();
-    temp = data.at(11);
-    tModule->utc = temp.toInt();
+//    temp = data.at(0);
+//    strcpy(tModule->module_name, temp.toUtf8().data());
+    tModule->module_name = data.at(0);
+//    temp = data.at(1);
+//    strcpy(tModule->serial_number, temp.toUtf8().data());
+    tModule->serial_number = data.at(1);
+//    temp = data.at(2);
+//    strcpy(tModule->ip_address, temp.toUtf8().data());
+    tModule->ip_address = data.at(2);
+//    temp = data.at(3);
+//    strcpy(tModule->server_address, temp.toUtf8().data());
+    tModule->server_address = data.at(3);
+//    temp = data.at(4);
+//    strcpy(tModule->file_address, temp.toUtf8().data());
+    tModule->file_address = data.at(4);
+//    temp = data.at(5);
+//    tModule->flag_webclient = temp.toInt();
+    tModule->status_webclient = data.at(5).toInt();
+//    if (temp == "1") {
+//        temp = "ACTIVE";
+//        strcpy(tModule->status_webclient, temp.toUtf8().data());
+//    } else if (temp == "0") {
+//        temp = "NOT ACTIVE";
+//        strcpy(tModule->status_webclient, temp.toUtf8().data());
+//    }
+    tModule->interval_relay = data.at(7).toInt()+3;
+    tModule->interval_data = data.at(8).toInt()+3;
+//    temp = data.at(9);
+//    tModule->flag_mode_http = temp.toInt();
+    tModule->mode_http = data.at(9).toInt();
+//    if (temp == "1") {
+//        temp = "POST";
+//        strcpy(tModule->mode_http, temp.toUtf8().data());
+//    } else if (temp == "0") {
+//        temp = "GET";
+//        strcpy(tModule->mode_http, temp.toUtf8().data());
+//    }
+//    temp = data.at(10);
+    tModule->port = data.at(10).toInt();
+//    temp = data.at(11);
+    tModule->utc = data.at(11).toInt();
+//    temp = data.at(12);
+    tModule->status_relay = data.at(12).toInt();
+//    temp = data.at(13);
+    tModule->status_gps = data.at(13).toInt();
+//    temp = data.at(14);
+    tModule->baudrate_slave = data.at(14);
+//    temp = data.at(15);
+    tModule->baudrate_master = data.at(15);
 }
 
 void ProgressDialog::Get_SIM(struct t_module *tModule, QStringList data)
@@ -238,166 +295,198 @@ void ProgressDialog::Get_SIM(struct t_module *tModule, QStringList data)
     else {tModule->flag_dual_gsm = 0;}
 
     /** GSM_1 **/
-    temp = list1.at(1);
-    if (temp == "-") {strcpy(tModule->device_name_gsm_1, "");}
-    else {strcpy(tModule->device_name_gsm_1, temp.toUtf8().data());}
+//    temp = list1.at(1);
+//    if (temp == "-") {strcpy(tModule->device_name_gsm_1, "");}
+//    else {strcpy(tModule->device_name_gsm_1, temp.toUtf8().data());}
+    tModule->device_name_gsm_1 = list1.at(1);
 
-    temp = list1.at(2);
-    if (temp == "-") {
-        strcpy(tModule->name_gsm_1, "");
-        tModule->flag_gsm_1 = 0;
-    } else {
-        strcpy(tModule->name_gsm_1, temp.toUtf8().data());
-        if (temp == "TELKOMSEL") {tModule->flag_gsm_1 = 0;}
-        else if (temp == "INDOSAT") {tModule->flag_gsm_1 = 1;}
-        else if (temp == "XL") {tModule->flag_gsm_1 = 2;
-        } else if (temp == "3") {
-            tModule->flag_gsm_1 = 3;
-        }
-    }
-    temp = list1.at(3);
-    if (temp == "-") {
-        strcpy(tModule->number_gsm_1, "");
-    } else {
-        strcpy(tModule->number_gsm_1, temp.toUtf8().data());
-    }
-    temp = list1.at(4);
-    if (temp == "0") {
-        tModule->flag_status_active_gsm_1 = temp.toInt();
-        temp = "NOT ACTIVE";
-        strcpy(tModule->status_gsm_1, temp.toUtf8().data());
-    } else if (temp == "1") {
-        tModule->flag_status_active_gsm_1 = temp.toInt();
-        temp = "ACTIVE";
-        strcpy(tModule->status_gsm_1, temp.toUtf8().data());
-    }
-    temp = list1.at(8);
-    if (temp == "GSM") {
-//        temp = "SMS";
-        strcpy(tModule->com_gsm_1, temp.toUtf8().data());
-        tModule->flag_com_gsm_1 = 0;
-    } else if (temp == "GPRS") {
-        strcpy(tModule->com_gsm_1, temp.toUtf8().data());
-        tModule->flag_com_gsm_1 = 1;
-    } else {
-        strcpy(tModule->com_gsm_1, "");
-        tModule->flag_com_gsm_1 = 0;
-    }
-    if (tModule->flag_com_gsm_1 == 0) {
-        temp = "";
-        strcpy(tModule->apn_gsm_1, temp.toUtf8().data());
-        strcpy(tModule->user_gsm_1, temp.toUtf8().data());
-        strcpy(tModule->passwd_gsm_1, temp.toUtf8().data());
-    } else if (tModule->flag_com_gsm_1 == 1) {
-        temp = list1.at(5);
-        if (temp == "-") {
-            strcpy(tModule->apn_gsm_1, "");
-        } else {
-            strcpy(tModule->apn_gsm_1, temp.toUtf8().data());
-        }
-        temp = list1.at(6);
-        if (temp == "-") {
-            strcpy(tModule->user_gsm_1, "");
-        } else {
-            strcpy(tModule->user_gsm_1, temp.toUtf8().data());
-        }
-        temp = list1.at(7);
-        if (temp == "-") {
-            strcpy(tModule->passwd_gsm_1, "");
-        } else {
-            strcpy(tModule->passwd_gsm_1, temp.toUtf8().data());
-        }
-    }
+//    temp = list1.at(2);
+//    if (temp == "-") {
+//        strcpy(tModule->name_gsm_1, "");
+//        tModule->flag_gsm_1 = 0;
+//    } else {
+//        strcpy(tModule->name_gsm_1, temp.toUtf8().data());
+//        if (temp == "TELKOMSEL") {tModule->flag_gsm_1 = 0;}
+//        else if (temp == "INDOSAT") {tModule->flag_gsm_1 = 1;}
+//        else if (temp == "XL") {tModule->flag_gsm_1 = 2;}
+//        else if (temp == "3") {tModule->flag_gsm_1 = 3;}
+//    }
+    tModule->name_gsm_1 = list1.at(2);
+    if (tModule->name_gsm_1 == "TELKOMSEL") {tModule->flag_gsm_1 = 0;}
+    else if (tModule->name_gsm_1 == "INDOSAT") {tModule->flag_gsm_1 = 1;}
+    else if (tModule->name_gsm_1 == "XL") {tModule->flag_gsm_1 = 2;}
+    else if (tModule->name_gsm_1 == "3") {tModule->flag_gsm_1 = 3;}
+
+//    temp = list1.at(3);
+//    if (temp == "-") {
+//        strcpy(tModule->number_gsm_1, "");
+//    } else {
+//        strcpy(tModule->number_gsm_1, temp.toUtf8().data());
+//    }
+    tModule->number_gsm_1 = list1.at(3);
+
+//    temp = list1.at(4);
+//    if (temp == "0") {
+//        tModule->flag_status_active_gsm_1 = temp.toInt();
+//        temp = "NOT ACTIVE";
+//        strcpy(tModule->status_gsm_1, temp.toUtf8().data());
+//    } else if (temp == "1") {
+//        tModule->flag_status_active_gsm_1 = temp.toInt();
+//        temp = "ACTIVE";
+//        strcpy(tModule->status_gsm_1, temp.toUtf8().data());
+//    }
+    tModule->status_gsm_1 = list1.at(4).toInt();
+
+//    temp = list1.at(8);
+//    if (temp == "GSM") {
+////        temp = "SMS";
+//        strcpy(tModule->com_gsm_1, temp.toUtf8().data());
+//        tModule->flag_com_gsm_1 = 0;
+//    } else if (temp == "GPRS") {
+//        strcpy(tModule->com_gsm_1, temp.toUtf8().data());
+//        tModule->flag_com_gsm_1 = 1;
+//    } else {
+//        strcpy(tModule->com_gsm_1, "");
+//        tModule->flag_com_gsm_1 = 0;
+//    }
+//    if (tModule->flag_com_gsm_1 == 0) {
+//        temp = "";
+//        strcpy(tModule->apn_gsm_1, temp.toUtf8().data());
+//        strcpy(tModule->user_gsm_1, temp.toUtf8().data());
+//        strcpy(tModule->passwd_gsm_1, temp.toUtf8().data());
+//    } else if (tModule->flag_com_gsm_1 == 1) {
+//        temp = list1.at(5);
+//        if (temp == "-") {
+//            strcpy(tModule->apn_gsm_1, "");
+//        } else {
+//            strcpy(tModule->apn_gsm_1, temp.toUtf8().data());
+//        }
+//        temp = list1.at(6);
+//        if (temp == "-") {
+//            strcpy(tModule->user_gsm_1, "");
+//        } else {
+//            strcpy(tModule->user_gsm_1, temp.toUtf8().data());
+//        }
+//        temp = list1.at(7);
+//        if (temp == "-") {
+//            strcpy(tModule->passwd_gsm_1, "");
+//        } else {
+//            strcpy(tModule->passwd_gsm_1, temp.toUtf8().data());
+//        }
+//    }
+    tModule->apn_gsm_1 = list1.at(5);
+    tModule->user_gsm_1 = list1.at(6);
+    tModule->passwd_gsm_1 = list1.at(7);
+    tModule->com_gsm_1 = list1.at(8);
 
     /** GSM_2 **/
     if (tModule->flag_dual_gsm == 0) {
-        strcpy(tModule->device_name_gsm_2, "");
-        strcpy(tModule->name_gsm_2, "");
+//        strcpy(tModule->device_name_gsm_2, "");
+        tModule->device_name_gsm_2 = "";
+//        strcpy(tModule->name_gsm_2, "");
+        tModule->name_gsm_2 = "";
         tModule->flag_gsm_2 = 0;
-        strcpy(tModule->number_gsm_2, "");
-        tModule->flag_status_active_gsm_2 = 0;
-        strcpy(tModule->status_gsm_2, "");
-        strcpy(tModule->com_gsm_2, "");
-        tModule->flag_com_gsm_2 = 0;
-        strcpy(tModule->apn_gsm_2, "");
-        strcpy(tModule->user_gsm_2, "");
-        strcpy(tModule->passwd_gsm_2, "");
+//        strcpy(tModule->number_gsm_2, "");
+        tModule->number_gsm_2 = "";
+//        tModule->flag_status_active_gsm_2 = 0;
+//        strcpy(tModule->status_gsm_2, "");
+        tModule->status_gsm_2 = 0;
+//        strcpy(tModule->com_gsm_2, "");
+//        tModule->flag_com_gsm_2 = 0;
+        tModule->com_gsm_2 = "";
+//        strcpy(tModule->apn_gsm_2, "");
+        tModule->apn_gsm_2 = "";
+//        strcpy(tModule->user_gsm_2, "");
+        tModule->user_gsm_2 = "";
+//        strcpy(tModule->passwd_gsm_2, "");
+        tModule->passwd_gsm_2 = "";
     } else if (tModule->flag_dual_gsm == 1) {
-        temp = list2.at(1);
-        if (temp == "-") {
-            strcpy(tModule->device_name_gsm_2, "");
-        } else {
-            strcpy(tModule->device_name_gsm_2, temp.toUtf8().data());
-        }
-        temp = list2.at(2);
-        if (temp == "-") {
-            strcpy(tModule->name_gsm_2, "");
-            tModule->flag_gsm_2 = 0;
-        } else {
-            strcpy(tModule->name_gsm_2, temp.toUtf8().data());
-            if (temp == "TELKOMSEL") {
-                tModule->flag_gsm_2 = 0;
-            } else if (temp == "INDOSAT") {
-                tModule->flag_gsm_2 = 1;
-            } else if (temp == "XL") {
-                tModule->flag_gsm_2 = 2;
-            } else if (temp == "3") {
-                tModule->flag_gsm_2 = 3;
-            }
-        }
-        temp = list2.at(3);
-        if (temp == "-") {
-            strcpy(tModule->number_gsm_2, "");
-        } else {
-            strcpy(tModule->number_gsm_2, temp.toUtf8().data());
-        }
-        temp = list2.at(4);
-        if (temp == "0") {
-            tModule->flag_status_active_gsm_2 = temp.toInt();
-            temp = "NOT ACTIVE";
-            strcpy(tModule->status_gsm_2, temp.toUtf8().data());
-        } else if (temp == "1") {
-            tModule->flag_status_active_gsm_2 = temp.toInt();
-            temp = "ACTIVE";
-            strcpy(tModule->status_gsm_2, temp.toUtf8().data());
-        }
-        temp = list2.at(8);
-        if (temp == "GSM") {
-//            temp = "SMS";
-            strcpy(tModule->com_gsm_2, temp.toUtf8().data());
-            tModule->flag_com_gsm_2 = 0;
-        } else if (temp == "GPRS") {
-            strcpy(tModule->com_gsm_2, temp.toUtf8().data());
-            tModule->flag_com_gsm_2 = 1;
-        } else {
-            strcpy(tModule->com_gsm_2, "");
-            tModule->flag_com_gsm_2 = 0;
-        }
-        if (tModule->flag_com_gsm_2 == 0) {
-            temp = "";
-            strcpy(tModule->apn_gsm_2, temp.toUtf8().data());
-            strcpy(tModule->user_gsm_2, temp.toUtf8().data());
-            strcpy(tModule->passwd_gsm_2, temp.toUtf8().data());
-        } else if (tModule->flag_com_gsm_2 == 1) {
-            temp = list2.at(5);
-            if (temp == "-") {
-                strcpy(tModule->apn_gsm_2, "");
-            } else {
-                strcpy(tModule->apn_gsm_2, temp.toUtf8().data());
-            }
-            temp = list2.at(6);
-            if (temp == "-") {
-                strcpy(tModule->user_gsm_2, "");
-            } else {
-                strcpy(tModule->user_gsm_2, temp.toUtf8().data());
-            }
-            temp = list2.at(7);
-            if (temp == "-") {
-                strcpy(tModule->passwd_gsm_2, "");
-            } else {
-                strcpy(tModule->passwd_gsm_2, temp.toUtf8().data());
-            }
-        }
+//        temp = list2.at(1);
+//        if (temp == "-") {
+//            strcpy(tModule->device_name_gsm_2, "");
+//        } else {
+//            strcpy(tModule->device_name_gsm_2, temp.toUtf8().data());
+//        }
+        tModule->device_name_gsm_2 = list2.at(1);
+
+//        temp = list2.at(2);
+//        if (temp == "-") {
+//            strcpy(tModule->name_gsm_2, "");
+//            tModule->flag_gsm_2 = 0;
+//        } else {
+//            strcpy(tModule->name_gsm_2, temp.toUtf8().data());
+//            if (temp == "TELKOMSEL") {tModule->flag_gsm_2 = 0;}
+//            else if (temp == "INDOSAT") {tModule->flag_gsm_2 = 1;}
+//            else if (temp == "XL") {tModule->flag_gsm_2 = 2;}
+//            else if (temp == "3") {tModule->flag_gsm_2 = 3;}
+//        }
+        tModule->name_gsm_2 = list2.at(2);
+        if (tModule->name_gsm_2 == "TELKOMSEL") {tModule->flag_gsm_2 = 0;}
+        else if (tModule->name_gsm_2 == "INDOSAT") {tModule->flag_gsm_2 = 1;}
+        else if (tModule->name_gsm_2 == "XL") {tModule->flag_gsm_2 = 2;}
+        else if (tModule->name_gsm_2 == "3") {tModule->flag_gsm_2 = 3;}
+
+//        temp = list2.at(3);
+//        if (temp == "-") {
+//            strcpy(tModule->number_gsm_2, "");
+//        } else {
+//            strcpy(tModule->number_gsm_2, temp.toUtf8().data());
+//        }
+        tModule->number_gsm_2 = list2.at(3);
+
+//        temp = list2.at(4);
+//        if (temp == "0") {
+//            tModule->flag_status_active_gsm_2 = temp.toInt();
+//            temp = "NOT ACTIVE";
+//            strcpy(tModule->status_gsm_2, temp.toUtf8().data());
+//        } else if (temp == "1") {
+//            tModule->flag_status_active_gsm_2 = temp.toInt();
+//            temp = "ACTIVE";
+//            strcpy(tModule->status_gsm_2, temp.toUtf8().data());
+//        }
+        tModule->status_gsm_2 = list2.at(4).toInt();
+
+//        temp = list2.at(8);
+//        if (temp == "GSM") {
+////            temp = "SMS";
+//            strcpy(tModule->com_gsm_2, temp.toUtf8().data());
+//            tModule->flag_com_gsm_2 = 0;
+//        } else if (temp == "GPRS") {
+//            strcpy(tModule->com_gsm_2, temp.toUtf8().data());
+//            tModule->flag_com_gsm_2 = 1;
+//        } else {
+//            strcpy(tModule->com_gsm_2, "");
+//            tModule->flag_com_gsm_2 = 0;
+//        }
+//        if (tModule->flag_com_gsm_2 == 0) {
+//            temp = "";
+//            strcpy(tModule->apn_gsm_2, temp.toUtf8().data());
+//            strcpy(tModule->user_gsm_2, temp.toUtf8().data());
+//            strcpy(tModule->passwd_gsm_2, temp.toUtf8().data());
+//        } else if (tModule->flag_com_gsm_2 == 1) {
+//            temp = list2.at(5);
+//            if (temp == "-") {
+//                strcpy(tModule->apn_gsm_2, "");
+//            } else {
+//                strcpy(tModule->apn_gsm_2, temp.toUtf8().data());
+//            }
+//            temp = list2.at(6);
+//            if (temp == "-") {
+//                strcpy(tModule->user_gsm_2, "");
+//            } else {
+//                strcpy(tModule->user_gsm_2, temp.toUtf8().data());
+//            }
+//            temp = list2.at(7);
+//            if (temp == "-") {
+//                strcpy(tModule->passwd_gsm_2, "");
+//            } else {
+//                strcpy(tModule->passwd_gsm_2, temp.toUtf8().data());
+//            }
+//        }
+        tModule->apn_gsm_2 = list2.at(5);
+        tModule->user_gsm_2 = list2.at(6);
+        tModule->passwd_gsm_2 = list2.at(7);
+        tModule->com_gsm_2 = list2.at(8);
     }
 }
 
@@ -468,6 +557,18 @@ void ProgressDialog::Get_Sumber(struct t_module *tModule, QStringList data)
     }
 }
 
+void ProgressDialog::Get_Formula(t_module *tModule, QStringList data)
+{
+    tModule->formula.clear();
+    tModule->jml_formula = 0;
+    for (int i = 0; i < data.length(); i++) {
+        if (data.at(i) != "") {
+            tModule->formula.insert(tModule->jml_formula, data.at(i));
+            tModule->jml_formula++;
+        }
+    }
+}
+
 void ProgressDialog::Get_Data(struct t_module *tModule, QStringList data)
 {
     tModule->data.clear();
@@ -480,22 +581,43 @@ void ProgressDialog::Get_Data(struct t_module *tModule, QStringList data)
     }
 }
 
+void ProgressDialog::Get_System(t_module *tModule, QStringList data)
+{
+    tModule->signal = data.at(0);
+    tModule->status_modem = data.at(1).toInt();
+    tModule->sim_activated = data.at(2).toInt();
+    tModule->status_sim_1 = data.at(3).toInt();
+    tModule->status_sim_2 = data.at(4).toInt();
+    tModule->modem_send_success = data.at(5);
+    tModule->modem_send_fail = data.at(6);
+    tModule->module_uptime = data.at(7);
+    tModule->firmware_version = data.at(8);
+    tModule->build_date = data.at(9);
+}
+
 void ProgressDialog::Set_ENV(bool stat, t_module *tModule)
 {
-    /** SET ENVIRONTMENT **/
-    Request.sprintf("%s %s %s %s %s %d %d %d %d %d %d\r\n"
+    /** SET ENVIRONMENT **/
+    Request.sprintf("%s %s %s %s %s %d %d %d %d %d %d %d %d %s %s\r\n"
                     , MODE_SET_ENV
-                    , tModule->module_name
-                    , tModule->serial_number
-                    , tModule->server_address
-                    , tModule->file_address
-                    , tModule->flag_webclient
+                    , tModule->module_name.toUtf8().data()
+                    , tModule->serial_number.toUtf8().data()
+                    , tModule->server_address.toUtf8().data()
+                    , tModule->file_address.toUtf8().data()
+                    , tModule->status_webclient
                     , tModule->interval_relay-3
                     , tModule->interval_data-3
-                    , tModule->flag_mode_http
+                    , tModule->mode_http
                     , tModule->port
-                    , tModule->utc);
-    Desc.sprintf("Set Environtment \"%s \" ..", tModule->module_name);
+                    , tModule->utc
+                    , tModule->status_relay
+                    , tModule->status_gps
+                    , tModule->baudrate_slave.toUtf8().data()
+                    , tModule->baudrate_master.toUtf8().data());
+
+//    Desc.sprintf("Set Environment \"%s \" ..", tModule->module_name);
+    Desc = "Set Environment \"" + tModule->module_name + "\" ..";
+//    0100 RTU PKP-XXX-XXX-XXX 119.18.154.235 /rinjani/ml.php 0 10 30 0 80 7 1 1 38400 38400\r\n
 //    0100 RTU-PDAM_Ciburial PKP1-280616-001-RJN1R 119.18.154.235 /api/loket 1 10 30 0 1337 7
     if (stat) {
         serial_write(Desc, Request, WAIT_WRITE);
@@ -508,15 +630,17 @@ void ProgressDialog::Set_SIM(bool stat, t_module *tModule)
     /** SET SIM 1 **/
     Request.sprintf("%s 1 %s %s %s %d %s %s %s %s"
                     , MODE_SET_SIM
-                    , tModule->device_name_gsm_1
-                    , tModule->name_gsm_1
-                    , tModule->number_gsm_1
-                    , tModule->flag_status_active_gsm_1
-                    , tModule->apn_gsm_1
-                    , tModule->user_gsm_1
-                    , tModule->passwd_gsm_1
-                    , tModule->com_gsm_1);
-    Desc.sprintf("Set SIM 1 Configuration (\"%s\") ..", tModule->device_name_gsm_1);
+                    , tModule->device_name_gsm_1.toUtf8().data()
+                    , tModule->name_gsm_1.toUtf8().data()
+                    , tModule->number_gsm_1.toUtf8().data()
+                    , tModule->status_gsm_1
+                    , tModule->apn_gsm_1.toUtf8().data()
+                    , tModule->user_gsm_1.toUtf8().data()
+                    , tModule->passwd_gsm_1.toUtf8().data()
+                    , tModule->com_gsm_1.toUtf8().data());
+//    Desc.sprintf("Set SIM 1 Configuration (\"%s\") ..", tModule->device_name_gsm_1);
+    Desc = "Set SIM 1 Configuration (\"" + tModule->device_name_gsm_1 + "\") ..";
+//    0101 1 Slot1 TELKOMSEL 08111976295 1 - - -
     if (stat) {
         serial_write(Desc, Request, WAIT_WRITE);
         ui->progressBar->setValue(progressVal++);
@@ -525,19 +649,21 @@ void ProgressDialog::Set_SIM(bool stat, t_module *tModule)
     /** SET SIM 2 **/
     Request.sprintf("%s 2 %s %s %s %d %s %s %s %s"
                     , MODE_SET_SIM
-                    , tModule->device_name_gsm_2
-                    , tModule->name_gsm_2
-                    , tModule->number_gsm_2
-                    , tModule->flag_status_active_gsm_2
-                    , tModule->apn_gsm_2
-                    , tModule->user_gsm_2
-                    , tModule->passwd_gsm_2
-                    , tModule->com_gsm_2);
-    Desc.sprintf("Set SIM 2 Configuration (\"%s\") ..", tModule->device_name_gsm_2);
+                    , tModule->device_name_gsm_2.toUtf8().data()
+                    , tModule->name_gsm_2.toUtf8().data()
+                    , tModule->number_gsm_2.toUtf8().data()
+                    , tModule->status_gsm_2
+                    , tModule->apn_gsm_2.toUtf8().data()
+                    , tModule->user_gsm_2.toUtf8().data()
+                    , tModule->passwd_gsm_2.toUtf8().data()
+                    , tModule->com_gsm_2.toUtf8().data());
+//    Desc.sprintf("Set SIM 2 Configuration (\"%s\") ..", tModule->device_name_gsm_2);
+    Desc = "Set SIM 2 Configuration (\"" + tModule->device_name_gsm_2 + "\") ..";
     if (stat) {
         serial_write(Desc, Request, WAIT_WRITE);
         ui->progressBar->setValue(progressVal++);
     } else {progressVal++;}
+
 }
 
 void ProgressDialog::Set_Input(bool stat, t_module *tModule, QString index)
@@ -551,12 +677,13 @@ void ProgressDialog::Set_Input(bool stat, t_module *tModule, QString index)
             temp = tModule->Input.at(i);
             list1 = temp.split(';');
 
-            Request = QString::fromUtf8(MODE_SET_KNL) + " " + list1.at(1) + " " + list1.at(2) + " " + list1.at(3) + " " + list1.at(4) + " " + QString::number(validation) + "\r\n";
+            Request = QString(MODE_SET_KNL) + " " + list1.at(1) + " " + list1.at(2) + " " + list1.at(3) + " " + list1.at(4) + " " + QString::number(validation) + "\r\n";
             Desc = "Set Input Channel " + list1.at(1) + " ..";
             if (stat) {
                 serial_write(Desc, Request, WAIT_WRITE);
                 ui->progressBar->setValue(progressVal++);
             } else {progressVal++;}
+
             if (cancel) break;
         }
 
@@ -567,7 +694,7 @@ void ProgressDialog::Set_Input(bool stat, t_module *tModule, QString index)
             temp = tModule->data.at(i);
             list1 = temp.split(";");
 
-            Request = QString::fromUtf8(MODE_SET_DAT) + " " + list1.at(0) + " " + list1.at(1) + " " +
+            Request = QString(MODE_SET_DAT) + " " + list1.at(0) + " " + list1.at(1) + " " +
                       list1.at(2) + " " + list1.at(4) + " " + list1.at(5) + " " +
                       list1.at(6) + " " + list1.at(7) + " " + list1.at(8) + " " +
                       list1.at(9) + " " + list1.at(10) + " " + list1.at(11) + " " +
@@ -578,13 +705,14 @@ void ProgressDialog::Set_Input(bool stat, t_module *tModule, QString index)
                 serial_write(Desc, Request, WAIT_WRITE);
                 ui->progressBar->setValue(progressVal++);
             } else {progressVal++;}
+
             if (cancel) break;
         }
     } else {
         temp = tModule->Input.at(index.toInt());
         list1 = temp.split(';');
 //        0102 12 250 10.000 0.000 3
-        Request = QString::fromUtf8(MODE_SET_KNL) + " " + list1.at(1) + " " + list1.at(2) + " " + list1.at(3) + " " + list1.at(4) + " 3\r\n";
+        Request = QString(MODE_SET_KNL) + " " + list1.at(1) + " " + list1.at(2) + " " + list1.at(3) + " " + list1.at(4) + " 3\r\n";
         Desc = "Set Input Channel " + list1.at(1) + " ..";
         if (stat) {
             serial_write(Desc, Request, WAIT_WRITE);
@@ -600,18 +728,19 @@ void ProgressDialog::Set_Output(bool stat, t_module *tModule, QString index)
         for (int i = 0; i < tModule->Output.length(); i++) {
             temp = tModule->Output.at(i);
             list1 = temp.split(';');
-            Request = QString::fromUtf8(MODE_SET_RLY) + " " + list1.at(1) + " " + list1.at(2) + " " + list1.at(4) + "\r\n";
+            Request = QString(MODE_SET_RLY) + " " + list1.at(1) + " " + list1.at(2) + " " + list1.at(4) + "\r\n";
             Desc = "Set Output Channel " + list1.at(1) + " ..";
             if (stat) {
                 serial_write(Desc, Request, WAIT_WRITE);
                 ui->progressBar->setValue(progressVal++);
             } else {progressVal++;}
+
             if (cancel) break;
         }
     } else {
         temp = tModule->Output.at(index.toInt());
         list1 = temp.split(';');
-        Request = QString::fromUtf8(MODE_SET_RLY) + " " + list1.at(1) + " " + list1.at(2) + " " + list1.at(4) + "\r\n";
+        Request = QString(MODE_SET_RLY) + " " + list1.at(1) + " " + list1.at(2) + " " + list1.at(4) + "\r\n";
         Desc = "Set Output Channel " + list1.at(1) + " ..";
         if (stat) {
             serial_write(Desc, Request, WAIT_WRITE);
@@ -631,7 +760,7 @@ void ProgressDialog::Set_Sumber(bool stat, t_module *tModule, QString index)
             temp = tModule->sumber.at(i);
             list1 = temp.split(";");
 
-            Request = QString::fromUtf8(MODE_SET_SRC) + " " + list1.at(0) + " " + list1.at(1) + " " +
+            Request = QString(MODE_SET_SRC) + " " + list1.at(0) + " " + list1.at(1) + " " +
                       list1.at(2) + " " + list1.at(3) + " " + list1.at(4) + " " +
                       list1.at(5) + ";" + list1.at(6) + ";" + list1.at(7) + ";" +
                       list1.at(8) + ";" + list1.at(9) + ";" +
@@ -659,6 +788,7 @@ void ProgressDialog::Set_Sumber(bool stat, t_module *tModule, QString index)
                     data_setting.append(QString::number(str.toInt()+j) + ";" + list1.at(4));
                 }
             }
+
             if (cancel) break;
         }
         for (int i = 0; i < data_setting.length(); i++) {
@@ -674,12 +804,14 @@ void ProgressDialog::Set_Sumber(bool stat, t_module *tModule, QString index)
                 serial_write(Desc, Request, WAIT_WRITE);
                 ui->progressBar->setValue(progressVal++);
             } else {progressVal++;}
+
+            if (cancel) break;
         }
     } else {
         temp = tModule->sumber.at(index.toInt());
         list1 = temp.split(";");
 
-        Request = QString::fromUtf8(MODE_SET_SRC) + " " + list1.at(0) + " " + list1.at(1) + " " +
+        Request = QString(MODE_SET_SRC) + " " + list1.at(0) + " " + list1.at(1) + " " +
                   list1.at(2) + " " + list1.at(3) + " " + list1.at(4) + " " +
                   list1.at(5) + ";" + list1.at(6) + ";" + list1.at(7) + ";" +
                   list1.at(8) + ";" + list1.at(9) + ";" +
@@ -719,6 +851,48 @@ void ProgressDialog::Set_Sumber(bool stat, t_module *tModule, QString index)
     }
 }
 
+void ProgressDialog::Set_Formula(bool stat, t_module *tModule, QString index)
+{
+    QStringList data_setting;
+    if (index.isEmpty()) {
+        for (int i = 0; i < tModule->formula.length(); i++) {
+            int validation = 0;
+            if (i == 0) validation = 2;
+            if (i == tModule->formula.length()-1) validation = 1;
+            temp = tModule->formula.at(i);
+            list1 = temp.split(";");
+
+            Request = QString(MODE_SET_FRM) + " " + list1.at(0) + " " + list1.at(1) + " " +
+                      list1.at(2) + ";" + list1.at(3) + ";" + list1.at(4) + ";" +
+                      list1.at(5) + ";" + list1.at(6) + ";" + list1.at(7) + " " +
+                      list1.at(8) + " " + list1.at(9) + " " + list1.at(10) + " " +
+                      QString::number(validation) + "\r\n";
+            Desc = "Set Formula " + list1.at(0) + " : \"" + list1.at(1) + "\" ..";
+            if (stat) {
+                serial_write(Desc, Request, WAIT_WRITE);
+                ui->progressBar->setValue(progressVal++);
+            } else {progressVal++;}
+
+            if (cancel) break;
+        }
+    } else {
+        temp = tModule->formula.at(index.toInt());
+        list1 = temp.split(";");
+
+        Request = QString(MODE_SET_FRM) + " " + list1.at(0) + " " + list1.at(1) + " " +
+                list1.at(2) + ";" + list1.at(3) + ";" + list1.at(4) + ";" +
+                list1.at(5) + ";" + list1.at(6) + ";" + list1.at(7) + " " +
+                list1.at(8) + " " + list1.at(9) + " " + list1.at(10) + " " + "3\r\n";
+        Desc = "Set Formula " + list1.at(0) + " : \"" + list1.at(1) + "\" ..";
+//        0105 3 test 0;43.21;12.34;3.21;d20;d20 5.43 1.23 1 3\r\n
+//        0105 3 test 0;d7;12.34;3.21;d39;d40 5.43 1.23 1 3
+        if (stat) {
+            serial_write(Desc, Request, WAIT_WRITE);
+            ui->progressBar->setValue(progressVal++);
+        } else {progressVal++;}
+    }
+}
+
 void ProgressDialog::Set_Data(bool stat, t_module *tModule, QString index)
 {
 //    qDebug() << "-----------------------------------";
@@ -730,7 +904,7 @@ void ProgressDialog::Set_Data(bool stat, t_module *tModule, QString index)
             temp = tModule->data.at(i);
             list1 = temp.split(";");
 
-            Request = QString::fromUtf8(MODE_SET_DAT) + " " + list1.at(0) + " " + list1.at(1) + " " +
+            Request = QString(MODE_SET_DAT) + " " + list1.at(0) + " " + list1.at(1) + " " +
                       list1.at(2) + " " + list1.at(4) + " " + list1.at(5) + " " +
                       list1.at(6) + " " + list1.at(7) + " " + list1.at(8) + " " +
                       list1.at(9) + " " + list1.at(10) + " " + list1.at(11) + " " +
@@ -741,6 +915,7 @@ void ProgressDialog::Set_Data(bool stat, t_module *tModule, QString index)
                 serial_write(Desc, Request, WAIT_WRITE);
                 ui->progressBar->setValue(progressVal++);
             } else {progressVal++;}
+
             if (cancel) break;
         }
     } else {
@@ -768,7 +943,7 @@ void ProgressDialog::Set_Data(bool stat, t_module *tModule, QString index)
             temp = tModule->data.at(index.toInt());
             list1 = temp.split(";");
 
-            Request = QString::fromUtf8(MODE_SET_DAT) + " " + list1.at(0) + " " + list1.at(1) + " " +
+            Request = QString(MODE_SET_DAT) + " " + list1.at(0) + " " + list1.at(1) + " " +
                       list1.at(2) + " " + list1.at(4) + " " + list1.at(5) + " " +
                       list1.at(6) + " " + list1.at(7) + " " + list1.at(8) + " " +
                       list1.at(9) + " " + list1.at(10) + " " + list1.at(11) + " 3\r\n";
@@ -786,7 +961,7 @@ void ProgressDialog::Set_Data(bool stat, t_module *tModule, QString index)
 void ProgressDialog::Reset_Board(bool stat)
 {
     Request = "reset\r\n";
-    Desc = "Reset Board ..";
+    Desc = "Resetting Board ..";
     if (stat) {
         serial_write(Desc, Request, WAIT_WRITE);
         ui->progressBar->setValue(progressVal++);

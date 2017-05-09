@@ -110,7 +110,7 @@
      <x>0</x>
      <y>0</y>
      <width>1100</width>
-     <height>19</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -143,6 +143,7 @@
     <property name="title">
      <string>Help</string>
     </property>
+    <addaction name="actionDebug_Modem"/>
    </widget>
    <widget class="QMenu" name="menuActive_Window">
     <property name="title">
@@ -281,6 +282,11 @@
   <action name="actionExit">
    <property name="text">
     <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionDebug_Modem">
+   <property name="text">
+    <string>Debug Modem</string>
    </property>
   </action>
  </widget>

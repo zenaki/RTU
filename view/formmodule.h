@@ -15,14 +15,14 @@
 #include "model/setting.h"
 #include "model/communication/serial.h"
 
-#include <controller/worker.h>
+#include "controller/worker.h"
 
-#include <view/form_addmodule.h>
-#include <ui_form_addmodule.h>
-#include <view/mainwindow.h>
-#include <ui_mainwindow.h>
+#include "view/form_addmodule.h"
+#include "ui_form_addmodule.h"
+#include "view/mainwindow.h"
+#include "ui_mainwindow.h"
 //#include <model/interface_manipulator/qlightboxwidget.h>
-#include <view/progressdialog.h>
+#include "view/progressdialog.h"
 
 namespace Ui {
     class formModule;
@@ -35,6 +35,7 @@ class setting;
 //class QLightBoxWidget;
 class wait_process;
 class ProgressDialog;
+class DebugDialog;
 
 /**
  * @brief The formModule class
@@ -66,7 +67,8 @@ public:
     /**
      * @brief eventFilter
      */
-    bool eventFilter(/*QObject *obj, */QEvent *event);
+    bool eventFilter(QObject *obj, QEvent *event);
+
 private slots:
     /**
      * @brief on_pbSetAll_clicked
@@ -128,6 +130,11 @@ private slots:
      */
     void tReg_src_changed();
     /**
+     * @brief del_frm_clicked
+     * @param index
+     */
+    void del_frm_clicked(int index);
+    /**
      * @brief del_alrm_clicked
      * @param index
      */
@@ -158,6 +165,7 @@ private slots:
 //     * @param index
 //     */
 //    void state_data_change(int index);
+
 private:
     /**
      * @brief work
@@ -289,15 +297,20 @@ private:
      */
     void setInterface_Communication(QString address);
     /**
-     * @brief setInterface_Environtment
+     * @brief setInterface_Environment
      * @param address
      */
-    void setInterface_Environtment(QString address);
+    void setInterface_Environment(QString address);
     /**
      * @brief setInterface_Sumber
      * @param address
      */
     void setInterface_Sumber(QString address);
+    /**
+     * @brief setInterface_Formula
+     * @param address
+     */
+    void setInterface_Formula(QString address);
     /**
      * @brief setInterface_Alarm
      * @param address
@@ -314,6 +327,11 @@ private:
      */
     void setInterface_Data_Monitoring(QString address);
     /**
+     * @brief setInterface_System_Monitoring
+     * @param address
+     */
+    void setInterface_System_Monitoring(QString address);
+    /**
      * @brief EnableButton
      * @param enab
      */
@@ -323,31 +341,31 @@ private:
     /**
      * @brief check_input
      */
-    QCheckBox       *check_input[16];
+    QCheckBox       *check_input[PIN_ANALOG + PIN_DIGITAL];
     /**
      * @brief name_input
      */
-    QLineEdit       *name_input[16];
+    QLineEdit       *name_input[PIN_ANALOG + PIN_DIGITAL];
     /**
      * @brief type_input
      */
-    QComboBox       *type_input[16];
+    QComboBox       *type_input[PIN_ANALOG + PIN_DIGITAL];
     /**
      * @brief state_input
      */
-    QComboBox       *state_input[16];
+    QComboBox       *state_input[PIN_ANALOG + PIN_DIGITAL];
     /**
      * @brief calib_m
      */
-    QDoubleSpinBox  *calib_m[16];
+    QDoubleSpinBox  *calib_m[PIN_ANALOG + PIN_DIGITAL];
     /**
      * @brief calib_x
      */
-    QDoubleSpinBox  *calib_x[16];
+    QDoubleSpinBox  *calib_x[PIN_ANALOG + PIN_DIGITAL];
     /**
      * @brief reg_input
      */
-    QComboBox       *reg_input[60];
+    QComboBox       *reg_input[PIN_ANALOG + PIN_DIGITAL];
     /**
      * @brief SigMapReg_input
      */
@@ -361,37 +379,37 @@ private:
     /**
      * @brief check_output
      */
-    QCheckBox       *check_output[16];
+    QCheckBox       *check_output[PIN_OUTPUT];
     /**
      * @brief name_output
      */
-    QLineEdit       *name_output[16];
+    QLineEdit       *name_output[PIN_OUTPUT];
     /**
      * @brief type_output
      */
-    QLineEdit       *type_output[16];
+    QLineEdit       *type_output[PIN_OUTPUT];
     /**
      * @brief state_output
      */
-    QComboBox       *state_output[16];
+    QComboBox       *state_output[PIN_OUTPUT];
     /**
      * @brief control
      */
-    QComboBox       *control[16];
+    QComboBox       *control[PIN_OUTPUT];
     /**
      * @brief reg_output
      */
-    QSpinBox        *reg_output[16];
+    QSpinBox        *reg_output[PIN_OUTPUT];
 
     //** Sources Tab **//
     /**
      * @brief check_source
      */
-    QCheckBox       *check_source[16];
+    QCheckBox       *check_source[JML_SOURCE];
     /**
      * @brief delete_source
      */
-    QPushButton     *delete_source[16];
+    QPushButton     *delete_source[JML_SOURCE];
     /**
      * @brief SigMapDel_Source
      */
@@ -399,43 +417,43 @@ private:
     /**
      * @brief name_source
      */
-    QLineEdit       *name_source[16];
+    QLineEdit       *name_source[JML_SOURCE];
     /**
      * @brief ip_source
      */
-    QLineEdit       *ip_source[16];
+    QLineEdit       *ip_source[JML_SOURCE];
     /**
      * @brief port_source
      */
-    QSpinBox        *port_source[16];
+    QSpinBox        *port_source[JML_SOURCE];
     /**
      * @brief state_source
      */
-    QComboBox       *state_source[16];
+    QComboBox       *state_source[JML_SOURCE];
     /**
      * @brief type_source
      */
-    QComboBox       *type_source[16];
+    QComboBox       *type_source[JML_SOURCE];
     /**
      * @brief id_source
      */
-    QSpinBox        *id_source[16];
+    QSpinBox        *id_source[JML_SOURCE];
     /**
      * @brief sensor_reg_source
      */
-    QSpinBox        *sensor_reg_source[16];
+    QSpinBox        *sensor_reg_source[JML_SOURCE];
 //    /**
 //     * @brief OffsetBase_source
 //     */
-//    QComboBox       *OffsetBase_source[16];
+//    QComboBox       *OffsetBase_source[JML_SOURCE];
     /**
      * @brief command_source
      */
-    QComboBox       *command_source[16];
+    QComboBox       *command_source[JML_SOURCE];
     /**
      * @brief length_source
      */
-    QComboBox       *length_source[16];
+    QComboBox       *length_source[JML_SOURCE];
     /**
      * @brief SigMap_length_source
      */
@@ -443,7 +461,7 @@ private:
     /**
      * @brief target_reg_source
      */
-    QComboBox       *target_reg_source[16];
+    QComboBox       *target_reg_source[JML_SOURCE];
     /**
      * @brief SigMap_tReg_source
      */
@@ -451,22 +469,82 @@ private:
     /**
      * @brief target_reg_source
      */
-    QComboBox       *swap_source[16];
+    QComboBox       *swap_source[JML_SOURCE];
     /**
      * @brief target_reg_source
      */
-    QComboBox       *data_type_source[16];
+    QComboBox       *data_type_source[JML_SOURCE];
     /**
      * @brief target_reg_source
      */
-    QComboBox       *data_bits_source[16];
-
+    QComboBox       *data_bits_source[JML_SOURCE];
     /**
      * @brief checkFormula
      * @param data
      * @return
      */
     bool checkFormula(QString data);
+
+    //** Formula Tab **//
+    /**
+     * @brief check_formula
+     */
+    QCheckBox       *check_formula[JML_FORMULA];
+    /**
+     * @brief delete_formula
+     */
+    QPushButton     *delete_formula[JML_FORMULA];
+    /**
+     * @brief SigMapDel_Formula
+     */
+    QSignalMapper   *SigMapDel_Formula;
+    /**
+     * @brief name_formula
+     */
+    QLineEdit       *name_formula[JML_FORMULA];
+    /**
+     * @brief type_formula
+     */
+    QComboBox       *type_formula[JML_FORMULA];
+    /**
+     * @brief hx_formula
+     */
+    QComboBox       *hx_formula[JML_FORMULA];
+    /**
+     * @brief pa_formula
+     */
+    QLineEdit       *pa_formula[JML_FORMULA];
+    /**
+     * @brief b_formula
+     */
+    QLineEdit       *b_formula[JML_FORMULA];
+    /**
+     * @brief q_formula
+     */
+    QComboBox       *q_formula[JML_FORMULA];
+    /**
+     * @brief v_formula
+     */
+    QComboBox       *v_formula[JML_FORMULA];
+    /**
+     * @brief m_formula
+     */
+    QDoubleSpinBox  *m_formula[JML_FORMULA];
+    /**
+     * @brief c_formula
+     */
+    QDoubleSpinBox  *c_formula[JML_FORMULA];
+    /**
+     * @brief status_formula
+     */
+    QComboBox       *state_formula[JML_FORMULA];
+    /**
+     * @brief checkParameter
+     * @param data
+     * @return
+     */
+    bool checkParameter(QString data);
+
 
     //** Alarm Threshold Tab **//
     /**
@@ -530,49 +608,53 @@ private:
     /**
      * @brief check_data_s
      */
-    QCheckBox       *check_data_s[60];
+    QCheckBox       *check_data_s[JML_DATA];
     /**
      * @brief id_data_s
      */
-    QSpinBox        *id_data_s[60];
+    QSpinBox        *id_data_s[JML_DATA];
     /**
      * @brief name_data_s
      */
-    QLineEdit       *name_data_s[60];
+    QLineEdit       *name_data_s[JML_DATA];
 
-//    QDoubleSpinBox  *value_data_s[60];
+//    QDoubleSpinBox  *value_data_s[JML_DATA];
     /**
      * @brief unit_data_s
      */
-    QLineEdit       *unit_data_s[60];
+    QLineEdit       *unit_data_s[JML_DATA];
     /**
      * @brief range_l_data_s
      */
-    QDoubleSpinBox  *range_l_data_s[60];
+    QDoubleSpinBox  *range_l_data_s[JML_DATA];
     /**
      * @brief border_ll_data_s
      */
-    QDoubleSpinBox  *border_ll_data_s[60];
+    QDoubleSpinBox  *border_ll_data_s[JML_DATA];
     /**
      * @brief border_l_data_s
      */
-    QDoubleSpinBox  *border_l_data_s[60];
+    QDoubleSpinBox  *border_l_data_s[JML_DATA];
     /**
      * @brief border_h_data_s
      */
-    QDoubleSpinBox  *border_h_data_s[60];
+    QDoubleSpinBox  *border_h_data_s[JML_DATA];
     /**
      * @brief border_hh_data_s
      */
-    QDoubleSpinBox  *border_hh_data_s[60];
+    QDoubleSpinBox  *border_hh_data_s[JML_DATA];
     /**
      * @brief range_h_data_s
      */
-    QDoubleSpinBox  *range_h_data_s[60];
+    QDoubleSpinBox  *range_h_data_s[JML_DATA];
     /**
      * @brief state_data_s
      */
-    QComboBox       *state_data_s[60];
+    QComboBox       *state_data_s[JML_DATA];
+    /**
+     * @brief sdCard_data
+     */
+    QCheckBox       *sdCard_data_s[JML_DATA];
     /**
      * @brief SigMapState_data_s
      */
@@ -582,24 +664,28 @@ private:
     /**
      * @brief reg_data
      */
-    QLabel          *reg_data[60];
+    QLabel          *reg_data[JML_DATA];
     /**
      * @brief name_data
      */
-    QLabel          *name_data[60];
+    QLabel          *name_data[JML_DATA];
     /**
      * @brief value_data
      */
-    QLabel          *value_data[60];
+    QLabel          *value_data[JML_DATA];
     /**
      * @brief unit_data
      */
-    QLabel          *unit_data[60];
+    QLabel          *unit_data[JML_DATA];
 
     /**
      * @brief data_monitoring
      */
     void data_monitoring();
+    /**
+     * @brief system_monitoring
+     */
+    void system_monitoring();
 };
 
 #endif // FORMMODULE_H

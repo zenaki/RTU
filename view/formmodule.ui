@@ -38,20 +38,17 @@
   <layout class="QGridLayout" name="gridLayout_10">
    <item row="1" column="0">
     <layout class="QGridLayout" name="gridLayout">
-     <item row="0" column="8">
-      <widget class="QPushButton" name="pbEdit">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="text">
-        <string>Edit</string>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="0">
       <widget class="QPushButton" name="pbSet">
        <property name="text">
         <string>Set Setting</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="9">
+      <widget class="QPushButton" name="pbSetAll">
+       <property name="text">
+        <string>Set All Setting</string>
        </property>
       </widget>
      </item>
@@ -68,37 +65,27 @@
        </property>
       </spacer>
      </item>
+     <item row="0" column="10">
+      <widget class="QPushButton" name="pbGetAll">
+       <property name="text">
+        <string>Get All Setting</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="8">
+      <widget class="QPushButton" name="pbEdit">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="text">
+        <string>Edit</string>
+       </property>
+      </widget>
+     </item>
      <item row="0" column="2">
       <widget class="QPushButton" name="pbGet">
        <property name="text">
         <string>Get Setting</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="5">
-      <widget class="QPushButton" name="pbRefresh">
-       <property name="text">
-        <string>Refresh Data</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QPushButton" name="pbSetChk">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Set Checked</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="9">
-      <widget class="QPushButton" name="pbSetAll">
-       <property name="text">
-        <string>Set All Setting</string>
        </property>
       </widget>
      </item>
@@ -116,10 +103,23 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="10">
-      <widget class="QPushButton" name="pbGetAll">
+     <item row="0" column="5">
+      <widget class="QPushButton" name="pbRefresh">
        <property name="text">
-        <string>Get All Setting</string>
+        <string>Refresh</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QPushButton" name="pbSetChk">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Set Checked</string>
        </property>
       </widget>
      </item>
@@ -134,7 +134,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>4</number>
+      <number>8</number>
      </property>
      <widget class="QWidget" name="tab_input">
       <attribute name="title">
@@ -1030,7 +1030,7 @@
         <rect>
          <x>20</x>
          <y>20</y>
-         <width>711</width>
+         <width>604</width>
          <height>422</height>
         </rect>
        </property>
@@ -1186,16 +1186,22 @@
         </item>
         <item>
          <layout class="QGridLayout" name="gridLayout_12">
-          <item row="5" column="1">
-           <widget class="QLabel" name="label_52">
+          <item row="6" column="0">
+           <widget class="QLabel" name="label_53">
             <property name="minimumSize">
              <size>
-              <width>5</width>
+              <width>130</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>130</width>
               <height>17</height>
              </size>
             </property>
             <property name="text">
-             <string>:</string>
+             <string>Port</string>
             </property>
            </widget>
           </item>
@@ -1218,33 +1224,17 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="1">
-           <widget class="QLabel" name="label_46">
+          <item row="2" column="2">
+           <widget class="QLabel" name="web_client">
             <property name="minimumSize">
              <size>
-              <width>5</width>
-              <height>17</height>
+              <width>150</width>
+              <height>27</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>5</width>
-              <height>17</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>:</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QLabel" name="file_address">
-            <property name="minimumSize">
-             <size>
-              <width>141</width>
+              <width>150</width>
               <height>27</height>
              </size>
             </property>
@@ -1253,52 +1243,17 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
-           <widget class="QLabel" name="label_45">
+          <item row="3" column="2">
+           <widget class="QLabel" name="interval_relay">
             <property name="minimumSize">
              <size>
-              <width>5</width>
-              <height>17</height>
+              <width>150</width>
+              <height>27</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>5</width>
-              <height>17</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>:</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_41">
-            <property name="minimumSize">
-             <size>
-              <width>130</width>
-              <height>17</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>130</width>
-              <height>17</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Server Address</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <widget class="QLabel" name="server_address">
-            <property name="minimumSize">
-             <size>
-              <width>141</width>
+              <width>150</width>
               <height>27</height>
              </size>
             </property>
@@ -1326,72 +1281,17 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="label_39">
+          <item row="5" column="2">
+           <widget class="QLabel" name="mode_http">
             <property name="minimumSize">
              <size>
-              <width>130</width>
-              <height>17</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Interval Data</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QLabel" name="label_50">
-            <property name="minimumSize">
-             <size>
-              <width>5</width>
-              <height>17</height>
+              <width>150</width>
+              <height>27</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>5</width>
-              <height>17</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>:</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="2">
-           <widget class="QLabel" name="web_client">
-            <property name="minimumSize">
-             <size>
-              <width>141</width>
-              <height>27</height>
-             </size>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_40">
-            <property name="minimumSize">
-             <size>
-              <width>130</width>
-              <height>17</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Interval Relay</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="2">
-           <widget class="QLabel" name="interval_relay">
-            <property name="minimumSize">
-             <size>
-              <width>141</width>
+              <width>150</width>
               <height>27</height>
              </size>
             </property>
@@ -1422,16 +1322,22 @@
             </property>
            </widget>
           </item>
-          <item row="5" column="2">
-           <widget class="QLabel" name="mode_http">
+          <item row="7" column="0">
+           <widget class="QLabel" name="label_55">
             <property name="minimumSize">
              <size>
-              <width>141</width>
-              <height>27</height>
+              <width>130</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>130</width>
+              <height>17</height>
              </size>
             </property>
             <property name="text">
-             <string/>
+             <string>UTC</string>
             </property>
            </widget>
           </item>
@@ -1443,8 +1349,267 @@
               <height>17</height>
              </size>
             </property>
+            <property name="maximumSize">
+             <size>
+              <width>5</width>
+              <height>17</height>
+             </size>
+            </property>
             <property name="text">
              <string>:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <widget class="QLabel" name="label_56">
+            <property name="minimumSize">
+             <size>
+              <width>5</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>5</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_39">
+            <property name="minimumSize">
+             <size>
+              <width>130</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>130</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Interval Data</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QLabel" name="label_52">
+            <property name="minimumSize">
+             <size>
+              <width>5</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>5</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_41">
+            <property name="minimumSize">
+             <size>
+              <width>130</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>130</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Server Address</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QLabel" name="file_address">
+            <property name="minimumSize">
+             <size>
+              <width>150</width>
+              <height>27</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>150</width>
+              <height>27</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QLabel" name="label_58">
+            <property name="minimumSize">
+             <size>
+              <width>130</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>130</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>GPS</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="3">
+           <widget class="QLabel" name="label_59">
+            <property name="minimumSize">
+             <size>
+              <width>130</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>130</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Baudrate Master</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="3">
+           <widget class="QLabel" name="label_60">
+            <property name="minimumSize">
+             <size>
+              <width>130</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>130</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Baudrate Slave</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="4">
+           <widget class="QLabel" name="label_61">
+            <property name="minimumSize">
+             <size>
+              <width>5</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>5</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="label_46">
+            <property name="minimumSize">
+             <size>
+              <width>5</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>5</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QLabel" name="server_address">
+            <property name="minimumSize">
+             <size>
+              <width>150</width>
+              <height>27</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>150</width>
+              <height>27</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLabel" name="label_45">
+            <property name="minimumSize">
+             <size>
+              <width>5</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>5</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="2">
+           <widget class="QLabel" name="port">
+            <property name="minimumSize">
+             <size>
+              <width>150</width>
+              <height>27</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>150</width>
+              <height>27</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
             </property>
            </widget>
           </item>
@@ -1452,7 +1617,70 @@
            <widget class="QLabel" name="interval_data">
             <property name="minimumSize">
              <size>
-              <width>141</width>
+              <width>150</width>
+              <height>27</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>150</width>
+              <height>27</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_40">
+            <property name="minimumSize">
+             <size>
+              <width>130</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>130</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Interval Relay</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QLabel" name="label_54">
+            <property name="minimumSize">
+             <size>
+              <width>5</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>5</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="2">
+           <widget class="QLabel" name="utc">
+            <property name="minimumSize">
+             <size>
+              <width>150</width>
+              <height>27</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>150</width>
               <height>27</height>
              </size>
             </property>
@@ -1469,16 +1697,126 @@
               <height>17</height>
              </size>
             </property>
+            <property name="maximumSize">
+             <size>
+              <width>130</width>
+              <height>17</height>
+             </size>
+            </property>
             <property name="text">
              <string>Mode HTTP</string>
             </property>
            </widget>
           </item>
-          <item row="6" column="2">
-           <widget class="QLabel" name="port">
+          <item row="2" column="1">
+           <widget class="QLabel" name="label_50">
             <property name="minimumSize">
              <size>
-              <width>141</width>
+              <width>5</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>5</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QLabel" name="label_57">
+            <property name="minimumSize">
+             <size>
+              <width>130</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>130</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Send Relay</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="4">
+           <widget class="QLabel" name="label_62">
+            <property name="minimumSize">
+             <size>
+              <width>5</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>5</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="4">
+           <widget class="QLabel" name="label_63">
+            <property name="minimumSize">
+             <size>
+              <width>5</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>5</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="4">
+           <widget class="QLabel" name="label_64">
+            <property name="minimumSize">
+             <size>
+              <width>5</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>5</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="5">
+           <widget class="QLabel" name="send_relay">
+            <property name="minimumSize">
+             <size>
+              <width>150</width>
+              <height>27</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>150</width>
               <height>27</height>
              </size>
             </property>
@@ -1487,63 +1825,55 @@
             </property>
            </widget>
           </item>
-          <item row="6" column="0">
-           <widget class="QLabel" name="label_53">
+          <item row="1" column="5">
+           <widget class="QLabel" name="gps">
             <property name="minimumSize">
              <size>
-              <width>130</width>
-              <height>17</height>
+              <width>150</width>
+              <height>27</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>150</width>
+              <height>27</height>
              </size>
             </property>
             <property name="text">
-             <string>Port</string>
+             <string/>
             </property>
            </widget>
           </item>
-          <item row="6" column="1">
-           <widget class="QLabel" name="label_54">
+          <item row="2" column="5">
+           <widget class="QLabel" name="baudrate_master">
             <property name="minimumSize">
              <size>
-              <width>5</width>
-              <height>17</height>
+              <width>150</width>
+              <height>27</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>150</width>
+              <height>27</height>
              </size>
             </property>
             <property name="text">
-             <string>:</string>
+             <string/>
             </property>
            </widget>
           </item>
-          <item row="7" column="0">
-           <widget class="QLabel" name="label_55">
+          <item row="3" column="5">
+           <widget class="QLabel" name="baudrate_slave">
             <property name="minimumSize">
              <size>
-              <width>130</width>
-              <height>17</height>
+              <width>150</width>
+              <height>27</height>
              </size>
             </property>
-            <property name="text">
-             <string>UTC</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="1">
-           <widget class="QLabel" name="label_56">
-            <property name="minimumSize">
+            <property name="maximumSize">
              <size>
-              <width>5</width>
-              <height>17</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="2">
-           <widget class="QLabel" name="utc">
-            <property name="minimumSize">
-             <size>
-              <width>141</width>
+              <width>150</width>
               <height>27</height>
              </size>
             </property>
@@ -1654,6 +1984,82 @@
          <column>
           <property name="text">
            <string>Data Bits</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_formula">
+      <attribute name="title">
+       <string>Formula</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_15">
+       <item row="0" column="0">
+        <widget class="QTableWidget" name="tabel_formula">
+         <column>
+          <property name="text">
+           <string/>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string/>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>No.</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Name</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Type</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>H/x</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>P/A</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>b</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Q</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>V</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>m</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>c</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Status</string>
           </property>
          </column>
         </widget>
@@ -1806,43 +2212,667 @@
            <string>Status</string>
           </property>
          </column>
+         <column>
+          <property name="text">
+           <string>SD Card</string>
+          </property>
+         </column>
         </widget>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_data_m">
+     <widget class="QWidget" name="tab_system_m">
       <attribute name="title">
-       <string>Data Monitoring</string>
+       <string>System Monitoring</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_13">
+      <layout class="QGridLayout" name="gridLayout_16">
        <item row="0" column="0">
-        <widget class="QTableWidget" name="tabel_data_m">
-         <column>
-          <property name="text">
-           <string>ID</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Register</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Name</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Value</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Unit</string>
-          </property>
-         </column>
-        </widget>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QLabel" name="label_66">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>20</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>System</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QGridLayout" name="gridLayout_13">
+           <item row="7" column="0">
+            <widget class="QLabel" name="label_81">
+             <property name="minimumSize">
+              <size>
+               <width>130</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>130</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Uptime Module</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QLabel" name="label_74">
+             <property name="minimumSize">
+              <size>
+               <width>5</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>5</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>:</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QLabel" name="status_modem">
+             <property name="minimumSize">
+              <size>
+               <width>141</width>
+               <height>27</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_71">
+             <property name="minimumSize">
+              <size>
+               <width>130</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>130</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>SIM Activated</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="1">
+            <widget class="QLabel" name="label_79">
+             <property name="minimumSize">
+              <size>
+               <width>5</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>5</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>:</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="1">
+            <widget class="QLabel" name="label_84">
+             <property name="minimumSize">
+              <size>
+               <width>5</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>5</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>:</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="2">
+            <widget class="QLabel" name="status_sim_2">
+             <property name="minimumSize">
+              <size>
+               <width>141</width>
+               <height>27</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="1">
+            <widget class="QLabel" name="label_82">
+             <property name="minimumSize">
+              <size>
+               <width>5</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>5</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>:</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="2">
+            <widget class="QLabel" name="modem_send_fail">
+             <property name="minimumSize">
+              <size>
+               <width>141</width>
+               <height>27</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="0">
+            <widget class="QLabel" name="label_78">
+             <property name="minimumSize">
+              <size>
+               <width>130</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>130</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Modem Send Fail</string>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="2">
+            <widget class="QLabel" name="firmware_version">
+             <property name="minimumSize">
+              <size>
+               <width>141</width>
+               <height>27</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="2">
+            <widget class="QLabel" name="uptime_module">
+             <property name="minimumSize">
+              <size>
+               <width>141</width>
+               <height>27</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="1">
+            <widget class="QLabel" name="label_76">
+             <property name="minimumSize">
+              <size>
+               <width>5</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>5</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>:</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="2">
+            <widget class="QLabel" name="status_sim_1">
+             <property name="minimumSize">
+              <size>
+               <width>141</width>
+               <height>27</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="label_75">
+             <property name="minimumSize">
+              <size>
+               <width>130</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>130</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Status SIM 2</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="2">
+            <widget class="QLabel" name="modem_send_success">
+             <property name="minimumSize">
+              <size>
+               <width>141</width>
+               <height>27</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QLabel" name="label_77">
+             <property name="minimumSize">
+              <size>
+               <width>130</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>130</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Modem Send Success</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="label_73">
+             <property name="minimumSize">
+              <size>
+               <width>130</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>130</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Status SIM 1</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_69">
+             <property name="minimumSize">
+              <size>
+               <width>130</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>130</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Status Modem</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLabel" name="label_70">
+             <property name="minimumSize">
+              <size>
+               <width>5</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>5</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>:</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QLabel" name="signal">
+             <property name="minimumSize">
+              <size>
+               <width>141</width>
+               <height>27</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLabel" name="label_68">
+             <property name="minimumSize">
+              <size>
+               <width>5</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>5</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>:</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_67">
+             <property name="minimumSize">
+              <size>
+               <width>130</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>130</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Signal</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <widget class="QLabel" name="sim_activated">
+             <property name="minimumSize">
+              <size>
+               <width>141</width>
+               <height>27</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="1">
+            <widget class="QLabel" name="label_80">
+             <property name="minimumSize">
+              <size>
+               <width>5</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>5</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>:</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLabel" name="label_72">
+             <property name="minimumSize">
+              <size>
+               <width>5</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>5</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>:</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="0">
+            <widget class="QLabel" name="label_83">
+             <property name="minimumSize">
+              <size>
+               <width>130</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>130</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Firmware Version</string>
+             </property>
+            </widget>
+           </item>
+           <item row="9" column="0">
+            <widget class="QLabel" name="label_85">
+             <property name="minimumSize">
+              <size>
+               <width>130</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>130</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Build Date</string>
+             </property>
+            </widget>
+           </item>
+           <item row="9" column="1">
+            <widget class="QLabel" name="label_86">
+             <property name="minimumSize">
+              <size>
+               <width>5</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>5</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>:</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="9" column="2">
+            <widget class="QLabel" name="build_date">
+             <property name="minimumSize">
+              <size>
+               <width>141</width>
+               <height>27</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <spacer name="verticalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item row="0" column="1">
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <widget class="QLabel" name="label_65">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>20</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Data</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QTableWidget" name="tabel_data_m">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+           <column>
+            <property name="text">
+             <string>ID</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Register</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Name</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Value</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Unit</string>
+            </property>
+           </column>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>

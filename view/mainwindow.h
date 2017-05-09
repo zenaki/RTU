@@ -6,19 +6,20 @@
 #include <QProcess>
 #include <QtWidgets>
 
-#include <util/utama.h>
-#include <model/interface_manipulator/mtreeview.h>
-#include <controller/worker.h>
-#include <model/communication/serial.h>
+#include "util/utama.h"
+#include "model/interface_manipulator/mtreeview.h"
+#include "controller/worker.h"
+#include "model/communication/serial.h"
 
-#include <view/form_addmodule.h>
+#include "view/form_addmodule.h"
 #include <ui_form_addmodule.h>
 
-#include <view/settingsdialog.h>
-#include <view/mainwindow.h>
-#include <model/module.h>
+#include "view/settingsdialog.h"
+#include "view/mainwindow.h"
+#include "model/module.h"
 //#include <model/interface_manipulator/qlightboxwidget.h>
-#include <view/progressdialog.h>
+#include "view/progressdialog.h"
+#include "view/debugdialog.h"
 
 #include <view/loginform.h>
 #include <ui_loginform.h>
@@ -195,6 +196,8 @@ private slots:
      */
     void on_actionExit_triggered();
 
+    void on_actionDebug_Modem_triggered();
+
 private:
     //** Other Class **//
     /**
@@ -235,6 +238,10 @@ private:
      * @brief progress_dialog
      */
     ProgressDialog *progress_dialog;
+    /**
+     * @brief debug_dialog
+     */
+    DebugDialog    *debug_dialog;
 
     /**
      * @brief num_window

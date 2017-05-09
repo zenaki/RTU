@@ -38,7 +38,8 @@ HEADERS += \
     view/form_addmodule.h \
     controller/worker.h \
     view/settingsdialog.h \
-    view/progressdialog.h
+    view/progressdialog.h \
+    view/debugdialog.h
 
 SOURCES += \
     main.cpp\
@@ -56,7 +57,8 @@ SOURCES += \
     view/form_addmodule.cpp \
     controller/worker.cpp \
     view/settingsdialog.cpp \
-    view/progressdialog.cpp
+    view/progressdialog.cpp \
+    view/debugdialog.cpp
 
 FORMS += \
     view/mainwindow.ui \
@@ -64,7 +66,8 @@ FORMS += \
     view/loginform.ui \
     view/form_addmodule.ui \
     view/settingsdialog.ui \
-    view/progressdialog.ui
+    view/progressdialog.ui \
+    view/debugdialog.ui
 
 RESOURCES += \
     image.qrc

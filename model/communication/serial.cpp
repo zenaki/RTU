@@ -104,6 +104,15 @@ void serial::write_parsing_src(struct t_serial_settings *tSerial)
     sett.setValue("STR_DATA_SRC", tSerial->str_data_src);
 }
 
+void serial::write_parsing_frm(struct t_serial_settings *tSerial)
+{
+    QString pth;
+    pth = PATH_SERIAL_PARSING;
+    QSettings sett(pth, QSettings::IniFormat);
+
+    sett.setValue("STR_DATA_FRM", tSerial->str_data_frm);
+}
+
 void serial::write_parsing_dat(struct t_serial_settings *tSerial)
 {
     QString pth;
@@ -111,6 +120,15 @@ void serial::write_parsing_dat(struct t_serial_settings *tSerial)
     QSettings sett(pth, QSettings::IniFormat);
 
     sett.setValue("STR_DATA_DAT", tSerial->str_data_dat);
+}
+
+void serial::write_parsing_sys(struct t_serial_settings *tSerial)
+{
+    QString pth;
+    pth = PATH_SERIAL_PARSING;
+    QSettings sett(pth, QSettings::IniFormat);
+
+    sett.setValue("STR_DATA_SYS", tSerial->str_data_sys);
 }
 
 void serial::read_parsing(struct t_serial_settings *tSerial)
@@ -125,7 +143,9 @@ void serial::read_parsing(struct t_serial_settings *tSerial)
     tSerial->str_data_io = sett.value("STR_DATA_IO").toString();
     tSerial->str_data_sim = sett.value("STR_DATA_SIM").toString();
     tSerial->str_data_src = sett.value("STR_DATA_SRC").toString();
+    tSerial->str_data_frm = sett.value("STR_DATA_FRM").toString();
     tSerial->str_data_dat = sett.value("STR_DATA_DAT").toString();
+    tSerial->str_data_sys = sett.value("STR_DATA_SYS").toString();
 
     code.encryp(pth);
 }

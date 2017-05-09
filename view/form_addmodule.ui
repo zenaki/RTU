@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>640</width>
-    <height>765</height>
+    <width>1070</width>
+    <height>530</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>640</width>
+    <width>0</width>
     <height>0</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>640</width>
+    <width>16777215</width>
     <height>16777215</height>
    </size>
   </property>
@@ -32,8 +32,8 @@
   <widget class="QCheckBox" name="ck_flag_active_gsm_2">
    <property name="geometry">
     <rect>
-     <x>370</x>
-     <y>56</y>
+     <x>450</x>
+     <y>60</y>
      <width>121</width>
      <height>22</height>
     </rect>
@@ -51,8 +51,8 @@
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>730</y>
+     <x>450</x>
+     <y>500</y>
      <width>601</width>
      <height>27</height>
     </rect>
@@ -66,7 +66,7 @@
     <rect>
      <x>19</x>
      <y>16</y>
-     <width>341</width>
+     <width>411</width>
      <height>66</height>
     </rect>
    </property>
@@ -130,8 +130,8 @@
   <widget class="QGroupBox" name="gbCom">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>410</y>
+     <x>450</x>
+     <y>90</y>
      <width>601</width>
      <height>311</height>
     </rect>
@@ -708,8 +708,8 @@
     <rect>
      <x>20</x>
      <y>90</y>
-     <width>601</width>
-     <height>311</height>
+     <width>421</width>
+     <height>431</height>
     </rect>
    </property>
    <property name="title">
@@ -721,7 +721,7 @@
       <x>0</x>
       <y>0</y>
       <width>414</width>
-      <height>309</height>
+      <height>433</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -740,7 +740,7 @@
      </item>
      <item>
       <layout class="QGridLayout" name="gridLayout_6">
-       <item row="5" column="1">
+       <item row="7" column="1">
         <widget class="QComboBox" name="cb_mode_http">
          <property name="minimumSize">
           <size>
@@ -765,6 +765,123 @@
           </property>
          </item>
         </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="edit_file_address">
+         <property name="minimumSize">
+          <size>
+           <width>141</width>
+           <height>27</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_22">
+         <property name="text">
+          <string>Interval Relay</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <layout class="QHBoxLayout" name="horizontalLayout_7">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_8">
+           <item>
+            <widget class="QSpinBox" name="spin_interval_data_d">
+             <property name="minimum">
+              <number>0</number>
+             </property>
+             <property name="maximum">
+              <number>24855</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_31">
+             <property name="text">
+              <string>D</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_9">
+           <item>
+            <widget class="QSpinBox" name="spin_interval_data_h">
+             <property name="minimum">
+              <number>0</number>
+             </property>
+             <property name="maximum">
+              <number>24</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_32">
+             <property name="text">
+              <string>H</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_10">
+           <item>
+            <widget class="QSpinBox" name="spin_interval_data_m">
+             <property name="minimum">
+              <number>0</number>
+             </property>
+             <property name="maximum">
+              <number>60</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_33">
+             <property name="text">
+              <string>m</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_11">
+           <item>
+            <widget class="QSpinBox" name="spin_interval_data_s">
+             <property name="minimum">
+              <number>0</number>
+             </property>
+             <property name="maximum">
+              <number>60</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_34">
+             <property name="text">
+              <string>s</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
        </item>
        <item row="3" column="1">
         <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -866,42 +983,6 @@
          </item>
         </layout>
        </item>
-       <item row="0" column="1">
-        <widget class="QLineEdit" name="edit_server_address">
-         <property name="minimumSize">
-          <size>
-           <width>141</width>
-           <height>27</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>16777215</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_22">
-         <property name="text">
-          <string>Interval Relay</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_26">
-         <property name="minimumSize">
-          <size>
-           <width>111</width>
-           <height>17</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>File Address</string>
-         </property>
-        </widget>
-       </item>
        <item row="2" column="1">
         <widget class="QComboBox" name="cb_webclient">
          <property name="minimumSize">
@@ -928,140 +1009,19 @@
          </item>
         </widget>
        </item>
-       <item row="1" column="1">
-        <widget class="QLineEdit" name="edit_file_address">
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="edit_server_address">
          <property name="minimumSize">
           <size>
            <width>141</width>
            <height>27</height>
           </size>
          </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_25">
-         <property name="minimumSize">
+         <property name="maximumSize">
           <size>
-           <width>111</width>
-           <height>17</height>
+           <width>16777215</width>
+           <height>16777215</height>
           </size>
-         </property>
-         <property name="text">
-          <string>Server Address</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_23">
-         <property name="text">
-          <string>Interval Data</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <layout class="QHBoxLayout" name="horizontalLayout_7">
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_8">
-           <item>
-            <widget class="QSpinBox" name="spin_interval_data_d">
-             <property name="minimum">
-              <number>0</number>
-             </property>
-             <property name="maximum">
-              <number>24855</number>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_31">
-             <property name="text">
-              <string>D</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_9">
-           <item>
-            <widget class="QSpinBox" name="spin_interval_data_h">
-             <property name="minimum">
-              <number>0</number>
-             </property>
-             <property name="maximum">
-              <number>24</number>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_32">
-             <property name="text">
-              <string>H</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_10">
-           <item>
-            <widget class="QSpinBox" name="spin_interval_data_m">
-             <property name="minimum">
-              <number>0</number>
-             </property>
-             <property name="maximum">
-              <number>60</number>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_33">
-             <property name="text">
-              <string>m</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_11">
-           <item>
-            <widget class="QSpinBox" name="spin_interval_data_s">
-             <property name="minimum">
-              <number>0</number>
-             </property>
-             <property name="maximum">
-              <number>60</number>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_34">
-             <property name="text">
-              <string>s</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="label_35">
-         <property name="text">
-          <string>Mode HTTP</string>
          </property>
         </widget>
        </item>
@@ -1078,14 +1038,57 @@
          </property>
         </widget>
        </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="label_36">
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_26">
+         <property name="minimumSize">
+          <size>
+           <width>111</width>
+           <height>17</height>
+          </size>
+         </property>
          <property name="text">
-          <string>Port</string>
+          <string>File Address</string>
          </property>
         </widget>
        </item>
-       <item row="6" column="1">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_25">
+         <property name="minimumSize">
+          <size>
+           <width>111</width>
+           <height>17</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Server Address</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="1">
+        <widget class="QSpinBox" name="spin_utc">
+         <property name="minimum">
+          <number>-11</number>
+         </property>
+         <property name="maximum">
+          <number>12</number>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QComboBox" name="cb_send_data_relay">
+         <item>
+          <property name="text">
+           <string>NOT ACTIVE</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>ACTIVE</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="8" column="1">
         <widget class="QSpinBox" name="spin_port">
          <property name="minimum">
           <number>0</number>
@@ -1096,20 +1099,111 @@
         </widget>
        </item>
        <item row="7" column="0">
+        <widget class="QLabel" name="label_35">
+         <property name="text">
+          <string>Mode HTTP</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="0">
         <widget class="QLabel" name="label_37">
          <property name="text">
           <string>UTC</string>
          </property>
         </widget>
        </item>
-       <item row="7" column="1">
-        <widget class="QSpinBox" name="spin_utc">
-         <property name="minimum">
-          <number>-11</number>
+       <item row="5" column="0">
+        <widget class="QLabel" name="label_23">
+         <property name="text">
+          <string>Interval Data</string>
          </property>
-         <property name="maximum">
-          <number>12</number>
+        </widget>
+       </item>
+       <item row="8" column="0">
+        <widget class="QLabel" name="label_36">
+         <property name="text">
+          <string>Port</string>
          </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_38">
+         <property name="text">
+          <string>Send Data Relay</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="label_39">
+         <property name="text">
+          <string>GPS</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QComboBox" name="cb_gps">
+         <item>
+          <property name="text">
+           <string>NOT ACTIVE</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>ACTIVE</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="10" column="0">
+        <widget class="QLabel" name="label_40">
+         <property name="text">
+          <string>Baudrate Master</string>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="1">
+        <widget class="QComboBox" name="cb_baudrate_master">
+         <item>
+          <property name="text">
+           <string>9600</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>38400</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>57600</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="11" column="0">
+        <widget class="QLabel" name="label_41">
+         <property name="text">
+          <string>Baudrate Slave</string>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="1">
+        <widget class="QComboBox" name="cb_baudrate_slave">
+         <item>
+          <property name="text">
+           <string>9600</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>38400</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>57600</string>
+          </property>
+         </item>
         </widget>
        </item>
       </layout>
@@ -1117,6 +1211,11 @@
     </layout>
    </widget>
   </widget>
+  <zorder>buttonBox</zorder>
+  <zorder>layoutWidget1</zorder>
+  <zorder>gbCom</zorder>
+  <zorder>gbEnv</zorder>
+  <zorder>ck_flag_active_gsm_2</zorder>
  </widget>
  <tabstops>
   <tabstop>edit_module_name</tabstop>

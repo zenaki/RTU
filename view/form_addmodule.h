@@ -78,13 +78,13 @@ private slots:
      * @brief on_cb_com_1_currentIndexChanged
      * @param index
      */
-    void on_cb_com_1_currentIndexChanged(int index);
+    void on_cb_com_1_currentIndexChanged(QString index);
 
     /**
      * @brief on_cb_com_2_currentIndexChanged
      * @param index
      */
-    void on_cb_com_2_currentIndexChanged(int index);
+    void on_cb_com_2_currentIndexChanged(QString index);
 
     /**
      * @brief enabledButton

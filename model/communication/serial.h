@@ -68,10 +68,20 @@ public:
      */
     void write_parsing_src(struct t_serial_settings *tSerial);
     /**
+     * @brief write_parsing_frm
+     * @param tSerial
+     */
+    void write_parsing_frm(struct t_serial_settings *tSerial);
+    /**
      * @brief write_parsing_dat
      * @param tSerial
      */
     void write_parsing_dat(struct t_serial_settings *tSerial);
+    /**
+     * @brief write_parsing_sys
+     * @param tSerial
+     */
+    void write_parsing_sys(struct t_serial_settings *tSerial);
 
     /**
      * @brief read_parsing

@@ -40,6 +40,12 @@ public:
      * @param address
      */
     void save_as_module(struct t_module *tmodule, QString address);
+    /**
+     * @brief validate_module
+     * @param tmodule
+     * @return
+     */
+    bool validate_module(t_module *tmodule);
 };
 
 #endif // MODULE_H

@@ -14,11 +14,15 @@ QString worker::newModule(QStandardItemModel *tree, QTreeView *treeView, QString
     mod.read_module(&tModule, address);
 
     QString modules;
-    modules.sprintf("%s [%s]", tModule.module_name, tModule.serial_number);
-//    modules.sprintf("m_%s.dbe", tModule.module_name);
-    mTree.appendItem(tree, treeView, modules);
+    if (!tModule.module_name.isEmpty() && !tModule.serial_number.isEmpty()) {
+        //    modules.sprintf("%s [%s]", tModule.module_name, tModule.serial_number);
+            modules = tModule.module_name + " [" + tModule.serial_number + "]";
+        //    modules.sprintf("m_%s.dbe", tModule.module_name);
+            mTree.appendItem(tree, treeView, modules);
 
-    return modules;
+            return modules;
+    }
+    return "Error";
 }
 
 QString worker::editModule(QStandardItemModel *tree, QTreeView *treeView, QString title){
@@ -30,7 +34,8 @@ QString worker::editModule(QStandardItemModel *tree, QTreeView *treeView, QStrin
     mod.read_module(&tModule, address);
 
     QString modules;
-    modules.sprintf("%s", tModule.module_name);
+//    modules.sprintf("%s", tModule.module_name);
+    modules = tModule.module_name;
 //    modules.sprintf("m_%s.dbe", tModule.module_name);
     mTree.appendItem(tree, treeView, modules);
 
@@ -45,11 +50,13 @@ QString worker::loadModule(QStandardItemModel *tree, QTreeView *treeView, QStrin
     tModule.flag_active = 1;
 
     if (!NewName.isEmpty()) {
-        strcpy(tModule.module_name, NewName.toLatin1());
+//        strcpy(tModule.module_name, NewName.toLatin1());
+        tModule.module_name = NewName;
     }
 
     QString modules;
-    modules.sprintf("%s [%s]", tModule.module_name, tModule.serial_number);
+//    modules.sprintf("%s [%s]", tModule.module_name, tModule.serial_number);
+    modules = tModule.module_name + " [" + tModule.serial_number + "]";
 //    modules.sprintf("m_%s.dbe", tModule.module_name);
     mTree.appendItem(tree, treeView, modules);
 
@@ -62,7 +69,8 @@ QString worker::checkModule(QString address){
     mod.read_module(&tModule, address);
 
     QString modules;
-    modules.sprintf("m_%s.dbe", tModule.module_name);
+//    modules.sprintf("m_%s.dbe", tModule.module_name);
+    modules = "m_" + tModule.module_name + ".dbe";
     return modules;
 }
 
@@ -75,7 +83,8 @@ QString worker::check_statusModule(QString address){
 
     QString modules;
     if(tModule.flag_active){
-        modules.sprintf("m_%s.dbe", tModule.module_name);
+//        modules.sprintf("m_%s.dbe", tModule.module_name);
+        modules = "m_" + tModule.module_name + ".dbe";
         return modules;
     }
     return "none";
@@ -148,7 +157,7 @@ bool worker::state_of_module(int num, QString newModule, QString *existModule){
 bool worker::Request_ENV(QSerialPort *Serial_Com, bool timeout)
 {
 //    QString Request = "hmi_cek_env\r\n";
-    QString Request = "0000";
+    QString Request = MODE_GET_ENV;
     QString Desc = "Request Environment ..";
     serial_write(Serial_Com, Request, WAIT_WRITE);
 //    Serial_Com->write(Request.toUtf8().data(), qstrlen(Request.toUtf8().data()));

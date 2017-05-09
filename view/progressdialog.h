@@ -90,10 +90,20 @@ public:
      */
     void Request_Sumber(bool stat);
     /**
+     * @brief Request_Formula
+     * @param stat
+     */
+    void Request_Formula(bool stat);
+    /**
      * @brief Request_Data
      * @param stat
      */
     void Request_Data(bool stat);
+    /**
+     * @brief Request_System
+     * @param stat
+     */
+    void Request_System(bool stat);
 
     /**
      * @brief Get_ENV
@@ -127,11 +137,23 @@ public:
      */
     void Get_Sumber(struct t_module *tModule, QStringList data);
     /**
+     * @brief Get_Formula
+     * @param tModule
+     * @param data
+     */
+    void Get_Formula(struct t_module *tModule, QStringList data);
+    /**
      * @brief Get_Data
      * @param tModule
      * @param data
      */
     void Get_Data(struct t_module *tModule, QStringList data);
+    /**
+     * @brief Get_System
+     * @param tModule
+     * @param data
+     */
+    void Get_System(struct t_module *tModule, QStringList data);
 
     /**
      * @brief mod
@@ -233,6 +255,13 @@ public:
      * @param index
      */
     void Set_Sumber(bool stat, struct t_module *tModule, QString index = 0);
+    /**
+     * @brief Set_Formula
+     * @param stat
+     * @param tModule
+     * @param index
+     */
+    void Set_Formula(bool stat, struct t_module *tModule, QString index = 0);
     /**
      * @brief Set_Data
      * @param stat

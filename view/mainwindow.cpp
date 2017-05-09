@@ -136,18 +136,28 @@ void MainWindow::on_actionNew_triggered()
                 if (reply == QMessageBox::Yes) {
                     QString Address = ".RTUdata/module/" + newFiles;
                     mod->read_module(&tModule, Address);
-                    strcpy(tModule.serial_number, GetNoSeri.toLatin1());
+//                    strcpy(tModule.serial_number, GetNoSeri.toLatin1());
+                    tModule.serial_number = GetNoSeri;
 
                     progress_dialog->show();
                     progress_dialog->setWindowTitle("Get from board ..");
-                    progress_dialog->Processing(SerialPort, Address, "0000;0001;0005;0002;0004");
+                    progress_dialog->Processing(SerialPort, Address,
+                                                QString(MODE_GET_ENV) + ";" +
+                                                QString(MODE_GET_SIM) + ";" +
+                                                QString(MODE_GET_I0) + ";" +
+                                                QString(MODE_GET_DAT) + ";" +
+                                                QString(MODE_GET_SRC) + ";" +
+                                                QString(MODE_GET_SIM) + ";" +
+                                                QString(MODE_GET_SYS));
                     progress_dialog->close();
 
                 } else {
                     GetNamaBoard.append("_new");
                     QString newModule = "m_" + GetNamaBoard + ".dbe";
-                    strcpy(tModule.module_name, GetNamaBoard.toUtf8().data());
-                    strcpy(tModule.serial_number, GetNoSeri.toLatin1());
+//                    strcpy(tModule.module_name, GetNamaBoard.toUtf8().data());
+                    tModule.module_name = GetNamaBoard;
+//                    strcpy(tModule.serial_number, GetNoSeri.toLatin1());
+                    tModule.serial_number = GetNoSeri;
                     QString Address = ".RTUdata/module/" + newModule;
 
                     tModule.InputName.clear();
@@ -156,7 +166,14 @@ void MainWindow::on_actionNew_triggered()
 
                     progress_dialog->show();
                     progress_dialog->setWindowTitle("Get from board ..");
-                    progress_dialog->Processing(SerialPort, Address, "0000;0001;0005;0002;0004");
+                    progress_dialog->Processing(SerialPort, Address,
+                                                QString(MODE_GET_ENV) + ";" +
+                                                QString(MODE_GET_SIM) + ";" +
+                                                QString(MODE_GET_I0) + ";" +
+                                                QString(MODE_GET_DAT) + ";" +
+                                                QString(MODE_GET_SRC) + ";" +
+                                                QString(MODE_GET_SIM) + ";" +
+                                                QString(MODE_GET_SYS));
                     progress_dialog->close();
 
                     faddModule = new form_addModule(this, false, Address, 1);
@@ -181,7 +198,8 @@ void MainWindow::on_actionNew_triggered()
                     progress_dialog->Processing(SerialPort, Address, "0100;0101");
                     progress_dialog->close();
 
-                    this->GetNamaBoard.sprintf("%s", tModule.module_name);
+//                    this->GetNamaBoard.sprintf("%s", tModule.module_name);
+                    this->GetNamaBoard = tModule.module_name;
                     this->Refresh_Tree();
 
                     if (fail) {
@@ -200,17 +218,37 @@ void MainWindow::on_actionNew_triggered()
 
                 progress_dialog->show();
                 progress_dialog->setWindowTitle("Get from board ..");
-                progress_dialog->Processing(SerialPort, Address, "0000;0001;0005;0002;0004");
+                progress_dialog->Processing(SerialPort, Address,
+                                            QString(MODE_GET_ENV) + ";" +
+                                            QString(MODE_GET_SIM) + ";" +
+                                            QString(MODE_GET_I0) + ";" +
+                                            QString(MODE_GET_SRC) + ";" +
+                                            QString(MODE_GET_FRM) + ";" +
+                                            QString(MODE_GET_DAT) + ";" +
+                                            QString(MODE_GET_SYS));
                 progress_dialog->close();
 
-                strcpy(tModule.module_name, GetNamaBoard.toUtf8().data());
-                strcpy(tModule.serial_number, GetNoSeri.toLatin1());
+//                strcpy(tModule.module_name, GetNamaBoard.toUtf8().data());
+                tModule.module_name = GetNamaBoard;
+//                strcpy(tModule.serial_number, GetNoSeri.toLatin1());
+                tModule.serial_number = GetNoSeri;
 
                 QString title;
-                title.sprintf("%s", tModule.module_name);
+//                title.sprintf("%s", tModule.module_name);
+                title = tModule.module_name;
 
-                module_name[module_count] = work->newModule(modelTree, this->ui->treeView, title);
-                module_count++;
+                if (!title.isEmpty()) {
+                    QString temp = work->newModule(modelTree, this->ui->treeView, title);
+                    if (temp != "Error") {
+                        module_name[module_count] = work->newModule(modelTree, this->ui->treeView, title);
+                        module_count++;
+                        this->GetNamaBoard = title;
+                    } else {
+                        QMessageBox::warning(this, "Debug Error", "Module Name and Serial Number is Empty ..");
+                    }
+                } else {
+                    QMessageBox::warning(this, "Debug Error", "Title is Empty ..");
+                }
             }
 //        } else {
 ////            QMessageBox::critical(this, tr("Error"), SerialPort->errorString());
@@ -235,9 +273,18 @@ void MainWindow::on_actionNew_triggered()
         QString title;
         title.sprintf("%s [%s]", faddModule->ui->edit_module_name->text().toUtf8().data(), faddModule->ui->edit_sn->text().toUtf8().data());
 
-        module_name[module_count] = work->newModule(modelTree, this->ui->treeView, title);
-        module_count++;
-        this->GetNamaBoard = title;
+        if (!title.isEmpty()) {
+            QString temp = work->newModule(modelTree, this->ui->treeView, title);
+            if (temp != "Error") {
+                module_name[module_count] = work->newModule(modelTree, this->ui->treeView, title);
+                module_count++;
+                this->GetNamaBoard = title;
+            } else {
+                QMessageBox::warning(this, "Debug Error", "Module Name and Serial Number is Empty ..");
+            }
+        } else {
+            QMessageBox::warning(this, "Debug Error", "Title is Empty ..");
+        }
     }
     QString Message = this->GetNamaBoard;
     Message.prepend("Module with name : \n").append("\nwas created ..");
@@ -279,7 +326,8 @@ void MainWindow::on_actionLoad_triggered()
 
     for(int i = 0; i < fileName.count(); i++){
         mod->read_module(&tModule, fileName.at(i));
-        file.sprintf("m_%s.dbe", tModule.module_name);
+//        file.sprintf("m_%s.dbe", tModule.module_name);
+        file = "m_" + tModule.module_name + ".dbe";
 //        file = work->checkModule(QString(fileName.at(i)).toUtf8().data());
         cek = false;
         for (int j = 0; j < module_count; j++) {
@@ -293,7 +341,9 @@ void MainWindow::on_actionLoad_triggered()
         }
         if (!cek) {
             mod->write_module(&tModule);
-            QString pth; pth.sprintf(".RTUdata/module/m_%s.dbe", tModule.module_name);
+            QString pth;
+//            pth.sprintf(".RTUdata/module/m_%s.dbe", tModule.module_name);
+            pth = QString(PATH_MODULE) + "m_" + tModule.module_name + ".dbe";
             cryp code; code.encryp(pth);
 
 //            QApplication::processEvents();
@@ -310,7 +360,9 @@ void MainWindow::on_actionLoad_triggered()
             if (reply == QMessageBox::Yes) {
                 mod->read_module(&tModule, fileName[i]);
                 mod->write_module(&tModule);
-                QString pth; pth.sprintf(".RTUdata/module/m_%s.dbe", tModule.module_name);
+                QString pth;
+//                pth.sprintf(".RTUdata/module/m_%s.dbe", tModule.module_name);
+                pth = QString(PATH_MODULE) + "m_" + tModule.module_name + ".dbe";
                 cryp code; code.encryp(pth);
                 return;
             } else {
@@ -318,7 +370,8 @@ void MainWindow::on_actionLoad_triggered()
                 cek = false;
                 while (1) {
                     cpy_num++;
-                    newName.sprintf("%s_%d", tModule.module_name, cpy_num);
+//                    newName.sprintf("%s_%d", tModule.module_name, cpy_num);
+                    newName = tModule.module_name + "_" + QString::number(cpy_num);
                     for (int l = 0; l < module_count; l++) {
                         currName = module_name[l];
                         if (currName == newName) {
@@ -326,7 +379,8 @@ void MainWindow::on_actionLoad_triggered()
                             break;
                         } else {
                             cek = false;
-                            strcpy(tModule.module_name, newName.toLatin1());
+//                            strcpy(tModule.module_name, newName.toLatin1());
+                            tModule.module_name = newName;
                         }
                     }
                     if (!cek)
@@ -334,7 +388,9 @@ void MainWindow::on_actionLoad_triggered()
                 }
                 if(!cek) {
                     mod->write_module(&tModule);
-                    QString pth; pth.sprintf(".RTUdata/module/m_%s.dbe", tModule.module_name);
+                    QString pth;
+//                    pth.sprintf(".RTUdata/module/m_%s.dbe", tModule.module_name);
+                    pth = QString(PATH_MODULE) + "m_" + tModule.module_name + ".dbe";
                     cryp code; code.encryp(pth);
 
 //                    QApplication::processEvents();
@@ -366,6 +422,7 @@ void MainWindow::on_actionDelete_triggered()
             if (d_m.remove()) {
                 Message = "Module with name : " + module_name_sv + " was deleted";
                 QMessageBox::information(this, "Delete Successfully ..", Message, 0, 0);
+                module_name_sv = "";
             } else {
                 Message = d_m.errorString();
                 QMessageBox::information(this, "Delete Error ..", Message, 0, 0);
@@ -528,7 +585,7 @@ void MainWindow::readData()
                     .remove("<ENVani$")
                     .remove("ENV>")
                     .remove("Rinjani$")
-                    .remove("0000")
+                    .remove(MODE_GET_ENV)
                     .remove("hmi_cek_env")
                     .remove("\r").remove("\n").split(";");
         GetNamaBoard = val_data[0];
@@ -569,7 +626,7 @@ void MainWindow::readData()
                     .remove("<SIMani$")
                     .remove("SIM>")
                     .remove("Rinjani$")
-                    .remove("0001")
+                    .remove(MODE_GET_SIM)
                     .remove("hmi_cek_cfg_sim")
                     .remove("\r").remove("\n").remove("(X)").split("*");
         tSerial.str_data_sim = str_data;
@@ -589,11 +646,31 @@ void MainWindow::readData()
                     .remove("<SRCani$")
                     .remove("SRC>")
                     .remove("Rinjani$")
-                    .remove("0004")
+                    .remove(MODE_GET_SRC)
                     .remove("hmi_cek_sumber")
                     .remove("\r").remove("\n").remove("(X)").split("*");
         tSerial.str_data_src = str_data;
         Serial->write_parsing_src(&tSerial);
+        cryp code; code.encryp(PATH_SERIAL_PARSING);
+        str_data.clear();
+        FinishRead = true;
+        progress_dialog->write_FinishRead(FinishRead, 0, "");
+        code.encryp(PATH_SERIAL_PARSING);
+    } else if (str_data.indexOf("<FRM") > 0 && str_data.indexOf("FRM>") > 0) {
+        int a = str_data.indexOf("<FRM");
+        int b = str_data.indexOf("FRM>");
+        str_data = str_data.mid(a+4, b-a);
+        val_data = str_data
+                    .remove(" ")
+                    .remove("<FRM")
+                    .remove("<FRMani$")
+                    .remove("FRM>")
+                    .remove("Rinjani$")
+                    .remove(MODE_GET_FRM)
+                    .remove("hmi_cek_formula")
+                    .remove("\r").remove("\n").remove("(X)").split("*");
+        tSerial.str_data_frm = str_data;
+        Serial->write_parsing_frm(&tSerial);
         cryp code; code.encryp(PATH_SERIAL_PARSING);
         str_data.clear();
         FinishRead = true;
@@ -609,11 +686,31 @@ void MainWindow::readData()
                     .remove("<DATani$")
                     .remove("DAT>")
                     .remove("Rinjani$")
-                    .remove("0005")
+                    .remove(MODE_GET_DAT)
                     .remove("hmi_cek_data")
                     .remove("\r").remove("\n").remove("(X)").split("*");
         tSerial.str_data_dat = str_data;
         Serial->write_parsing_dat(&tSerial);
+        cryp code; code.encryp(PATH_SERIAL_PARSING);
+        str_data.clear();
+        FinishRead = true;
+        progress_dialog->write_FinishRead(FinishRead, 0, "");
+        code.encryp(PATH_SERIAL_PARSING);
+    } else if (str_data.indexOf("<SYS") > 0 && str_data.indexOf("SYS>") > 0) {
+        int a = str_data.indexOf("<SYS");
+        int b = str_data.indexOf("SYS>");
+        str_data = str_data.mid(a+4, b-a);
+        val_data = str_data
+                    .remove(" ")
+                    .remove("<SYS")
+                    .remove("<SYSani$")
+                    .remove("SYS>")
+                    .remove("Rinjani$")
+                    .remove(MODE_GET_SYS)
+                    .remove("hmi_cek_system")
+                    .remove("\r").remove("\n").remove("(X)").split("*");
+        tSerial.str_data_sys = str_data;
+        Serial->write_parsing_sys(&tSerial);
         cryp code; code.encryp(PATH_SERIAL_PARSING);
         str_data.clear();
         FinishRead = true;
@@ -646,7 +743,7 @@ void MainWindow::readData()
         cryp code; code.encryp(PATH_SERIAL_PARSING);
         str_data.clear();
     } else if (str_data.indexOf("Passwd salah	!") > 0 || str_data.indexOf("assword lock!") > 0) {
-        SerialPort->write("monita\r\n");
+        SerialPort->write(QByteArray(MODULE_PASSWORD)+"\r\n");
         SerialPort->write("\r\n");
         str_data.clear();
     } else if (str_data.indexOf("injani$") > 0) {
@@ -762,4 +859,18 @@ void MainWindow::on_actionEdit_User_triggered()
 void MainWindow::on_actionExit_triggered()
 {
     QApplication::quit();
+}
+
+void MainWindow::on_actionDebug_Modem_triggered()
+{
+    if (SerialPort->isOpen()) {
+        this->on_actionDisconnect_triggered();
+        debug_dialog = new DebugDialog(this, START_DEBUG_MODEM, STOP_DEBUG_MODEM, WAIT_WRITE);
+        debug_dialog->setModal(true);
+        debug_dialog->exec();
+        debug_dialog->close_window();
+        this->on_actionConnect_triggered();
+    } else {
+        QMessageBox::warning(this, "Debug Modem", "Module is not connect");
+    }
 }
