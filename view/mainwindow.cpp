@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    MainWindow::setWindowTitle("Sarasvati ver 1.0.2-5 - MONITA RTU Configuration");
+    MainWindow::setWindowTitle("Sarasvati ver 1.0.2-6 - MONITA RTU Configuration");
     ui->treeView->header()->setHidden(true);
     ui->treeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
@@ -289,6 +289,7 @@ void MainWindow::on_actionNew_triggered()
     QString Message = this->GetNamaBoard;
     Message.prepend("Module with name : \n").append("\nwas created ..");
     QMessageBox::information(this, "New Module", Message, 0, 0);
+    this->on_actionRefresh_triggered();
 }
 
 void MainWindow::on_actionSave_triggered()
@@ -575,6 +576,7 @@ void MainWindow::readData()
     QCoreApplication::processEvents();
     struct t_serial_settings tSerial;
     str_data.append(SerialPort->readAll());
+//    qDebug() << str_data;
     if (str_data.indexOf("<ENV") > 0 && str_data.indexOf("ENV>") > 0) {
         int a = str_data.indexOf("<ENV");
         int b = str_data.indexOf("ENV>");
@@ -721,6 +723,11 @@ void MainWindow::readData()
         progress_dialog->write_FinishRead(FinishRead, 0, "");
         str_data.clear();
         cryp code; code.encryp(PATH_SERIAL_PARSING);
+    } else if (str_data.indexOf("<RESET OK>") > 0) {
+        FinishRead = true;
+        progress_dialog->write_FinishRead(FinishRead, 0, "");
+        str_data.clear();
+        cryp code; code.encryp(PATH_SERIAL_PARSING);
     } else if (str_data.indexOf("<OK:") > 0 && str_data.indexOf(":OK>") > 0) {
         int a = str_data.indexOf("<OK:");
         int b = str_data.indexOf(":OK>");
@@ -793,6 +800,7 @@ void MainWindow::Refresh_Tree()
             module_count++;
         }
     }
+    this->ui->treeView->expandAll();
 
 //    mTree.add_firstItem(modelTree, ui->treeView, "Text");
     //    mTree.add_firstItem(modelTree, ui->treeView, "Configuration");
@@ -871,6 +879,6 @@ void MainWindow::on_actionDebug_Modem_triggered()
         debug_dialog->close_window();
         this->on_actionConnect_triggered();
     } else {
-        QMessageBox::warning(this, "Debug Modem", "Module is not connect");
+        QMessageBox::warning(this, "Debug Modem", "Module is not connected");
     }
 }

@@ -84,6 +84,8 @@
 #define MODE_SET_FRM         "0105"
 #define MODE_SET_DAT         "0106"
 
+#define MODE_RESET           "reset"
+
 #define START_DEBUG_MODEM    "set_env debug_m 1"
 #define STOP_DEBUG_MODEM     "set_env debug_m 0"
 
@@ -97,11 +99,11 @@
  * @brief The data_port struct
  */
 struct data_port {
-    /**
-     * @brief nama_input
-     */
-//    char nama_input[64];
-    QString nama_input;
+//    /**
+//     * @brief nama_input
+//     */
+////    char nama_input[64];
+//    QString nama_input;
     /**
      * @brief type_input
      */
@@ -119,11 +121,11 @@ struct data_port {
      */
     float calib_x;
 
-    /**
-     * @brief nama_output
-     */
-//    char nama_output[64];
-    QString nama_output;
+//    /**
+//     * @brief nama_output
+//     */
+////    char nama_output[64];
+//    QString nama_output;
     /**
      * @brief type_output
      */

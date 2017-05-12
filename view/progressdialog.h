@@ -305,6 +305,10 @@ public:
      * @brief waiting_set
      */
     void waiting_set();
+    /**
+     * @brief waiting_reset
+     */
+    void waiting_reset();
 
     /**
      * @brief writeLogFile

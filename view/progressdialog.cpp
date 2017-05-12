@@ -62,6 +62,8 @@ void ProgressDialog::Processing(QSerialPort *SerialPort, QString address, QStrin
         } if (list_mode.at(i) == MODE_SET_DAT) {
             if (index.isEmpty()) {Set_Data(false, &tModule);}
             else {Set_Data(false, &tModule, list_index.at(i));}
+        } if (list_mode.at(i) == MODE_RESET) {
+            Reset_Board(false);
         }
     }
 /** ---------------------------------------------------------- **/
@@ -138,6 +140,8 @@ void ProgressDialog::Processing(QSerialPort *SerialPort, QString address, QStrin
             } else {
                 Set_Data(true, &tModule, list_index.at(i));
             }
+        } if (list_mode.at(i) == MODE_RESET) {
+            Reset_Board(true);
         }
         if (cancel) break;
     }
@@ -698,8 +702,8 @@ void ProgressDialog::Set_Input(bool stat, t_module *tModule, QString index)
                       list1.at(2) + " " + list1.at(4) + " " + list1.at(5) + " " +
                       list1.at(6) + " " + list1.at(7) + " " + list1.at(8) + " " +
                       list1.at(9) + " " + list1.at(10) + " " + list1.at(11) + " " +
+                      list1.at(12) + " " +
                       QString::number(validation) + "\r\n";
-//            qDebug() << Request;
             Desc = "Set Data " + list1.at(0) + " ..";
             if (stat) {
                 serial_write(Desc, Request, WAIT_WRITE);
@@ -908,8 +912,8 @@ void ProgressDialog::Set_Data(bool stat, t_module *tModule, QString index)
                       list1.at(2) + " " + list1.at(4) + " " + list1.at(5) + " " +
                       list1.at(6) + " " + list1.at(7) + " " + list1.at(8) + " " +
                       list1.at(9) + " " + list1.at(10) + " " + list1.at(11) + " " +
+                      list1.at(12) + " " +
                       QString::number(validation) + "\r\n";
-//            qDebug() << Request;
             Desc = "Set Data " + list1.at(0) + " ..";
             if (stat) {
                 serial_write(Desc, Request, WAIT_WRITE);
@@ -933,7 +937,6 @@ void ProgressDialog::Set_Data(bool stat, t_module *tModule, QString index)
 //                          list1.at(9) + " " + list1.at(10) + " " + list1.at(11) + " " +
 //                          QString::number(validation) + "\r\n";
 //                Desc = "Set Data " + list1.at(0)  + " ..";
-//                qDebug() << Request;
 //                if (stat) {
 //                    serial_write(Desc, Request, WAIT_WRITE);
 //                    ui->progressBar->setValue(progressVal++);
@@ -946,9 +949,9 @@ void ProgressDialog::Set_Data(bool stat, t_module *tModule, QString index)
             Request = QString(MODE_SET_DAT) + " " + list1.at(0) + " " + list1.at(1) + " " +
                       list1.at(2) + " " + list1.at(4) + " " + list1.at(5) + " " +
                       list1.at(6) + " " + list1.at(7) + " " + list1.at(8) + " " +
-                      list1.at(9) + " " + list1.at(10) + " " + list1.at(11) + " 3\r\n";
+                      list1.at(9) + " " + list1.at(10) + " " + list1.at(11) + " " +
+                      list1.at(12) + " 3\r\n";
             Desc = "Set Data " + list1.at(0)  + " ..";
-//            qDebug() << Request;
             if (stat) {
                 serial_write(Desc, Request, WAIT_WRITE);
                 ui->progressBar->setValue(progressVal++);
@@ -960,7 +963,7 @@ void ProgressDialog::Set_Data(bool stat, t_module *tModule, QString index)
 
 void ProgressDialog::Reset_Board(bool stat)
 {
-    Request = "reset\r\n";
+    Request = QString(MODE_RESET)+"\r\n";
     Desc = "Resetting Board ..";
     if (stat) {
         serial_write(Desc, Request, WAIT_WRITE);
@@ -1033,7 +1036,11 @@ void ProgressDialog::serial_write(QString desc, QString data, int delay_char)
         delay(delay_char);
     }
     Serial_Com->write("\r\n");
-    waiting_set();
+    if (data != MODE_RESET) {
+        waiting_set();
+    } else {
+        waiting_reset();
+    }
     flagERR = read_flagERR();
     strERR = read_strERR();
 //    if (timeout) {QMessageBox::information(this, "Serial Communication", STR_TIMEOUT, 0, 0);}
@@ -1059,6 +1066,17 @@ void ProgressDialog::waiting_set()
         }
         if (QTime::currentTime() >= dieTime && !timeout) {
             timeout = true;
+            break;
+        }
+    }
+}
+
+void ProgressDialog::waiting_reset()
+{
+    while (!this->read_FinishRead()) {
+        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+        if (this->read_flagERR() == 1 && !timeout) {
+            timeout = false;
             break;
         }
     }

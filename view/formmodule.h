@@ -342,10 +342,10 @@ private:
      * @brief check_input
      */
     QCheckBox       *check_input[PIN_ANALOG + PIN_DIGITAL];
-    /**
-     * @brief name_input
-     */
-    QLineEdit       *name_input[PIN_ANALOG + PIN_DIGITAL];
+//    /**
+//     * @brief name_input
+//     */
+//    QLineEdit       *name_input[PIN_ANALOG + PIN_DIGITAL];
     /**
      * @brief type_input
      */
@@ -652,9 +652,13 @@ private:
      */
     QComboBox       *state_data_s[JML_DATA];
     /**
-     * @brief sdCard_data
+     * @brief sdCard_data_s
      */
-    QCheckBox       *sdCard_data_s[JML_DATA];
+    QComboBox       *sdCard_data_s[JML_DATA];
+    /**
+     * @brief lastTime_data_s
+     */
+    QLabel          *lastTime_data_s[JML_DATA];
     /**
      * @brief SigMapState_data_s
      */
